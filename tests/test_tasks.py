@@ -124,11 +124,11 @@ class TestSkullstripping(TestTask):
 class TestT1Preprocessing(TestTask):
     def test_run(self):
         accession = 'brainomics02'
-        task = T1Preprocessing(GreedyRegistration(), self.pipeline_dir)
+        task = T1Preprocessing(Convert3DProcessor, self.pipeline_dir)
 
         self.pipeline_dir.create_dir('processed', accession, Modality.T1)
         input_image = self.pipeline_dir.get_processed_image(
-            accession, Modality.T1)
+            accession, Modality.T1, image_type='skullstripped')
         shutil.copy(
             os.path.join('tests', 'data', 'brainomics02', 'anat_t1.nii.gz'),
             input_image)
@@ -228,8 +228,15 @@ class TestMultiModalitySegmentation(TestTask):
 
 class TestT1Postprocessing(TestTask):
     def test_run(self):
-        self.fail()
-
+        accession = 'brats10'
+        input_path = self.pipeline_dir.get_processed_image(
+            accession, Modality.T1, image_type=f'skullstripped')
+        shutil.copy(
+            os.path.join(
+                'tests', 'data', 'brats10',
+                f'BraTS19_2013_10_1_{Modality.T1}.nii.gz'),
+            input_path
+        )
 
 class TestResampling(TestTask):
     def test_run(self):

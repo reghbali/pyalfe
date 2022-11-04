@@ -41,10 +41,10 @@ class T1Postprocessing():
         cerebellum_image = self.pipeline_dir.get_processed_image(
             accession, Modality.T1, image_type='cerebellum')
 
-        output_image = self.pipeline_dir.get_segmentation_image(
+        output_image = self.pipeline_dir.get_processed_image(
             accession, Modality.T1, 'VentriclesSeg')
 
-        output_dist_image = self.pipeline_dir.get_segmentation_image(
+        output_dist_image = self.pipeline_dir.get_processed_image(
             accession, Modality.T1, 'VentriclesDist')
 
         if self.overwrite or not os.path.exists(output_image):
