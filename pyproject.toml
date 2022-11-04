@@ -27,4 +27,4 @@ ants = ["antspyx"]
 radiomics = ["Pyradiomics"]
 
 [project.scripts]
-pyalfe = "PyALFEPipelineRunner:run"
+pyalfe = "pyalfe.main:main"

@@ -9,12 +9,20 @@ from pyalfe.image_registration import GreedyRegistration
 from pyalfe.inference import InferenceModel
 from pyalfe.tasks.initialization import Initialization
 from pyalfe.tasks.registration import CrossModalityRegistration
+from pyalfe.tasks.segmentation import SingleModalitySegmentation, \
+    MultiModalitySegmentation
 from pyalfe.tasks.skullstripping import Skullstripping
+from pyalfe.tasks.t1_preprocessing import T1Preprocessing
 
 
 class MockInferenceModel(InferenceModel):
+
+    def __init__(self, number_of_inputs=1):
+        self.number_of_inputs = number_of_inputs
+
     def predict_cases(self, image_tuple_list, output_list):
         for image_tuple, output in zip(image_tuple_list, output_list):
+            assert len(image_tuple) == self.number_of_inputs
             shutil.copy(image_tuple[-1], output)
 
 
@@ -113,6 +121,24 @@ class TestSkullstripping(TestTask):
             self.assertTrue(os.path.exists(ss_image_path))
 
 
+class TestT1Preprocessing(TestTask):
+    def test_run(self):
+        accession = 'brainomics02'
+        task = T1Preprocessing(GreedyRegistration(), self.pipeline_dir)
+
+        self.pipeline_dir.create_dir('processed', accession, Modality.T1)
+        input_image = self.pipeline_dir.get_processed_image(
+            accession, Modality.T1)
+        shutil.copy(
+            os.path.join('tests', 'data', 'brainomics02', 'anat_t1.nii.gz'),
+            input_image)
+
+        task.run(accession)
+        output = self.pipeline_dir.get_processed_image(
+            accession, Modality.T1, image_type='trim_upsampled')
+        self.assertTrue(os.path.exists(output))
+
+
 class TestCrossModalityRegistration(TestTask):
 
     def test_run(self):
@@ -121,8 +147,10 @@ class TestCrossModalityRegistration(TestTask):
             Modality.T1, Modality.T2, Modality.T1Post, Modality.FLAIR]
         modalities_target = [Modality.T1Post, Modality.FLAIR]
         task = CrossModalityRegistration(
-            self.pipeline_dir, modalities,
-            modalities_target, GreedyRegistration())
+            GreedyRegistration(),
+            self.pipeline_dir,
+            modalities,
+            modalities_target)
         for modality in modalities:
             self.pipeline_dir.create_dir(
                 'processed', accession, modality)
@@ -138,9 +166,72 @@ class TestCrossModalityRegistration(TestTask):
             for modality in modalities:
                 output = self.pipeline_dir.get_processed_image(
                     accession, modality, f'to_{target}_{task.image_type}')
-                self.assertTrue(output)
+                self.assertTrue(os.path.exists(output))
 
 
-class TestResampling(TestCase):
+class TestSingleModalitySegmentation(TestTask):
+
+    def test_run(self):
+        accession = '10000'
+        modality = Modality.FLAIR
+        model = MockInferenceModel()
+        task = SingleModalitySegmentation(
+            model, self.pipeline_dir, Modality.FLAIR)
+
+        modality_dir = self.pipeline_dir.create_dir(
+            'processed', accession, modality)
+        input_path = self.pipeline_dir.get_processed_image(
+            accession, modality, image_type=task.image_type_input
+        )
+        output_path = self.pipeline_dir.get_processed_image(
+            accession, modality, image_type=task.image_type_output,
+            sub_dir_name=task.segmentation_dir)
+        shutil.copy(
+            os.path.join(
+                'tests', 'data', 'brats10', 'BraTS19_2013_10_1_flair.nii.gz'),
+            input_path)
+        task.run(accession)
+
+        self.assertTrue(os.path.exists(output_path))
+
+
+class TestMultiModalitySegmentation(TestTask):
+
+    def test_run(self):
+        accession = '10000'
+        modality_list = [Modality.T1, Modality.T1Post]
+        output_modality = Modality.T1Post
+        model = MockInferenceModel(2)
+        task = MultiModalitySegmentation(
+            model, self.pipeline_dir,
+            modality_list, output_modality)
+
+        for modality in modality_list:
+            modality_dir = self.pipeline_dir.create_dir(
+                'processed', accession, modality)
+            input_path = self.pipeline_dir.get_processed_image(
+                accession, modality,
+                image_type=f'to_{output_modality}_{task.image_type_input}')
+            shutil.copy(
+                os.path.join(
+                    'tests', 'data', 'brats10',
+                    f'BraTS19_2013_10_1_{modality.lower()}.nii.gz'),
+                input_path
+            )
+        output_path = self.pipeline_dir.get_processed_image(
+            accession, output_modality,
+            image_type=task.image_type_output,
+            sub_dir_name=task.segmentation_dir)
+        task.run(accession)
+        self.assertTrue(os.path.exists(output_path))
+
+
+class TestT1Postprocessing(TestTask):
     def test_run(self):
         self.fail()
+
+
+class TestResampling(TestTask):
+    def test_run(self):
+        self.fail()
+

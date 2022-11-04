@@ -19,8 +19,8 @@ class T1Postprocessing():
         self.overwrite = overwrite
 
     def run(self, accession):
-        tissue_segmentation_image = self.pipeline_dir.get_segmentation_image(
-            accession, Modality.T1, 'tissue_seg')
+        tissue_segmentation_image = self.pipeline_dir.get_processed_image(
+            accession, Modality.T1, image_type='tissue_seg')
 
         if not os.path.exists(tissue_segmentation_image):
             self.logger.info('T1 tissue segmentation is missing.'

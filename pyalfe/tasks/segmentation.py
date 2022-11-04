@@ -44,10 +44,10 @@ class SingleModalitySegmentation(Segmentation):
                 f'{image_dir} is missing.'
                 f'Skipping {self.image_type_output} segmentation.')
             return
-        output_dir = self.pipeline_dir.get_segmentation_image(
+        output_dir = self.pipeline_dir.get_processed_image(
             accession=accession, modality=self.modality,
-            segmentation_image_type=self.image_type_output,
-            segmentation_dir=self.segmentation_dir)
+            image_type=self.image_type_output,
+            sub_dir_name=self.segmentation_dir)
         if not self.overwrite and os.path.exists(output_dir):
             return
         self.process([(image_dir,)], [output_dir])
@@ -90,11 +90,11 @@ class MultiModalitySegmentation(Segmentation):
                 return
             image_dir_list.append(image_dir)
             
-        output_dir = self.pipeline_dir.get_segmentation_image(
+        output_dir = self.pipeline_dir.get_processed_image(
             accession=accession,
             modality=self.output_modality,
-            segmentation_image_type=self.image_type_output,
-            segmentation_dir=self.segmentation_dir)
+            image_type=self.image_type_output,
+            sub_dir_name=self.segmentation_dir)
         if not self.overwrite and os.path.exists(output_dir):
             return
         self.process([image_dir_list], [output_dir])

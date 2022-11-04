@@ -1,7 +1,7 @@
 import os
 import logging
 
-from pyalfe.data_structure import PipelineDataDir
+from pyalfe.data_structure import PipelineDataDir, Modality
 from pyalfe.image_processing import ImageProcessor
 
 
@@ -21,7 +21,7 @@ class T1Preprocessing():
 
     def run(self, accession):
         t1ss = self.pipeline_dir.get_processed_image(
-            accession, 'T1', image_type='skullstripped')
+            accession, Modality.T1, image_type='skullstripped')
         if not os.path.exists(t1ss):
             self.logger.info(
                 'T1 skullstripped image is missing. Skipping T1Preprocessing.')
@@ -33,7 +33,7 @@ class T1Preprocessing():
             self.image_processor.trim_largest_comp(
                 t1ss, trim_output, [15, 15, 15])
         output = self.pipeline_dir.get_processed_image(
-            accession, 'T1', image_type='trim_upsampled')
+            accession, Modality.T1, image_type='trim_upsampled')
         if self.overwrite or not os.path.exists(output):
             dims = self.image_processor.get_dims(t1ss)
             upfactors = []

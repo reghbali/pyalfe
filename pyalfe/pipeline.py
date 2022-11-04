@@ -1,6 +1,3 @@
-from dependency_injector.wiring import Provide, inject
-
-from pyalfe.containers import Container
 from pyalfe.tasks.initialization import Initialization
 from pyalfe.tasks.quantification import Quantification
 from pyalfe.tasks.registration import CrossModalityRegistration, Resampling
@@ -13,19 +10,18 @@ from pyalfe.tasks.t1_preprocessing import T1Preprocessing
 
 class PyALFEPipelineRunner(object):
 
-    @inject
     def __init__(
             self,
-            initialization: Initialization = Provide[Container.initialization],
-            skullstripping: Skullstripping = Provide[Container.skullstripping],
-            t1_preprocessing: T1Preprocessing = Provide[Container.t1_preprocessing],
-            cross_modality_registration: CrossModalityRegistration = Provide[Container.cross_modality_registration],
-            flair_segmentation: SingleModalitySegmentation = Provide[Container.flair_segmentation],
-            enhancement_segmentation: MultiModalitySegmentation = Provide[Container.enhancement_segmentation],
-            tissue_segmentation: SingleModalitySegmentation = Provide[Container.tissue_segmentation],
-            t1_postprocessing: T1Postprocessing = Provide[Container.t1_postprocessing],
-            resampling: Resampling = Provide[Container.resampling],
-            quantification: Quantification = Provide[Container.quantification]):
+            initialization: Initialization,
+            skullstripping: Skullstripping,
+            t1_preprocessing: T1Preprocessing,
+            cross_modality_registration: CrossModalityRegistration,
+            flair_segmentation: SingleModalitySegmentation,
+            enhancement_segmentation: MultiModalitySegmentation,
+            tissue_segmentation: SingleModalitySegmentation,
+            t1_postprocessing: T1Postprocessing,
+            resampling: Resampling,
+            quantification: Quantification):
         self.initialization = initialization
         self.skullstripping = skullstripping
         self.t1_preprocessing = t1_preprocessing

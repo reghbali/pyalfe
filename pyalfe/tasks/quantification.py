@@ -110,10 +110,10 @@ class Quantification(object):
             if not self.overwrite and os.path.exists(quantification_file):
                 continue
 
-            lesion_seg_file = self.pipeline_dir.get_segmentation_image(
+            lesion_seg_file = self.pipeline_dir.get_processed_image(
                 accession=accession, modality=target,
-                segmentation_image_type='CNNAbnormalMap_seg',
-                segmentation_dir='abnormalmap')
+                image_type='CNNAbnormalMap_seg',
+                sub_dir_name='abnormalmap')
             if not os.path.exists(lesion_seg_file):
                 print(lesion_seg_file, 'lesion_seg does not exist')
                 self.logger.info(
