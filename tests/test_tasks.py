@@ -12,6 +12,7 @@ from pyalfe.tasks.registration import CrossModalityRegistration
 from pyalfe.tasks.segmentation import SingleModalitySegmentation, \
     MultiModalitySegmentation
 from pyalfe.tasks.skullstripping import Skullstripping
+from pyalfe.tasks.t1_postprocessing import T1Postprocessing
 from pyalfe.tasks.t1_preprocessing import T1Preprocessing
 
 
@@ -237,6 +238,21 @@ class TestT1Postprocessing(TestTask):
                 f'BraTS19_2013_10_1_{Modality.T1}.nii.gz'),
             input_path
         )
+        tissue_seg_path = self.pipeline_dir.get_processed_image(
+            accession, Modality.T1, image_type=f'tissue_seg')
+        shutil.copy(
+            os.path.join(
+                'tests', 'data', 'brats10',
+                f'BraTS19_2013_10_1_{Modality.T1}.nii.gz'),
+            tissue_seg_path
+        )
+        output_path = self.pipeline_dir.get_processed_image(
+            accession, Modality.T1,
+            image_type='VentriclesSeg'
+        )
+        task = T1Postprocessing(Convert3DProcessor, self.pipeline_dir)
+        task.run(accession)
+        self.assertTrue(os.path.exists(output_path))
 
 class TestResampling(TestTask):
     def test_run(self):

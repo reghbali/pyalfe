@@ -3,9 +3,10 @@ import os
 
 from pyalfe.data_structure import PipelineDataDir, Tissue, Modality
 from pyalfe.image_processing import ImageProcessor
+from pyalfe.tasks import Task
 
 
-class T1Postprocessing():
+class T1Postprocessing(Task):
     logger = logging.getLogger('T1Postprocessing')
 
     def __init__(
@@ -54,8 +55,9 @@ class T1Postprocessing():
 
             for tissue in Tissue:
                 self.image_processing.threshold(
-                    tissue_segmentation_image, int(tissue),
-                    int(tissue), 1, 0, eval(f'{tissue.name.lower()}_image'))
+                    tissue_segmentation_image,
+                    eval(f'{tissue.name.lower()}_image'),
+                    int(tissue), int(tissue), 1, 0)
 
             self.image_processing.union(
                 deep_gray_matter_image, white_matter_image, temp_image)
