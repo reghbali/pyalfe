@@ -85,26 +85,26 @@ classfied_dir
 │
 └───accession2
     │
-        │───T1
-            │   └── T1.nii.gz
-                │───T1Post
-                    │   └── T1Post.nii.gz
-                        │───FLAIR
-                            │   └── FLAIR.nii.gz  
-                                │───ADC
-                                    │   └── ADC.nii.gz 
-                                        └───T2
-                                                └── T2.nii.gz
-                                                .
-                                                .
-                                                .
-                                                ```
+    │───T1
+    │   └── T1.nii.gz
+    │───T1Post
+    │   └── T1Post.nii.gz
+    │───FLAIR
+    │   └── FLAIR.nii.gz  
+    │───ADC
+    │   └── ADC.nii.gz 
+    └───T2
+        └── T2.nii.gz
+  .
+  .
+  .
+```
 
 
-                                                ## Contributing
-                                                Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-                                                Please make sure to update tests as appropriate.
+Please make sure to update tests as appropriate.
 
-                                                ## License
-                                                Proprietary for now.
+## License
+Proprietary for now.

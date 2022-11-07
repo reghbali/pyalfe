@@ -8,7 +8,7 @@ from pyalfe.image_processing import Convert3DProcessor
 from pyalfe.image_registration import GreedyRegistration
 from pyalfe.inference import InferenceModel
 from pyalfe.tasks.initialization import Initialization
-from pyalfe.tasks.registration import CrossModalityRegistration
+from pyalfe.tasks.registration import CrossModalityRegistration, Resampling
 from pyalfe.tasks.segmentation import SingleModalitySegmentation, \
     MultiModalitySegmentation
 from pyalfe.tasks.skullstripping import Skullstripping
@@ -235,7 +235,7 @@ class TestT1Postprocessing(TestTask):
         shutil.copy(
             os.path.join(
                 'tests', 'data', 'brats10',
-                f'BraTS19_2013_10_1_{Modality.T1}.nii.gz'),
+                f'BraTS19_2013_10_1_{Modality.T1.lower()}.nii.gz'),
             input_path
         )
         tissue_seg_path = self.pipeline_dir.get_processed_image(
@@ -256,5 +256,13 @@ class TestT1Postprocessing(TestTask):
 
 class TestResampling(TestTask):
     def test_run(self):
-        self.fail()
+        accession = 'brats10'
+        modalities = [
+            Modality.T1, Modality.T2, Modality.T1Post, Modality.FLAIR]
+        modalities_target = [Modality.T1Post, Modality.FLAIR]
+        task = Resampling(
+            Convert3DProcessor,
+            GreedyRegistration(),
+            self.pipeline_dir,
+            modalities_target)
 

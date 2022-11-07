@@ -128,3 +128,91 @@ class Resampling(object):
 
                 self.image_registration.reslice(
                     target_image, roi_image, output, transform)
+
+
+class T1Registration():
+    logger = logging.getLogger('T1Registration')
+
+    rois = {
+        'template': 'T_template0_BrainCerebellum.nii.gz',
+        'lobes': 'T_template0_Lobes.nii.gz'
+    }
+
+    def __init__(
+            self,
+            image_processor: ImageProcessor,
+            image_registration: ImageRegistration,
+            pipeline_dir: PipelineDataDir,
+            overwrite: bool = True
+    ):
+        self.pipeline_dir = pipeline_dir
+        self.image_processor = image_processor
+        self.image_registration = image_registration
+        self.overwrite = overwrite
+
+    def run(self, accession):
+        t1ss = self.pipeline_dir.get_processed_image(
+            accession, 'T1', image_type='skullstripped')
+        t1ss_mask = self.pipeline_dir.get_processed_image(
+            accession, 'T1', image_type='skullstripped_mask'
+        )
+
+        if not os.path.exists(t1ss):
+            self.logger.info(
+                'T1 skullstripped image is missing. Skipping T1Registration')
+            return
+
+        template = roi_dict['template']['source']
+        template_mask = roi_dict['template_mask']['source']
+
+        rigid_init_transform = self.pipeline_dir.get_processed_image(
+            accession, 'T1', resampling_origin='template',
+            resampling_target='T1', image_type='greedy_rigid_init',
+            sub_dir_name=self.template_reg_sub_dir, extension='.mat'
+        )
+
+        self.image_processor.binarize(t1ss, t1ss_mask)
+
+        if self.overwrite or not os.path.exists(rigid_init_transform):
+            self.image_registration.register_rigid(
+                t1ss_mask, template_mask, rigid_init_transform)
+
+        template_to_t1 = self.pipeline_dir.get_processed_image(
+            accession, 'T1', resampling_origin='template',
+            resampling_target='T1', sub_dir_name=self.template_reg_sub_dir
+        )
+
+        affine_transform = self.pipeline_dir.get_processed_image(
+            accession, 'T1', resampling_origin='template',
+            resampling_target='T1', image_type='affine',
+            sub_dir_name=self.template_reg_sub_dir, extension='.mat'
+        )
+
+        if self.overwrite or not os.path.exists(affine_transform):
+            self.image_registration.register_affine(
+                t1ss, template, affine_transform,
+                init_transform=rigid_init_transform, fast=False)
+
+        warp_transform = self.pipeline_dir.get_processed_image(
+            accession, 'T1', resampling_origin='template',
+            resampling_target='T1', image_type='warp',
+            sub_dir_name=self.template_reg_sub_dir
+        )
+
+        if self.overwrite or not os.path.exists(warp_transform):
+            self.image_registration.register_deformable(
+                t1ss, template,
+                transform_output=warp_transform,
+                affine_transform=affine_transform)
+
+        for roi_key in ['template', 'lobes']:
+            roi_template_to_t1 = self.pipeline_dir.get_processed_image(
+                accession, 'T1', resampling_origin=roi_key,
+                resampling_target='T1',
+                sub_dir_name=roi_dict[roi_key]['sub_dir'])
+            roi_template = roi_dict[roi_key]['source']
+
+            if self.overwrite or not os.path.exists(roi_template_to_t1):
+                self.image_registration.reslice(
+                    t1ss, roi_template, roi_template_to_t1,
+                    warp_transform, affine_transform)

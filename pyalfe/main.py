@@ -1,5 +1,6 @@
 import os
 import pathlib
+import sys
 import tarfile
 import importlib
 
@@ -37,11 +38,18 @@ def _download_tar_file(
 
 
 @main.command()
-def download_models():
-    _download_tar_file(
-        url=MODELS_URL,
-        download_dir=os.path.dirname(__file__),
-        tar_file_name='models.tar.gz')
+@click.argument('asset')
+def download(asset):
+    if asset == 'models':
+        _download_tar_file(
+            url=MODELS_URL,
+            download_dir=os.path.dirname(__file__),
+            tar_file_name='models.tar.gz')
+    elif asset == 'greedy':
+        _download_tar_file(
+            url=GREEDY_URL,
+            download_dir=os.path.dirname(sys.executable)
+        )
 
 
 @main.command()
