@@ -5,7 +5,7 @@ from unittest import TestCase
 from click.testing import CliRunner
 
 from pyalfe.data_structure import DefaultALFEDataDir, Modality
-from pyalfe.main import main
+from pyalfe.main import main, run
 
 
 class TestIntegration(TestCase):
@@ -21,8 +21,7 @@ class TestIntegration(TestCase):
         os.mkdir(self.classified_dir)
 
     def tearDown(self) -> None:
-        pass
-        #shutil.rmtree(self.test_dir)
+        shutil.rmtree(self.test_dir)
 
     def test_run(self):
         accession = 'brats10'
@@ -43,7 +42,7 @@ class TestIntegration(TestCase):
         args =  [accession,
                  '--classified_dir', self.classified_dir,
                  '--processed_dir', self.processed_dir]
-        result = runner.invoke(main, args, catch_exceptions=False)
+        result = runner.invoke(run, args, catch_exceptions=False)
         print(result)
         self.assertEqual(result.exit_code, 0)
 
@@ -51,7 +50,7 @@ class TestIntegration(TestCase):
             processed_image_path = pipeline_dir.get_processed_image(
                 accession, modality)
             self.assertTrue(os.path.exists(processed_image_path))
-            ss_image_path = self.pipeline_dir.get_processed_image(
+            ss_image_path = pipeline_dir.get_processed_image(
                 accession, modality, suffix='skullstripped'
             )
             self.assertTrue(os.path.exists(ss_image_path))

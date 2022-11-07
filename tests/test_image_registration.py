@@ -15,7 +15,7 @@ def get_image_registration_test(image_registration: ImageRegistration) -> Type[T
     class TestImageRegistration(TestCase):
 
         def setUp(self) -> None:
-            self.test_dir = os.path.join('/tmp', 'image_processing_Test')
+            self.test_dir = os.path.join('/tmp', 'image_registration_Test')
             os.makedirs(self.test_dir)
 
         def tearDown(self) -> None:

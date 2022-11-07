@@ -12,15 +12,16 @@ authors = [
     {email = "reza.eghbali@ucsf.edu"}
 ]
 dependencies = [
+    "scipy",
     "numpy",
     "Click",
     "dependency_injector",
     "torch",
     "pandas",
     "nibabel",
-    "nnunet",
     "nilearn",
-    "matplotlib"
+    "matplotlib",
+    "nnunet"
 ]
 
 [project.optional-dependencies]

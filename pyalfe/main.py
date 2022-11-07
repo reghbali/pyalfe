@@ -1,33 +1,55 @@
 import os
 import pathlib
 import tarfile
+import importlib
+
 import requests
 
 import click
 
 from pyalfe.containers import Container
 
-DEFAULT_CFG = pathlib.Path(__file__).with_name('config.ini')
+DEFAULT_CFG = os.path.join(os.path.dirname(__file__), 'config.ini')
 MODELS_URL = ('https://ucsf.box.com/shared/static/'
               'a93ruk3m26mso38jm8gk3qs5iod0h90h.gz')
+GREEDY_URL = ('https://sourceforge.net/projects/greedy-reg/'
+              'files/Nightly/greedy-nightly-Linux-gcc64.tar.gz/download')
 
 
-def download_models(
-        models_url: str,
-        models_dir: str,
-        tar_file_name: str = 'models.tar.gz'
+@click.group()
+def main():
+    pass
+
+
+def _download_tar_file(
+        url: str,
+        download_dir: str,
+        tar_file_name: str
 ):
     tar_file_path = os.path.join('/tmp', tar_file_name)
-    models = requests.get(models_url)
+    models = requests.get(url)
 
     with open(tar_file_path, 'wb') as file:
         file.write(models.content)
 
     with tarfile.open(tar_file_path) as tar_file:
-        tar_file.extractall(models_dir)
+        tar_file.extractall(download_dir)
 
 
-@click.command()
+@main.command()
+def download_models():
+    _download_tar_file(
+        url=MODELS_URL,
+        download_dir=os.path.dirname(__file__),
+        tar_file_name='models.tar.gz')
+
+
+@main.command()
+def download_greedy():
+    pass
+
+
+@main.command()
 @click.argument('accession')
 @click.option(
     '-c', '--config',
@@ -35,7 +57,7 @@ def download_models(
 )
 @click.option('--classified_dir')
 @click.option('--processed_dir')
-def main(accession: str, config: str, classified_dir: str, processed_dir: str):
+def run(accession: str, config: str, classified_dir: str, processed_dir: str):
 
     models_dir = os.path.dirname(__file__)
     if not os.path.exists(os.path.join(models_dir, 'models')):
