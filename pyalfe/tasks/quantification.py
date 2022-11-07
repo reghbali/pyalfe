@@ -147,7 +147,7 @@ class Quantification(object):
                 modality_image_to_target_file = \
                     self.pipeline_dir.get_processed_image(
                     accession, modality, image_type='skullstripped',
-                    resmapling_target=target)
+                    resampling_target=target)
                 if os.path.exists(modality_image_to_target_file):
                     modality_images[modality], _ = self.load(
                         modality_image_to_target_file)

@@ -51,6 +51,6 @@ class TestIntegration(TestCase):
                 accession, modality)
             self.assertTrue(os.path.exists(processed_image_path))
             ss_image_path = pipeline_dir.get_processed_image(
-                accession, modality, suffix='skullstripped'
+                accession, modality, image_type='skullstripped'
             )
             self.assertTrue(os.path.exists(ss_image_path))
