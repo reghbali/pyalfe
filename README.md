@@ -11,7 +11,7 @@ PyALFE can work with `Greedy` or `Ants` for registration tasks.
 To enable `Greedy`, the [latest version](https://sourceforge.net/projects/greedy-reg/files/latest/download) should be installed on your system and the binary should be on on your path. 
 
 
-If `Greedy` is not installed on your system you can install PyALFE with Ants support. Ants registration does not perform as well as greedy.
+If `Greedy` is not installed on your system, you can install PyALFE with Ants support. Ants registration does not perform as well as greedy.
 
 ### Convert3D
 For image processing task PyALFE can work with `Convert3D` or python native library `Nilearn`. To enable `Convert3D`, the [latest version](https://sourceforge.net/projects/c3d/files/latest/download) should be installed on your system and the binary should be on on your path. 
@@ -53,11 +53,11 @@ pip install dist/pyalfe-0.0.1-py3-none-any.whl
 ### Download models
 To download deep learning models, run
 ```bash
-pylafe download-models
+pylafe download models
 ```
 ## Usage
 
-PyALFE read its input data from `classified_dir` and writes its output to `processed_dir`. These can be given as input argument of configure in a `config.ini` file.
+PyALFE reads its input data from `classified_dir` and writes its output to `processed_dir`. These can be given as input argument of configure in a `config.ini` file.
 
 To run PyALFE for an accessionL
 
