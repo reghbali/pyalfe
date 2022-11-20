@@ -62,10 +62,10 @@ def download(assets):
     '-c', '--config',
     default=DEFAULT_CFG,
 )
-@click.option('-cd', '--classified_dir')
-@click.option('-pd', '--processed_dir')
 @click.option('-m', '--modalities', default='T1,T1Post,FLAIR,T2,ADC')
 @click.option('-t', '--targets', default='FLAIR,T1Post')
+@click.option('-cd', '--classified_dir')
+@click.option('-pd', '--processed_dir')
 @click.option(
     '-dt', '--dominant_tissue',
     default='white_matter',
@@ -78,6 +78,18 @@ def download(assets):
 @click.option(
     '-oq', '--override_quantification',
     is_flag=True, show_default=True, default=True)
+@click.option(
+    '-ip', '--image_processing',
+    default='c3d',
+    type=click.Choice(
+        ['c3d', 'nilearn'], case_sensitive=False)
+)
+@click.option(
+    '-ir', '--image_registration',
+    default='greedy',
+    type=click.Choice(
+        ['greedy', 'ants'], case_sensitive=False)
+)
 def run(
         accession: str,
         config: str,
@@ -87,7 +99,9 @@ def run(
         targets: str,
         dominant_tissue: str,
         override_images: bool,
-        override_quantification: bool):
+        override_quantification: bool,
+        image_processing: str,
+        image_registration: str) -> None:
 
     container = Container()
     container.config.from_ini(config, required=True, envs_required=True)
@@ -107,6 +121,10 @@ def run(
         options['override_images'] = override_images
     if override_quantification:
         options['override_quantification'] = override_quantification
+    if image_processing:
+        options['image_processing'] = image_processing
+    if image_registration:
+        options['image_registration'] = image_registration
 
     container.config.from_dict(options)
 

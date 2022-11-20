@@ -5,17 +5,10 @@ Python implementation of Automated Lesion and Feature Extraction (ALFE) pipeline
 ## Requirements
 PyALFE supports Linux x86-64, Mac x86-64, and Mac arm64 and requires python 
 
-### Greedy
-PyALFE can work with `Greedy` or `Ants` for registration tasks. 
-
-To enable `Greedy`, the [latest version](https://sourceforge.net/projects/greedy-reg/files/latest/download) should be installed on your system and the binary should be on on your path. 
-
-
-If `Greedy` is not installed on your system, you can install PyALFE with Ants support. Ants registration does not perform as well as greedy.
-
-### Convert3D
-For image processing task PyALFE can work with `Convert3D` or python native library `Nilearn`. To enable `Convert3D`, the [latest version](https://sourceforge.net/projects/c3d/files/latest/download) should be installed on your system and the binary should be on on your path. 
-
+### Image registration and processing
+PyALFE can be configured to use either [Greedy](https://greedy.readthedocs.io/en/latest/) or [AntsPy](https://antspy.readthedocs.io/en/latest/registration.html) registration tools.
+Similarly, PyALFE can can be configured to use [Convert3D](https://sourceforge.net/p/c3d/git/ci/master/tree/doc/c3d.md) or python native library [Nilearn](https://nilearn.github.io/stable/index.html) for image processing tasks. 
+The Greedy and Convert3d command line tools can be downloaded using the [download command](#download-models-and-tools).
 ## Installation
 
 First run
@@ -39,7 +32,7 @@ pip install -e .
 
 ### Build and install
 
-First update the build
+First update the build tool
 ```bash
 pip install --upgrade build
 ```
@@ -50,27 +43,27 @@ python -m build
 pip install dist/pyalfe-0.0.1-py3-none-any.whl
 ```
 
-### Download models & command line tools
+### Download models and tools
 To download deep learning models alongside the binaries for c3d and greedy, run
 ```bash
 pylafe download models c3d greedy
 ```
+
+### Test
+To make sure PyALFE runs properly, run the integration test in the parent directroy:
+```bash
+python -m unittest tests.test_integration
+```
 ## Usage
 
+### Configuration
 To configrue the PyALFE pipeline you should run:
 ```bash
 pyalfe configure
 ```
-This 
-PyALFE reads its input data from `classified_dir` and writes its output to `processed_dir`. These can be given as input argument of configure in a `config.ini` file.
 
-To run PyALFE for an accessionL
-
-```bash
-pyalfe run [accession] [--config==config.ini][--classified_dir==path/to/classified] [--processed_dir==path/to/processed] 
-```
-
-PyALFE expect the following input directory structure in `classfied_dir`:
+PyALFE reads its input data from `classified_dir` and writes its output to `processed_dir`. These should be set during configuration. 
+The input directory structure in `classfied_dir` should be organized as follows:
 
 ```
 classfied_dir  
@@ -89,9 +82,9 @@ classfied_dir
 │       └── T2.nii.gz
 │
 └───accession2
-    │
-    │───T1
-    │   └── T1.nii.gz
+.   │
+.   │───T1
+.   │   └── T1.nii.gz
     │───T1Post
     │   └── T1Post.nii.gz
     │───FLAIR
@@ -100,12 +93,25 @@ classfied_dir
     │   └── ADC.nii.gz 
     └───T2
         └── T2.nii.gz
-  .
-  .
-  .
 ```
 
+### Running the pipeline
+To run PyALFE for an accession
 
+```bash
+pyalfe run ACCESSION
+```
+
+If you chose to save the configuration file in a non-standard location you can run
+
+```bash
+pyalfe run -c path/to/conf.ini ACCESSION
+```
+
+In general, all the config option can be overwritten by command line options. To see a list of command line options, run:
+```bash
+pyalfe run --help
+```
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
