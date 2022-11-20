@@ -1,6 +1,7 @@
 from pyalfe.tasks.initialization import Initialization
 from pyalfe.tasks.quantification import Quantification
-from pyalfe.tasks.registration import CrossModalityRegistration, Resampling
+from pyalfe.tasks.registration import CrossModalityRegistration, Resampling, \
+    T1Registration
 from pyalfe.tasks.segmentation import SingleModalitySegmentation, \
     MultiModalitySegmentation
 from pyalfe.tasks.skullstripping import Skullstripping
@@ -20,6 +21,7 @@ class PyALFEPipelineRunner(object):
             enhancement_segmentation: MultiModalitySegmentation,
             tissue_segmentation: SingleModalitySegmentation,
             t1_postprocessing: T1Postprocessing,
+            t1_registration: T1Registration,
             resampling: Resampling,
             quantification: Quantification):
         self.initialization = initialization
@@ -30,6 +32,7 @@ class PyALFEPipelineRunner(object):
         self.enhancement_segmentation = enhancement_segmentation
         self.tissue_segmentation = tissue_segmentation
         self.t1_postprocessing = t1_postprocessing
+        self.t1_registration = t1_registration
         self.resampling = resampling
         self.quantification = quantification
 
@@ -42,5 +45,6 @@ class PyALFEPipelineRunner(object):
         self.enhancement_segmentation.run(accession)
         self.tissue_segmentation.run(accession)
         self.t1_postprocessing.run(accession)
+        self.t1_registration.run(accession)
         self.resampling.run(accession)
         self.quantification.run(accession)

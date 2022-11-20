@@ -79,18 +79,20 @@ class Resampling(object):
             image_registration: ImageRegistration,
             pipeline_dir: PipelineDataDir,
             modalities_target,
+            image_type: str = 'skullstripped',
             overwrite=True
     ):
         self.pipeline_dir = pipeline_dir
         self.modalities_target = modalities_target
         self.image_processor = image_processor
         self.image_registration = image_registration
+        self.image_type = image_type
         self.overwrite = overwrite
 
     def run(self, accession):
         for target in self.modalities_target:
             target_image = self.pipeline_dir.get_processed_image(
-                accession, target, image_type='skullstripped')
+                accession, target, image_type=self.image_type)
             if not os.path.exists(target_image):
                 self.logger.info(
                     f'{target} is missing.'
@@ -99,18 +101,28 @@ class Resampling(object):
 
             transform = self.pipeline_dir.get_processed_image(
                 accession=accession, modality=Modality.T1,
-                image_type='skullstripped',
+                image_type=self.image_type,
                 resampling_target=target,
                 extension='.mat'
             )
 
-            for roi_type, roi_properties in roi_dict.items():
+            for roi_key, roi_properties in roi_dict.items():
 
                 roi_sub_dir = roi_properties['sub_dir']
-                roi_image = self.pipeline_dir.get_processed_image(
-                    accession=accession, modality=Modality.T1,
-                    image_type=roi_type,
-                    sub_dir_name=roi_sub_dir)
+                if roi_properties['type'] == 'derived':
+                    roi_image = self.pipeline_dir.get_processed_image(
+                        accession=accession, modality=Modality.T1,
+                        image_type=roi_key,
+                        sub_dir_name=roi_sub_dir)
+                elif roi_properties['type'] == 'registered':
+                    roi_image = self.pipeline_dir.get_processed_image(
+                        accession=accession, modality=Modality.T1,
+                        resampling_origin=roi_key,
+                        resampling_target=Modality.T1,
+                        sub_dir_name=roi_properties['sub_dir']
+                    )
+                else:
+                    continue
 
                 if not os.path.exists(roi_image):
                     self.logger.info(
@@ -119,7 +131,7 @@ class Resampling(object):
                     )
 
                 output = self.pipeline_dir.get_processed_image(
-                    accession, modality=target, image_type=roi_type,
+                    accession, modality=target, image_type=roi_key,
                     resampling_target=target, resampling_origin=Modality.T1,
                     sub_dir_name=roi_sub_dir)
 
@@ -130,13 +142,8 @@ class Resampling(object):
                     target_image, roi_image, output, transform)
 
 
-class T1Registration():
+class T1Registration:
     logger = logging.getLogger('T1Registration')
-
-    rois = {
-        'template': 'T_template0_BrainCerebellum.nii.gz',
-        'lobes': 'T_template0_Lobes.nii.gz'
-    }
 
     def __init__(
             self,
@@ -152,9 +159,9 @@ class T1Registration():
 
     def run(self, accession):
         t1ss = self.pipeline_dir.get_processed_image(
-            accession, 'T1', image_type='skullstripped')
+            accession, Modality.T1, image_type='skullstripped')
         t1ss_mask = self.pipeline_dir.get_processed_image(
-            accession, 'T1', image_type='skullstripped_mask'
+            accession, Modality.T1, image_type='skullstripped_mask'
         )
 
         if not os.path.exists(t1ss):
@@ -164,11 +171,12 @@ class T1Registration():
 
         template = roi_dict['template']['source']
         template_mask = roi_dict['template_mask']['source']
+        template_reg_sub_dir = roi_dict['template']['sub_dir']
 
         rigid_init_transform = self.pipeline_dir.get_processed_image(
-            accession, 'T1', resampling_origin='template',
-            resampling_target='T1', image_type='greedy_rigid_init',
-            sub_dir_name=self.template_reg_sub_dir, extension='.mat'
+            accession, Modality.T1, resampling_origin='template',
+            resampling_target=Modality.T1, image_type='greedy_rigid_init',
+            sub_dir_name=template_reg_sub_dir, extension='.mat'
         )
 
         self.image_processor.binarize(t1ss, t1ss_mask)
@@ -178,14 +186,14 @@ class T1Registration():
                 t1ss_mask, template_mask, rigid_init_transform)
 
         template_to_t1 = self.pipeline_dir.get_processed_image(
-            accession, 'T1', resampling_origin='template',
-            resampling_target='T1', sub_dir_name=self.template_reg_sub_dir
+            accession, Modality.T1, resampling_origin='template',
+            resampling_target=Modality.T1, sub_dir_name=template_reg_sub_dir
         )
 
         affine_transform = self.pipeline_dir.get_processed_image(
-            accession, 'T1', resampling_origin='template',
-            resampling_target='T1', image_type='affine',
-            sub_dir_name=self.template_reg_sub_dir, extension='.mat'
+            accession, Modality.T1, resampling_origin='template',
+            resampling_target=Modality.T1, image_type='affine',
+            sub_dir_name=template_reg_sub_dir, extension='.mat'
         )
 
         if self.overwrite or not os.path.exists(affine_transform):
@@ -194,9 +202,9 @@ class T1Registration():
                 init_transform=rigid_init_transform, fast=False)
 
         warp_transform = self.pipeline_dir.get_processed_image(
-            accession, 'T1', resampling_origin='template',
-            resampling_target='T1', image_type='warp',
-            sub_dir_name=self.template_reg_sub_dir
+            accession, Modality.T1, resampling_origin='template',
+            resampling_target=Modality.T1, image_type='warp',
+            sub_dir_name=template_reg_sub_dir
         )
 
         if self.overwrite or not os.path.exists(warp_transform):
@@ -207,8 +215,8 @@ class T1Registration():
 
         for roi_key in ['template', 'lobes']:
             roi_template_to_t1 = self.pipeline_dir.get_processed_image(
-                accession, 'T1', resampling_origin=roi_key,
-                resampling_target='T1',
+                accession, Modality.T1, resampling_origin=roi_key,
+                resampling_target=Modality.T1,
                 sub_dir_name=roi_dict[roi_key]['sub_dir'])
             roi_template = roi_dict[roi_key]['source']
 

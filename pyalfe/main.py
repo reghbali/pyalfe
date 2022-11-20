@@ -1,20 +1,19 @@
+import configparser
 import os
-import pathlib
-import sys
-import tarfile
 import importlib
-
-import requests
+from pathlib import Path
 
 import click
 
 from pyalfe.containers import Container
+from pyalfe.tools import greedy_url, c3d_url
+from pyalfe.models import models_url
+from pyalfe.utils import download_archive, extract_binary_from_archive
+from pyalfe.utils.archive import extract_tar
 
-DEFAULT_CFG = os.path.join(os.path.dirname(__file__), 'config.ini')
-MODELS_URL = ('https://ucsf.box.com/shared/static/'
-              'a93ruk3m26mso38jm8gk3qs5iod0h90h.gz')
-GREEDY_URL = ('https://sourceforge.net/projects/greedy-reg/'
-              'files/Nightly/greedy-nightly-Linux-gcc64.tar.gz/download')
+DEFAULT_CFG = os.path.expanduser(
+    os.path.join('~', '.config', 'pyalfe', 'config.ini'))
+#importlib.resources.files('pyalfe').joinpath('config.ini')
 
 
 @click.group()
@@ -22,39 +21,39 @@ def main():
     pass
 
 
-def _download_tar_file(
-        url: str,
-        download_dir: str,
-        tar_file_name: str
-):
-    tar_file_path = os.path.join('/tmp', tar_file_name)
-    models = requests.get(url)
-
-    with open(tar_file_path, 'wb') as file:
-        file.write(models.content)
-
-    with tarfile.open(tar_file_path) as tar_file:
-        tar_file.extractall(download_dir)
-
-
 @main.command()
-@click.argument('asset')
-def download(asset):
-    if asset == 'models':
-        _download_tar_file(
-            url=MODELS_URL,
-            download_dir=os.path.dirname(__file__),
-            tar_file_name='models.tar.gz')
-    elif asset == 'greedy':
-        _download_tar_file(
-            url=GREEDY_URL,
-            download_dir=os.path.dirname(sys.executable)
-        )
-
-
-@main.command()
-def download_greedy():
-    pass
+@click.argument('assets', nargs=-1)
+def download(assets):
+    for asset in assets:
+        if asset == 'models':
+            archive_path = download_archive(
+                url=models_url,
+                download_dir=importlib.resources.files('pyalfe.models'),
+                archive_name='models.tar.gz')
+            extract_tar(
+                archive_path, importlib.resources.files('pyalfe.models'))
+        elif asset == 'greedy':
+            archive_path = download_archive(
+                url=greedy_url,
+                download_dir=importlib.resources.files('pyalfe.tools'),
+            )
+            extract_binary_from_archive(
+                archive_path=archive_path,
+                dst=importlib.resources.files('pyalfe.tools'),
+                binary_name='greedy')
+        elif asset == 'c3d':
+            archive_path = download_archive(
+                url=c3d_url,
+                download_dir=importlib.resources.files('pyalfe.tools'),
+            )
+            extract_binary_from_archive(
+                archive_path=archive_path,
+                dst=importlib.resources.files('pyalfe.tools'),
+                binary_name='c3d')
+        else:
+            click.print(f'asset {asset} is not recognized.')
+        if os.path.exists(archive_path):
+            os.remove(archive_path)
 
 
 @main.command()
@@ -63,16 +62,33 @@ def download_greedy():
     '-c', '--config',
     default=DEFAULT_CFG,
 )
-@click.option('--classified_dir')
-@click.option('--processed_dir')
-def run(accession: str, config: str, classified_dir: str, processed_dir: str):
+@click.option('-cd', '--classified_dir')
+@click.option('-pd', '--processed_dir')
+@click.option('-m', '--modalities', default='T1,T1Post,FLAIR,T2,ADC')
+@click.option('-t', '--targets', default='FLAIR,T1Post')
+@click.option(
+    '-dt', '--dominant_tissue',
+    default='white_matter',
+    type=click.Choice(
+        ['white_matter', 'gray_matter', 'auto'], case_sensitive=False)
+)
+@click.option(
+    '-oi', '--override_images',
+    is_flag=True, show_default=True, default=True)
+@click.option(
+    '-oq', '--override_quantification',
+    is_flag=True, show_default=True, default=True)
+def run(
+        accession: str,
+        config: str,
+        classified_dir: str,
+        processed_dir: str,
+        modalities: str,
+        targets: str,
+        dominant_tissue: str,
+        override_images: bool,
+        override_quantification: bool):
 
-    models_dir = os.path.dirname(__file__)
-    if not os.path.exists(os.path.join(models_dir, 'models')):
-        click.echo('--------------------------------------------------------')
-        click.echo('Inference models directory not found.'
-                   ' Downloading the models. This may take a few minutes ...')
-        download_models(models_url=MODELS_URL, models_dir=models_dir)
     container = Container()
     container.config.from_ini(config, required=True, envs_required=True)
 
@@ -81,12 +97,75 @@ def run(accession: str, config: str, classified_dir: str, processed_dir: str):
         options['classified_dir'] = classified_dir
     if processed_dir:
         options['processed_dir'] = processed_dir
+    if modalities:
+        options['modalities'] = modalities
+    if targets:
+        options['targets'] = targets
+    if dominant_tissue:
+        options['dominant_tissue'] = dominant_tissue
+    if override_images:
+        options['override_images'] = override_images
+    if override_quantification:
+        options['override_quantification'] = override_quantification
+
     container.config.from_dict(options)
 
     container.init_resources()
     pipeline_runner = container.pipeline_runner()
 
     pipeline_runner.run(accession)
+
+
+@main.command()
+def configure():
+
+    classified_dir = click.prompt(
+        'Enter classified image directory',
+        type=click.Path(exists=True))
+    processed_dir = click.prompt(
+        'Enter processed image directory',
+        type=click.Path(exists=True))
+    modalities = click.prompt(
+        'Enter modalities separated by comma', default='T1,T1Post,FLAIR,T2,ADC',
+        type=str)
+    targets = click.prompt(
+        'Enter target modalities separated by comma', default='T1Post,FLAIR',
+        type=str)
+    overwrite_images = click.confirm(
+        'Overwrite images?', default=True
+    )
+    overwrite_quantification = click.confirm(
+        'Overwrite quantification?', default=True
+    )
+    image_processor = click.prompt(
+        'image processor to use',
+        type = click.Choice(['c3d', 'nilearn']),
+        default='c3d')
+    image_registration = click.prompt(
+        'image registration to use',
+        type = click.Choice(['greedy', 'ants']),
+        default='greedy')
+    config_path = click.prompt(
+        'config path',
+        default= DEFAULT_CFG)
+    config = configparser.ConfigParser()
+    config['options'] = {
+        'classified_dir': classified_dir,
+        'processed_dir': processed_dir,
+        'modalities': modalities,
+        'targets': targets,
+        'overwrite_images': overwrite_images,
+        'overwrite_quantification': overwrite_quantification,
+        'image_processor': image_processor,
+        'image_registration': image_registration
+        }
+
+    config_parent_path = os.path.dirname(config_path)
+    if not os.path.exists(config_parent_path):
+        Path(config_parent_path).mkdir(parents=True, exist_ok=True)
+
+    with open(config_path, 'w') as conf:
+        config.write(conf)
 
 
 if __name__ == '__main__':

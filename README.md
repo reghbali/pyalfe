@@ -3,7 +3,7 @@
 Python implementation of Automated Lesion and Feature Extraction (ALFE) pipeline. 
 
 ## Requirements
-PyALFE has been tested on linux.
+PyALFE supports Linux x86-64, Mac x86-64, and Mac arm64 and requires python 
 
 ### Greedy
 PyALFE can work with `Greedy` or `Ants` for registration tasks. 
@@ -44,19 +44,24 @@ First update the build
 pip install --upgrade build
 ```
 
-Run the following commands in the parent pyalfe directory to build the whl file
+Run the following commands in the parent pyalfe directory to build the whl file and install pyalfe
 ```bash
 python -m build
 pip install dist/pyalfe-0.0.1-py3-none-any.whl
 ```
 
-### Download models
-To download deep learning models, run
+### Download models & command line tools
+To download deep learning models alongside the binaries for c3d and greedy, run
 ```bash
-pylafe download models
+pylafe download models c3d greedy
 ```
 ## Usage
 
+To configrue the PyALFE pipeline you should run:
+```bash
+pyalfe configure
+```
+This 
 PyALFE reads its input data from `classified_dir` and writes its output to `processed_dir`. These can be given as input argument of configure in a `config.ini` file.
 
 To run PyALFE for an accessionL

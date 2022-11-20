@@ -1,7 +1,9 @@
+import importlib.resources
 import os
 import shutil
 from unittest import TestCase
 
+import pandas as pd
 from click.testing import CliRunner
 
 from pyalfe.data_structure import DefaultALFEDataDir, Modality
@@ -16,12 +18,12 @@ class TestIntegration(TestCase):
         self.processed_dir = os.path.join(self.test_dir, 'processed')
         self.classified_dir = os.path.join(self.test_dir, 'classified')
 
-
         os.makedirs(self.processed_dir)
         os.mkdir(self.classified_dir)
 
     def tearDown(self) -> None:
-        shutil.rmtree(self.test_dir)
+        pass
+        #shutil.rmtree(self.test_dir)
 
     def test_run(self):
         accession = 'brats10'
@@ -39,9 +41,13 @@ class TestIntegration(TestCase):
                 pipeline_dir.get_classified_image(accession, modality)
             )
         runner = CliRunner()
+        config_file = importlib.resources.files('pyalfe').joinpath('config.ini')
+        targets = [Modality.T1Post, Modality.FLAIR]
         args =  [accession,
+                 '-c', config_file,
                  '--classified_dir', self.classified_dir,
-                 '--processed_dir', self.processed_dir]
+                 '--processed_dir', self.processed_dir,
+                 '--targets', ','.join(targets)]
         result = runner.invoke(run, args, catch_exceptions=False)
         print(result)
         self.assertEqual(result.exit_code, 0)
@@ -50,7 +56,23 @@ class TestIntegration(TestCase):
             processed_image_path = pipeline_dir.get_processed_image(
                 accession, modality)
             self.assertTrue(os.path.exists(processed_image_path))
+            image_path = pipeline_dir.get_processed_image(
+                accession, modality)
             ss_image_path = pipeline_dir.get_processed_image(
                 accession, modality, image_type='skullstripped'
             )
-            self.assertTrue(os.path.exists(ss_image_path))
+            self.assertTrue(
+                os.path.exists(ss_image_path),
+                msg=f'{ss_image_path} does not exist.')
+            self.assertTrue(
+                os.path.exists(image_path),
+                msg=f'{image_path} does not exist.')
+
+        for modality in targets:
+            quantification_path = pipeline_dir.get_quantification_file(
+                accession, modality, 'SummaryLesionMeasures')
+            self.assertTrue(
+                os.path.exists(quantification_path),
+                msg=f'{quantification_path} does not exist.')
+            quantification = pd.read_csv(quantification_path)
+            self.assertEqual(quantification.dropna().shape, (14, 2))

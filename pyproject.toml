@@ -21,7 +21,7 @@ dependencies = [
     "nibabel",
     "nilearn",
     "matplotlib",
-    "nnunet"
+    "nnunet @ git+https://git.ucsf.edu/rauschecker-sugrue-labs/nnunet.git@main",
 ]
 
 [project.optional-dependencies]
@@ -30,3 +30,7 @@ radiomics = ["Pyradiomics"]
 
 [project.scripts]
 pyalfe = "pyalfe.main:main"
+
+[tool.setuptools.package-data]
+pyalfe = ["*.ini"]
+"pyalfe.templates" = ["oasis/*.nii.gz"]

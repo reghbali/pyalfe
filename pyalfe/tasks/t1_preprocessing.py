@@ -5,7 +5,7 @@ from pyalfe.data_structure import PipelineDataDir, Modality
 from pyalfe.image_processing import ImageProcessor
 
 
-class T1Preprocessing():
+class T1Preprocessing:
 
     logger = logging.getLogger('T1Preprocessing')
 

@@ -1,5 +1,7 @@
+import importlib
 import logging
 import os
+import sys
 
 from dependency_injector import containers, providers
 
@@ -10,7 +12,8 @@ from pyalfe.inference import NNUnet
 from pyalfe.pipeline import PyALFEPipelineRunner
 from pyalfe.tasks.initialization import Initialization
 from pyalfe.tasks.quantification import Quantification
-from pyalfe.tasks.registration import CrossModalityRegistration, Resampling
+from pyalfe.tasks.registration import CrossModalityRegistration, Resampling, \
+    T1Registration
 from pyalfe.tasks.segmentation import SingleModalitySegmentation, \
     MultiModalitySegmentation
 from pyalfe.tasks.skullstripping import Skullstripping
@@ -22,6 +25,7 @@ class Container(containers.DeclarativeContainer):
 
     logger = logging.getLogger('Container')
     config = providers.Configuration()
+    sys.path.append(importlib.resources.files('pyalfe.tools'))
 
     pipeline_dir = providers.Singleton(
         DefaultALFEDataDir,
@@ -69,29 +73,25 @@ class Container(containers.DeclarativeContainer):
     parent_dir = os.path.dirname(__file__)
     skullstripping_model = providers.Singleton(
         NNUnet,
-        model_dir = os.path.join(
-            parent_dir, 'models', 'nnunet',
-            'Task502_SS', 'nnUNetTrainerV2__nnUNetPlansv2.1'),
+        model_dir=str(importlib.resources.files('pyalfe.models').joinpath(
+            'nnunet', 'Task502_SS', 'nnUNetTrainerV2__nnUNetPlansv2.1')),
         fold=1)
     flair_model= providers.Singleton(
         NNUnet,
-        model_dir = os.path.join(
-            parent_dir, 'models', 'nnunet',
-            'Task500_FLAIR', 'nnUNetTrainerV2__nnUNetPlansv2.1'),
+        model_dir=str(importlib.resources.files('pyalfe.models').joinpath(
+            'nnunet', 'Task500_FLAIR', 'nnUNetTrainerV2__nnUNetPlansv2.1')),
         fold=1
     )
     enhancement_model = providers.Singleton(
         NNUnet,
-        model_dir = os.path.join(
-            parent_dir, 'models', 'nnunet',
-            'Task503_Enhancement', 'nnUNetTrainerV2__nnUNetPlansv2.1'),
+        model_dir=str(importlib.resources.files('pyalfe.models').joinpath(
+            'nnunet', 'Task503_Enhancement', 'nnUNetTrainerV2__nnUNetPlansv2.1')),
         fold=1
     )
     tissue_model = providers.Singleton(
         NNUnet,
-        model_dir = os.path.join(
-            parent_dir, 'models', 'nnunet',
-            'Task504_Tissue', 'nnUNetTrainerV2__nnUNetPlansv2.1'),
+        model_dir=str(importlib.resources.files('pyalfe.models').joinpath(
+            'nnunet', 'Task504_Tissue', 'nnUNetTrainerV2__nnUNetPlansv2.1')),
         fold=1
     )
 
@@ -169,12 +169,20 @@ class Container(containers.DeclarativeContainer):
         overwrite=config.options.override_images
     )
 
+    t1_registration = providers.Singleton(
+        T1Registration,
+        image_processor = image_processor,
+        image_registration = image_registration,
+        pipeline_dir = pipeline_dir,
+        overwrite=config.options.override_images
+    )
+
     resampling = providers.Singleton(
         Resampling,
         image_processor=image_processor,
         image_registration=image_registration,
         pipeline_dir=pipeline_dir,
-        modalities_target=config.options.modalities.as_(lambda s: s.split(',')),
+        modalities_target=config.options.targets.as_(lambda s: s.split(',')),
         overwrite=config.options.override_images
     )
 
@@ -197,6 +205,7 @@ class Container(containers.DeclarativeContainer):
         enhancement_segmentation=enhancement_segmentation,
         tissue_segmentation=tissue_segmentation,
         t1_postprocessing=t1_postprocessing,
+        t1_registration=t1_registration,
         resampling=resampling,
         quantification=quantification
     )

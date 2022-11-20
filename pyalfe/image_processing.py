@@ -26,6 +26,10 @@ class ImageProcessor(ABC):
         pass
 
     @staticmethod
+    def binarize(image, output):
+        pass
+
+    @staticmethod
     @abstractmethod
     def mask(image, mask):
         pass
@@ -96,6 +100,11 @@ class Convert3DProcessor(ImageProcessor):
         (c3d.operand(image)
          .thresh(lower_bound, upper_bound, inside_target, outside_target)
          .out(output).run())
+
+    @staticmethod
+    def binarize(image, output):
+         c3d = C3D()
+         c3d.operand(image).binarize().out(output).run()
 
     @staticmethod
     def mask(image, mask, output):
@@ -226,6 +235,60 @@ class NilearnProcessor(ImageProcessor):
         return cropped_im
 
     @staticmethod
+    def threshold(
+        image,
+        output,
+        lower_bound,
+        upper_bound,
+        inside_target,
+        outside_target
+    ):
+        nib_image = nilearn.image.load_img(image)
+        data = nib_image.get_data()
+        threshold_data = np.where(
+            (data >= lower_bound) & (data <= upper_bound),
+            inside_target, outside_target)
+        threshold_image = nib.Nifti1Image(threshold_data, nib_image.affine)
+        nib.save(threshold_image, output)
+
+    @staticmethod
+    def binarize(image, output):
+        nib_image = nilearn.image.load_img(image)
+        nib.save(nilearn.image.binarize_img(nib_image), output)
+
+    @staticmethod
+    def mask(image, mask, output):
+        nib_image = nilearn.image.load_img(image)
+        nib_mask = nilearn.image.load_img(mask)
+        masked_image = nib.Nifti1Image(
+            nib_image.get_fdata() * nib_mask.get_fdata(), nib_image.affine)
+        nib.save(masked_image, output)
+
+    @staticmethod
+    def largest_mask_comp(image, output):
+        try:
+            nilearn.image.largest_connected_component_img(
+            image).to_filename(output)
+        except ValueError as e:
+            if str(e).startswith('No non-zero values: no connected components'):
+                shutil.copyfile(image, output)
+            else:
+                raise ValueError(e)
+
+    @staticmethod
+    def holefill(binary_image, output):
+        nib_image = nilearn.image.load_img(binary_image)
+        data = nib_image.get_fdata()
+        holefilled_data = scipy.ndimage.binary_fill_holes(data).astype('int16')
+        holefilled_image = nib.Nifti1Image(holefilled_data, nib_image.affine)
+        nib.save(holefilled_image, output)
+
+    @staticmethod
+    def reslice_to_ref(ref_image, moving_image, output):
+        nilearn.image.resample_to_img(
+            moving_image, ref_image).to_filename(output)
+
+    @staticmethod
     def resample_new_dim(image, output, dim1, dim2, dim3, percent=True):
         nib_image = nilearn.image.load_img(image)
         dims = nib_image.get_fdata().shape
@@ -260,53 +323,12 @@ class NilearnProcessor(ImageProcessor):
         nib.save(trimmed_largest_comp_image, output)
 
     @staticmethod
-    def threshold(
-        image,
-        output,
-        lower_bound,
-        upper_bound,
-        inside_target,
-        outside_target
-    ):
-        nib_image = nilearn.image.load_img(image)
-        data = nib_image.get_data()
-        threshold_data = np.where(
-            (data >= lower_bound) & (data <= upper_bound),
-            inside_target, outside_target)
-        threshold_image = nib.Nifti1Image(threshold_data, nib_image.affine)
-        nib.save(threshold_image, output)
-
-    @staticmethod
-    def mask(image, mask, output):
-        nib_image = nilearn.image.load_img(image)
-        nib_mask = nilearn.image.load_img(mask)
-        masked_image = nib.Nifti1Image(
-            nib_image.get_fdata() * nib_mask.get_fdata(), nib_image.affine)
-        nib.save(masked_image, output)
-
-    @staticmethod
-    def holefill(binary_image, output):
-        nib_image = nilearn.image.load_img(binary_image)
-        data = nib_image.get_fdata()
-        holefilled_data = scipy.ndimage.binary_fill_holes(data).astype('int16')
-        holefilled_image = nib.Nifti1Image(holefilled_data, nib_image.affine)
-        nib.save(holefilled_image, output)
-
-    @staticmethod
-    def reslice_to_ref(ref_image, moving_image, output):
-        nilearn.image.resample_to_img(
-            moving_image, ref_image).to_filename(output)
-
-    @staticmethod
-    def largest_mask_comp(image, output):
-        try:
-            nilearn.image.largest_connected_component_img(
-            image).to_filename(output)
-        except ValueError as e:
-            if str(e).startswith('No non-zero values: no connected components'):
-                shutil.copyfile(image, output)
-            else:
-                raise ValueError(e)
+    def set_subtract(binary_image_1, binary_image_2, output):
+        subtract_image = nilearn.image.binarize_img(
+            nilearn.image.math_img(
+                'np.maximum(img1 - img2, 0)',
+                img1=binary_image_1, img2=binary_image_2))
+        nib.save(subtract_image, output)
 
     @staticmethod
     def dilate(binary_image, rad, output):
@@ -320,14 +342,6 @@ class NilearnProcessor(ImageProcessor):
                 data, structure=np.ones(3 * (-2 * rad + 1,))).astype(data.dtype)
         dilated_image = nib.Nifti1Image(dilated_data, nib_image.affine)
         nib.save(dilated_image, output)
-
-    @staticmethod
-    def set_subtract(binary_image_1, binary_image_2, output):
-        subtract_image = nilearn.image.binarize_img(
-            nilearn.image.math_img(
-                'np.maximum(img1 - img2, 0)',
-                img1=binary_image_1, img2=binary_image_2))
-        nib.save(subtract_image, output)
 
     @staticmethod
     def union(binary_image_1, binary_image_2, output):

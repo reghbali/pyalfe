@@ -7,8 +7,10 @@ from pyalfe.data_structure import DefaultALFEDataDir, Modality
 from pyalfe.image_processing import Convert3DProcessor
 from pyalfe.image_registration import GreedyRegistration
 from pyalfe.inference import InferenceModel
+from pyalfe.roi import roi_dict
 from pyalfe.tasks.initialization import Initialization
-from pyalfe.tasks.registration import CrossModalityRegistration, Resampling
+from pyalfe.tasks.registration import CrossModalityRegistration, Resampling, \
+    T1Registration
 from pyalfe.tasks.segmentation import SingleModalitySegmentation, \
     MultiModalitySegmentation
 from pyalfe.tasks.skullstripping import Skullstripping
@@ -254,15 +256,129 @@ class TestT1Postprocessing(TestTask):
         task.run(accession)
         self.assertTrue(os.path.exists(output_path))
 
+
 class TestResampling(TestTask):
     def test_run(self):
         accession = 'brats10'
         modalities = [
             Modality.T1, Modality.T2, Modality.T1Post, Modality.FLAIR]
         modalities_target = [Modality.T1Post, Modality.FLAIR]
+
+        image_registration = GreedyRegistration()
         task = Resampling(
             Convert3DProcessor,
-            GreedyRegistration(),
+            image_registration,
             self.pipeline_dir,
             modalities_target)
+
+        for modality in modalities:
+            self.pipeline_dir.create_dir(
+                'processed', accession, modality)
+            shutil.copy(
+                os.path.join(
+                    'tests', 'data', 'brats10',
+                    f'BraTS19_2013_10_1_{modality.lower()}.nii.gz'),
+                self.pipeline_dir.get_processed_image(
+                    accession, modality, task.image_type)
+            )
+
+
+        template = roi_dict['template']['source']
+        template_reg_sub_dir = roi_dict['template']['sub_dir']
+
+        t1ss = self.pipeline_dir.get_processed_image(
+            accession, Modality.T1, image_type='skullstripped')
+
+        template_to_t1 = self.pipeline_dir.get_processed_image(
+            accession, Modality.T1, resampling_origin='template',
+            resampling_target=Modality.T1, sub_dir_name=template_reg_sub_dir
+        )
+
+        affine_transform = self.pipeline_dir.get_processed_image(
+            accession, Modality.T1, resampling_origin='template',
+            resampling_target=Modality.T1, image_type='affine',
+            sub_dir_name=template_reg_sub_dir, extension='.mat'
+        )
+
+        image_registration.register_affine(
+            t1ss, template, affine_transform, fast=True)
+
+        for modality in modalities_target:
+            shutil.copy(
+                affine_transform,
+                self.pipeline_dir.get_processed_image(
+                    accession, Modality.T1, image_type=task.image_type,
+                    resampling_target=modality, resampling_origin=Modality.T1,
+                    extension='.mat')
+            )
+        warp_transform = self.pipeline_dir.get_processed_image(
+            accession, Modality.T1, resampling_origin='template',
+            resampling_target=Modality.T1, image_type='warp',
+            sub_dir_name=template_reg_sub_dir
+        )
+
+        image_registration.register_deformable(
+            t1ss, template,
+            transform_output=warp_transform,
+            affine_transform=affine_transform)
+
+        image_registration.reslice(
+            t1ss, template, template_to_t1,
+            warp_transform, affine_transform)
+
+        for roi_key, roi_properties in roi_dict.items():
+            if roi_properties['type'] == 'derived':
+                roi_image = self.pipeline_dir.get_processed_image(
+                    accession, Modality.T1, image_type=roi_key,
+                    sub_dir_name=roi_properties['sub_dir'])
+            elif roi_properties['type'] == 'registered':
+                roi_image = self.pipeline_dir.get_processed_image(
+                    accession, Modality.T1,
+                    resampling_origin=roi_key, resampling_target=Modality.T1,
+                    sub_dir_name=roi_properties['sub_dir'])
+            shutil.copy(
+                t1ss,
+                roi_image
+            )
+
+        task.run(accession)
+
+        for modality in modalities_target:
+            for roi_key, roi_properties in roi_dict.items():
+                if roi_properties['type'] not in ['derived', 'registered']:
+                    continue
+                output_path = self.pipeline_dir.get_processed_image(
+                    accession, modality, image_type=roi_key,
+                    resampling_origin=modality.T1,
+                    resampling_target=modality,
+                    sub_dir_name=roi_properties['sub_dir'])
+                self.assertTrue(
+                    os.path.exists(output_path),
+                    msg=f'{output_path} does not exists.')
+
+
+
+class TestT1Registration(TestTask):
+    def test_run(self):
+        accession = 'brainomics02'
+        task = T1Registration(
+            image_processor=Convert3DProcessor,
+            image_registration=GreedyRegistration(),
+            pipeline_dir=self.pipeline_dir)
+
+        self.pipeline_dir.create_dir('processed', accession, Modality.T1)
+        input_image = self.pipeline_dir.get_processed_image(
+            accession, Modality.T1, image_type='skullstripped')
+        shutil.copy(
+            os.path.join('tests', 'data', 'brainomics02', 'anat_t1.nii.gz'),
+            input_image)
+        task.run(accession)
+
+        for roi_key in ['template', 'lobes']:
+            output_path = self.pipeline_dir.get_processed_image(
+                accession, Modality.T1, resampling_origin=roi_key,
+                resampling_target=Modality.T1,
+                sub_dir_name=roi_dict[roi_key]['sub_dir'])
+            self.assertTrue(os.path.exists(output_path))
+
 

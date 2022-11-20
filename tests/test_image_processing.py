@@ -53,6 +53,17 @@ def get_image_processor_test(image_processor: ImageProcessor) -> Type[TestCase]:
             np.testing.assert_array_equal(
                 get_nifti_data(threshold4), np.array([[[0, 0, 0, 0]]]))
 
+        def test_binarize(self):
+            data = np.array([[[0, 1, 2.2, -1, 0]]])
+            input_image_path = self.get_image_path('input.nii.gz')
+            create_nifti(input_image_path, data)
+
+            binary1 = self.get_image_path('binary1.nii.gz')
+            image_processor.binarize(input_image_path, binary1)
+            np.testing.assert_array_equal(
+                get_nifti_data(binary1), np.array([[[0, 1, 1, 1, 0]]])
+            )
+
         def test_mask(self):
             input_image_path = self.get_image_path('input.nii.gz')
             create_nifti(input_image_path, np.array([[[0, 1, 2, 3]]]))
