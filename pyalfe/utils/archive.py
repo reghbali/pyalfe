@@ -38,7 +38,7 @@ def extract_binary_from_archive(archive_path, dst, binary_name):
     elif archive_type == 'tar':
         extract_file_from_tar(
             archive_path, extract_path, dst,
-            os.path.join('bin', binary_name))
+            os.path.join('*', 'bin', binary_name))
     else:
         raise ValueError(f'cannot extract from {archive_path}'
                          f' unsupported extension {archive_type}')
