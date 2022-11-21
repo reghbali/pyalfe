@@ -33,20 +33,20 @@ def download(assets):
         elif asset == 'greedy':
             archive_path = download_archive(
                 url=greedy_url,
-                download_dir=os.path.basename(GREEDY_PATH),
+                download_dir=os.path.dirname(GREEDY_PATH),
             )
             extract_binary_from_archive(
                 archive_path=archive_path,
-                dst=os.path.basename(GREEDY_PATH),
+                dst=os.path.dirname(GREEDY_PATH),
                 binary_name='greedy')
         elif asset == 'c3d':
             archive_path = download_archive(
                 url=c3d_url,
-                download_dir=os.path.basename(C3D_PATH),
+                download_dir=os.path.dirname(C3D_PATH),
             )
             extract_binary_from_archive(
                 archive_path=archive_path,
-                dst=os.path.basename(C3D_PATH),
+                dst=os.path.dirname(C3D_PATH),
                 binary_name='c3d')
         else:
             click.print(f'asset {asset} is not recognized.')
