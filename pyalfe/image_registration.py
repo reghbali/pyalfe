@@ -3,6 +3,7 @@ import shutil
 from abc import ABC, abstractmethod
 
 from pyalfe.interfaces.greedy import Greedy
+from pyalfe.tools import GREEDY_PATH
 
 try:
     import ants
@@ -56,7 +57,7 @@ class ImageRegistration(ABC):
 
 class GreedyRegistration(ImageRegistration):
 
-    def __init__(self, greedy_path='greedy', threads=16):
+    def __init__(self, greedy_path=GREEDY_PATH, threads=16):
         self.greedy_path = greedy_path
         self.threads = threads
 
