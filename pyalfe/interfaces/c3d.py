@@ -1,7 +1,6 @@
-import importlib.resources
 import subprocess
 
-C3D_PATH = importlib.resources.files('pyalfe').joinpath('tools').joinpath('c3d')
+from pyalfe.tools import C3D_PATH
 
 
 class C3D:

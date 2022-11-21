@@ -1,7 +1,5 @@
-import importlib.resources
 import logging
 import os
-import sys
 
 from dependency_injector import containers, providers
 
@@ -9,6 +7,7 @@ from pyalfe.data_structure import DefaultALFEDataDir, Modality
 from pyalfe.image_processing import Convert3DProcessor, NilearnProcessor
 from pyalfe.image_registration import GreedyRegistration, AntsRegistration
 from pyalfe.inference import NNUnet
+from pyalfe.models import MODELS_PATH
 from pyalfe.pipeline import PyALFEPipelineRunner
 from pyalfe.tasks.initialization import Initialization
 from pyalfe.tasks.quantification import Quantification
@@ -25,7 +24,6 @@ class Container(containers.DeclarativeContainer):
 
     logger = logging.getLogger('Container')
     config = providers.Configuration()
-    sys.path.append(importlib.resources.files('pyalfe.tools'))
 
     pipeline_dir = providers.Singleton(
         DefaultALFEDataDir,
@@ -73,24 +71,24 @@ class Container(containers.DeclarativeContainer):
     parent_dir = os.path.dirname(__file__)
     skullstripping_model = providers.Singleton(
         NNUnet,
-        model_dir=str(importlib.resources.files('pyalfe.models').joinpath(
+        model_dir=str(MODELS_PATH.joinpath(
             'nnunet', 'Task502_SS', 'nnUNetTrainerV2__nnUNetPlansv2.1')),
         fold=1)
     flair_model= providers.Singleton(
         NNUnet,
-        model_dir=str(importlib.resources.files('pyalfe.models').joinpath(
+        model_dir=str(MODELS_PATH.joinpath(
             'nnunet', 'Task500_FLAIR', 'nnUNetTrainerV2__nnUNetPlansv2.1')),
         fold=1
     )
     enhancement_model = providers.Singleton(
         NNUnet,
-        model_dir=str(importlib.resources.files('pyalfe.models').joinpath(
+        model_dir=str(MODELS_PATH.joinpath(
             'nnunet', 'Task503_Enhancement', 'nnUNetTrainerV2__nnUNetPlansv2.1')),
         fold=1
     )
     tissue_model = providers.Singleton(
         NNUnet,
-        model_dir=str(importlib.resources.files('pyalfe.models').joinpath(
+        model_dir=str(MODELS_PATH.joinpath(
             'nnunet', 'Task504_Tissue', 'nnUNetTrainerV2__nnUNetPlansv2.1')),
         fold=1
     )

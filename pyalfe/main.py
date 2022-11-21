@@ -1,13 +1,12 @@
 import configparser
 import os
-import importlib.resources
 from pathlib import Path
 
 import click
 
 from pyalfe.containers import Container
-from pyalfe.tools import greedy_url, c3d_url
-from pyalfe.models import models_url
+from pyalfe.tools import greedy_url, c3d_url, GREEDY_PATH, C3D_PATH
+from pyalfe.models import models_url, MODELS_PATH
 from pyalfe.utils import download_archive, extract_binary_from_archive
 from pyalfe.utils.archive import extract_tar
 
@@ -28,27 +27,26 @@ def download(assets):
         if asset == 'models':
             archive_path = download_archive(
                 url=models_url,
-                download_dir=importlib.resources.files('pyalfe.models'),
+                download_dir=MODELS_PATH,
                 archive_name='models.tar.gz')
-            extract_tar(
-                archive_path, importlib.resources.files('pyalfe.models'))
+            extract_tar(archive_path, MODELS_PATH)
         elif asset == 'greedy':
             archive_path = download_archive(
                 url=greedy_url,
-                download_dir=importlib.resources.files('pyalfe.tools'),
+                download_dir=os.path.basename(GREEDY_PATH),
             )
             extract_binary_from_archive(
                 archive_path=archive_path,
-                dst=importlib.resources.files('pyalfe.tools'),
+                dst=os.path.basename(GREEDY_PATH),
                 binary_name='greedy')
         elif asset == 'c3d':
             archive_path = download_archive(
                 url=c3d_url,
-                download_dir=importlib.resources.files('pyalfe.tools'),
+                download_dir=os.path.basename(C3D_PATH),
             )
             extract_binary_from_archive(
                 archive_path=archive_path,
-                dst=importlib.resources.files('pyalfe.tools'),
+                dst=os.path.basename(C3D_PATH),
                 binary_name='c3d')
         else:
             click.print(f'asset {asset} is not recognized.')

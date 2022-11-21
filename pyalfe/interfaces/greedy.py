@@ -1,9 +1,6 @@
-import importlib.resources
 import subprocess
 
-
-GREEDY_PATH = importlib.resources.files(
-    'pyalfe').joinpath('tools').joinpath('greedy')
+from pyalfe.tools import GREEDY_PATH
 
 
 class Greedy:
