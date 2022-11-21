@@ -3,7 +3,7 @@
 Python implementation of Automated Lesion and Feature Extraction (ALFE) pipeline. 
 
 ## Requirements
-PyALFE supports Linux x86-64, Mac x86-64, and Mac arm64 and requires python 
+PyALFE supports Linux x86-64, Mac x86-64, and Mac arm64 and requires python >= 3.9.
 
 ### Image registration and processing
 PyALFE can be configured to use either [Greedy](https://greedy.readthedocs.io/en/latest/) or [AntsPy](https://antspy.readthedocs.io/en/latest/registration.html) registration tools.
@@ -49,11 +49,6 @@ To download deep learning models alongside the binaries for c3d and greedy, run
 pylafe download models c3d greedy
 ```
 
-### Test
-To make sure PyALFE runs properly, run the integration test in the parent directroy:
-```bash
-python -m unittest tests.test_integration
-```
 ## Usage
 
 ### Configuration
