@@ -1,9 +1,12 @@
+import importlib.resources
 import subprocess
+
+C3D_PATH = importlib.resources.files('pyalfe').joinpath('tools').joinpath('c3d')
 
 
 class C3D:
-    def __init__(self):
-        self.cmd = ['c3d']
+    def __init__(self, c3d_path=C3D_PATH):
+        self.cmd = [c3d_path]
 
     def push(self, var):
         self.cmd.append('-push')

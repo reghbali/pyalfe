@@ -22,8 +22,7 @@ class TestIntegration(TestCase):
         os.mkdir(self.classified_dir)
 
     def tearDown(self) -> None:
-        pass
-        #shutil.rmtree(self.test_dir)
+        shutil.rmtree(self.test_dir)
 
     def test_run(self):
         accession = 'brats10'
@@ -69,6 +68,13 @@ class TestIntegration(TestCase):
                 msg=f'{image_path} does not exist.')
 
         for modality in targets:
+            segmentation_path = pipeline_dir.get_processed_image(
+                accession, modality,
+                image_type='CNNAbnormalMap_seg',
+                sub_dir_name='abnormalmap')
+            self.assertTrue(
+                os.path.exists(segmentation_path),
+                msg=f'{segmentation_path} does not exist.')
             quantification_path = pipeline_dir.get_quantification_file(
                 accession, modality, 'SummaryLesionMeasures')
             self.assertTrue(

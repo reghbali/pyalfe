@@ -1,9 +1,14 @@
+import importlib.resources
 import subprocess
+
+
+GREEDY_PATH = importlib.resources.files(
+    'pyalfe').joinpath('tools').joinpath('greedy')
 
 
 class Greedy:
 
-    def __init__(self, greedy_path='greedy'):
+    def __init__(self, greedy_path=GREEDY_PATH):
         self.cmd = [greedy_path]
 
     def dim(self, d):
