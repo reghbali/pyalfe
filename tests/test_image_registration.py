@@ -19,8 +19,7 @@ def get_image_registration_test(image_registration: ImageRegistration) -> Type[T
             os.makedirs(self.test_dir)
 
         def tearDown(self) -> None:
-            #shutil.rmtree(self.test_dir)
-            pass
+            shutil.rmtree(self.test_dir)
 
         def get_image_path(self, image_name):
             return os.path.join(self.test_dir, image_name)

@@ -167,7 +167,8 @@ class AntsRegistration(ImageRegistration):
         rigid_output = ants.registration(
             ants.image_read(fixed), ants.image_read(moving),
             type_of_transform=type_of_transform,
-            initial_transform=init_transform, reg_iterations=(100, 50, 10), verbose=True,  flow_sigma=1)
+            initial_transform=init_transform,
+            reg_iterations=(100, 50, 10), verbose=True,  flow_sigma=1)
         shutil.copy(rigid_output['fwdtransforms'][0], transform_output)
 
     def register_rigid(
@@ -209,7 +210,6 @@ class AntsRegistration(ImageRegistration):
         moving_image = ants.image_read(moving)
 
         if not affine_transform:
-            print(f'no affine')
             fixed_name = os.path.basename(fixed).split('.')[0]
             moving_name = os.path.basename(moving).split('.')[0]
             affine_transform = f'{moving_name}_to_{fixed_name}.mat'

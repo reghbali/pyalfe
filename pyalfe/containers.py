@@ -31,38 +31,12 @@ class Container(containers.DeclarativeContainer):
         classified=config.options.classified_dir,
     )
 
-    #if config.options.image_processor == 'c3d':
-    #    if shutil.which('c3d'):
-    #        image_processor = providers.Singleton(Convert3DProcessor)
-    #    else:
-    #        logger.warning('Image processor c3d was requested'
-    #                       ' but the binary is not in the path.'
-    #                       ' Falling back on nilearn processor')
-    #        image_processor = providers.Singleton(NilearnProcessor)
-    #elif config.options.image_processor == 'nilearn':
-    #    image_processor = providers.Singleton(NilearnProcessor)
-    #else:
-    #    raise ValueError(f'Unknown image processor'
-    #                     f' {config.options.image_processor}')
     image_processor = providers.Selector(
         config.options.image_processor,
         c3d=providers.Singleton(Convert3DProcessor),
         nilearn=providers.Singleton(NilearnProcessor),
     )
 
-    #if config.options.image_registration == 'greedy':
-    #    if shutil.which('greedy'):
-    #        image_registration = providers.Singleton(GreedyRegistration)
-    #    else:
-    #        logger.warning('Image registration tool greedy was requested'
-    #                       ' but the binary is not in the path.'
-    #                       ' Falling back on PyAnts registration')
-    #        image_registration = providers.Singleton(AntsRegistration)
-    #elif config.options.image_registration == 'ants':
-    #    image_registration = providers.Singleton(AntsRegistration)
-    #else:
-    #    raise ValueError('Unknown image registration'
-    #                     ' {config.options.image_registration}')
     image_registration = providers.Selector(
         config.options.image_registration,
         greedy=providers.Factory(GreedyRegistration),
@@ -207,5 +181,3 @@ class Container(containers.DeclarativeContainer):
         resampling=resampling,
         quantification=quantification
     )
-
-

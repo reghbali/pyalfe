@@ -31,7 +31,7 @@ class ImageProcessor(ABC):
 
     @staticmethod
     @abstractmethod
-    def mask(image, mask):
+    def mask(image, mask, output):
         pass
 
     @staticmethod
@@ -103,8 +103,8 @@ class Convert3DProcessor(ImageProcessor):
 
     @staticmethod
     def binarize(image, output):
-         c3d = C3D()
-         c3d.operand(image).binarize().out(output).run()
+        c3d = C3D()
+        c3d.operand(image).binarize().out(output).run()
 
     @staticmethod
     def mask(image, mask, output):

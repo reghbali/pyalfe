@@ -62,7 +62,7 @@ class Quantification(object):
                 tissue_name = tissue.name.lower()
                 if (self.dominant_tissue == tissue_id or
                    self.dominant_tissue == tissue_name):
-                    self.dominant_tissue_id = tissue_id
+                    dominant_tissue_id = tissue_id
                     invalid_tissue = False
                     break
             if invalid_tissue:
@@ -70,7 +70,7 @@ class Quantification(object):
                     f'{self.dominant_tissue} is invalid.'
                     ' The valid options are: {list(Tissue)}')
         else:
-            self.dominant_tissue_id = unique_counts[0][
+            dominant_tissue_id = unique_counts[0][
                 np.argmax(unique_counts[1])]
 
         tissue_freq = dict(zip(*unique_counts))
@@ -87,7 +87,7 @@ class Quantification(object):
                 stats[f'relative_{modality_name}_signal'] = np.nan
                 continue
             healthy_dom_tissue_indices = np.logical_and(
-                tissue_seg == self.dominant_tissue_id, lesion_seg == 0)
+                tissue_seg == dominant_tissue_id, lesion_seg == 0)
             mean_signal = np.mean(modality_image[healthy_dom_tissue_indices])
             stats[f'relative_{modality_name}_signal'] = \
                 np.mean(modality_image[lesion_indices]) / mean_signal
