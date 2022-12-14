@@ -21,7 +21,7 @@ dependencies = [
     "nibabel",
     "nilearn",
     "matplotlib",
-    "nnunet @ git+https://git.ucsf.edu/rauschecker-sugrue-labs/nnunet.git@main",
+    "nnunet @ git+https://github.com/reghbali/nnunet.git@main",
 ]
 
 [project.optional-dependencies]

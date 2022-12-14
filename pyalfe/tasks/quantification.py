@@ -94,6 +94,12 @@ class Quantification(object):
             if modality_name == Modality.ADC:
                 stats['relative_min_adc_signal'] = \
                     np.min(modality_image[lesion_indices]) / mean_signal
+                stats['min_adc_signal'] = np.min(
+                    modality_image[lesion_indices])
+                stats['mean_adc_signal'] = np.mean(
+                    modality_image[lesion_indices])
+                stats['median_Adc_signal'] = np.median(
+                    modality_image[lesion_indices])
 
         if ventricles_distance is not None:
             stats['average_dist_to_ventricles_(voxels)'] = np.mean(
