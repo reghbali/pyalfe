@@ -72,7 +72,7 @@ class Container(containers.DeclarativeContainer):
         Initialization,
         pipeline_dir=pipeline_dir,
         modalities=config.options.modalities.as_(lambda s: s.split(',')),
-        overwrite=config.options.override_images
+        overwrite=config.options.override
     )
 
     skullstripping = providers.Singleton(
@@ -81,14 +81,14 @@ class Container(containers.DeclarativeContainer):
         image_processor=image_processor,
         pipeline_dir=pipeline_dir,
         modalities=config.options.modalities.as_(lambda s: s.split(',')),
-        overwrite=config.options.override_images
+        overwrite=config.options.override
     )
 
     t1_preprocessing = providers.Singleton(
         T1Preprocessing,
         image_processor=image_processor,
         pipeline_dir=pipeline_dir,
-        overwrite=config.options.override_images
+        overwrite=config.options.override
     )
 
     cross_modality_registration = providers.Singleton(
@@ -97,7 +97,7 @@ class Container(containers.DeclarativeContainer):
         pipeline_dir=pipeline_dir,
         modalities_all=config.options.modalities.as_(lambda s: s.split(',')),
         modalities_target=config.options.targets.as_(lambda s: s.split(',')),
-        overwrite=config.options.override_images
+        overwrite=config.options.override
     )
 
     flair_segmentation = providers.Singleton(
@@ -108,7 +108,7 @@ class Container(containers.DeclarativeContainer):
         image_type_input='skullstripped',
         image_type_output='CNNAbnormalMap_seg',
         segmentation_dir='abnormalmap',
-        overwrite=config.options.override_images
+        overwrite=config.options.override
     )
 
     enhancement_segmentation = providers.Singleton(
@@ -120,7 +120,7 @@ class Container(containers.DeclarativeContainer):
         image_type_input='skullstripped',
         image_type_output='CNNAbnormalMap_seg',
         segmentation_dir='abnormalmap',
-        overwrite=config.options.override_images
+        overwrite=config.options.override
     )
 
     tissue_segmentation = providers.Singleton(
@@ -138,7 +138,7 @@ class Container(containers.DeclarativeContainer):
         T1Postprocessing,
         image_processor = image_processor,
         pipeline_dir = pipeline_dir,
-        overwrite=config.options.override_images
+        overwrite=config.options.override
     )
 
     t1_registration = providers.Singleton(
@@ -146,7 +146,7 @@ class Container(containers.DeclarativeContainer):
         image_processor = image_processor,
         image_registration = image_registration,
         pipeline_dir = pipeline_dir,
-        overwrite=config.options.override_images
+        overwrite=config.options.override
     )
 
     resampling = providers.Singleton(
@@ -155,7 +155,7 @@ class Container(containers.DeclarativeContainer):
         image_registration=image_registration,
         pipeline_dir=pipeline_dir,
         modalities_target=config.options.targets.as_(lambda s: s.split(',')),
-        overwrite=config.options.override_images
+        overwrite=config.options.override
     )
 
     quantification = providers.Singleton(
@@ -164,7 +164,6 @@ class Container(containers.DeclarativeContainer):
         modalities_all=config.options.modalities.as_(lambda s: s.split(',')),
         modalities_target=config.options.targets.as_(lambda s: s.split(',')),
         dominant_tissue =config.options.dominant_tissue,
-        overwrite=config.options.override_quantification
     )
 
     pipeline_runner = providers.Singleton(

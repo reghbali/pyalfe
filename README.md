@@ -63,7 +63,7 @@ The input directory structure in `classfied_dir` should be organized as follows:
 ```
 classfied_dir  
 │
-│───accession1
+│───$ACCESSION
 │   │
 │   │───T1
 │   │   └── T1.nii.gz
@@ -76,7 +76,7 @@ classfied_dir
 │   └───T2
 │       └── T2.nii.gz
 │
-└───accession2
+└───$ACCESSION
 .   │
 .   │───T1
 .   │   └── T1.nii.gz

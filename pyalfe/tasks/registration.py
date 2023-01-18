@@ -114,7 +114,7 @@ class Resampling(object):
                         accession=accession, modality=Modality.T1,
                         image_type=roi_key,
                         sub_dir_name=roi_sub_dir)
-                elif roi_properties['type'] == 'registered':
+                elif roi_properties['type'] == 'template':
                     roi_image = self.pipeline_dir.get_processed_image(
                         accession=accession, modality=Modality.T1,
                         resampling_origin=roi_key,

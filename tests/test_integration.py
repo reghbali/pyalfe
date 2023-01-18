@@ -22,7 +22,8 @@ class TestIntegration(TestCase):
         os.mkdir(self.classified_dir)
 
     def tearDown(self) -> None:
-        shutil.rmtree(self.test_dir)
+        pass
+        #shutil.rmtree(self.test_dir)
 
     def test_run(self):
         accession = 'brats10'

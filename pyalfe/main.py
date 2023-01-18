@@ -60,10 +60,10 @@ def download(assets):
     '-c', '--config',
     default=DEFAULT_CFG,
 )
-@click.option('-m', '--modalities', default='T1,T1Post,FLAIR,T2,ADC')
-@click.option('-t', '--targets', default='FLAIR,T1Post')
-@click.option('-cd', '--classified_dir')
-@click.option('-pd', '--processed_dir')
+@click.option('-m', '--modalities')
+@click.option('-t', '--targets')
+@click.option('-cd', '--classified-dir')
+@click.option('-pd', '--processed-dir')
 @click.option(
     '-dt', '--dominant_tissue',
     default='white_matter',
@@ -71,20 +71,14 @@ def download(assets):
         ['white_matter', 'gray_matter', 'auto'], case_sensitive=False)
 )
 @click.option(
-    '-oi', '--override_images',
-    is_flag=True, show_default=True, default=True)
-@click.option(
-    '-oq', '--override_quantification',
-    is_flag=True, show_default=True, default=True)
+    '-ow/-now', '--overwrite/--no-overwrite', default=True)
 @click.option(
     '-ip', '--image_processing',
-    default='c3d',
     type=click.Choice(
         ['c3d', 'nilearn'], case_sensitive=False)
 )
 @click.option(
     '-ir', '--image_registration',
-    default='greedy',
     type=click.Choice(
         ['greedy', 'ants'], case_sensitive=False)
 )
@@ -96,15 +90,15 @@ def run(
         modalities: str,
         targets: str,
         dominant_tissue: str,
-        override_images: bool,
-        override_quantification: bool,
         image_processing: str,
-        image_registration: str) -> None:
+        image_registration: str,
+        overwrite: bool) -> None:
 
     container = Container()
     container.config.from_ini(config, required=True, envs_required=True)
 
     options = container.config.options()
+    click.echo(options)
     if classified_dir:
         options['classified_dir'] = classified_dir
     if processed_dir:
@@ -115,14 +109,11 @@ def run(
         options['targets'] = targets
     if dominant_tissue:
         options['dominant_tissue'] = dominant_tissue
-    if override_images:
-        options['override_images'] = override_images
-    if override_quantification:
-        options['override_quantification'] = override_quantification
     if image_processing:
         options['image_processing'] = image_processing
     if image_registration:
         options['image_registration'] = image_registration
+    options['overwrite_images'] = overwrite
 
     container.config.from_dict(options)
 
@@ -147,12 +138,6 @@ def configure():
     targets = click.prompt(
         'Enter target modalities separated by comma', default='T1Post,FLAIR',
         type=str)
-    overwrite_images = click.confirm(
-        'Overwrite images?', default=True
-    )
-    overwrite_quantification = click.confirm(
-        'Overwrite quantification?', default=True
-    )
     image_processor = click.prompt(
         'image processor to use',
         type = click.Choice(['c3d', 'nilearn']),
@@ -170,8 +155,6 @@ def configure():
         'processed_dir': processed_dir,
         'modalities': modalities,
         'targets': targets,
-        'overwrite_images': overwrite_images,
-        'overwrite_quantification': overwrite_quantification,
         'image_processor': image_processor,
         'image_registration': image_registration
         }

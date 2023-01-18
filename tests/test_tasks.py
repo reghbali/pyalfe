@@ -245,7 +245,7 @@ class TestT1Postprocessing(TestTask):
         shutil.copy(
             os.path.join(
                 'tests', 'data', 'brats10',
-                f'BraTS19_2013_10_1_{Modality.T1}.nii.gz'),
+                f'BraTS19_2013_10_1_{Modality.T1.lower()}.nii.gz'),
             tissue_seg_path
         )
         output_path = self.pipeline_dir.get_processed_image(
@@ -380,5 +380,3 @@ class TestT1Registration(TestTask):
                 resampling_target=Modality.T1,
                 sub_dir_name=roi_dict[roi_key]['sub_dir'])
             self.assertTrue(os.path.exists(output_path))
-
-
