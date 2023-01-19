@@ -1,5 +1,6 @@
 import importlib.resources
 import os
+import pathlib
 import shutil
 from unittest import TestCase
 
@@ -22,35 +23,35 @@ class TestIntegration(TestCase):
         os.mkdir(self.classified_dir)
 
     def tearDown(self) -> None:
-        pass
-        #shutil.rmtree(self.test_dir)
+        shutil.rmtree(self.test_dir)
 
     def test_run(self):
-        accession = 'brats10'
+        accession = 'cnsl_patient'
         modalities = [
-                Modality.T1, Modality.T2, Modality.T1Post, Modality.FLAIR]
+            Modality.T1, Modality.T2,
+            Modality.T1Post, Modality.FLAIR, Modality.ADC]
         pipeline_dir = DefaultALFEDataDir(
             processed=self.processed_dir, classified=self.classified_dir)
+
         for modality in modalities:
             pipeline_dir.create_dir(
                 'classified', accession, modality)
             shutil.copy(
-                os.path.join(
-                    'tests', 'data', 'brats10',
-                    f'BraTS19_2013_10_1_{modality.lower()}.nii.gz'),
+                os.path.join(pathlib.Path(__file__).parent.resolve(),
+                'data', 'cnsl_patient', f'{modality}.nii.gz'),
                 pipeline_dir.get_classified_image(accession, modality)
             )
+
         runner = CliRunner()
         config_file = importlib.resources.files('pyalfe').joinpath('config.ini')
         targets = [Modality.T1Post, Modality.FLAIR]
         args =  [accession,
                  '-c', config_file,
-                 '--classified_dir', self.classified_dir,
-                 '--processed_dir', self.processed_dir,
+                 '--classified-dir', self.classified_dir,
+                 '--processed-dir', self.processed_dir,
                  '--targets', ','.join(targets)]
         result = runner.invoke(run, args, catch_exceptions=False)
-        print(result)
-        self.assertEqual(result.exit_code, 0)
+        self.assertEqual(result.exit_code, 0, msg=result.stdout)
 
         for modality in modalities:
             processed_image_path = pipeline_dir.get_processed_image(
