@@ -73,12 +73,12 @@ def download(assets):
 @click.option(
     '-ow/-now', '--overwrite/--no-overwrite', default=True)
 @click.option(
-    '-ip', '--image_processing',
+    '-ip', '--image-processing',
     type=click.Choice(
         ['c3d', 'nilearn'], case_sensitive=False)
 )
 @click.option(
-    '-ir', '--image_registration',
+    '-ir', '--image-registration',
     type=click.Choice(
         ['greedy', 'ants'], case_sensitive=False)
 )
@@ -133,17 +133,23 @@ def configure():
         'Enter processed image directory',
         type=click.Path(exists=True))
     modalities = click.prompt(
-        'Enter modalities separated by comma', default='T1,T1Post,FLAIR,T2,ADC',
+        'Enter modalities separated by comma (enter for default)',
+        default='T1,T1Post,FLAIR,T2,ADC',
         type=str)
     targets = click.prompt(
-        'Enter target modalities separated by comma', default='T1Post,FLAIR',
+        'Enter target modalities separated by comma (enter for default)',
+        default='T1Post,FLAIR',
         type=str)
+    dominant_tissue = click.prompt(
+        'Enter the dominant tissue for the lesions',
+        type=click.Choice(['white_matter', 'gray_matter', 'auto']),
+        default='white_matter')
     image_processor = click.prompt(
-        'image processor to use',
+        'image processor to use (enter for default)',
         type = click.Choice(['c3d', 'nilearn']),
         default='c3d')
     image_registration = click.prompt(
-        'image registration to use',
+        'image registration to use (enter for default)',
         type = click.Choice(['greedy', 'ants']),
         default='greedy')
     config_path = click.prompt(
@@ -155,6 +161,7 @@ def configure():
         'processed_dir': processed_dir,
         'modalities': modalities,
         'targets': targets,
+        'dominant_tissue': dominant_tissue,
         'image_processor': image_processor,
         'image_registration': image_registration
         }
