@@ -8,6 +8,11 @@ import pandas as pd
 from pyalfe.data_structure import PipelineDataDir, Tissue, Modality
 from pyalfe.roi import roi_dict
 
+try:
+    from radiomics import featureextractor
+except ImportError:
+    featureextractor = None
+
 
 class Quantification(object):
 
@@ -23,7 +28,15 @@ class Quantification(object):
         self.modalities_all = modalities_all
         self.modalities_target = modalities_target
         self.pipeline_dir = pipeline_dir
-        self.dominant_tissue = dominant_tissue 
+        self.dominant_tissue = dominant_tissue
+
+        if featureextractor:
+            self.radiomics_extractor = featureextractor.RadiomicsFeatureExtractor()
+            self.radiomics_extractor.disableAllFeatures()
+            self.radiomics_extractor.enableFeaturesByName(firstorder=[], shape=[])
+            self.radiomics_enabled = True
+        else:
+            self.radiomics_enabled = False
 
     @staticmethod
     def load_nii_gz(filename):
@@ -73,6 +86,17 @@ class Quantification(object):
                 else:
                     target_images[roi_key] = None
         return target_images
+
+    def get_radiomics(
+        self,
+        skullstripped_file,
+        lesion_seg_file):
+        try:
+            return self.radiomics_extractor.execute(
+                skullstripped_file, lesion_seg_file)
+        except ValueError as e:
+            self.logger.debug(f'Pyradiomics failed with this error {e}.')
+            return {}
 
     def get_lesion_stats(
         self,
@@ -165,7 +189,11 @@ class Quantification(object):
         for target in self.modalities_target:
             quantification_file = self.pipeline_dir.get_quantification_file(
                 accession, target, 'SummaryLesionMeasures')
+            radiomics_file = self.pipeline_dir.get_quantification_file(
+                accession, target, 'radiomics')
 
+            skullstripped_file = self.pipeline_dir.get_processed_image(
+                accession, target, image_type='skullstripped')
             lesion_seg_file = self.pipeline_dir.get_processed_image(
                 accession=accession, modality=target,
                 image_type='CNNAbnormalMap_seg',
@@ -209,3 +237,8 @@ class Quantification(object):
                 lesion_seg, tissue_seg, ventricles_distance,
                 modality_images, template_images, voxel_volume)
             pd.Series(stats).to_csv(quantification_file)
+
+            if self.radiomics_enabled:
+                radiomics = self.get_radiomics(
+                    skullstripped_file, lesion_seg_file)
+                pd.Series(radiomics).to_csv(radiomics_file)
