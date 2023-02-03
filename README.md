@@ -51,7 +51,16 @@ To download deep learning models alongside the binaries for c3d and greedy, run
 ```bash
 pylafe download models c3d greedy
 ```
-
+### Pyradiomics support
+To install pyalfe with pyradiomics support, run
+```bash
+pip install -e  '.[radiomics]'
+```
+for development installation or
+```bash
+pip install 'dist/pyalfe-0.0.1-py3-none-any.whl[radiomics]'
+```
+when performing a build and install.
 ## Usage
 ___
 ### Configuration
