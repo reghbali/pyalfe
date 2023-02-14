@@ -3,7 +3,7 @@
 Python implementation of Automated Lesion and Feature Extraction (ALFE) pipeline. 
 
 ## Requirements
-___
+
 PyALFE supports Linux x86-64, Mac x86-64, and Mac arm64 and requires python >= 3.9.
 
 ### Image registration and processing
@@ -12,7 +12,6 @@ Similarly, PyALFE can can be configured to use [Convert3D](https://sourceforge.n
 To use Greedy and Convert3d, these command line tools should be downloaded using the [download command](#download-models-and-tools).
 
 ## Installation
-___
 
 First run
 
@@ -20,6 +19,7 @@ First run
 pip install --upgrade pip
 ```
 
+You can either instal pyalfe in [development mode](#development-mode-installation) or [build and install](#build-and-install).
 ### Development mode installation
 
 First update the setuptools
@@ -49,7 +49,7 @@ pip install dist/pyalfe-0.0.1-py3-none-any.whl
 ### Download models and tools
 To download deep learning models alongside the binaries for c3d and greedy, run
 ```bash
-pylafe download models c3d greedy
+pyalfe download models c3d greedy
 ```
 ### Pyradiomics support
 To install pyalfe with pyradiomics support, run
@@ -62,7 +62,7 @@ pip install 'dist/pyalfe-0.0.1-py3-none-any.whl[radiomics]'
 ```
 when performing a build and install.
 ## Usage
-___
+
 ### Configuration
 To configrue the PyALFE pipeline you should run:
 ```bash
