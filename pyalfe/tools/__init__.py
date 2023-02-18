@@ -26,5 +26,5 @@ c3d_url = {
                   'c3d-nightly-MacOS-arm64.dmg')}
 }[os.uname()[0]][os.uname()[-1]]
 
-GREEDY_PATH = importlib.resources.files('pyalfe.tools').joinpath('greedy')
-C3D_PATH = importlib.resources.files('pyalfe.tools').joinpath('c3d')
+GREEDY_PATH = 'greedy' #importlib.resources.files('pyalfe.tools').joinpath('greedy')
+C3D_PATH = 'c3d' #importlib.resources.files('pyalfe.tools').joinpath('c3d')
