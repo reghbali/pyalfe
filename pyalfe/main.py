@@ -73,7 +73,7 @@ def download(assets):
 @click.option(
     '-ow/-now', '--overwrite/--no-overwrite', default=True)
 @click.option(
-    '-ip', '--image-processing',
+    '-ip', '--image-processor',
     type=click.Choice(
         ['c3d', 'nilearn'], case_sensitive=False)
 )
@@ -90,7 +90,7 @@ def run(
         modalities: str,
         targets: str,
         dominant_tissue: str,
-        image_processing: str,
+        image_processor: str,
         image_registration: str,
         overwrite: bool) -> None:
 
@@ -110,7 +110,7 @@ def run(
     if dominant_tissue:
         options['dominant_tissue'] = dominant_tissue
     if image_processing:
-        options['image_processing'] = image_processing
+        options['image_processor'] = image_processor
     if image_registration:
         options['image_registration'] = image_registration
     options['overwrite_images'] = overwrite
