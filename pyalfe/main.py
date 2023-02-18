@@ -109,7 +109,7 @@ def run(
         options['targets'] = targets
     if dominant_tissue:
         options['dominant_tissue'] = dominant_tissue
-    if image_processing:
+    if image_processor:
         options['image_processor'] = image_processor
     if image_registration:
         options['image_registration'] = image_registration
