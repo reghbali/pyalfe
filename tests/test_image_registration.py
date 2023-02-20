@@ -50,7 +50,7 @@ def get_image_registration_test(image_registration: ImageRegistration) -> Type[T
             moving2_path = self.get_image_path('moving2.nii.gz')
             moving2_data = scipy.ndimage.rotate(
                 fixed_data, 15, axes=(2, 0), reshape=False)
-            print(moving2_data.shape)
+
             create_nifti(moving2_path, moving2_data)
 
             transform2 = self.get_image_path('rigid2.mat')

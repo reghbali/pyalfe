@@ -73,4 +73,5 @@ class Greedy:
         return self
 
     def run(self):
-        subprocess.run(self.cmd)
+        return subprocess.run(
+            self.cmd, capture_output=True).stdout.decode("utf-8")

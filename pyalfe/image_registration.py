@@ -1,3 +1,4 @@
+import logging
 import os
 import shutil
 from abc import ABC, abstractmethod
@@ -56,6 +57,7 @@ class ImageRegistration(ABC):
 
 
 class GreedyRegistration(ImageRegistration):
+    logger = logging.getLogger('GreedyRegistration')
 
     def __init__(self, greedy_path=GREEDY_PATH, threads=16):
         self.greedy_path = greedy_path
@@ -83,10 +85,19 @@ class GreedyRegistration(ImageRegistration):
             fast
     ):
         cmd = Greedy(self.greedy_path)
+        if 'WNCC' in cmd.run():
+            metric = 'WNCC'
+        else:
+            metric = 'NCC'
+            self.logger.warning(
+                'Your version of greedy does not support weigthed normalized'
+                ' cross-correlation. Falling back to simple normalized'
+                ' cross-correlation. Consider upgrading greedy to the'
+                ' latest version.')
         if init_transform:
             cmd.initialize_affine(init_transform)
         cmd = cmd.threads(self.threads).dim(3).affine().dof(dof)
-        cmd = cmd.metric('WNCC', 2)
+        cmd = cmd.metric(metric, 2)
         if fast:
             cmd = cmd.num_iter(100, 50, 0)
         else:
