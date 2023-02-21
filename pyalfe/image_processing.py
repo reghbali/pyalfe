@@ -192,7 +192,7 @@ class NilearnProcessor(ImageProcessor):
     @staticmethod
     def _crop_img_to(image, slices, copy=True):
 
-        data = nilearn.image.get_fdata(image)
+        data = nilearn.image.get_data(image)
         affine = image.affine
 
         cropped_data = data[tuple(slices)]
@@ -308,7 +308,7 @@ class NilearnProcessor(ImageProcessor):
 
     @staticmethod
     def get_dims(image):
-        return nilearn.image.load_img(image).get_fdata().shape
+        return nilearn.image.load_img(image).get_data().shape
 
     @staticmethod
     def trim_largest_comp(image, output, trim_margin_vec):
