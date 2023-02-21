@@ -207,7 +207,6 @@ class NilearnProcessor(ImageProcessor):
         new_affine = np.eye(4)
         new_affine[:3, :3] = linear_part
         new_affine[:3, 3] = new_origin
-
         return nilearn.image.new_img_like(image, cropped_data, new_affine)
 
     @staticmethod
@@ -247,8 +246,9 @@ class NilearnProcessor(ImageProcessor):
         data = nib_image.get_fdata()
         threshold_data = np.where(
             (data >= lower_bound) & (data <= upper_bound),
-            inside_target, outside_target)
-        threshold_image = nib.Nifti1Image(threshold_data, nib_image.affine)
+            inside_target, outside_target).astype(np.int16)
+        threshold_image = nib.Nifti1Image(
+            threshold_data, nib_image.affine)
         nib.save(threshold_image, output)
 
     @staticmethod
@@ -261,7 +261,8 @@ class NilearnProcessor(ImageProcessor):
         nib_image = nilearn.image.load_img(image)
         nib_mask = nilearn.image.load_img(mask)
         masked_image = nib.Nifti1Image(
-            nib_image.get_fdata() * nib_mask.get_fdata(), nib_image.affine)
+            nib_image.get_fdata() * nib_mask.get_fdata(),
+            nib_image.affine, dtype=np.int16)
         nib.save(masked_image, output)
 
     @staticmethod
@@ -340,7 +341,8 @@ class NilearnProcessor(ImageProcessor):
         else:
             dilated_data = scipy.ndimage.binary_erosion(
                 data, structure=np.ones(3 * (-2 * rad + 1,))).astype(data.dtype)
-        dilated_image = nib.Nifti1Image(dilated_data, nib_image.affine)
+        dilated_image = nib.Nifti1Image(
+            dilated_data, nib_image.affine)
         nib.save(dilated_image, output)
 
     @staticmethod
@@ -354,6 +356,6 @@ class NilearnProcessor(ImageProcessor):
     def distance_transform(binary_image, output):
         nib_image = nilearn.image.load_img(binary_image)
         data = nib_image.get_fdata()
-        dist_data = scipy.ndimage.morphology.distance_transform_edt(1 - data)
+        dist_data = scipy.ndimage.distance_transform_edt(1 - data)
         dist_image = nib.Nifti1Image(dist_data, nib_image.affine)
         nib.save(dist_image, output)

@@ -25,7 +25,7 @@ def get_image_processor_test(image_processor: ImageProcessor) -> Type[TestCase]:
             return os.path.join(self.test_dir, image_name)
 
         def test_threshold(self) -> None:
-            data = np.array([[[0, 1, 2, 3]]])
+            data = np.array([[[0, 1, 2, 3]]]).astype(np.int16)
             input_image_path = self.get_image_path('input.nii.gz')
             create_nifti(input_image_path, data)
 
@@ -66,42 +66,49 @@ def get_image_processor_test(image_processor: ImageProcessor) -> Type[TestCase]:
 
         def test_mask(self):
             input_image_path = self.get_image_path('input.nii.gz')
-            create_nifti(input_image_path, np.array([[[0, 1, 2, 3]]]))
+            create_nifti(
+                input_image_path, np.array([[[0, 1, 2, 3]]]).astype(np.int16))
 
             mask_image_path = self.get_image_path('mask.nii.gz')
-            create_nifti(mask_image_path, np.array([[[0, 1, 1, 0]]]))
+            create_nifti(
+                mask_image_path, np.array([[[0, 1, 1, 0]]]).astype(np.int16))
             output = self.get_image_path('output.nii.gz')
             image_processor.mask(
                 input_image_path, mask_image_path, output)
-            np.testing.assert_array_equal(
-                get_nifti_data(output), np.array([[[0, 1, 2, 0]]]))
+            np.testing.assert_allclose(
+                get_nifti_data(output), np.array([[[0, 1, 2, 0]]]), rtol=1e-03)
 
             mask2_image_path = self.get_image_path('mask2.nii.gz')
-            create_nifti(mask2_image_path, np.array([[[0, 0, 0, 0]]]))
+            create_nifti(
+                mask2_image_path, np.array([[[0, 0, 0, 0]]]).astype(np.int16))
             output2 = self.get_image_path('output2.nii.gz')
             image_processor.mask(
                 input_image_path, mask2_image_path, output2)
             np.testing.assert_array_equal(
-                get_nifti_data(output2), np.array([[[0, 0, 0, 0]]]))
+                get_nifti_data(output2),
+                np.array([[[0, 0, 0, 0]]]).astype(np.int16))
 
             mask3_image_path = self.get_image_path('mask3.nii.gz')
-            create_nifti(mask3_image_path, np.array([[[1, 1, 1, 1]]]))
+            create_nifti(
+                mask3_image_path, np.array([[[1, 1, 1, 1]]]).astype(np.int16))
             output3 = self.get_image_path('output3.nii.gz')
             image_processor.mask(
                 input_image_path, mask3_image_path, output3)
-            np.testing.assert_array_equal(
+            np.testing.assert_allclose(
                 get_nifti_data(output3), np.array([[[0, 1, 2, 3]]]))
 
         def test_largest_mask_comp(self):
             mask_path = self.get_image_path('input.nii.gz')
-            create_nifti(mask_path, np.array([[[0, 1, 1, 0, 1]]]))
+            create_nifti(
+                mask_path, np.array([[[0, 1, 1, 0, 1]]]).astype(np.int16))
             output = self.get_image_path('output.nii.gz')
             image_processor.largest_mask_comp(mask_path, output)
             np.testing.assert_array_equal(
                 get_nifti_data(output), np.array([[[0, 1, 1, 0, 0]]]))
 
             mask_path2 = self.get_image_path('input.nii.gz')
-            create_nifti(mask_path2, np.array([[[0, 0, 0, 0, 0]]]))
+            create_nifti(
+                mask_path2, np.array([[[0, 0, 0, 0, 0]]]).astype(np.int16))
             output2 = self.get_image_path('output2.nii.gz')
             image_processor.largest_mask_comp(mask_path2, output2)
             np.testing.assert_array_equal(
@@ -111,7 +118,7 @@ def get_image_processor_test(image_processor: ImageProcessor) -> Type[TestCase]:
             mask_path = self.get_image_path('input.nii.gz')
             data = np.ones([3, 3, 3])
             data[1, 1, 1] = 0
-            create_nifti(mask_path, data)
+            create_nifti(mask_path, data.astype(np.int16))
             output = self.get_image_path('output.nii.gz')
             image_processor.holefill(mask_path, output)
             np.testing.assert_array_equal(
@@ -184,7 +191,7 @@ def get_image_processor_test(image_processor: ImageProcessor) -> Type[TestCase]:
         def test_trim_largest_comp(self):
             data = np.array([[[0, 0, 1, 2, 3, 0, 0, 1, 0]]])
             input_image_path = self.get_image_path('input.nii.gz')
-            create_nifti(input_image_path, data)
+            create_nifti(input_image_path, data.astype(np.int16))
 
             output = self.get_image_path('output.nii.gz')
             image_processor.trim_largest_comp(
@@ -217,11 +224,11 @@ def get_image_processor_test(image_processor: ImageProcessor) -> Type[TestCase]:
         def test_set_subtract(self):
             minuend_data = np.array([[[0, 1, 1, 1, 1, 1]]])
             minuend_path = self.get_image_path('minuend.nii.gz')
-            create_nifti(minuend_path, minuend_data)
+            create_nifti(minuend_path, minuend_data.astype(np.int16))
 
             subtrahend_data = np.array([[[1, 1, 1, 0, 0, 1]]])
             subtrahend_path = self.get_image_path('subtrahend.nii.gz')
-            create_nifti(subtrahend_path, subtrahend_data)
+            create_nifti(subtrahend_path, subtrahend_data.astype(np.int16))
 
             output = self.get_image_path('output.nii.gz')
             image_processor.set_subtract(
@@ -232,7 +239,7 @@ def get_image_processor_test(image_processor: ImageProcessor) -> Type[TestCase]:
         def test_dilate(self):
             data = np.array([[[0, 1, 1, 0, 0, 0, 1]]])
             input_image_path = self.get_image_path('input.nii.gz')
-            create_nifti(input_image_path, data)
+            create_nifti(input_image_path, data.astype(np.int16))
 
             output = self.get_image_path('output.nii.gz')
 
@@ -249,11 +256,11 @@ def get_image_processor_test(image_processor: ImageProcessor) -> Type[TestCase]:
         def test_union(self):
             data1 = np.array([[[0, 1, 1, 0, 0, 0, 1]]])
             image1_path = self.get_image_path('input1.nii.gz')
-            create_nifti(image1_path, data1)
+            create_nifti(image1_path, data1.astype(np.int16))
 
             data2 = np.array([[[1, 0, 1, 0, 0, 1, 0]]])
             image2_path = self.get_image_path('input2.nii.gz')
-            create_nifti(image2_path, data2)
+            create_nifti(image2_path, data2.astype(np.int16))
 
             output = self.get_image_path('output.nii.gz')
 
@@ -264,7 +271,7 @@ def get_image_processor_test(image_processor: ImageProcessor) -> Type[TestCase]:
         def test_distance_transform(self):
             data = np.array([[[0, 1, 1, 0, 0, 0, 1]]])
             input_image_path = self.get_image_path('input.nii.gz')
-            create_nifti(input_image_path, data)
+            create_nifti(input_image_path, data.astype(np.int16))
 
             output = self.get_image_path('output.nii.gz')
             image_processor.distance_transform(input_image_path, output)
