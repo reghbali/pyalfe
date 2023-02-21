@@ -20,16 +20,17 @@ class Initialization(Task):
 
     def run(self, accession: str) -> None:
         for modality in self.modalities:
-            print(f'accession {accession}, mod {modality}')
+
             classified_image = self.pipeline_dir.get_classified_image(
                 accession, modality)
             processed_image = self.pipeline_dir.get_processed_image(
                 accession, modality)
             if not os.path.exists(classified_image):
-                self.logger.info(
+                self.logger.warning(
                     f'{modality} image is missing.'
                     f'Skipping initialization for {modality}')
                 continue
+            self.logger.info(f'processing {modality} for accession {accession}.')
             if os.path.exists(processed_image):
                 if self.overwrite:
                     os.remove(processed_image)

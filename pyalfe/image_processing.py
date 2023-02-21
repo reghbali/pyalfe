@@ -213,7 +213,7 @@ class NilearnProcessor(ImageProcessor):
     @staticmethod
     def crop_img(image, rtol=1e-8, copy=True, pad = (0, 0, 0)):
 
-        data = nilearn.image.get_fdata(image)
+        data = nilearn.image.get_data(image)
         infinity_norm = max(-data.min(), data.max())
         passes_threshold = np.logical_or(data < -rtol * infinity_norm,
                                          data > rtol * infinity_norm)
@@ -308,7 +308,7 @@ class NilearnProcessor(ImageProcessor):
 
     @staticmethod
     def get_dims(image):
-        return nilearn.image.load_img(image).get_data().shape
+        return nilearn.image.load_img(image).get_fdata().shape
 
     @staticmethod
     def trim_largest_comp(image, output, trim_margin_vec):
