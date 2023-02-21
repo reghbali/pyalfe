@@ -1,4 +1,5 @@
 import configparser
+import logging
 import os
 from pathlib import Path
 
@@ -14,6 +15,7 @@ DEFAULT_CFG = os.path.expanduser(
     os.path.join('~', '.config', 'pyalfe', 'config.ini'))
 #importlib.resources.files('pyalfe').joinpath('config.ini')
 
+logging.basicConfig(level=logging.DEBUG)
 
 @click.group()
 def main():
