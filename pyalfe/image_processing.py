@@ -192,7 +192,7 @@ class NilearnProcessor(ImageProcessor):
     @staticmethod
     def _crop_img_to(image, slices, copy=True):
 
-        data = nilearn.image.get_data(image)
+        data = nilearn.image.get_fdata(image)
         affine = image.affine
 
         cropped_data = data[tuple(slices)]
@@ -213,7 +213,7 @@ class NilearnProcessor(ImageProcessor):
     @staticmethod
     def crop_img(image, rtol=1e-8, copy=True, pad = (0, 0, 0)):
 
-        data = nilearn.image.get_data(image)
+        data = nilearn.image.get_fdata(image)
         infinity_norm = max(-data.min(), data.max())
         passes_threshold = np.logical_or(data < -rtol * infinity_norm,
                                          data > rtol * infinity_norm)
@@ -244,7 +244,7 @@ class NilearnProcessor(ImageProcessor):
         outside_target
     ):
         nib_image = nilearn.image.load_img(image)
-        data = nib_image.get_data()
+        data = nib_image.get_fdata()
         threshold_data = np.where(
             (data >= lower_bound) & (data <= upper_bound),
             inside_target, outside_target)
@@ -333,7 +333,7 @@ class NilearnProcessor(ImageProcessor):
     @staticmethod
     def dilate(binary_image, rad, output):
         nib_image = nilearn.image.load_img(binary_image)
-        data = nib_image.get_data()
+        data = nib_image.get_fdata()
         if rad >= 0:
             dilated_data = scipy.ndimage.binary_dilation(
                 data, structure=np.ones(3 * (2 * rad + 1,))).astype(data.dtype)
