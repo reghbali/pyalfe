@@ -175,6 +175,8 @@ class Quantification(object):
                 ventricles_distance[lesion_indices])
 
         for template_key, template_image in template_images.items():
+            if 'regions' not in roi_dict[template_key]:
+                continue
             regions = roi_dict[template_key]['regions']
             for region_key, region_values in regions.items():
                 stats[f'lesion_volume_in_{region_key}'] = np.sum(

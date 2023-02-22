@@ -18,16 +18,16 @@ roi_dict = {
         'type': 'template',
         'source':  importlib.resources.files('pyalfe').joinpath(
             'templates', 'oasis', 'T_template0_BrainCerebellum.nii.gz'),
-        'regions': {
-            'Brain': [1],
-         }
     },
     'template_mask': {
         'sub_dir': 'TemplateReg',
         'measure': 'volume',
         'type': 'aux',
         'source': importlib.resources.files('pyalfe').joinpath(
-            'templates', 'oasis', 'T_template0_BrainCerebellumMask.nii.gz')
+            'templates', 'oasis', 'T_template0_BrainCerebellumMask.nii.gz'),
+        'regions': {
+            'Brain': [1],
+        }
     },
     'lobes': {
         'sub_dir': 'TemplateReg',
