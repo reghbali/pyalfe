@@ -13,14 +13,20 @@ To use Greedy and Convert3d, these command line tools should be downloaded using
 
 ## Installation
 
-First run
+Clone the repo
+```bash
+git clone git@git.ucsf.edu:rauschecker-sugrue-labs/pyalfe.git
+cd pyalfe
+```
+
+Then run (we recommend using a python virtual environment)
 
 ```bash
 pip install --upgrade pip
 ```
 
 You can either instal pyalfe in [development mode](#development-mode-installation) or [build and install](#build-and-install).
-### Development mode installation
+### Option 1: Development mode installation
 
 First update the setuptools
 ```bash
@@ -33,7 +39,7 @@ Run the following command in the parent pyalfe directory:
 pip install -e .
 ```
 
-### Build and install
+### Option 2: Build and install
 
 First update the build tool
 ```bash
@@ -46,10 +52,10 @@ python -m build
 pip install dist/pyalfe-0.0.1-py3-none-any.whl
 ```
 
-### Download models and tools
-To download deep learning models alongside the binaries for c3d and greedy, run
+### Download models
+To download deep learning models, run
 ```bash
-pyalfe download models c3d greedy
+pyalfe download models
 ```
 ### Pyradiomics support
 To install pyalfe with pyradiomics support, run
