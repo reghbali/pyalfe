@@ -82,7 +82,7 @@ class MultiModalitySegmentation(Segmentation):
         pred_path = self.pipeline_dir.get_processed_image(
             accession=accession,
             modality=self.output_modality,
-            image_type=self.image_type_output,
+            image_type=f'{self.image_type_output}_pred',
             sub_dir_name=self.segmentation_dir)
         if self.overwrite or not os.path.exists(pred_path):
             self.predict([image_path_list], [pred_path])
