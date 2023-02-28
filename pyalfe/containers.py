@@ -103,10 +103,12 @@ class Container(containers.DeclarativeContainer):
     flair_segmentation = providers.Singleton(
         SingleModalitySegmentation,
         inference_model=flair_model,
+        image_processor=image_processor,
         pipeline_dir=pipeline_dir,
         modality=Modality.FLAIR,
         image_type_input='skullstripped',
-        image_type_output='CNNAbnormalMap_seg',
+        image_type_output='abnormal_seg',
+        image_type_mask='skullstripping_mask',
         segmentation_dir='abnormalmap',
         overwrite=config.options.override
     )
@@ -114,11 +116,13 @@ class Container(containers.DeclarativeContainer):
     enhancement_segmentation = providers.Singleton(
         MultiModalitySegmentation,
         inference_model=enhancement_model,
+        image_processor=image_processor,
         pipeline_dir=pipeline_dir,
         modality_list=[Modality.T1, Modality.T1Post],
         output_modality=Modality.T1Post,
         image_type_input='skullstripped',
-        image_type_output='CNNAbnormalMap_seg',
+        image_type_output='abnormal_seg',
+        image_type_mask='skullstripping_mask',
         segmentation_dir='abnormalmap',
         overwrite=config.options.override
     )
@@ -126,10 +130,12 @@ class Container(containers.DeclarativeContainer):
     tissue_segmentation = providers.Singleton(
         SingleModalitySegmentation,
         inference_model=tissue_model,
+        image_processor=image_processor,
         pipeline_dir=pipeline_dir,
         modality = Modality.T1,
         image_type_input='trim_upsampled',
         image_type_output='tissue_seg',
+        image_type_mask='skullstripping_mask',
         segmentation_dir=None,
         overwrite=config.options.override_images
     )

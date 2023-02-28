@@ -100,7 +100,7 @@ def run(
     container.config.from_ini(config, required=True, envs_required=True)
 
     options = container.config.options()
-    click.echo(options)
+
     if classified_dir:
         options['classified_dir'] = classified_dir
     if processed_dir:
@@ -118,6 +118,7 @@ def run(
     options['overwrite_images'] = overwrite
 
     container.config.from_dict(options)
+    click.echo(options)
 
     container.init_resources()
     pipeline_runner = container.pipeline_runner()

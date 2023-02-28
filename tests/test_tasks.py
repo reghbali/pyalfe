@@ -179,7 +179,7 @@ class TestSingleModalitySegmentation(TestTask):
         modality = Modality.FLAIR
         model = MockInferenceModel()
         task = SingleModalitySegmentation(
-            model, self.pipeline_dir, Modality.FLAIR)
+            model, Convert3DProcessor(), self.pipeline_dir, Modality.FLAIR)
 
         modality_dir = self.pipeline_dir.create_dir(
             'processed', accession, modality)
@@ -206,7 +206,7 @@ class TestMultiModalitySegmentation(TestTask):
         output_modality = Modality.T1Post
         model = MockInferenceModel(2)
         task = MultiModalitySegmentation(
-            model, self.pipeline_dir,
+            model, Convert3DProcessor(), self.pipeline_dir,
             modality_list, output_modality)
 
         for modality in modality_list:
