@@ -198,7 +198,7 @@ class Quantification(object):
                 accession, target, image_type='skullstripped')
             lesion_seg_file = self.pipeline_dir.get_processed_image(
                 accession=accession, modality=target,
-                image_type='CNNAbnormalMap_seg',
+                image_type='abnormal_seg',
                 sub_dir_name='abnormalmap')
 
             if not os.path.exists(lesion_seg_file):
