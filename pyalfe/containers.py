@@ -57,7 +57,8 @@ class Container(containers.DeclarativeContainer):
     enhancement_model = providers.Singleton(
         NNUnet,
         model_dir=str(MODELS_PATH.joinpath(
-            'nnunet', 'Task503_Enhancement', 'nnUNetTrainerV2__nnUNetPlansv2.1')),
+            'nnunet', 'Task503_Enhancement',
+            'nnUNetTrainerV2__nnUNetPlansv2.1')),
         fold=1
     )
     tissue_model = providers.Singleton(
@@ -72,7 +73,7 @@ class Container(containers.DeclarativeContainer):
         Initialization,
         pipeline_dir=pipeline_dir,
         modalities=config.options.modalities.as_(lambda s: s.split(',')),
-        overwrite=config.options.override
+        overwrite=config.options.overwrite_images
     )
 
     skullstripping = providers.Singleton(
@@ -81,14 +82,14 @@ class Container(containers.DeclarativeContainer):
         image_processor=image_processor,
         pipeline_dir=pipeline_dir,
         modalities=config.options.modalities.as_(lambda s: s.split(',')),
-        overwrite=config.options.override
+        overwrite=config.options.overwrite_images
     )
 
     t1_preprocessing = providers.Singleton(
         T1Preprocessing,
         image_processor=image_processor,
         pipeline_dir=pipeline_dir,
-        overwrite=config.options.override
+        overwrite=config.options.overwrite_images
     )
 
     cross_modality_registration = providers.Singleton(
@@ -97,7 +98,7 @@ class Container(containers.DeclarativeContainer):
         pipeline_dir=pipeline_dir,
         modalities_all=config.options.modalities.as_(lambda s: s.split(',')),
         modalities_target=config.options.targets.as_(lambda s: s.split(',')),
-        overwrite=config.options.override
+        overwrite=config.options.overwrite_images
     )
 
     flair_segmentation = providers.Singleton(
@@ -110,7 +111,7 @@ class Container(containers.DeclarativeContainer):
         image_type_output='abnormal_seg',
         image_type_mask='skullstripping_mask',
         segmentation_dir='abnormalmap',
-        overwrite=config.options.override
+        overwrite=config.options.overwrite_images
     )
 
     enhancement_segmentation = providers.Singleton(
@@ -124,7 +125,7 @@ class Container(containers.DeclarativeContainer):
         image_type_output='abnormal_seg',
         image_type_mask='skullstripping_mask',
         segmentation_dir='abnormalmap',
-        overwrite=config.options.override
+        overwrite=config.options.overwrite_images
     )
 
     tissue_segmentation = providers.Singleton(
@@ -135,16 +136,16 @@ class Container(containers.DeclarativeContainer):
         modality = Modality.T1,
         image_type_input='trim_upsampled',
         image_type_output='tissue_seg',
-        image_type_mask='skullstripping_mask',
+        image_type_mask=None,
         segmentation_dir=None,
-        overwrite=config.options.override_images
+        overwrite=config.options.overwrite_images
     )
 
     t1_postprocessing = providers.Singleton(
         T1Postprocessing,
         image_processor = image_processor,
         pipeline_dir = pipeline_dir,
-        overwrite=config.options.override
+        overwrite=config.options.overwrite_images
     )
 
     t1_registration = providers.Singleton(
@@ -152,7 +153,7 @@ class Container(containers.DeclarativeContainer):
         image_processor = image_processor,
         image_registration = image_registration,
         pipeline_dir = pipeline_dir,
-        overwrite=config.options.override
+        overwrite=config.options.overwrite_images
     )
 
     resampling = providers.Singleton(
@@ -161,7 +162,7 @@ class Container(containers.DeclarativeContainer):
         image_registration=image_registration,
         pipeline_dir=pipeline_dir,
         modalities_target=config.options.targets.as_(lambda s: s.split(',')),
-        overwrite=config.options.override
+        overwrite=config.options.overwrite_images
     )
 
     quantification = providers.Singleton(
