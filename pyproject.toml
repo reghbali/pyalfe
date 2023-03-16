@@ -27,6 +27,7 @@ dependencies = [
 [project.optional-dependencies]
 ants = ["antspyx"]
 radiomics = ["Pyradiomics"]
+docs = ["jupyter-book"]
 
 [project.scripts]
 pyalfe = "pyalfe.main:main"
