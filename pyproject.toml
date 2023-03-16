@@ -34,3 +34,18 @@ pyalfe = "pyalfe.main:main"
 [tool.setuptools.package-data]
 pyalfe = ["*.ini"]
 "pyalfe.templates" = ["oasis/*.nii.gz"]
+
+[tool.ruff]
+line-length = 88
+target-version = 'py39'
+select = [
+    'F',
+    'E',
+    'W',
+    'UP',
+]
+exclude = [
+    '.git',
+    '.ruff_cache',
+    'dist'
+]
