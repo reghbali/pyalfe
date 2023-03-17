@@ -29,27 +29,14 @@ class T1Postprocessing(Task):
                 'T1 tissue segmentation is missing.' 'Skipping T1 postprocessing'
             )
             return
-        self.pipeline_dir.get_processed_image(
-            accession, Modality.T1, image_type='background'
-        )
-        csf_image = self.pipeline_dir.get_processed_image(
-            accession, Modality.T1, image_type='csf'
-        )
-        white_matter_image = self.pipeline_dir.get_processed_image(
-            accession, Modality.T1, image_type='white_matter'
-        )
-        cortical_gray_matter_image = self.pipeline_dir.get_processed_image(
-            accession, Modality.T1, image_type='cortical_gray_matter'
-        )
-        deep_gray_matter_image = self.pipeline_dir.get_processed_image(
-            accession, Modality.T1, image_type='deep_gray_matter'
-        )
-        brain_stem_image = self.pipeline_dir.get_processed_image(
-            accession, Modality.T1, image_type='brain_stem'
-        )
-        self.pipeline_dir.get_processed_image(
-            accession, Modality.T1, image_type='cerebellum'
-        )
+
+        tissues = [tissue.name.lower() for tissue in Tissue]
+        tissue_images = {
+            it: self.pipeline_dir.get_processed_image(
+                accession, Modality.T1, image_type=it
+            )
+            for it in tissues
+        }
 
         output_image = self.pipeline_dir.get_processed_image(
             accession, Modality.T1, 'VentriclesSeg'
@@ -68,7 +55,7 @@ class T1Postprocessing(Task):
             for tissue in Tissue:
                 self.image_processing.threshold(
                     tissue_segmentation_image,
-                    eval(f'{tissue.name.lower()}_image'),
+                    tissue_images[tissue.name.lower()],
                     int(tissue),
                     int(tissue),
                     1,
@@ -76,30 +63,32 @@ class T1Postprocessing(Task):
                 )
 
             self.image_processing.union(
-                deep_gray_matter_image, white_matter_image, temp_image
+                tissue_images['deep_gray_matter'],
+                tissue_images['white_matter'],
+                temp_image
             )
             self.image_processing.dilate(temp_image, 4, temp_image)
             self.image_processing.holefill(temp_image, temp_image)
-            self.image_processing.mask(temp_image, csf_image, output_image)
+            self.image_processing.mask(temp_image, tissue_images['csf'], output_image)
 
-            self.image_processing.dilate(cortical_gray_matter_image, 2, temp_image)
+            self.image_processing.dilate(tissue_images['cortical_gray_matter'], 2, temp_image)
             self.image_processing.set_subtract(output_image, temp_image, output_image)
 
             self.image_processing.dilate(output_image, -1, temp_image)
             self.image_processing.largest_mask_comp(temp_image, output_image)
 
             self.image_processing.union(
-                deep_gray_matter_image, output_image, output_image
+                tissue_images['deep_gray_matter'], output_image, output_image
             )
             self.image_processing.dilate(output_image, 3, output_image)
-            self.image_processing.mask(output_image, csf_image, output_image)
+            self.image_processing.mask(output_image, tissue_images['csf'], output_image)
 
             self.image_processing.largest_mask_comp(output_image, output_image)
 
-            self.image_processing.dilate(cortical_gray_matter_image, 2, temp_image)
+            self.image_processing.dilate(tissue_images['cortical_gray_matter'], 2, temp_image)
             self.image_processing.set_subtract(output_image, temp_image, output_image)
 
-            self.image_processing.dilate(brain_stem_image, 5, temp_image)
+            self.image_processing.dilate(tissue_images['brain_stem'], 5, temp_image)
             self.image_processing.set_subtract(output_image, temp_image, output_image)
 
             self.image_processing.largest_mask_comp(output_image, output_image)
