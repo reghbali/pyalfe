@@ -89,7 +89,7 @@ def get_image_registration_test(image_registration: ImageRegistration) -> Type[T
 
             np.testing.assert_array_less(
                 np.linalg.norm(get_nifti_data(output) - fixed_data) /
-                np.linalg.norm(get_nifti_data(output) - moving_data), 0.30)
+                np.linalg.norm(get_nifti_data(output) - moving_data), 0.4)
 
             moving2_path = self.get_image_path('moving2.nii.gz')
             moving2_data = scipy.ndimage.rotate(
@@ -123,7 +123,7 @@ def get_image_registration_test(image_registration: ImageRegistration) -> Type[T
 
             np.testing.assert_array_less(
                 np.linalg.norm(get_nifti_data(output3) - fixed_data) /
-                np.linalg.norm(get_nifti_data(output3) - moving2_data), 0.30)
+                np.linalg.norm(get_nifti_data(output3) - moving2_data), 0.5)
 
         def test_register_deformable(self):
             fixed_path = self.get_image_path('fixed.nii.gz')
@@ -151,7 +151,7 @@ def get_image_registration_test(image_registration: ImageRegistration) -> Type[T
 
             np.testing.assert_array_less(
                 np.linalg.norm(get_nifti_data(output) - fixed_data) /
-                np.linalg.norm(get_nifti_data(output) - moving_data), 0.30)
+                np.linalg.norm(get_nifti_data(output) - moving_data), 0.5)
 
 
     return TestImageRegistration

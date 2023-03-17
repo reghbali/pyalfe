@@ -44,7 +44,7 @@ class MultiModalitySegmentation(Segmentation):
             output_modality,
             image_type_input: str='skullstripped',
             image_type_output: str='abnormal_seg',
-            image_type_mask: str='skullstripping_mask',
+            image_type_mask: str=None,
             segmentation_dir:str ='abnormalmap',
             overwrite: bool=True
     ):
@@ -61,8 +61,8 @@ class MultiModalitySegmentation(Segmentation):
 
     def run(self, accession):
         image_path_list = []
-        for modality in self.modality_list:
 
+        for modality in self.modality_list:
             if modality != self.output_modality:
                 resampling_target = self.output_modality
             else:
@@ -72,7 +72,6 @@ class MultiModalitySegmentation(Segmentation):
                 accession, modality, image_type=self.image_type_input,
                 resampling_target=resampling_target)
             if not os.path.exists(image_path):
-                print(image_path)
                 self.logger.info(
                     f'{image_path} is missing.'
                     f'Skipping {self.image_type_output} segmentation.')
@@ -84,6 +83,7 @@ class MultiModalitySegmentation(Segmentation):
             modality=self.output_modality,
             image_type=f'{self.image_type_output}_pred',
             sub_dir_name=self.segmentation_dir)
+
         if self.overwrite or not os.path.exists(pred_path):
             self.predict([image_path_list], [pred_path])
 
@@ -113,7 +113,7 @@ class SingleModalitySegmentation(MultiModalitySegmentation):
             modality,
             image_type_input:str ='skullstripped',
             image_type_output:str ='abnormal_seg',
-            image_type_mask:str ='skullstripping_mask',
+            image_type_mask:str =None,
             segmentation_dir:str ='abnormalmap',
             overwrite:bool =True
     ):
