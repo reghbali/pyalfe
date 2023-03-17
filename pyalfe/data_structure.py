@@ -34,7 +34,6 @@ class Tissue(IntEnum):
 
 
 class PipelineDataDir:
-
     def __init__(self, **kwargs):
         self.dir_dict = kwargs
 
@@ -46,7 +45,7 @@ class PipelineDataDir:
         resampling_target=None,
         resampling_origin=None,
         sub_dir_name=None,
-        extension='.nii.gz'
+        extension='.nii.gz',
     ):
         raise NotImplementedError
 
@@ -54,23 +53,17 @@ class PipelineDataDir:
         raise NotImplementedError
 
     def get_quantification_file(
-        self,
-        accession,
-        modality,
-        quantification_file_type,
-        extension='.csv'
+        self, accession, modality, quantification_file_type, extension='.csv'
     ):
         raise NotImplementedError
 
 
 class DefaultALFEDataDir(PipelineDataDir):
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     def __call__(self, dir_type, accession, *sub_dir_names):
-        return os.path.join(
-            self.dir_dict[dir_type], accession, *sub_dir_names)
+        return os.path.join(self.dir_dict[dir_type], accession, *sub_dir_names)
 
     def create_dir(self, dir_type, accession, *sub_dir_names, exists=True):
         directory = self(dir_type, accession, *sub_dir_names)
@@ -78,14 +71,14 @@ class DefaultALFEDataDir(PipelineDataDir):
         return directory
 
     def get_processed_image(
-            self,
-            accession,
-            modality,
-            image_type=None,
-            resampling_target=None,
-            resampling_origin=None,
-            sub_dir_name=None,
-            extension='.nii.gz'
+        self,
+        accession,
+        modality,
+        image_type=None,
+        resampling_target=None,
+        resampling_origin=None,
+        sub_dir_name=None,
+        extension='.nii.gz',
     ):
         if not resampling_origin:
             file_name = f'{accession}_{modality}'
@@ -101,30 +94,23 @@ class DefaultALFEDataDir(PipelineDataDir):
         file_name += extension
 
         if sub_dir_name:
-            file_dir = self.create_dir(
-                'processed', accession, modality, sub_dir_name)
+            file_dir = self.create_dir('processed', accession, modality, sub_dir_name)
         else:
-            file_dir = self.create_dir(
-                'processed', accession, modality)
+            file_dir = self.create_dir('processed', accession, modality)
 
         return os.path.join(file_dir, file_name)
 
     def get_classified_image(self, accession, modality, extension='.nii.gz'):
         return os.path.join(
-            self('classified', accession, modality),
-            f'{modality}.nii.gz')
-
-    def get_quantification_file(
-            self,
-            accession,
-            modality,
-            quantification_file_type,
-            extension='.csv'
-    ):
-        quantification_dir = self.create_dir('processed', accession,
-                                             modality, 'quantification')
-        return os.path.join(
-            quantification_dir,
-            f'{accession}_{quantification_file_type}{extension}'
+            self('classified', accession, modality), f'{modality}.nii.gz'
         )
 
+    def get_quantification_file(
+        self, accession, modality, quantification_file_type, extension='.csv'
+    ):
+        quantification_dir = self.create_dir(
+            'processed', accession, modality, 'quantification'
+        )
+        return os.path.join(
+            quantification_dir, f'{accession}_{quantification_file_type}{extension}'
+        )

@@ -4,7 +4,6 @@ from pyalfe.tools import GREEDY_PATH
 
 
 class Greedy:
-
     def __init__(self, greedy_path=GREEDY_PATH):
         self.cmd = [greedy_path]
 
@@ -73,5 +72,4 @@ class Greedy:
         return self
 
     def run(self):
-        return subprocess.run(
-            self.cmd, capture_output=True).stdout.decode("utf-8")
+        return subprocess.run(self.cmd, capture_output=True).stdout.decode("utf-8")

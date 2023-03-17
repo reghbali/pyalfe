@@ -3,11 +3,7 @@ import os
 import requests
 
 
-def download_archive(
-        url: str,
-        download_dir: str,
-        archive_name: str = None
-):
+def download_archive(url: str, download_dir: str, archive_name: str = None):
 
     response = requests.get(url)
     if not archive_name:

@@ -1,6 +1,6 @@
 # PyALFE
 
-Python implementation of Automated Lesion and Feature Extraction (ALFE) pipeline. 
+Python implementation of Automated Lesion and Feature Extraction (ALFE) pipeline.
 
 ## Requirements
 
@@ -8,7 +8,7 @@ PyALFE supports Linux x86-64, Mac x86-64, and Mac arm64 and requires python >= 3
 
 ### Image registration and processing
 PyALFE can be configured to use either [Greedy](https://greedy.readthedocs.io/en/latest/) or [AntsPy](https://antspy.readthedocs.io/en/latest/registration.html) registration tools.
-Similarly, PyALFE can can be configured to use [Convert3D](https://sourceforge.net/p/c3d/git/ci/master/tree/doc/c3d.md) or python native library [Nilearn](https://nilearn.github.io/stable/index.html) for image processing tasks. 
+Similarly, PyALFE can can be configured to use [Convert3D](https://sourceforge.net/p/c3d/git/ci/master/tree/doc/c3d.md) or python native library [Nilearn](https://nilearn.github.io/stable/index.html) for image processing tasks.
 To use Greedy and Convert3d, these command line tools should be downloaded using the [download command](#download-models-and-tools).
 
 ## Installation
@@ -84,7 +84,7 @@ The classified directory (`classified_dir`) is the input directory to PyALFE and
 Here is an example:
 
 ```
-my_mri_data  
+my_mri_data
 │
 │───12345
 │   │
@@ -93,9 +93,9 @@ my_mri_data
 │   │───T1Post
 │   │   └── T1Post.nii.gz
 │   │───FLAIR
-│   │   └── FLAIR.nii.gz  
+│   │   └── FLAIR.nii.gz
 │   │───ADC
-│   │   └── ADC.nii.gz 
+│   │   └── ADC.nii.gz
 │   └───T2
 │       └── T2.nii.gz
 │
@@ -106,9 +106,9 @@ my_mri_data
     │───T1Post
     │   └── T1Post.nii.gz
     │───FLAIR
-    │   └── FLAIR.nii.gz  
+    │   └── FLAIR.nii.gz
     │───ADC
-    │   └── ADC.nii.gz 
+    │   └── ADC.nii.gz
     └───T2
         └── T2.nii.gz
 ```
@@ -141,16 +141,16 @@ This config value can be overwritten when calling `pyalfe run` via `-t` or `--ta
 
 #### Dominant Tissue
 ```bash
-Enter the dominant tissue for the lesions (white_matter, gray_matter, auto) [white_matter]: 
+Enter the dominant tissue for the lesions (white_matter, gray_matter, auto) [white_matter]:
 ```
 The dominant tissue where the tumor or lesion is expected to be located at.
 This information is use in relative signal feature calculations.
-If you choose `auto`, pyalfe automatically detect the dominant tissue after segmentation. 
+If you choose `auto`, pyalfe automatically detect the dominant tissue after segmentation.
 This config value can be overwritten when calling `pyalfe run` via `-dt` or `--dominant_tissue` option.
 
 #### Image processor
 ```bash
-image processor to use (c3d, nilearn) [c3d]: 
+image processor to use (c3d, nilearn) [c3d]:
 ```
 Currently, pyalfe can be configures to use either Convert3D (a.k.a. c3d) or Nilearn for image processing tasks.
 The default is Convert3d aka c3d. In other to use c3d,
@@ -160,7 +160,7 @@ This config value can be overwritten when calling `pyalfe run` via `-ip` or `--i
 
 #### Image Registration
 ```bash
-image registration to use (greedy, ants) [greedy]: 
+image registration to use (greedy, ants) [greedy]:
 ```
 Currently, pyalfe can be configures to use either greedy or ants for image registration tasks. The default is greedy.
 In other to use greedy, you have to download it using the [download command](#download-models-and-tools). To use ants,
