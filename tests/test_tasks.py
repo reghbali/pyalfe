@@ -212,9 +212,15 @@ class TestMultiModalitySegmentation(TestTask):
         for modality in modality_list:
             modality_dir = self.pipeline_dir.create_dir(
                 'processed', accession, modality)
+            if modality != output_modality:
+                resampling_target = output_modality
+            else:
+                resampling_target = None
+
             input_path = self.pipeline_dir.get_processed_image(
                 accession, modality,
-                image_type=f'to_{output_modality}_{task.image_type_input}')
+                image_type=task.image_type_input,
+                resampling_target=resampling_target)
             shutil.copy(
                 os.path.join(
                     'tests', 'data', 'brats10',

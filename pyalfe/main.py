@@ -95,7 +95,31 @@ def run(
         image_processor: str,
         image_registration: str,
         overwrite: bool) -> None:
+    """The run method for pyalfe.
 
+    Runs the pipeline for an accession number.
+    :param accession: str
+          the accession number for which you want to run the pipeline.
+    :param config: str, default: ~/.config/pyalfe/config.ini
+          the path for the config file.
+    :param classified_dir: str
+          the path to the directory containing input classified images
+    :param processed_dir: str
+          the path to the directory containing output processed images
+    :param modalities: str
+          comma separated modalities
+    :param targets: str
+          comma separated target modalities
+    :param dominant_tissue: str, default='white_matter'
+          dominant tissue
+    :param image_processor: str, default=c3d
+          image processor that is used by the pipeline.
+    :param image_registration: str, default=greedy
+          image registration that is used by the pipeline
+    :param overwrite: bool
+          if True, the pipeline overwrites existing output images.
+    :return: None
+    """
     container = Container()
     container.config.from_ini(config, required=True, envs_required=True)
 
