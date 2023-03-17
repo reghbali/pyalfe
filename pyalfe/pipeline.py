@@ -1,29 +1,34 @@
 from pyalfe.tasks.initialization import Initialization
 from pyalfe.tasks.quantification import Quantification
-from pyalfe.tasks.registration import CrossModalityRegistration, Resampling, \
-    T1Registration
-from pyalfe.tasks.segmentation import SingleModalitySegmentation, \
-    MultiModalitySegmentation
+from pyalfe.tasks.registration import (
+    CrossModalityRegistration,
+    Resampling,
+    T1Registration,
+)
+from pyalfe.tasks.segmentation import (
+    SingleModalitySegmentation,
+    MultiModalitySegmentation,
+)
 from pyalfe.tasks.skullstripping import Skullstripping
 from pyalfe.tasks.t1_postprocessing import T1Postprocessing
 from pyalfe.tasks.t1_preprocessing import T1Preprocessing
 
 
-class PyALFEPipelineRunner(object):
-
+class PyALFEPipelineRunner:
     def __init__(
-            self,
-            initialization: Initialization,
-            skullstripping: Skullstripping,
-            t1_preprocessing: T1Preprocessing,
-            cross_modality_registration: CrossModalityRegistration,
-            flair_segmentation: SingleModalitySegmentation,
-            enhancement_segmentation: MultiModalitySegmentation,
-            tissue_segmentation: SingleModalitySegmentation,
-            t1_postprocessing: T1Postprocessing,
-            t1_registration: T1Registration,
-            resampling: Resampling,
-            quantification: Quantification):
+        self,
+        initialization: Initialization,
+        skullstripping: Skullstripping,
+        t1_preprocessing: T1Preprocessing,
+        cross_modality_registration: CrossModalityRegistration,
+        flair_segmentation: SingleModalitySegmentation,
+        enhancement_segmentation: MultiModalitySegmentation,
+        tissue_segmentation: SingleModalitySegmentation,
+        t1_postprocessing: T1Postprocessing,
+        t1_registration: T1Registration,
+        resampling: Resampling,
+        quantification: Quantification,
+    ):
         self.initialization = initialization
         self.skullstripping = skullstripping
         self.t1_preprocessing = t1_preprocessing

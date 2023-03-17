@@ -13,7 +13,7 @@ class T1Preprocessing:
         self,
         image_processor: ImageProcessor,
         pipeline_dir: PipelineDataDir,
-        overwrite=True
+        overwrite=True,
     ):
         self.pipeline_dir = pipeline_dir
         self.image_processor = image_processor
@@ -21,19 +21,21 @@ class T1Preprocessing:
 
     def run(self, accession):
         t1ss = self.pipeline_dir.get_processed_image(
-            accession, Modality.T1, image_type='skullstripped')
+            accession, Modality.T1, image_type='skullstripped'
+        )
         if not os.path.exists(t1ss):
             self.logger.info(
-                'T1 skullstripped image is missing. Skipping T1Preprocessing.')
+                'T1 skullstripped image is missing. Skipping T1Preprocessing.'
+            )
             return
         trim_output = self.pipeline_dir.get_processed_image(
             accession, 'T1', image_type='trim'
         )
         if self.overwrite or not os.path.exists(trim_output):
-            self.image_processor.trim_largest_comp(
-                t1ss, trim_output, [15, 15, 15])
+            self.image_processor.trim_largest_comp(t1ss, trim_output, [15, 15, 15])
         output = self.pipeline_dir.get_processed_image(
-            accession, Modality.T1, image_type='trim_upsampled')
+            accession, Modality.T1, image_type='trim_upsampled'
+        )
         if self.overwrite or not os.path.exists(output):
             dims = self.image_processor.get_dims(t1ss)
             upfactors = []
@@ -43,5 +45,4 @@ class T1Preprocessing:
                 else:
                     upfactors.append(100)
 
-            self.image_processor.resample_new_dim(
-                trim_output, output, *upfactors)
+            self.image_processor.resample_new_dim(trim_output, output, *upfactors)

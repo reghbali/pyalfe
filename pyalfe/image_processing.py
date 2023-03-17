@@ -12,16 +12,10 @@ from pyalfe.interfaces.c3d import C3D
 
 
 class ImageProcessor(ABC):
-
     @staticmethod
     @abstractmethod
     def threshold(
-            image,
-            output,
-            lower_bound,
-            upper_bound,
-            inside_target,
-            outside_target
+        image, output, lower_bound, upper_bound, inside_target, outside_target
     ):
         pass
 
@@ -86,20 +80,17 @@ class ImageProcessor(ABC):
 
 
 class Convert3DProcessor(ImageProcessor):
-
     @staticmethod
     def threshold(
-            image,
-            output,
-            lower_bound,
-            upper_bound,
-            inside_target,
-            outside_target
+        image, output, lower_bound, upper_bound, inside_target, outside_target
     ):
         c3d = C3D()
-        (c3d.operand(image)
-         .thresh(lower_bound, upper_bound, inside_target, outside_target)
-         .out(output).run())
+        (
+            c3d.operand(image)
+            .thresh(lower_bound, upper_bound, inside_target, outside_target)
+            .out(output)
+            .run()
+        )
 
     @staticmethod
     def binarize(image, output):
@@ -114,12 +105,19 @@ class Convert3DProcessor(ImageProcessor):
     @staticmethod
     def largest_mask_comp(image, output):
         c3d = C3D()
-        (c3d.operand(image).popas('S')
-         .push('S').thresh(1, 1, 1, 0).comp()
-         .popas('C')
-         .push('C').thresh(1, 1, 1, 0)
-         .push('S').multiply()
-         .out(output)).run()
+        (
+            c3d.operand(image)
+            .popas('S')
+            .push('S')
+            .thresh(1, 1, 1, 0)
+            .comp()
+            .popas('C')
+            .push('C')
+            .thresh(1, 1, 1, 0)
+            .push('S')
+            .multiply()
+            .out(output)
+        ).run()
 
     @staticmethod
     def holefill(binary_image, output):
@@ -129,8 +127,7 @@ class Convert3DProcessor(ImageProcessor):
     @staticmethod
     def reslice_to_ref(ref_image, moving_image, output):
         c3d = C3D()
-        c3d.operand(
-            ref_image, moving_image).reslice_identity().out(output).run()
+        c3d.operand(ref_image, moving_image).reslice_identity().out(output).run()
 
     @staticmethod
     def resample_new_dim(image, output, dim1, dim2, dim3, percent=True):
@@ -154,32 +151,34 @@ class Convert3DProcessor(ImageProcessor):
         c3d = C3D()
         largest_comp_cmd = c3d.operand(image).dup().comp().thresh(1, 1, 1, 0).multiply()
         trim_cmd = largest_comp_cmd.trim(*trim_margin_vec).out(output)
-        #trim_cmd = trim_cmd.operand(image).reslice_identity().out(output)
+        # trim_cmd = trim_cmd.operand(image).reslice_identity().out(output)
         trim_cmd.run()
 
     @staticmethod
     def set_subtract(binary_image_1, binary_image_2, output):
         c3d = C3D()
-        c3d.operand(
-            binary_image_1,
-            binary_image_2).scale(-1).add().thresh(1, 1, 1, 0).out(output).run()
+        c3d.operand(binary_image_1, binary_image_2).scale(-1).add().thresh(
+            1, 1, 1, 0
+        ).out(output).run()
 
     @staticmethod
     def dilate(binary_image, rad, output):
         c3d = C3D()
         if rad >= 0:
-            c3d.operand(binary_image).dilate(
-                label=1, r1=rad, r2=rad, r3=rad).out(output).run()
+            c3d.operand(binary_image).dilate(label=1, r1=rad, r2=rad, r3=rad).out(
+                output
+            ).run()
         else:
-            c3d.operand(binary_image).dilate(
-                label=0, r1=-rad, r2=-rad, r3=-rad).out(output).run()
+            c3d.operand(binary_image).dilate(label=0, r1=-rad, r2=-rad, r3=-rad).out(
+                output
+            ).run()
 
     @staticmethod
     def union(binary_image_1, binary_image_2, output):
         c3d = C3D()
-        c3d.operand(
-            binary_image_1,
-            binary_image_2).add().thresh(1, 2, 1, 0).out(output).run()
+        c3d.operand(binary_image_1, binary_image_2).add().thresh(1, 2, 1, 0).out(
+            output
+        ).run()
 
     @staticmethod
     def distance_transform(binary_image, output):
@@ -188,7 +187,6 @@ class Convert3DProcessor(ImageProcessor):
 
 
 class NilearnProcessor(ImageProcessor):
-
     @staticmethod
     def _crop_img_to(image, slices, copy=True):
 
@@ -210,12 +208,13 @@ class NilearnProcessor(ImageProcessor):
         return nilearn.image.new_img_like(image, cropped_data, new_affine)
 
     @staticmethod
-    def crop_img(image, rtol=1e-8, copy=True, pad = (0, 0, 0)):
+    def crop_img(image, rtol=1e-8, copy=True, pad=(0, 0, 0)):
 
         data = nilearn.image.get_data(image)
         infinity_norm = max(-data.min(), data.max())
-        passes_threshold = np.logical_or(data < -rtol * infinity_norm,
-                                         data > rtol * infinity_norm)
+        passes_threshold = np.logical_or(
+            data < -rtol * infinity_norm, data > rtol * infinity_norm
+        )
 
         coords = np.array(np.where(passes_threshold))
 
@@ -235,20 +234,14 @@ class NilearnProcessor(ImageProcessor):
 
     @staticmethod
     def threshold(
-        image,
-        output,
-        lower_bound,
-        upper_bound,
-        inside_target,
-        outside_target
+        image, output, lower_bound, upper_bound, inside_target, outside_target
     ):
         nib_image = nilearn.image.load_img(image)
         data = nib_image.get_fdata()
         threshold_data = np.where(
-            (data >= lower_bound) & (data <= upper_bound),
-            inside_target, outside_target).astype(np.int16)
-        threshold_image = nib.Nifti1Image(
-            threshold_data, nib_image.affine)
+            (data >= lower_bound) & (data <= upper_bound), inside_target, outside_target
+        ).astype(np.int16)
+        threshold_image = nib.Nifti1Image(threshold_data, nib_image.affine)
         nib.save(threshold_image, output)
 
     @staticmethod
@@ -262,14 +255,15 @@ class NilearnProcessor(ImageProcessor):
         nib_mask = nilearn.image.load_img(mask)
         masked_image = nib.Nifti1Image(
             nib_image.get_fdata() * nib_mask.get_fdata(),
-            nib_image.affine, dtype=np.int16)
+            nib_image.affine,
+            dtype=np.int16,
+        )
         nib.save(masked_image, output)
 
     @staticmethod
     def largest_mask_comp(image, output):
         try:
-            nilearn.image.largest_connected_component_img(
-            image).to_filename(output)
+            nilearn.image.largest_connected_component_img(image).to_filename(output)
         except ValueError as e:
             if str(e).startswith('No non-zero values: no connected components'):
                 shutil.copyfile(image, output)
@@ -286,8 +280,7 @@ class NilearnProcessor(ImageProcessor):
 
     @staticmethod
     def reslice_to_ref(ref_image, moving_image, output):
-        nilearn.image.resample_to_img(
-            moving_image, ref_image).to_filename(output)
+        nilearn.image.resample_to_img(moving_image, ref_image).to_filename(output)
 
     @staticmethod
     def resample_new_dim(image, output, dim1, dim2, dim3, percent=True):
@@ -296,15 +289,16 @@ class NilearnProcessor(ImageProcessor):
         if percent:
             ratios = np.array([dim1 * 0.01, dim2 * 0.01, dim3 * 0.01, 1])
         else:
-            ratios = np.array(
-                [dim1 / dims[0], dim2 / dims[1], dim3 / dims[2], 1])
-        new_affine = nib_image.affine.dot(np.diag(1. / ratios))
+            ratios = np.array([dim1 / dims[0], dim2 / dims[1], dim3 / dims[2], 1])
+        new_affine = nib_image.affine.dot(np.diag(1.0 / ratios))
         new_dims = (
             int(ratios[0] * dims[0]),
             int(ratios[1] * dims[1]),
-            int(ratios[2] * dims[2]))
+            int(ratios[2] * dims[2]),
+        )
         resampled_image = nilearn.image.resample_img(
-                image, target_affine=new_affine, target_shape=new_dims)
+            image, target_affine=new_affine, target_shape=new_dims
+        )
         nib.save(resampled_image, output)
 
     @staticmethod
@@ -315,20 +309,24 @@ class NilearnProcessor(ImageProcessor):
     def trim_largest_comp(image, output, trim_margin_vec):
         nib_image = nilearn.image.load_img(image)
         largest_comp_mask_image = nilearn.image.largest_connected_component_img(
-            nib_image)
+            nib_image
+        )
         largest_comp_image = nilearn.image.math_img(
-            'img1 * img2', img1=nib_image, img2=largest_comp_mask_image)
+            'img1 * img2', img1=nib_image, img2=largest_comp_mask_image
+        )
 
         trimmed_largest_comp_image = NilearnProcessor.crop_img(
-            largest_comp_image, pad=trim_margin_vec)
+            largest_comp_image, pad=trim_margin_vec
+        )
         nib.save(trimmed_largest_comp_image, output)
 
     @staticmethod
     def set_subtract(binary_image_1, binary_image_2, output):
         subtract_image = nilearn.image.binarize_img(
             nilearn.image.math_img(
-                'np.maximum(img1 - img2, 0)',
-                img1=binary_image_1, img2=binary_image_2))
+                'np.maximum(img1 - img2, 0)', img1=binary_image_1, img2=binary_image_2
+            )
+        )
         nib.save(subtract_image, output)
 
     @staticmethod
@@ -337,19 +335,22 @@ class NilearnProcessor(ImageProcessor):
         data = nib_image.get_fdata()
         if rad >= 0:
             dilated_data = scipy.ndimage.binary_dilation(
-                data, structure=np.ones(3 * (2 * rad + 1,))).astype(data.dtype)
+                data, structure=np.ones(3 * (2 * rad + 1,))
+            ).astype(data.dtype)
         else:
             dilated_data = scipy.ndimage.binary_erosion(
-                data, structure=np.ones(3 * (-2 * rad + 1,))).astype(data.dtype)
-        dilated_image = nib.Nifti1Image(
-            dilated_data, nib_image.affine)
+                data, structure=np.ones(3 * (-2 * rad + 1,))
+            ).astype(data.dtype)
+        dilated_image = nib.Nifti1Image(dilated_data, nib_image.affine)
         nib.save(dilated_image, output)
 
     @staticmethod
     def union(binary_image_1, binary_image_2, output):
         union_image = nilearn.image.binarize_img(
             nilearn.image.math_img(
-                'img1 + img2', img1=binary_image_1, img2=binary_image_2))
+                'img1 + img2', img1=binary_image_1, img2=binary_image_2
+            )
+        )
         nib.save(union_image, output)
 
     @staticmethod

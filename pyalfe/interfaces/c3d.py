@@ -86,8 +86,7 @@ class C3D:
         return self
 
     def run(self):
-        return subprocess.run(
-            self.cmd, capture_output=True).stdout.decode("utf-8")
+        return subprocess.run(self.cmd, capture_output=True).stdout.decode("utf-8")
 
     def check_output(self):
         return subprocess.check_output(self.cmd).decode("utf-8")
