@@ -24,6 +24,9 @@ dependencies = [
     "nnunet @ git+https://github.com/reghbali/nnunet.git@main",
 ]
 
+[project.license]
+file = "LICENSE"
+
 [project.optional-dependencies]
 ants = ["antspyx"]
 radiomics = ["Pyradiomics"]
@@ -50,3 +53,6 @@ exclude = [
     '.ruff_cache',
     'dist'
 ]
+
+[tool.pytest.ini_options]
+addopts = ["--ignore=tests/test_integration.py"]
