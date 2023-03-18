@@ -2,7 +2,7 @@
 A short description of your PR.
 
 ## Related Issues
-Include References to related issues.
+Include references to related issues.
 
 ## Motivation and Context
 Explain the motivation and the context for your changes.
