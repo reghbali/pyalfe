@@ -104,7 +104,7 @@ def run(
     accession : str
         the accession number for which you want to run the pipeline.
     config : str, default: ~/.config/pyalfe/config.ini
-        the path for the config file.
+        the path to the config file.
     classified_dir : str
         the path to the directory containing input classified images
     processed_dir : str
@@ -118,7 +118,7 @@ def run(
     image_processor : str, default=c3d
         image processor that is used by the pipeline.
     image_registration : str, default=greedy
-        image registration that is used by the pipeline
+        image registration that is used by the pipeline.
     overwrite : bool
         if True, the pipeline overwrites existing output images.
 
