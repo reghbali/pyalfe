@@ -30,7 +30,7 @@ file = "LICENSE"
 [project.optional-dependencies]
 ants = ["antspyx"]
 radiomics = ["Pyradiomics"]
-docs = ["jupyter-book"]
+docs = ["jupyter-book", "sphinx-click"]
 
 [project.scripts]
 pyalfe = "pyalfe.main:main"

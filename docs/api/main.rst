@@ -1,7 +1,6 @@
 pyalfe.main
 ===========
 
-.. automodule:: pyalfe.main
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. click:: pyalfe.main:main
+  :prog: pyalfe
+  :nested: full
