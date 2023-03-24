@@ -39,6 +39,9 @@ pyalfe = "pyalfe.main:main"
 pyalfe = ["*.ini"]
 "pyalfe.templates" = ["oasis/*.nii.gz"]
 
+[tool.setuptools]
+py-modules = []
+
 [tool.ruff]
 line-length = 88
 target-version = 'py39'
