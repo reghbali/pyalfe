@@ -168,10 +168,12 @@ class TestCrossModalityRegistration(TestTask):
         task.run(accession)
         for target in modalities_target:
             for modality in modalities:
+
+                print(modality, target)
                 output = self.pipeline_dir.get_processed_image(
                     accession, modality, f'to_{target}_{task.image_type}'
                 )
-                self.assertTrue(os.path.exists(output))
+                self.assertTrue(os.path.exists(output), f'{output} is missing.')
 
 
 class TestSingleModalitySegmentation(TestTask):
