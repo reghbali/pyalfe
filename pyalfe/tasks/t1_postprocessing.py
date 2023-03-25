@@ -65,13 +65,15 @@ class T1Postprocessing(Task):
             self.image_processing.union(
                 tissue_images['deep_gray_matter'],
                 tissue_images['white_matter'],
-                temp_image
+                temp_image,
             )
             self.image_processing.dilate(temp_image, 4, temp_image)
             self.image_processing.holefill(temp_image, temp_image)
             self.image_processing.mask(temp_image, tissue_images['csf'], output_image)
 
-            self.image_processing.dilate(tissue_images['cortical_gray_matter'], 2, temp_image)
+            self.image_processing.dilate(
+                tissue_images['cortical_gray_matter'], 2, temp_image
+            )
             self.image_processing.set_subtract(output_image, temp_image, output_image)
 
             self.image_processing.dilate(output_image, -1, temp_image)
@@ -85,7 +87,9 @@ class T1Postprocessing(Task):
 
             self.image_processing.largest_mask_comp(output_image, output_image)
 
-            self.image_processing.dilate(tissue_images['cortical_gray_matter'], 2, temp_image)
+            self.image_processing.dilate(
+                tissue_images['cortical_gray_matter'], 2, temp_image
+            )
             self.image_processing.set_subtract(output_image, temp_image, output_image)
 
             self.image_processing.dilate(tissue_images['brain_stem'], 5, temp_image)
