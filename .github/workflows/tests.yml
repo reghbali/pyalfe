@@ -22,6 +22,7 @@ jobs:
         id: cache-bin
         uses: actions/cache@v3
         with:
+          key: bin
           path: |
             ~/.local/bin
             ~/.cache/pip
@@ -39,7 +40,7 @@ jobs:
         run: |
           export BIN=~/.local/bin
 
-          pip install antspyx
+          pip install pytest antspyx
 
           mkdir -p $BIN
           cd /tmp

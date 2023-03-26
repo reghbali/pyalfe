@@ -13,6 +13,7 @@ authors = [
 ]
 dependencies = [
     "scipy",
+    "StrEnum",
     "numpy",
     "Click",
     "dependency_injector",
@@ -21,7 +22,7 @@ dependencies = [
     "nibabel",
     "nilearn",
     "matplotlib",
-    "nnunet @ git+https://github.com/reghbali/nnunet.git@main",
+    "nnunet"
 ]
 
 [project.license]
@@ -30,7 +31,7 @@ file = "LICENSE"
 [project.optional-dependencies]
 ants = ["antspyx"]
 radiomics = ["Pyradiomics"]
-docs = ["jupyter-book"]
+docs = ["jupyter-book", "sphinx-click"]
 
 [project.scripts]
 pyalfe = "pyalfe.main:main"
@@ -38,6 +39,9 @@ pyalfe = "pyalfe.main:main"
 [tool.setuptools.package-data]
 pyalfe = ["*.ini"]
 "pyalfe.templates" = ["oasis/*.nii.gz"]
+
+[tool.setuptools]
+py-modules = []
 
 [tool.ruff]
 line-length = 88

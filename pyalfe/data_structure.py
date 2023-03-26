@@ -1,26 +1,28 @@
-from enum import Enum, IntEnum
+from enum import auto, IntEnum
 import os
 from pathlib import Path
 
-
-class Modality(str, Enum):
-    T1 = 'T1'
-    T1Post = 'T1Post'
-    T2 = 'T2'
-    FLAIR = 'FLAIR'
-    GRE = 'GRE'
-    DWI = 'DWI'
-    SingleDWI = 'SingleDWI'
-    ADC = 'ADC'
-    EADC = 'EADC'
-    ASL = 'ASL'
-    PERFUSION = 'PERFUSION'
+from strenum import StrEnum
 
 
-class Orientation(str, Enum):
-    AXIAL = 'AXIAL'
-    SAGITTAL = 'SAGITTAL'
-    CORONAL = 'CORONAL'
+class Modality(StrEnum):
+    T1 = auto()
+    T1Post = auto()
+    T2 = auto()
+    FLAIR = auto()
+    GRE = auto()
+    DWI = auto()
+    SingleDWI = auto()
+    ADC = auto()
+    EADC = auto()
+    ASL = auto()
+    PERFUSION = auto()
+
+
+class Orientation(StrEnum):
+    AXIAL = auto()
+    SAGITTAL = auto()
+    CORONAL = auto()
 
 
 class Tissue(IntEnum):
