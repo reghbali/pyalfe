@@ -173,7 +173,7 @@ class Quantification:
                 stats[f'ninety_five_percentile_{modality_name.lower()}_signal'] = np.percentile(
                     modality_image[lesion_indices], 95
                 )
-        if [Modality.T1, Modality.T1Post] in modality_images:
+        if Modality.T1 in modality_images and Modality.T1Post in modality_images:
             t1_image = modality_images[Modality.T1]
             t1post_image = modality_images[Modality.T1Post]
             stats['enhancement'] = (
