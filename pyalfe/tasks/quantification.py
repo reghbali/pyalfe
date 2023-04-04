@@ -157,19 +157,28 @@ class Quantification:
             stats[f'relative_{modality_name}_signal'] = (
                 np.mean(modality_image[lesion_indices]) / mean_signal
             )
-            if modality_name == Modality.ADC:
-                stats['relative_min_adc_signal'] = (
+            if modality_name in [Modality.ADC, Modality.ASL]:
+                stats[f'relative_min_{modality_name.lower()}_signal'] = (
                     np.min(modality_image[lesion_indices]) / mean_signal
                 )
-                stats['min_adc_signal'] = np.min(modality_image[lesion_indices])
-                stats['mean_adc_signal'] = np.mean(modality_image[lesion_indices])
-                stats['median_adc_signal'] = np.median(modality_image[lesion_indices])
-                stats['five_percentile_adc_signal'] = np.percentile(
+                stats[f'min_{modality_name.lower()}_signal'] = np.min(
+                    modality_image[lesion_indices])
+                stats[f'mean_{modality_name.lower()}_signal'] = np.mean(
+                    modality_image[lesion_indices])
+                stats[f'median_{modality_name.lower()}_signal'] = np.median(
+                    modality_image[lesion_indices])
+                stats[f'five_percentile_{modality_name.lower()}_signal'] = np.percentile(
                     modality_image[lesion_indices], 5
                 )
-                stats['ninety_five_percentile_adc_signal'] = np.percentile(
+                stats[f'ninety_five_percentile_{modality_name.lower()}_signal'] = np.percentile(
                     modality_image[lesion_indices], 95
                 )
+        if Modality.T1 in modality_images and Modality.T1Post in modality_images:
+            t1_image = modality_images[Modality.T1]
+            t1post_image = modality_images[Modality.T1Post]
+            stats['enhancement'] = (
+                    np.mean(t1post_image[lesion_indices]) /
+                    np.mean(t1_image[lesion_indices]))
 
         if ventricles_distance is not None:
             stats['average_dist_to_ventricles_(voxels)'] = np.mean(

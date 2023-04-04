@@ -1,8 +1,16 @@
 import importlib
 
 roi_dict = {
-    'tissue_seg': {'sub_dir': None, 'measure': 'volume', 'type': 'derived'},
-    'VentriclesDist': {'sub_dir': None, 'measure': 'distance', 'type': 'derived'},
+    'tissue_seg': {
+        'sub_dir': None,
+        'measure': 'volume',
+        'type': 'derived'
+    },
+    'VentriclesDist': {
+        'sub_dir': None,
+        'measure': 'distance',
+        'type': 'derived'
+    },
     'template': {
         'sub_dir': 'TemplateReg',
         'measure': 'volume',
@@ -40,4 +48,20 @@ roi_dict = {
             'Parietal_Occipital': [2, 3],
         },
     },
+    'CorpusCallosum': {
+        'sub_dir': 'TemplateReg',
+        'measure': 'volume',
+        'type': 'template',
+        'source': importlib.resources.files('pyalfe').joinpath(
+            'templates', 'oasis', 'T_template0_CorpusCallosum.nii.gz'
+        ),
+        'regions': {
+            'CorpusCallosum': [1, 2, 3, 4, 5],
+            'CorpusCallosum_Rostrum': [1],
+            'CorpusCallosum_Genu': [2],
+            'CorpusCallosum_Body': [3],
+            'CorpusCallosum_Isthmus': [4],
+            'CorpusCallosum_Splenium': [5]
+        }
+    }
 }

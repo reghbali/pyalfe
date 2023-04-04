@@ -258,15 +258,17 @@ class T1Registration:
                 affine_transform=affine_transform,
             )
 
-        for roi_key in ['template', 'lobes']:
+        for roi_key, roi_properties in roi_dict.items():
+            if roi_properties['type'] != 'template':
+                continue
             roi_template_to_t1 = self.pipeline_dir.get_processed_image(
                 accession,
                 Modality.T1,
                 resampling_origin=roi_key,
                 resampling_target=Modality.T1,
-                sub_dir_name=roi_dict[roi_key]['sub_dir'],
+                sub_dir_name=roi_properties['sub_dir'],
             )
-            roi_template = roi_dict[roi_key]['source']
+            roi_template = roi_properties['source']
 
             if self.overwrite or not os.path.exists(roi_template_to_t1):
                 self.image_registration.reslice(
