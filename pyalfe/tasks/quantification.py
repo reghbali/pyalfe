@@ -115,7 +115,8 @@ class Quantification:
         if volume == 0.0:
             return stats
 
-        unique_counts = np.unique(tissue_seg[lesion_indices], return_counts=True)
+        unique_counts = np.unique(
+            tissue_seg[lesion_indices], return_counts=True)
 
         if self.dominant_tissue and self.dominant_tissue != 'auto':
             invalid_tissue = True
@@ -153,6 +154,11 @@ class Quantification:
             healthy_dom_tissue_indices = np.logical_and(
                 tissue_seg == dominant_tissue_id, lesion_seg == 0
             )
+
+            if len(healthy_dom_tissue_indices) == 0:
+                self.logger.warning(
+                    'There is np healthy voxel in the dominant tissue')
+
             mean_signal = np.mean(modality_image[healthy_dom_tissue_indices])
             stats[f'relative_{modality_name}_signal'] = (
                 np.mean(modality_image[lesion_indices]) / mean_signal
@@ -195,7 +201,7 @@ class Quantification:
             for region_key, region_values in regions.items():
                 stats[f'lesion_volume_in_{region_key}'] = np.sum(
                     np.isin(template_image, region_values)[lesion_indices]
-                )
+                ) * voxel_volume
                 stats[f'percentage_volume_in_{region_key}'] = (
                     stats[f'lesion_volume_in_{region_key}']
                     * 100
