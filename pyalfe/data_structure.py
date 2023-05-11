@@ -36,6 +36,15 @@ class Tissue(IntEnum):
 
 
 class PipelineDataDir:
+    """
+    Abstract PipelineDataDir
+
+    Methods
+    -------
+    get_processed_image
+    get_classified_image
+    get_quantification_file
+    """
     def __init__(self, **kwargs):
         self.dir_dict = kwargs
 
@@ -61,6 +70,9 @@ class PipelineDataDir:
 
 
 class DefaultALFEDataDir(PipelineDataDir):
+    """
+    Default implementation of PipelineDataDir
+    """
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 

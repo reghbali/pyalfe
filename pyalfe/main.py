@@ -28,7 +28,9 @@ def download(assets):
     for asset in assets:
         if asset == 'models':
             archive_path = download_archive(
-                url=models_url, download_dir=MODELS_PATH, archive_name='models.tar.gz'
+                url=models_url,
+                download_dir=MODELS_PATH,
+                archive_name='models.tar.gz'
             )
             extract_tar(archive_path, MODELS_PATH)
         elif asset == 'greedy':
@@ -158,7 +160,13 @@ def run(
 
 @main.command()
 def configure():
+    """
+    Configure the pipeline through a series of prompts.
 
+    Returns
+    -------
+    None
+    """
     classified_dir = click.prompt(
         'Enter classified image directory', type=click.Path(exists=True)
     )

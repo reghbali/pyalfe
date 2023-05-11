@@ -26,6 +26,9 @@ from pyalfe.tasks.t1_preprocessing import T1Preprocessing
 
 
 class Container(containers.DeclarativeContainer):
+    """
+    container objects for all the dependencies of the pipeline.
+    """
 
     logger = logging.getLogger('Container')
     config = providers.Configuration()

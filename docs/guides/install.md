@@ -4,7 +4,7 @@ PyALFE supports Linux x86-64, Mac x86-64, and Mac arm64 and requires python >= 3
 
 ### Image registration and processing
 PyALFE can be configured to use either [Greedy](https://greedy.readthedocs.io/en/latest/) or [AntsPy](https://antspy.readthedocs.io/en/latest/registration.html) registration tools.
-Similarly, PyALFE can can be configured to use [Convert3D](https://sourceforge.net/p/c3d/git/ci/master/tree/doc/c3d.md) or python native library [Nilearn](https://nilearn.github.io/stable/index.html) for image processing tasks.
+Similarly, PyALFE can be configured to use [Convert3D](https://sourceforge.net/p/c3d/git/ci/master/tree/doc/c3d.md) or python native library [Nilearn](https://nilearn.github.io/stable/index.html) for image processing tasks.
 To use Greedy and Convert3d, these command line tools should be downloaded using the [download command](#download-models-and-tools).
 
 

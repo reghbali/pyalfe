@@ -1,7 +1,6 @@
 import os
+import sys
 from abc import ABC, abstractmethod
-
-from nnunet.inference.predict import predict_cases_fast
 
 
 class InferenceModel(ABC):
@@ -26,6 +25,11 @@ class NNUnet(InferenceModel):
         self.n_threads_save = n_threads_save
 
     def predict_cases(self, input_image_tuple_list, output_list):
+
+        sys.stdout, sys.stderr = os.devnull, os.devnull
+        from nnunet.inference.predict import predict_cases_fast
+        sys.stdout, sys.stderr = sys.__stdout__, sys.__stderr__
+
         for output in output_list:
             if os.path.exists(output):
                 os.remove(output)

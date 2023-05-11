@@ -6,6 +6,7 @@ import nibabel as nib
 import scipy.ndimage
 import nilearn.image
 import nilearn.masking
+import nilearn.regions
 import numpy as np
 
 from pyalfe.interfaces.c3d import C3D
@@ -76,6 +77,11 @@ class ImageProcessor(ABC):
     @staticmethod
     @abstractmethod
     def distance_transform(binary_image, output):
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def label_mask_comp(binary_image, output):
         pass
 
 
@@ -184,6 +190,11 @@ class Convert3DProcessor(ImageProcessor):
     def distance_transform(binary_image, output):
         c3d = C3D()
         c3d.operand(binary_image).sdt().clip(0, 'inf').out(output).run()
+
+    @staticmethod
+    def label_mask_comp(binary_image, output):
+        c3d = C3D()
+        c3d.operand(binary_image).comp().out(output).run()
 
 
 class NilearnProcessor(ImageProcessor):
@@ -297,7 +308,8 @@ class NilearnProcessor(ImageProcessor):
             int(ratios[2] * dims[2]),
         )
         resampled_image = nilearn.image.resample_img(
-            image, target_affine=new_affine, target_shape=new_dims
+            image, target_affine=new_affine,
+            target_shape=new_dims, interpolation='nearest'
         )
         nib.save(resampled_image, output)
 
@@ -360,3 +372,19 @@ class NilearnProcessor(ImageProcessor):
         dist_data = scipy.ndimage.distance_transform_edt(1 - data)
         dist_image = nib.Nifti1Image(dist_data, nib_image.affine)
         nib.save(dist_image, output)
+
+    @staticmethod
+    def label_mask_comp(binary_image, output):
+        nib_image = nilearn.image.load_img(binary_image)
+        comp_image = nilearn.regions.connected_label_regions(nib_image)
+        comp_image_data = comp_image.get_fdata()
+        labels, freq = np.unique(comp_image_data, return_counts=True)
+        sorted_labels = labels[1:][np.argsort(freq[1:])[::-1]]
+        sorted_comp_data = np.zeros_like(comp_image_data)
+        for index, label in enumerate(sorted_labels):
+            sorted_comp_data[comp_image_data==label] = index + 1
+
+        sorted_comp_image = nib.Nifti1Image(
+            sorted_comp_data, nib_image.affine)
+        nib.save(sorted_comp_image, output)
+
