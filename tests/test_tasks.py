@@ -3,6 +3,7 @@ import pathlib
 import shutil
 from unittest import TestCase
 
+import pandas as pd
 import numpy as np
 
 from pyalfe.data_structure import DefaultALFEDataDir, Modality, Tissue
@@ -451,6 +452,7 @@ class TestQuantification(TestTask):
         modalities_target = [Modality.T1Post, Modality.FLAIR]
 
         lesion_seg = np.array([0, 0, 1, 1, 0, 1, 1, 0, 0])
+        lesion_seg_comp = np.array([0, 0, 1, 1, 0, 2, 2, 0, 0])
         tissue_seg = np.array([0, 1, 2, 3, 4, 5, 6, 3, 0])
         ventricles_distance = np.array([3, 2, 1, 0, 0, 1, 2, 3, 4])
         modality_images = {

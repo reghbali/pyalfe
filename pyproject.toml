@@ -22,7 +22,8 @@ dependencies = [
     "nibabel",
     "nilearn",
     "matplotlib",
-    "nnunet"
+    "nnunet",
+    "pybids"
 ]
 
 [project.license]

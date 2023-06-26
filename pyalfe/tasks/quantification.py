@@ -106,9 +106,10 @@ class Quantification:
         modality_images,
         template_images,
         voxel_volume,
+        lesion_label=0
     ):
         stats = {}
-        lesion_indices = np.nonzero(lesion_seg)[0]
+        lesion_indices = np.where(lesion_seg==lesion_label)[0]
 
         volume = len(lesion_indices) * voxel_volume
         stats['total_lesion_volume'] = volume
@@ -212,8 +213,11 @@ class Quantification:
 
     def run(self, accession):
         for target in self.modalities_target:
-            quantification_file = self.pipeline_dir.get_quantification_file(
+            summary_quantification_file = self.pipeline_dir.get_quantification_file(
                 accession, target, 'SummaryLesionMeasures'
+            )
+            individual_quantification_file = self.pipeline_dir.get_quantification_file(
+                accession, target, 'IndividualLesionMeasures'
             )
             radiomics_file = self.pipeline_dir.get_quantification_file(
                 accession, target, 'radiomics'
@@ -229,8 +233,14 @@ class Quantification:
                 sub_dir_name='abnormalmap',
             )
 
+            lesion_seg_comp_file = self.pipeline_dir.get_processed_image(
+                accession=accession,
+                modality=target,
+                image_type='abnormal_seg_comp',
+                sub_dir_name='abnormalmap',
+            )
+
             if not os.path.exists(lesion_seg_file):
-                print(lesion_seg_file, 'lesion_seg does not exist')
                 self.logger.info(
                     f'Lesion seg file for {target} is missing.'
                     f'Skipping quantification for {target}.'
@@ -271,7 +281,7 @@ class Quantification:
             modality_images = self.load_modality_images(accession, target)
             template_images = self.load_template_images(accession, target)
 
-            stats = self.get_lesion_stats(
+            summary_stats = self.get_lesion_stats(
                 lesion_seg,
                 tissue_seg,
                 ventricles_distance,
@@ -279,8 +289,28 @@ class Quantification:
                 template_images,
                 voxel_volume,
             )
-            pd.Series(stats).to_csv(quantification_file)
+
+            pd.Series(summary_stats).to_csv(summary_quantification_file)
 
             if self.radiomics_enabled:
                 radiomics = self.get_radiomics(skullstripped_file, lesion_seg_file)
                 pd.Series(radiomics).to_csv(radiomics_file)
+
+            if not os.path.exists(lesion_seg_comp_file):
+                self.logger.info(
+                    f'Lesion seg comp file for {target} is missing.'
+                    f'Skipping individual lesion quantification for {target}.'
+                )
+                continue
+            lesion_seg_comp, _ = self.load(lesion_seg_comp_file)
+
+            individual_lesion_stats = [self.get_lesion_stats(
+                lesion_seg,
+                tissue_seg,
+                ventricles_distance,
+                modality_images,
+                template_images,
+                voxel_volume,
+                lesion_label=label
+            ) for label in range(1, np.max(lesion_seg_comp) + 1)]
+            pd.DataFrame(individual_lesion_stats).to_csv(individual_lesion_stats)

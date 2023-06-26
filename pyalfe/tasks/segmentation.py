@@ -20,7 +20,7 @@ class Segmentation:
     def post_process(self, pred_list, mask, seg_list):
         if len(pred_list) != len(seg_list):
             raise ValueError(
-                f'Input and output list should have the same length. '
+                f'pred and seg lists should have the same length. '
                 f'{len(pred_list)} != {len(seg_list)}'
             )
 
@@ -29,6 +29,16 @@ class Segmentation:
                 self.image_processor.mask(pred, mask, seg)
             else:
                 shutil.copy(pred, seg)
+
+    def label_segmentation_components(self, seg_list, comp_list):
+        if comp_list and len(seg_list) != len(comp_list):
+            raise ValueError(
+                f'seg and comp list should have the same length. '
+                f'{len(seg_list)} != {len(comp_list)}'
+            )
+
+        for seg, comp in zip(seg_list, comp_list):
+            self.image_processor.label_mask_comp(seg, comp)
 
 
 class MultiModalitySegmentation(Segmentation):
@@ -45,6 +55,7 @@ class MultiModalitySegmentation(Segmentation):
         image_type_output: str = 'abnormal_seg',
         image_type_mask: str = None,
         segmentation_dir: str = 'abnormalmap',
+        components: bool = False,
         overwrite: bool = True,
     ):
         self.pipeline_dir = pipeline_dir
@@ -54,6 +65,7 @@ class MultiModalitySegmentation(Segmentation):
         self.image_type_output = image_type_output
         self.image_type_mask = image_type_mask
         self.segmentation_dir = segmentation_dir
+        self.components = components
         self.overwrite = overwrite
         super().__init__(inference_model, image_processor)
 
@@ -97,14 +109,24 @@ class MultiModalitySegmentation(Segmentation):
         else:
             mask_path = None
 
-        output_path = self.pipeline_dir.get_processed_image(
+        seg_path = self.pipeline_dir.get_processed_image(
             accession=accession,
             modality=self.output_modality,
             image_type=self.image_type_output,
             sub_dir_name=self.segmentation_dir,
         )
-        if self.overwrite or not os.path.exists(output_path):
-            self.post_process([pred_path], mask_path, [output_path])
+
+        if self.overwrite or not os.path.exists(seg_path):
+            self.post_process([pred_path], mask_path, [seg_path])
+
+        if self.components:
+            comp_path = self.pipeline_dir.get_processed_image(
+            accession=accession,
+            modality=self.output_modality,
+            image_type=f'{self.image_type_output}_comp',
+            sub_dir_name=self.segmentation_dir,
+        )
+            self.label_segmentation_components([seg_path], [comp_path])
 
 
 class SingleModalitySegmentation(MultiModalitySegmentation):
@@ -120,6 +142,7 @@ class SingleModalitySegmentation(MultiModalitySegmentation):
         image_type_output: str = 'abnormal_seg',
         image_type_mask: str = None,
         segmentation_dir: str = 'abnormalmap',
+        components: bool = False,
         overwrite: bool = True,
     ):
         super().__init__(
@@ -132,5 +155,6 @@ class SingleModalitySegmentation(MultiModalitySegmentation):
             image_type_output=image_type_output,
             image_type_mask=image_type_mask,
             segmentation_dir=segmentation_dir,
+            components = components,
             overwrite=overwrite,
         )
