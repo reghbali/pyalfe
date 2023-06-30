@@ -106,10 +106,10 @@ class Quantification:
         modality_images,
         template_images,
         voxel_volume,
-        lesion_label=0
+        lesion_label=1
     ):
         stats = {}
-        lesion_indices = np.where(lesion_seg==lesion_label)[0]
+        lesion_indices = np.where(lesion_seg == lesion_label)[0]
 
         volume = len(lesion_indices) * voxel_volume
         stats['total_lesion_volume'] = volume

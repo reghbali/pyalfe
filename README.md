@@ -81,8 +81,27 @@ which prompt the you to enter the following required configurations:
 Enter classified image directory: /path/to/my_mri_data
 ```
 The classified directory (`classified_dir`) is the input directory to PyALFE and should be organized by accessions (or session ids). Inside the directory for each accession there should be a directory for each available modality.
-Here is an example:
+Here is an example that follow ALFE default structure:
 
+```
+my_mri_data
+│
+│───anat
+│   │───sub-123_T1w.nii.gz
+│   │───sub-123_T2w.nii.gz
+│   └───sub-123_FLAIR.nii.gz
+│───dwi
+│    │───sub-123_dwi.nii.gz
+│    └───sub-123_md.nii.gz   
+│───swi
+│    └───sub-123_swi.nii.gz
+└───perf
+     └───sub-123_cbf.nii.gz
+
+```
+To use this directory the user should provide `path/to/my_mri_data` as the classified directory. This config value can be overwritten when calling `pyalfe run` via `-cd` or `--classified-dir` option.
+
+pyALFE also supports BIDS directories. Here is an example of input dir organized in BIDS format:
 ```
 my_mri_data
 │
@@ -112,8 +131,6 @@ my_mri_data
     └───T2
         └── T2.nii.gz
 ```
-To use this directory the user should provide `path/to/my_mri_data` as the classified directory. This config value can be overwritten when calling `pyalfe run` via `-cd` or `--classified-dir` option.
-
 #### Processed directory
 ```bash
 Enter classified image directory: /path/to/processed_data_dir
@@ -177,7 +194,7 @@ pyalfe run ACCESSION
 If you chose to save the configuration file in a non-standard location you can run
 
 ```bash
-pyalfe run -c path/to/conf.ini ACCESSION
+pyalfe run -c path/to/config.ini ACCESSION
 ```
 
 In general, all the config option can be overwritten by command line options. To see a list of command line options, run:

@@ -229,21 +229,32 @@ class BIDSDataDir(PipelineDataDir):
         Modality.ASL: {'suffix': 'asl', 'datatype': 'perf'}}
 
     def get_classified_image(self, accession, modality, extension='.nii.gz'):
-        path = (
+        patterns = [
             'sub-{subject}[/ses-{session}]/{datatype}/sub-{subject}[_ses-{session}]'
             '[_task-{task}][_acq-{acquisition}][_ce-{ceagent}][_rec-{reconstruction}]'
-            '[_run-{run}][_part-{part}]_{suffix<T1w|T2w|FLAIR|swi|asl|cbf|md>}'
-            '{extension<.nii|.nii.gz>|.nii.gz}')
+            '[_run-{run}][_part-{part}]_{suffix<T1w|T2w|FLAIR|dwi|asl>}'
+            '{extension<.nii|.nii.gz>|.nii.gz}',
+            'sub-{subject}[/ses-{session}]/derivative/{datatype}/sub-{subject}[_ses-{session}]'
+            '[_task-{task}][_acq-{acquisition}][_ce-{ceagent}][_rec-{reconstruction}]'
+            '[_run-{run}][_part-{part}]_{suffix<swi|cbf|md>}'
+            '{extension<.nii|.nii.gz>|.nii.gz}'
+        ]
         entities = {
             'subject': accession,
             **self.modality_dict[modality],
             'extension': extension
         }
-        candidates = self.classified_layout.get(*entities)
+        candidates = self.classified_layout.get(*entities, patterns)
         if len(candidates) == 0:
+            default_path = self.classified_layout.build_path(
+                entities, patterns, validate=False)
             self.logger.warning(
                 f'Did not find any file matching {entities} '
-                f'when looking for {modality} image for {accession}.')
+                f'when looking for {modality} image for {accession}.'
+                f'Returning the default path {default_path}.')
+            # I see you watching me, you should watch her.
+            # Cause she is sick of your tricks, I am the doctor.
+            return default_path
         elif len(candidates) == 1:
             return candidates[0]
         else:
@@ -262,10 +273,10 @@ class BIDSDataDir(PipelineDataDir):
             resampling_origin=None,
             sub_dir_name=None,
             extension='.nii.gz'):
-        pattern = ('sub-{subject}[/ses-{session}]/{datatype}/sub-{subject}'
+        pattern = ['sub-{subject}[/ses-{session}]/{datatype}/sub-{subject}'
                    '[_ce-{ceagent}][_space-{space}][_desc-{desc}]'
                    '_{suffix<T1w|T2w|FLAIR|swi|asl|cbf|md|mask|dseg|probseg>}'
-                   '{extension<.nii|.nii.gz>|.nii.gz}')
+                   '{extension<.nii|.nii.gz>|.nii.gz}']
         entities = {
             'subject': accession,
             **self.modality_dict[modality],
@@ -286,7 +297,7 @@ class BIDSDataDir(PipelineDataDir):
                 entities['suffix'] = 'dseg'
             elif re.search(r'(?i)mask', image_type):
                 entities['suffix'] = 'mask'
-            elif entities['desc']:
+            elif 'desc' in entities:
                 entities['desc'] += image_type
             else:
                 entities['desc'] = image_type
