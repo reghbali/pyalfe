@@ -174,12 +174,12 @@ def configure():
         'Enter processed image directory', type=click.Path(exists=True)
     )
     modalities = click.prompt(
-        'Enter modalities separated by comma (enter for default)',
-        default='T1,T1Post,FLAIR,T2,ADC',
+        'Enter modalities separated by comma (press enter for default)',
+        default='T1,T1Post,FLAIR,T2,ADC,SWI,CBF',
         type=str,
     )
     targets = click.prompt(
-        'Enter target modalities separated by comma (enter for default)',
+        'Enter target modalities separated by comma (press enter for default)',
         default='T1Post,FLAIR',
         type=str,
     )
@@ -189,12 +189,12 @@ def configure():
         default='white_matter',
     )
     image_processor = click.prompt(
-        'image processor to use (enter for default)',
+        'image processor to use (press enter for default)',
         type=click.Choice(['c3d', 'nilearn']),
         default='c3d',
     )
     image_registration = click.prompt(
-        'image registration to use (enter for default)',
+        'image registration to use (press enter for default)',
         type=click.Choice(['greedy', 'ants']),
         default='greedy',
     )

@@ -130,7 +130,7 @@ class Container(containers.DeclarativeContainer):
         image_type_output='abnormal_seg',
         image_type_mask='skullstripping_mask',
         segmentation_dir='abnormalmap',
-        component=True,
+        components=True,
         overwrite=config.options.overwrite_images,
     )
 
@@ -145,7 +145,7 @@ class Container(containers.DeclarativeContainer):
         image_type_output='abnormal_seg',
         image_type_mask='skullstripping_mask',
         segmentation_dir='abnormalmap',
-        component=True,
+        components=True,
         overwrite=config.options.overwrite_images,
     )
 
