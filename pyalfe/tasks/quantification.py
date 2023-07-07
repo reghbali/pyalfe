@@ -305,12 +305,12 @@ class Quantification:
             lesion_seg_comp, _ = self.load(lesion_seg_comp_file)
 
             individual_lesion_stats = [self.get_lesion_stats(
-                lesion_seg,
+                lesion_seg_comp,
                 tissue_seg,
                 ventricles_distance,
                 modality_images,
                 template_images,
                 voxel_volume,
                 lesion_label=label
-            ) for label in range(1, np.max(lesion_seg_comp) + 1)]
-            pd.DataFrame(individual_lesion_stats).to_csv(individual_lesion_stats)
+            ) for label in range(1, int(np.max(lesion_seg_comp)) + 1)]
+            pd.DataFrame(individual_lesion_stats).to_csv(individual_quantification_file)

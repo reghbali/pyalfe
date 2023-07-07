@@ -19,6 +19,7 @@ class Initialization(Task):
         self.overwrite = overwrite
 
     def run(self, accession: str) -> None:
+        self.logger.info('Running initialization task.')
         for modality in self.modalities:
 
             classified_image = self.pipeline_dir.get_classified_image(

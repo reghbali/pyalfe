@@ -1,3 +1,4 @@
+import io
 import os
 import sys
 from abc import ABC, abstractmethod
@@ -26,19 +27,19 @@ class NNUnet(InferenceModel):
 
     def predict_cases(self, input_image_tuple_list, output_list):
 
-        sys.stdout, sys.stderr = os.devnull, os.devnull
-        from nnunet.inference.predict import predict_cases_fast
-        sys.stdout, sys.stderr = sys.__stdout__, sys.__stderr__
 
         for output in output_list:
             if os.path.exists(output):
                 os.remove(output)
-
-        predict_cases_fast(
-            self.model_dir,
-            input_image_tuple_list,
-            output_list,
-            folds=self.fold,
-            num_threads_nifti_save=self.n_threads_save,
-            num_threads_preprocessing=self.n_threads_preprocessing,
-        )
+            text_trap = io.StringIO()
+            sys.stdout = text_trap
+            from nnunet.inference.predict import predict_cases_fast
+            sys.stdout = sys.__stdout__
+            predict_cases_fast(
+                self.model_dir,
+                input_image_tuple_list,
+                output_list,
+                folds=self.fold,
+                num_threads_nifti_save=self.n_threads_save,
+                num_threads_preprocessing=self.n_threads_preprocessing,
+                )

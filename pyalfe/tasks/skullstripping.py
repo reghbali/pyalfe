@@ -58,6 +58,7 @@ class Skullstripping(Task):
             self.image_processor.mask(image, mask, output)
 
     def run(self, accession):
+        self.logger.info('Running skullstripping task.')
         modalities_to_process = []
         for modality in self.modalities:
             image = self.pipeline_dir.get_processed_image(accession, modality)
