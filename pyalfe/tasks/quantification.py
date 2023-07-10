@@ -98,6 +98,20 @@ class Quantification:
             self.logger.debug(f'Pyradiomics failed with this error {e}.')
             return {}
 
+    def get_brain_volume_stats(
+            self,
+            brain_mask,
+            ventricles_seg,
+            voxel_volume):
+        stats = {}
+        brain_indices = np.where(brain_mask == 1)[0]
+        stats['total_brain_volume'] = len(brain_indices) * voxel_volume
+
+        if ventricles_seg:
+            stats['total_ventricles_volume'] = (
+                    len(np.where(ventricles_seg == 1)[0]) * voxel_volume)
+        return stats
+
     def get_lesion_stats(
         self,
         lesion_seg,
@@ -212,6 +226,31 @@ class Quantification:
         return stats
 
     def run(self, accession):
+        volumetric_quantification_file = self.get_brain_volume_stats(
+            accession, Modality.T1, 'volumeMeasures')
+
+        brain_mask_file = self.pipeline_dir.get_processed_image(
+            accession=accession,
+            modality=Modality.T1,
+            image_type='skullstripping_mask')
+
+        brain_mask, voxel_volume = self.load(brain_mask_file)
+
+        ventricles_seg_file = self.pipeline_dir.get_processed_image(
+            accession=accession,
+            modality=Modality.T1,
+            image_type='VentriclesSeg'
+        )
+
+        if not os.path.exists(ventricles_seg_file):
+            ventricles_seg = None
+        else:
+            ventricles_seg, _ = self.load(ventricles_seg_file)
+
+        volume_stats = self.get_brain_volume_stats(
+            brain_mask, ventricles_seg, voxel_volume)
+        pd.DataFrame(volume_stats).to_csv(volumetric_quantification_file)
+
         for target in self.modalities_target:
             summary_quantification_file = self.pipeline_dir.get_quantification_file(
                 accession, target, 'SummaryLesionMeasures'
