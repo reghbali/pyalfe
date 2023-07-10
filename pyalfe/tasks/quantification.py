@@ -249,7 +249,7 @@ class Quantification:
 
         volume_stats = self.get_brain_volume_stats(
             brain_mask, ventricles_seg, voxel_volume)
-        pd.DataFrame(volume_stats).to_csv(volumetric_quantification_file)
+        pd.Series(volume_stats).to_csv(volumetric_quantification_file)
 
         for target in self.modalities_target:
             summary_quantification_file = self.pipeline_dir.get_quantification_file(
