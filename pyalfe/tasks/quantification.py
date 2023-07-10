@@ -226,7 +226,7 @@ class Quantification:
         return stats
 
     def run(self, accession):
-        volumetric_quantification_file = self.get_brain_volume_stats(
+        volumetric_quantification_file = self.pipeline_dir.get_quantification_file(
             accession, Modality.T1, 'volumeMeasures')
 
         brain_mask_file = self.pipeline_dir.get_processed_image(
