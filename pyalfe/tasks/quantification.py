@@ -107,7 +107,7 @@ class Quantification:
         brain_indices = np.where(brain_mask == 1)[0]
         stats['total_brain_volume'] = len(brain_indices) * voxel_volume
 
-        if ventricles_seg:
+        if ventricles_seg is not None:
             stats['total_ventricles_volume'] = (
                     len(np.where(ventricles_seg == 1)[0]) * voxel_volume)
         return stats
