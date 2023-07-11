@@ -586,3 +586,28 @@ class TestQuantification(TestTask):
         self.assertEqual(6., lesion_stats['lesion_volume_in_CorpusCallosum'])
         self.assertEqual(100.,
                          lesion_stats['percentage_volume_in_CorpusCallosum'])
+
+    def test_get_brain_volume_stats(self):
+        brain_seg = np.array( [0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0])
+        tissue_seg = np.array([0, 0, 1, 2, 3, 4, 5, 6, 1, 0, 0])
+        ventricles_seg = np.array([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0])
+
+        task = Quantification(
+            pipeline_dir=self.pipeline_dir,
+            modalities_all=[Modality.T1],
+            modalities_target=[Modality.T1Post],
+            dominant_tissue=Tissue.WHITE_MATTER)
+
+        volume_stats = task.get_brain_volume_stats(
+            brain_seg, tissue_seg, ventricles_seg, voxel_volume=2.)
+
+        self.assertEqual(14., volume_stats['total_brain_volume'])
+        self.assertEqual(2., volume_stats['total_ventricles_volume'])
+        self.assertEqual(8., volume_stats['volume_of_background'])
+        self.assertEqual(4., volume_stats['volume_of_csf'])
+        self.assertEqual(2., volume_stats['volume_of_cortical_gray_matter'])
+        self.assertEqual(2., volume_stats['volume_of_white_matter'])
+        self.assertEqual(2., volume_stats['volume_of_deep_gray_matter'])
+        self.assertEqual(2., volume_stats['volume_of_brain_stem'])
+        self.assertEqual(2., volume_stats['volume_of_cerebellum'])
+

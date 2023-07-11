@@ -101,6 +101,7 @@ class Quantification:
     def get_brain_volume_stats(
             self,
             brain_mask,
+            tissue_seg,
             ventricles_seg,
             voxel_volume):
         stats = {}
@@ -110,6 +111,12 @@ class Quantification:
         if ventricles_seg is not None:
             stats['total_ventricles_volume'] = (
                     len(np.where(ventricles_seg == 1)[0]) * voxel_volume)
+
+        if tissue_seg is not None:
+            for tissue in Tissue:
+                stats[f'volume_of_{tissue.name.lower()}'] = (
+                    len(np.where(tissue_seg == tissue)[0]) * voxel_volume)
+
         return stats
 
     def get_lesion_stats(
@@ -236,6 +243,17 @@ class Quantification:
 
         brain_mask, voxel_volume = self.load(brain_mask_file)
 
+        tissue_seg_file = self.pipeline_dir.get_processed_image(
+            accession=accession,
+            modality=Modality.T1,
+            image_type='tissue_seg'
+        )
+
+        if not os.path.exists(tissue_seg_file):
+            tissue_seg = None
+        else:
+            tissue_seg, _ = self.load(tissue_seg_file)
+
         ventricles_seg_file = self.pipeline_dir.get_processed_image(
             accession=accession,
             modality=Modality.T1,
@@ -248,7 +266,7 @@ class Quantification:
             ventricles_seg, _ = self.load(ventricles_seg_file)
 
         volume_stats = self.get_brain_volume_stats(
-            brain_mask, ventricles_seg, voxel_volume)
+            brain_mask, tissue_seg, ventricles_seg, voxel_volume)
         pd.Series(volume_stats).to_csv(volumetric_quantification_file)
 
         for target in self.modalities_target:
