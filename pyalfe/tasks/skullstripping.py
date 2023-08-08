@@ -31,14 +31,14 @@ class Skullstripping(Task):
         mask_list = []
         output_list = []
         for modality in modalities:
-            image = self.pipeline_dir.get_processed_image(accession, modality)
-            pred = self.pipeline_dir.get_processed_image(
+            image = self.pipeline_dir.get_output_image(accession, modality)
+            pred = self.pipeline_dir.get_output_image(
                 accession, modality, image_type='skullstripping_pred'
             )
-            mask = self.pipeline_dir.get_processed_image(
+            mask = self.pipeline_dir.get_output_image(
                 accession, modality, image_type='skullstripping_mask'
             )
-            output = self.pipeline_dir.get_processed_image(
+            output = self.pipeline_dir.get_output_image(
                 accession, modality, image_type='skullstripped'
             )
             if not self.overwrite and os.path.exists(output):
@@ -61,7 +61,7 @@ class Skullstripping(Task):
         self.logger.info('Running skullstripping task.')
         modalities_to_process = []
         for modality in self.modalities:
-            image = self.pipeline_dir.get_processed_image(accession, modality)
+            image = self.pipeline_dir.get_output_image(accession, modality)
             if not os.path.exists(image):
                 self.logger.info(
                     f'{modality} image is missing.'

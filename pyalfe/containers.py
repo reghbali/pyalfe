@@ -35,8 +35,8 @@ class Container(containers.DeclarativeContainer):
 
     pipeline_dir = providers.Singleton(
         DefaultALFEDataDir,
-        processed=config.options.processed_dir,
-        classified=config.options.classified_dir,
+        output_dir=config.options.output_dir,
+        input_dir=config.options.input_dir,
     )
 
     image_processor = providers.Selector(

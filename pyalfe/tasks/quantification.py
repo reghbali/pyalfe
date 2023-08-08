@@ -54,7 +54,7 @@ class Quantification:
 
         for modality in self.modalities_all:
 
-            modality_image_to_target_file = self.pipeline_dir.get_processed_image(
+            modality_image_to_target_file = self.pipeline_dir.get_output_image(
                 accession,
                 modality,
                 image_type='skullstripped',
@@ -75,7 +75,7 @@ class Quantification:
             roi_sub_dir = roi_properties['sub_dir']
 
             if roi_properties['type'] == 'template':
-                template_image_to_target_file = self.pipeline_dir.get_processed_image(
+                template_image_to_target_file = self.pipeline_dir.get_output_image(
                     accession,
                     modality=target,
                     image_type=roi_key,
@@ -236,14 +236,14 @@ class Quantification:
         volumetric_quantification_file = self.pipeline_dir.get_quantification_file(
             accession, Modality.T1, 'volumeMeasures')
 
-        brain_mask_file = self.pipeline_dir.get_processed_image(
+        brain_mask_file = self.pipeline_dir.get_output_image(
             accession=accession,
             modality=Modality.T1,
             image_type='skullstripping_mask')
 
         brain_mask, voxel_volume = self.load(brain_mask_file)
 
-        tissue_seg_file = self.pipeline_dir.get_processed_image(
+        tissue_seg_file = self.pipeline_dir.get_output_image(
             accession=accession,
             modality=Modality.T1,
             image_type='tissue_seg'
@@ -254,7 +254,7 @@ class Quantification:
         else:
             tissue_seg, _ = self.load(tissue_seg_file)
 
-        ventricles_seg_file = self.pipeline_dir.get_processed_image(
+        ventricles_seg_file = self.pipeline_dir.get_output_image(
             accession=accession,
             modality=Modality.T1,
             image_type='VentriclesSeg'
@@ -280,17 +280,17 @@ class Quantification:
                 accession, target, 'radiomics'
             )
 
-            skullstripped_file = self.pipeline_dir.get_processed_image(
+            skullstripped_file = self.pipeline_dir.get_output_image(
                 accession, target, image_type='skullstripped'
             )
-            lesion_seg_file = self.pipeline_dir.get_processed_image(
+            lesion_seg_file = self.pipeline_dir.get_output_image(
                 accession=accession,
                 modality=target,
                 image_type='abnormal_seg',
                 sub_dir_name='abnormalmap',
             )
 
-            lesion_seg_comp_file = self.pipeline_dir.get_processed_image(
+            lesion_seg_comp_file = self.pipeline_dir.get_output_image(
                 accession=accession,
                 modality=target,
                 image_type='abnormal_seg_comp',
@@ -305,7 +305,7 @@ class Quantification:
                 continue
 
             lesion_seg, voxel_volume = self.load(lesion_seg_file)
-            tissue_seg_file = self.pipeline_dir.get_processed_image(
+            tissue_seg_file = self.pipeline_dir.get_output_image(
                 accession,
                 target,
                 image_type='tissue_seg',
@@ -322,7 +322,7 @@ class Quantification:
                 continue
             tissue_seg, _ = self.load(tissue_seg_file)
 
-            ventricles_distance_file = self.pipeline_dir.get_processed_image(
+            ventricles_distance_file = self.pipeline_dir.get_output_image(
                 accession=accession,
                 modality=target,
                 image_type='VentriclesDist',
@@ -360,7 +360,7 @@ class Quantification:
                 )
                 continue
             lesion_seg_comp, _ = self.load(lesion_seg_comp_file)
-
+            number_of_lesions = int(np.max(lesion_seg_comp))
             individual_lesion_stats = [self.get_lesion_stats(
                 lesion_seg_comp,
                 tissue_seg,
@@ -369,5 +369,13 @@ class Quantification:
                 template_images,
                 voxel_volume,
                 lesion_label=label
-            ) for label in range(1, int(np.max(lesion_seg_comp)) + 1)]
-            pd.DataFrame(individual_lesion_stats).to_csv(individual_quantification_file)
+            ) for label in range(1, number_of_lesions + 1)]
+
+            individual_lesion_df = pd.DataFrame(individual_lesion_stats)
+            individual_lesion_df.to_csv(individual_quantification_file)
+
+            summary_stats['number_of_lesions'] = number_of_lesions
+            summary_stats['largest_lesion_volume'] = individual_lesion_df['total_lesion_volume'].max()
+            summary_stats['average_lesion_volume'] = individual_lesion_df['total_lesion_volume'].mean()
+
+

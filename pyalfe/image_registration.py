@@ -14,23 +14,94 @@ except ImportError:
 
 class ImageRegistration(ABC):
     @abstractmethod
-    def register_rigid(self, fixed, moving, transform_output, init_transform):
+    def register_rigid(self, fixed, moving, transform_output, init_transform=None):
+        """Performs rigid registration (translation and rotation).
+
+        Parameters
+        ----------
+        fixed: str or Path
+            The path to the fixed image.
+        moving: str or Path
+            The path to the moving image
+        transform_output: str to Path
+            The path to the rigid transform output
+        init_transform: str or Path
+            The path to the file storing the initial transform.
+            The default is None.
+
+        Returns
+        -------
+
+        """
         pass
 
     @abstractmethod
     def register_affine(
         self, fixed, moving, transform_output, init_transform, fast=False
     ):
+        """Performs affine registration (scaling, translation, and rotation)
+
+        Parameters
+        ----------
+        fixed: str or Path
+            The path to the fixed image.
+        moving: str or Path
+            The path to the moving image
+        transform_output: str to Path
+            The path to the rigid transform output
+        init_transform: str or Path
+            The path to the file storing the initial transform.
+            The default is None.
+        fast: bool
+            If True a fast method of registration is used with possibly lower
+            quality results. The default is False.
+
+        Returns
+        -------
+
+        """
         pass
 
     @abstractmethod
     def register_deformable(
         self, fixed, moving, transform_output, affine_transform=None
     ):
+        """Performs deformable registration.
+
+        Parameters
+        ----------
+        fixed: str or Path
+            The path to the fixed image.
+        moving: str or Path
+            The path to the moving image
+        transform_output: str to Path
+            The path to the rigid transform output
+        affine_transform: str or Path
+            The path to a file storing an affine transform that will be applied
+            to the moving image before the deformable registration. Default is
+            None.
+
+        Returns
+        -------
+
+        """
         pass
 
     @abstractmethod
     def reslice(self, fixed, moving, registration_output, *transform):
+        """Applies registration transforms to the moving image.
+
+        Parameters
+        ----------
+        fixed
+        moving
+        registration_output
+        transform
+
+        Returns
+        -------
+
+        """
         pass
 
 
@@ -38,6 +109,13 @@ class GreedyRegistration(ImageRegistration):
     logger = logging.getLogger('GreedyRegistration')
 
     def __init__(self, greedy_path=GREEDY_PATH, threads=16):
+        """
+
+        Parameters
+        ----------
+        greedy_path
+        threads
+        """
         self.greedy_path = greedy_path
         self.threads = threads
 

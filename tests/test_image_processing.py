@@ -1,5 +1,6 @@
 import os
 import shutil
+from pathlib import Path
 from unittest import TestCase
 
 import numpy as np
@@ -26,7 +27,7 @@ def get_image_processor_test(image_processor: ImageProcessor) -> type[TestCase]:
             create_nifti(input_image_path, data)
 
             threshold1 = self.get_image_path('threshold1.nii.gz')
-            image_processor.threshold(input_image_path, threshold1, 0, 1, 0, 1)
+            image_processor.threshold(Path(input_image_path), threshold1, 0, 1, 0, 1)
             np.testing.assert_array_equal(
                 get_nifti_data(threshold1), np.array([[[0, 0, 1, 1]]])
             )

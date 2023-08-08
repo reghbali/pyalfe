@@ -22,7 +22,7 @@ class Initialization(Task):
         self.logger.info('Running initialization task.')
         for modality in self.modalities:
 
-            classified_image = self.pipeline_dir.get_classified_image(
+            classified_image = self.pipeline_dir.get_input_image(
                 accession, modality
             )
             if not os.path.exists(classified_image):
@@ -31,7 +31,7 @@ class Initialization(Task):
                     f'Skipping initialization for {modality}'
                 )
                 continue
-            processed_image = self.pipeline_dir.get_processed_image(accession, modality)
+            processed_image = self.pipeline_dir.get_output_image(accession, modality)
             self.logger.info(f'processing {modality} for accession {accession}.')
             if os.path.exists(processed_image):
                 if self.overwrite:

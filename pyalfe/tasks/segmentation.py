@@ -78,7 +78,7 @@ class MultiModalitySegmentation(Segmentation):
             else:
                 resampling_target = None
 
-            image_path = self.pipeline_dir.get_processed_image(
+            image_path = self.pipeline_dir.get_output_image(
                 accession,
                 modality,
                 image_type=self.image_type_input,
@@ -92,7 +92,7 @@ class MultiModalitySegmentation(Segmentation):
                 return
             image_path_list.append(image_path)
 
-        pred_path = self.pipeline_dir.get_processed_image(
+        pred_path = self.pipeline_dir.get_output_image(
             accession=accession,
             modality=self.output_modality,
             image_type=f'{self.image_type_output}_pred',
@@ -103,13 +103,13 @@ class MultiModalitySegmentation(Segmentation):
             self.predict([image_path_list], [pred_path])
 
         if self.image_type_mask:
-            mask_path = self.pipeline_dir.get_processed_image(
+            mask_path = self.pipeline_dir.get_output_image(
                 accession, self.output_modality, image_type=self.image_type_mask
             )
         else:
             mask_path = None
 
-        seg_path = self.pipeline_dir.get_processed_image(
+        seg_path = self.pipeline_dir.get_output_image(
             accession=accession,
             modality=self.output_modality,
             image_type=self.image_type_output,
@@ -120,7 +120,7 @@ class MultiModalitySegmentation(Segmentation):
             self.post_process([pred_path], mask_path, [seg_path])
 
         if self.components:
-            comp_path = self.pipeline_dir.get_processed_image(
+            comp_path = self.pipeline_dir.get_output_image(
             accession=accession,
             modality=self.output_modality,
             image_type=f'{self.image_type_output}_comp',

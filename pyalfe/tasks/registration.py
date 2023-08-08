@@ -29,7 +29,7 @@ class CrossModalityRegistration:
 
     def run(self, accession):
         for target in self.modalities_target:
-            target_image = self.pipeline_dir.get_processed_image(
+            target_image = self.pipeline_dir.get_output_image(
                 accession, target, image_type=self.image_type
             )
             if not os.path.exists(target_image):
@@ -39,7 +39,7 @@ class CrossModalityRegistration:
                 )
                 continue
             for modality in self.modalities_all:
-                modality_image = self.pipeline_dir.get_processed_image(
+                modality_image = self.pipeline_dir.get_output_image(
                     accession, modality, image_type=self.image_type
                 )
                 if not os.path.exists(modality_image):
@@ -48,13 +48,13 @@ class CrossModalityRegistration:
                         f'Skipping CrossModalityRegistration for {modality}.'
                     )
                     continue
-                output = self.pipeline_dir.get_processed_image(
+                output = self.pipeline_dir.get_output_image(
                     accession,
                     modality,
                     image_type=self.image_type,
                     resampling_target=target,
                 )
-                transform = self.pipeline_dir.get_processed_image(
+                transform = self.pipeline_dir.get_output_image(
                     accession,
                     modality,
                     image_type=self.image_type,
@@ -103,7 +103,7 @@ class Resampling:
 
     def run(self, accession):
         for target in self.modalities_target:
-            target_image = self.pipeline_dir.get_processed_image(
+            target_image = self.pipeline_dir.get_output_image(
                 accession, target, image_type=self.image_type
             )
             if not os.path.exists(target_image):
@@ -112,7 +112,7 @@ class Resampling:
                 )
                 continue
 
-            transform = self.pipeline_dir.get_processed_image(
+            transform = self.pipeline_dir.get_output_image(
                 accession=accession,
                 modality=Modality.T1,
                 image_type=self.image_type,
@@ -124,14 +124,14 @@ class Resampling:
 
                 roi_sub_dir = roi_properties['sub_dir']
                 if roi_properties['type'] == 'derived':
-                    roi_image = self.pipeline_dir.get_processed_image(
+                    roi_image = self.pipeline_dir.get_output_image(
                         accession=accession,
                         modality=Modality.T1,
                         image_type=roi_key,
                         sub_dir_name=roi_sub_dir,
                     )
                 elif roi_properties['type'] == 'template':
-                    roi_image = self.pipeline_dir.get_processed_image(
+                    roi_image = self.pipeline_dir.get_output_image(
                         accession=accession,
                         modality=Modality.T1,
                         resampling_origin=roi_key,
@@ -147,7 +147,7 @@ class Resampling:
                         ' Skipping resampling for this image.'
                     )
 
-                output = self.pipeline_dir.get_processed_image(
+                output = self.pipeline_dir.get_output_image(
                     accession,
                     modality=target,
                     image_type=roi_key,
@@ -180,10 +180,10 @@ class T1Registration:
         self.overwrite = overwrite
 
     def run(self, accession):
-        t1ss = self.pipeline_dir.get_processed_image(
+        t1ss = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='skullstripped'
         )
-        t1ss_mask = self.pipeline_dir.get_processed_image(
+        t1ss_mask = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='skullstripped_mask'
         )
 
@@ -197,7 +197,7 @@ class T1Registration:
         template_mask = roi_dict['template_mask']['source']
         template_reg_sub_dir = roi_dict['template']['sub_dir']
 
-        rigid_init_transform = self.pipeline_dir.get_processed_image(
+        rigid_init_transform = self.pipeline_dir.get_output_image(
             accession,
             Modality.T1,
             resampling_origin='template',
@@ -214,7 +214,7 @@ class T1Registration:
                 t1ss_mask, template_mask, rigid_init_transform
             )
 
-        self.pipeline_dir.get_processed_image(
+        self.pipeline_dir.get_output_image(
             accession,
             Modality.T1,
             resampling_origin='template',
@@ -222,7 +222,7 @@ class T1Registration:
             sub_dir_name=template_reg_sub_dir,
         )
 
-        affine_transform = self.pipeline_dir.get_processed_image(
+        affine_transform = self.pipeline_dir.get_output_image(
             accession,
             Modality.T1,
             resampling_origin='template',
@@ -241,7 +241,7 @@ class T1Registration:
                 fast=False,
             )
 
-        warp_transform = self.pipeline_dir.get_processed_image(
+        warp_transform = self.pipeline_dir.get_output_image(
             accession,
             Modality.T1,
             resampling_origin='template',
@@ -261,7 +261,7 @@ class T1Registration:
         for roi_key, roi_properties in roi_dict.items():
             if roi_properties['type'] != 'template':
                 continue
-            roi_template_to_t1 = self.pipeline_dir.get_processed_image(
+            roi_template_to_t1 = self.pipeline_dir.get_output_image(
                 accession,
                 Modality.T1,
                 resampling_origin=roi_key,

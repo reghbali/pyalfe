@@ -43,14 +43,14 @@ class TestTask(TestCase):
     def setUp(self) -> None:
         self.test_dir = os.path.join('/tmp', 'tasks_tests')
 
-        processed_dir = os.path.join(self.test_dir, 'processed')
-        classified_dir = os.path.join(self.test_dir, 'classified')
+        processed_dir = os.path.join(self.test_dir, 'output')
+        classified_dir = os.path.join(self.test_dir, 'input')
 
         os.makedirs(processed_dir)
         os.mkdir(classified_dir)
 
         self.pipeline_dir = DefaultALFEDataDir(
-            processed=processed_dir, classified=classified_dir
+            output=processed_dir, input=classified_dir
         )
 
     def tearDown(self) -> None:
@@ -66,7 +66,7 @@ class TestInitialization(TestTask):
 
         accession = '12345'
         for modality in modalities:
-            classified_image = self.pipeline_dir.get_classified_image(
+            classified_image = self.pipeline_dir.get_input_image(
                 accession, modality
             )
             pathlib.Path(classified_image).parent.mkdir(parents=True, exist_ok=True)
@@ -76,7 +76,7 @@ class TestInitialization(TestTask):
         task.run(accession)
 
         for modality in modalities:
-            modality_image = self.pipeline_dir.get_processed_image(accession, modality)
+            modality_image = self.pipeline_dir.get_output_image(accession, modality)
             self.assertTrue(os.path.exists(modality_image))
 
     def test_run2(self):
@@ -87,7 +87,7 @@ class TestInitialization(TestTask):
 
         accession = '12345'
         for modality in modalities_existing:
-            classified_image = self.pipeline_dir.get_classified_image(
+            classified_image = self.pipeline_dir.get_input_image(
                 accession, modality
             )
             pathlib.Path(classified_image).parent.mkdir(parents=True, exist_ok=True)
@@ -97,7 +97,7 @@ class TestInitialization(TestTask):
         task.run(accession)
 
         for modality in modalities_existing:
-            modality_image = self.pipeline_dir.get_processed_image(accession, modality)
+            modality_image = self.pipeline_dir.get_output_image(accession, modality)
             self.assertTrue(os.path.exists(modality_image))
 
 
@@ -112,8 +112,8 @@ class TestSkullstripping(TestTask):
         )
 
         for modality in modalities:
-            self.pipeline_dir.create_dir('processed', accession, modality)
-            input_image = self.pipeline_dir.get_processed_image(accession, modality)
+            self.pipeline_dir.create_dir('output', accession, modality)
+            input_image = self.pipeline_dir.get_output_image(accession, modality)
             shutil.copy(
                 os.path.join(
                     'tests', 'data', 'brainomics02', f'anat_{modality.lower()}.nii.gz'
@@ -122,7 +122,7 @@ class TestSkullstripping(TestTask):
             )
         task.run(accession)
         for modality in modalities:
-            ss_image_path = self.pipeline_dir.get_processed_image(
+            ss_image_path = self.pipeline_dir.get_output_image(
                 accession, modality, image_type='skullstripped'
             )
             self.assertTrue(os.path.exists(ss_image_path))
@@ -133,8 +133,8 @@ class TestT1Preprocessing(TestTask):
         accession = 'brainomics02'
         task = T1Preprocessing(Convert3DProcessor, self.pipeline_dir)
 
-        self.pipeline_dir.create_dir('processed', accession, Modality.T1)
-        input_image = self.pipeline_dir.get_processed_image(
+        self.pipeline_dir.create_dir('output', accession, Modality.T1)
+        input_image = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='skullstripped'
         )
         shutil.copy(
@@ -142,7 +142,7 @@ class TestT1Preprocessing(TestTask):
         )
 
         task.run(accession)
-        output = self.pipeline_dir.get_processed_image(
+        output = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='trim_upsampled'
         )
         self.assertTrue(os.path.exists(output))
@@ -157,7 +157,7 @@ class TestCrossModalityRegistration(TestTask):
             GreedyRegistration(), self.pipeline_dir, modalities, modalities_target
         )
         for modality in modalities:
-            self.pipeline_dir.create_dir('processed', accession, modality)
+            self.pipeline_dir.create_dir('output', accession, modality)
             shutil.copy(
                 os.path.join(
                     'tests',
@@ -165,7 +165,7 @@ class TestCrossModalityRegistration(TestTask):
                     'brats10',
                     f'BraTS19_2013_10_1_{modality.lower()}.nii.gz',
                 ),
-                self.pipeline_dir.get_processed_image(
+                self.pipeline_dir.get_output_image(
                     accession, modality, task.image_type
                 ),
             )
@@ -174,7 +174,7 @@ class TestCrossModalityRegistration(TestTask):
             for modality in modalities:
 
                 print(modality, target)
-                output = self.pipeline_dir.get_processed_image(
+                output = self.pipeline_dir.get_output_image(
                     accession, modality, f'to_{target}_{task.image_type}'
                 )
                 self.assertTrue(os.path.exists(output), f'{output} is missing.')
@@ -189,11 +189,11 @@ class TestSingleModalitySegmentation(TestTask):
             model, Convert3DProcessor(), self.pipeline_dir, Modality.FLAIR
         )
 
-        self.pipeline_dir.create_dir('processed', accession, modality)
-        input_path = self.pipeline_dir.get_processed_image(
+        self.pipeline_dir.create_dir('output', accession, modality)
+        input_path = self.pipeline_dir.get_output_image(
             accession, modality, image_type=task.image_type_input
         )
-        output_path = self.pipeline_dir.get_processed_image(
+        output_path = self.pipeline_dir.get_output_image(
             accession,
             modality,
             image_type=task.image_type_output,
@@ -223,13 +223,13 @@ class TestMultiModalitySegmentation(TestTask):
         )
 
         for modality in modality_list:
-            self.pipeline_dir.create_dir('processed', accession, modality)
+            self.pipeline_dir.create_dir('output', accession, modality)
             if modality != output_modality:
                 resampling_target = output_modality
             else:
                 resampling_target = None
 
-            input_path = self.pipeline_dir.get_processed_image(
+            input_path = self.pipeline_dir.get_output_image(
                 accession,
                 modality,
                 image_type=task.image_type_input,
@@ -244,7 +244,7 @@ class TestMultiModalitySegmentation(TestTask):
                 ),
                 input_path,
             )
-        output_path = self.pipeline_dir.get_processed_image(
+        output_path = self.pipeline_dir.get_output_image(
             accession,
             output_modality,
             image_type=task.image_type_output,
@@ -257,7 +257,7 @@ class TestMultiModalitySegmentation(TestTask):
 class TestT1Postprocessing(TestTask):
     def test_run(self):
         accession = 'brats10'
-        input_path = self.pipeline_dir.get_processed_image(
+        input_path = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='skullstripped'
         )
         shutil.copy(
@@ -269,7 +269,7 @@ class TestT1Postprocessing(TestTask):
             ),
             input_path,
         )
-        tissue_seg_path = self.pipeline_dir.get_processed_image(
+        tissue_seg_path = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='tissue_seg'
         )
         shutil.copy(
@@ -281,7 +281,7 @@ class TestT1Postprocessing(TestTask):
             ),
             tissue_seg_path,
         )
-        output_path = self.pipeline_dir.get_processed_image(
+        output_path = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='VentriclesSeg'
         )
         task = T1Postprocessing(Convert3DProcessor, self.pipeline_dir)
@@ -301,7 +301,7 @@ class TestResampling(TestTask):
         )
 
         for modality in modalities:
-            self.pipeline_dir.create_dir('processed', accession, modality)
+            self.pipeline_dir.create_dir('output', accession, modality)
             shutil.copy(
                 os.path.join(
                     'tests',
@@ -309,7 +309,7 @@ class TestResampling(TestTask):
                     'brats10',
                     f'BraTS19_2013_10_1_{modality.lower()}.nii.gz',
                 ),
-                self.pipeline_dir.get_processed_image(
+                self.pipeline_dir.get_output_image(
                     accession, modality, task.image_type
                 ),
             )
@@ -317,11 +317,11 @@ class TestResampling(TestTask):
         template = roi_dict['template']['source']
         template_reg_sub_dir = roi_dict['template']['sub_dir']
 
-        t1ss = self.pipeline_dir.get_processed_image(
+        t1ss = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='skullstripped'
         )
 
-        template_to_t1 = self.pipeline_dir.get_processed_image(
+        template_to_t1 = self.pipeline_dir.get_output_image(
             accession,
             Modality.T1,
             resampling_origin='template',
@@ -329,7 +329,7 @@ class TestResampling(TestTask):
             sub_dir_name=template_reg_sub_dir,
         )
 
-        affine_transform = self.pipeline_dir.get_processed_image(
+        affine_transform = self.pipeline_dir.get_output_image(
             accession,
             Modality.T1,
             resampling_origin='template',
@@ -344,7 +344,7 @@ class TestResampling(TestTask):
         for modality in modalities_target:
             shutil.copy(
                 affine_transform,
-                self.pipeline_dir.get_processed_image(
+                self.pipeline_dir.get_output_image(
                     accession,
                     Modality.T1,
                     image_type=task.image_type,
@@ -353,7 +353,7 @@ class TestResampling(TestTask):
                     extension='.mat',
                 ),
             )
-        warp_transform = self.pipeline_dir.get_processed_image(
+        warp_transform = self.pipeline_dir.get_output_image(
             accession,
             Modality.T1,
             resampling_origin='template',
@@ -375,14 +375,14 @@ class TestResampling(TestTask):
 
         for roi_key, roi_properties in roi_dict.items():
             if roi_properties['type'] == 'derived':
-                roi_image = self.pipeline_dir.get_processed_image(
+                roi_image = self.pipeline_dir.get_output_image(
                     accession,
                     Modality.T1,
                     image_type=roi_key,
                     sub_dir_name=roi_properties['sub_dir'],
                 )
             elif roi_properties['type'] == 'registered':
-                roi_image = self.pipeline_dir.get_processed_image(
+                roi_image = self.pipeline_dir.get_output_image(
                     accession,
                     Modality.T1,
                     resampling_origin=roi_key,
@@ -397,7 +397,7 @@ class TestResampling(TestTask):
             for roi_key, roi_properties in roi_dict.items():
                 if roi_properties['type'] not in ['derived', 'registered']:
                     continue
-                output_path = self.pipeline_dir.get_processed_image(
+                output_path = self.pipeline_dir.get_output_image(
                     accession,
                     modality,
                     image_type=roi_key,
@@ -419,8 +419,8 @@ class TestT1Registration(TestTask):
             pipeline_dir=self.pipeline_dir,
         )
 
-        self.pipeline_dir.create_dir('processed', accession, Modality.T1)
-        input_image = self.pipeline_dir.get_processed_image(
+        self.pipeline_dir.create_dir('output', accession, Modality.T1)
+        input_image = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='skullstripped'
         )
         shutil.copy(
@@ -431,7 +431,7 @@ class TestT1Registration(TestTask):
         task.run(accession)
 
         for roi_key in ['template', 'lobes']:
-            output_path = self.pipeline_dir.get_processed_image(
+            output_path = self.pipeline_dir.get_output_image(
                 accession,
                 Modality.T1,
                 resampling_origin=roi_key,

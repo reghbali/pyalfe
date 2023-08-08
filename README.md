@@ -4,7 +4,7 @@ Python implementation of Automated Lesion and Feature Extraction (ALFE) pipeline
 
 ## Requirements
 
-PyALFE supports Linux x86-64, Mac x86-64, and Mac arm64 and requires python >= 3.9.
+PyALFE supports Linux x86-64, Mac x86-64, and Mac arm64 and requires python 3.9+.
 
 ### Image registration and processing
 PyALFE can be configured to use either [Greedy](https://greedy.readthedocs.io/en/latest/) or [AntsPy](https://antspy.readthedocs.io/en/latest/registration.html) registration tools.
@@ -78,7 +78,7 @@ which prompt the you to enter the following required configurations:
 
 #### Classified directory
 ```bash
-Enter classified image directory: /path/to/my_mri_data
+Enter input image directory: /path/to/my_mri_data
 ```
 The classified directory (`classified_dir`) is the input directory to PyALFE and should be organized by accessions (or session ids). Inside the directory for each accession there should be a directory for each available modality.
 Here is an example that follow ALFE default structure:
@@ -133,7 +133,7 @@ my_mri_data
 ```
 #### Processed directory
 ```bash
-Enter classified image directory: /path/to/processed_data_dir
+Enter input image directory: /path/to/processed_data_dir
 ```
 The processed image directory (`processed_dir`) is where ALFE writes all its output to.
 It can be any valid path in filesystem that user have write access to.

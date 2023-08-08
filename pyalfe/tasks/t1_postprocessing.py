@@ -20,7 +20,7 @@ class T1Postprocessing(Task):
         self.overwrite = overwrite
 
     def run(self, accession):
-        tissue_segmentation_image = self.pipeline_dir.get_processed_image(
+        tissue_segmentation_image = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='tissue_seg'
         )
 
@@ -32,23 +32,23 @@ class T1Postprocessing(Task):
 
         tissues = [tissue.name.lower() for tissue in Tissue]
         tissue_images = {
-            it: self.pipeline_dir.get_processed_image(
+            it: self.pipeline_dir.get_output_image(
                 accession, Modality.T1, image_type=it
             )
             for it in tissues
         }
 
-        output_image = self.pipeline_dir.get_processed_image(
+        output_image = self.pipeline_dir.get_output_image(
             accession, Modality.T1, 'VentriclesSeg'
         )
 
-        output_dist_image = self.pipeline_dir.get_processed_image(
+        output_dist_image = self.pipeline_dir.get_output_image(
             accession, Modality.T1, 'VentriclesDist'
         )
 
         if self.overwrite or not os.path.exists(output_image):
 
-            temp_image = self.pipeline_dir.get_processed_image(
+            temp_image = self.pipeline_dir.get_output_image(
                 accession, Modality.T1, image_type='ventricles_intermediate_temp'
             )
 
