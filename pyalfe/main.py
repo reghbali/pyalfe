@@ -91,7 +91,7 @@ def run(
     accession: str,
     config: str,
     input_dir: str,
-    processed_dir: str,
+    output_dir: str,
     modalities: str,
     targets: str,
     dominant_tissue: str,
@@ -109,7 +109,7 @@ def run(
         the path to the config file.
     input_dir : str
         the path to the directory containing input input images
-    processed_dir : str
+    outpu_dir : str
         the path to the directory containing output output images
     modalities : str
         comma separated modalities
@@ -135,8 +135,8 @@ def run(
 
     if input_dir:
         options['input_dir'] = input_dir
-    if processed_dir:
-        options['processed_dir'] = processed_dir
+    if output_dir:
+        options['processed_dir'] = output_dir
     if modalities:
         options['modalities'] = modalities
     if targets:
