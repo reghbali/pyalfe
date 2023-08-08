@@ -377,5 +377,6 @@ class Quantification:
             summary_stats['number_of_lesions'] = number_of_lesions
             summary_stats['largest_lesion_volume'] = individual_lesion_df['total_lesion_volume'].max()
             summary_stats['average_lesion_volume'] = individual_lesion_df['total_lesion_volume'].mean()
+            pd.Series(summary_stats).to_csv(summary_quantification_file)
 
 
