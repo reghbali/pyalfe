@@ -7,7 +7,7 @@ on:
 jobs:
   integration_test_linux:
     name: linux-cp${{ matrix.python-version }}-${{ matrix.OPTIONS_NAME }}
-    if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body.toLowerCase(), 'please run integration')
+    if: ${{ github.event.issue.pull_request }} && contains(${{ github.event.comment.body.toLowerCase() }}, 'please run integration')
     runs-on: ubuntu-latest
 
     strategy:
