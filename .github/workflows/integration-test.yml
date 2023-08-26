@@ -1,18 +1,18 @@
-name: Test
+name: Integration Test
 
-on: [push, pull_request]
-
-permissions:
-  contents: read
+on:
+  issue-comment:
+    types: [created]
 
 jobs:
-  unit_test_linux:
+  integration_test_linux:
     name: linux-cp${{ matrix.python-version }}-${{ matrix.OPTIONS_NAME }}
+    if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body.toLowerCase(), 'please run integration')
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        python-version: ["3.9", "3.11"]
+        python-version: [ "3.9", "3.11" ]
 
     steps:
       - name: Checkout
@@ -59,4 +59,4 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest tests/unit
+          pytest tests/integration

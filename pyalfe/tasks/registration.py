@@ -8,6 +8,24 @@ from pyalfe.roi import roi_dict
 
 
 class CrossModalityRegistration:
+    """This task registers all the modalities to target modalities.
+
+    Attributes
+    ----------
+    image_registration: ImageRegistration
+        The image registration object.
+    pipeline_dir: PipelineDataDir
+        The pipeline data directory object.
+    modalities_all: list[Modality]
+        All the modalities that should be registered to the target modalities.
+    modalities_target: list[Modality]
+        Target modalities.
+    image_type: str
+        The type of image that should be registered. Default is `skullstripped`.
+    overwrite: bool
+        Whether to overwrite existing registered images. Default is True.
+
+    """
 
     logger = logging.getLogger('CrossModalityRegistration')
 
@@ -83,6 +101,25 @@ class CrossModalityRegistration:
 
 
 class Resampling:
+    """This task resamples all the ROIs in the T1 space to
+    the target modalities.
+
+    Attributes
+    ----------
+    image_processor: ImageProcessor
+        The image processor object.
+    image_registration: ImageRegistration
+        Image registration object.
+    pipeline_dir: PipelineDataDir
+        The pipeline data directory object.
+    modalities_target: list[Modality]
+        Target modalities.
+    image_type: str
+        The type of image that should be registered. Default is `skullstripped`.
+    overwrite: bool
+        Whether to overwrite existing registered images. Default is True.
+    """
+
     logger = logging.getLogger('Resampling')
 
     def __init__(
@@ -165,6 +202,20 @@ class Resampling:
 
 
 class T1Registration:
+    """This task registers anatomical templates to the T1 image.
+
+    Attributes
+    ----------
+    image_processor: ImageProcessor
+        Image processor object.
+    image_registration: ImageRegistration
+        Image registration object.
+    pipeline_dir: PipelineDataDir
+        The pipeline data directory object.
+    overwrite: bool
+        Whether to overwrite existing registered images. Default is True.
+    """
+
     logger = logging.getLogger('T1Registration')
 
     def __init__(

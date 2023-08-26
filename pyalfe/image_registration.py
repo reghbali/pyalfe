@@ -4,7 +4,6 @@ import shutil
 from abc import ABC, abstractmethod
 
 from pyalfe.interfaces.greedy import Greedy
-from pyalfe.tools import GREEDY_PATH
 
 try:
     import ants
@@ -93,10 +92,15 @@ class ImageRegistration(ABC):
 
         Parameters
         ----------
-        fixed
-        moving
-        registration_output
-        transform
+        fixed: str or Path
+            The path to the fixed image.
+        moving: str or Path
+            The path to the moving image
+        registration_output: str or Path
+            The path where output image will be written to.
+        transform: str or Path
+            The path to one or more transformation files that should be applied
+            sequentially.
 
         Returns
         -------
@@ -106,16 +110,24 @@ class ImageRegistration(ABC):
 
 
 class GreedyRegistration(ImageRegistration):
+    """
+    Implementation of ImageRegistration that uses the Greedy tool.
+    https://greedy.readthedocs.io/en/latest/
+
+    Greedy needs to be installed on your machine to use this class.
+
+    Attributes
+    ----------
+    greedy_path: str or Path
+       The path to the greedy binary. Default is greedy.
+
+    threads: int
+       Number of cpu threads to be passed to greedy. Default is 16.
+    """
+
     logger = logging.getLogger('GreedyRegistration')
 
-    def __init__(self, greedy_path=GREEDY_PATH, threads=16):
-        """
-
-        Parameters
-        ----------
-        greedy_path
-        threads
-        """
+    def __init__(self, greedy_path='greedy', threads=16):
         self.greedy_path = greedy_path
         self.threads = threads
 
@@ -191,6 +203,11 @@ class GreedyRegistration(ImageRegistration):
 
 
 class AntsRegistration(ImageRegistration):
+    """
+    Implementation of ImageRegistration that uses ANTsPy
+    https://github.com/ANTsX/ANTsPy
+    """
+
     def reslice(self, fixed, moving, registration_output, *transform):
         fixed_image = ants.image_read(fixed)
         moving_image = ants.image_read(moving)

@@ -3,7 +3,6 @@ import pathlib
 import shutil
 from unittest import TestCase
 
-import pandas as pd
 import numpy as np
 
 from pyalfe.data_structure import DefaultALFEDataDir, Modality, Tissue
@@ -31,10 +30,8 @@ class MockInferenceModel(InferenceModel):
     def __init__(self, number_of_inputs=1):
         self.number_of_inputs = number_of_inputs
 
-    def predict_cases(self, image_tuple_list, output_list):
-        for image_tuple, output in zip(image_tuple_list, output_list):
-            assert len(image_tuple) == self.number_of_inputs
-            shutil.copy(image_tuple[-1], output)
+    def predict_cases(self, input_images, output):
+        shutil.copy(input_images[-1], output)
 
 
 class TestTask(TestCase):
@@ -50,7 +47,7 @@ class TestTask(TestCase):
         os.mkdir(classified_dir)
 
         self.pipeline_dir = DefaultALFEDataDir(
-            output=processed_dir, input=classified_dir
+            output_dir=processed_dir, input_dir=classified_dir
         )
 
     def tearDown(self) -> None:
@@ -66,9 +63,7 @@ class TestInitialization(TestTask):
 
         accession = '12345'
         for modality in modalities:
-            classified_image = self.pipeline_dir.get_input_image(
-                accession, modality
-            )
+            classified_image = self.pipeline_dir.get_input_image(accession, modality)
             pathlib.Path(classified_image).parent.mkdir(parents=True, exist_ok=True)
             with open(classified_image, 'wb') as _:
                 pass
@@ -87,9 +82,7 @@ class TestInitialization(TestTask):
 
         accession = '12345'
         for modality in modalities_existing:
-            classified_image = self.pipeline_dir.get_input_image(
-                accession, modality
-            )
+            classified_image = self.pipeline_dir.get_input_image(accession, modality)
             pathlib.Path(classified_image).parent.mkdir(parents=True, exist_ok=True)
             with open(classified_image, 'wb') as _:
                 pass
@@ -424,9 +417,7 @@ class TestT1Registration(TestTask):
             accession, Modality.T1, image_type='skullstripped'
         )
         shutil.copy(
-            os.path.join(
-                'tests', 'data', 'brainomics02', 'anat_t1.nii.gz'),
-            input_image
+            os.path.join('tests', 'data', 'brainomics02', 'anat_t1.nii.gz'), input_image
         )
         task.run(accession)
 
@@ -448,73 +439,74 @@ class TestQuantification(TestTask):
             Modality.T2,
             Modality.T1Post,
             Modality.FLAIR,
-            Modality.ASL]
+            Modality.ASL,
+        ]
         modalities_target = [Modality.T1Post, Modality.FLAIR]
 
         lesion_seg = np.array([0, 0, 1, 1, 0, 1, 1, 0, 0])
         tissue_seg = np.array([0, 1, 2, 3, 4, 5, 6, 3, 0])
         ventricles_distance = np.array([3, 2, 1, 0, 0, 1, 2, 3, 4])
         modality_images = {
-            Modality.T1: np.array([0., 1., 1., 1., 1., 1., 3., 3., 0.]),
-            Modality.T2: np.array([0., 2., 2., 0., 4., 2., 2., 2., 0.]),
-            Modality.ADC: np.array([0., 3., 0., 1., 0.5, 2., 2., 1., 1.]),
-            Modality.T1Post: np.array([0., 1., 2., 2., 0., 5., 3., 2., 1.]),
-            Modality.FLAIR: np.array([0., 2., 1., 2., 1., 3., 2., 2., 1.])}
+            Modality.T1: np.array([0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 3.0, 3.0, 0.0]),
+            Modality.T2: np.array([0.0, 2.0, 2.0, 0.0, 4.0, 2.0, 2.0, 2.0, 0.0]),
+            Modality.ADC: np.array([0.0, 3.0, 0.0, 1.0, 0.5, 2.0, 2.0, 1.0, 1.0]),
+            Modality.T1Post: np.array([0.0, 1.0, 2.0, 2.0, 0.0, 5.0, 3.0, 2.0, 1.0]),
+            Modality.FLAIR: np.array([0.0, 2.0, 1.0, 2.0, 1.0, 3.0, 2.0, 2.0, 1.0]),
+        }
         template_images = {
-            'template': np.array([0., 1., 1., 1., 1., 1., 2., 1., 0.]),
+            'template': np.array([0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 0.0]),
             'lobes': np.array([0, 1, 2, 3, 4, 5, 6, 6, 0]),
-            'CorpusCallosum': np.array([0, 1, 2, 3, 4, 5, 4, 3, 0, 0])}
+            'CorpusCallosum': np.array([0, 1, 2, 3, 4, 5, 4, 3, 0, 0]),
+        }
         voxel_volume = 2
         task = Quantification(
             pipeline_dir=self.pipeline_dir,
             modalities_all=modalities,
             modalities_target=modalities_target,
-            dominant_tissue=Tissue.WHITE_MATTER)
+            dominant_tissue=Tissue.WHITE_MATTER,
+        )
         lesion_stats = task.get_lesion_stats(
             lesion_seg=lesion_seg,
             tissue_seg=tissue_seg,
             ventricles_distance=ventricles_distance,
             modality_images=modality_images,
             template_images=template_images,
-            voxel_volume=voxel_volume)
+            voxel_volume=voxel_volume,
+        )
         print(lesion_stats)
-        self.assertEqual(8., lesion_stats['total_lesion_volume'])
-        self.assertEqual(0., lesion_stats['lesion_volume_in_background'])
-        self.assertEqual(0., lesion_stats['lesion_volume_in_csf'])
-        self.assertEqual(2.,
-                         lesion_stats['lesion_volume_in_cortical_gray_matter'])
-        self.assertEqual(2., lesion_stats['lesion_volume_in_white_matter'])
-        self.assertEqual(0., lesion_stats['lesion_volume_in_deep_gray_matter'])
-        self.assertEqual(2., lesion_stats['lesion_volume_in_brain_stem'])
-        self.assertEqual(2., lesion_stats['lesion_volume_in_cerebellum'])
+        self.assertEqual(8.0, lesion_stats['total_lesion_volume'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_background'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_csf'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_cortical_gray_matter'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_white_matter'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_deep_gray_matter'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_brain_stem'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_cerebellum'])
         self.assertEqual(0.5, lesion_stats['relative_T1_signal'])
         self.assertEqual(0.75, lesion_stats['relative_T2_signal'])
         self.assertEqual(1.25, lesion_stats['relative_ADC_signal'])
         self.assertEqual(1.25, lesion_stats['mean_adc_signal'])
         self.assertEqual(0.0, lesion_stats['min_adc_signal'])
         self.assertEqual(1.5, lesion_stats['median_adc_signal'])
-        np.testing.assert_almost_equal(0.15,
-            lesion_stats['five_percentile_adc_signal'])
-        np.testing.assert_almost_equal(2.0,
-            lesion_stats['ninety_five_percentile_adc_signal'])
-        self.assertEqual(1.5,
-            lesion_stats['relative_T1Post_signal'])
-        self.assertEqual(1.0,
-            lesion_stats['relative_FLAIR_signal'])
+        np.testing.assert_almost_equal(0.15, lesion_stats['five_percentile_adc_signal'])
+        np.testing.assert_almost_equal(
+            2.0, lesion_stats['ninety_five_percentile_adc_signal']
+        )
+        self.assertEqual(1.5, lesion_stats['relative_T1Post_signal'])
+        self.assertEqual(1.0, lesion_stats['relative_FLAIR_signal'])
         self.assertEqual(2.0, lesion_stats['enhancement'])
-        self.assertEqual(1., lesion_stats['average_dist_to_ventricles_(voxels)'])
-        self.assertEqual(0., lesion_stats['minimum_dist_to_Ventricles_(voxels)'])
-        self.assertEqual(0., lesion_stats['lesion_volume_in_Frontal'])
-        self.assertEqual(0., lesion_stats['percentage_volume_in_Frontal'])
-        self.assertEqual(2., lesion_stats['lesion_volume_in_Parietal'], 2)
-        self.assertEqual(25., lesion_stats['percentage_volume_in_Parietal'])
-        self.assertEqual(2., lesion_stats['lesion_volume_in_Occipital'])
-        self.assertEqual(25., lesion_stats['percentage_volume_in_Occipital'])
-        self.assertEqual(4., lesion_stats['lesion_volume_in_Temporal'], 4)
-        self.assertEqual(50., lesion_stats['percentage_volume_in_Temporal'])
-        self.assertEqual(8., lesion_stats['lesion_volume_in_CorpusCallosum'])
-        self.assertEqual(100.,
-            lesion_stats['percentage_volume_in_CorpusCallosum'])
+        self.assertEqual(1.0, lesion_stats['average_dist_to_ventricles_(voxels)'])
+        self.assertEqual(0.0, lesion_stats['minimum_dist_to_Ventricles_(voxels)'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_Frontal'])
+        self.assertEqual(0.0, lesion_stats['percentage_volume_in_Frontal'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_Parietal'], 2)
+        self.assertEqual(25.0, lesion_stats['percentage_volume_in_Parietal'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_Occipital'])
+        self.assertEqual(25.0, lesion_stats['percentage_volume_in_Occipital'])
+        self.assertEqual(4.0, lesion_stats['lesion_volume_in_Temporal'], 4)
+        self.assertEqual(50.0, lesion_stats['percentage_volume_in_Temporal'])
+        self.assertEqual(8.0, lesion_stats['lesion_volume_in_CorpusCallosum'])
+        self.assertEqual(100.0, lesion_stats['percentage_volume_in_CorpusCallosum'])
 
     def test_get_lesion_stats_with_label(self):
         modalities = [
@@ -522,28 +514,32 @@ class TestQuantification(TestTask):
             Modality.T2,
             Modality.T1Post,
             Modality.FLAIR,
-            Modality.ASL]
+            Modality.ASL,
+        ]
         modalities_target = [Modality.T1Post, Modality.FLAIR]
 
         lesion_seg_comp = np.array([0, 0, 1, 2, 0, 2, 2, 0, 0])
         tissue_seg = np.array([0, 1, 2, 3, 4, 5, 6, 3, 0])
         ventricles_distance = np.array([3, 2, 1, 0, 0, 1, 2, 3, 4])
         modality_images = {
-            Modality.T1: np.array([0., 1., 1., 2., 1., 1., 3., 4., 0.]),
-            Modality.T2: np.array([0., 2., 2., 0., 4., 9., 0., 4., 0.]),
-            Modality.ADC: np.array([0., 3., 0., 4., 0.5, 6., 5., 4., 1.]),
-            Modality.T1Post: np.array([0., 1., 2., 2., 0., 5., 2., 2., 1.]),
-            Modality.FLAIR: np.array([0., 2., 1., 2., 1., 2., 2., 2., 1.])}
+            Modality.T1: np.array([0.0, 1.0, 1.0, 2.0, 1.0, 1.0, 3.0, 4.0, 0.0]),
+            Modality.T2: np.array([0.0, 2.0, 2.0, 0.0, 4.0, 9.0, 0.0, 4.0, 0.0]),
+            Modality.ADC: np.array([0.0, 3.0, 0.0, 4.0, 0.5, 6.0, 5.0, 4.0, 1.0]),
+            Modality.T1Post: np.array([0.0, 1.0, 2.0, 2.0, 0.0, 5.0, 2.0, 2.0, 1.0]),
+            Modality.FLAIR: np.array([0.0, 2.0, 1.0, 2.0, 1.0, 2.0, 2.0, 2.0, 1.0]),
+        }
         template_images = {
-            'template': np.array([0., 1., 1., 1., 1., 1., 2., 1., 0.]),
+            'template': np.array([0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 0.0]),
             'lobes': np.array([0, 1, 2, 3, 4, 5, 6, 6, 0]),
-            'CorpusCallosum': np.array([0, 1, 2, 3, 4, 5, 4, 3, 0, 0])}
+            'CorpusCallosum': np.array([0, 1, 2, 3, 4, 5, 4, 3, 0, 0]),
+        }
         voxel_volume = 2
         task = Quantification(
             pipeline_dir=self.pipeline_dir,
             modalities_all=modalities,
             modalities_target=modalities_target,
-            dominant_tissue=Tissue.WHITE_MATTER)
+            dominant_tissue=Tissue.WHITE_MATTER,
+        )
         lesion_stats = task.get_lesion_stats(
             lesion_seg=lesion_seg_comp,
             tissue_seg=tissue_seg,
@@ -551,44 +547,41 @@ class TestQuantification(TestTask):
             modality_images=modality_images,
             template_images=template_images,
             voxel_volume=voxel_volume,
-            lesion_label=2.)
+            lesion_label=2.0,
+        )
         print(lesion_stats)
-        self.assertEqual(6., lesion_stats['total_lesion_volume'])
-        self.assertEqual(0., lesion_stats['lesion_volume_in_background'])
-        self.assertEqual(0., lesion_stats['lesion_volume_in_csf'])
-        self.assertEqual(0.,
-                         lesion_stats['lesion_volume_in_cortical_gray_matter'])
-        self.assertEqual(2., lesion_stats['lesion_volume_in_white_matter'])
-        self.assertEqual(0., lesion_stats['lesion_volume_in_deep_gray_matter'])
-        self.assertEqual(2., lesion_stats['lesion_volume_in_brain_stem'])
-        self.assertEqual(2., lesion_stats['lesion_volume_in_cerebellum'])
+        self.assertEqual(6.0, lesion_stats['total_lesion_volume'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_background'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_csf'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_cortical_gray_matter'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_white_matter'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_deep_gray_matter'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_brain_stem'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_cerebellum'])
         self.assertEqual(0.5, lesion_stats['relative_T1_signal'])
         self.assertEqual(0.75, lesion_stats['relative_T2_signal'])
         self.assertEqual(1.25, lesion_stats['relative_ADC_signal'])
         self.assertEqual(5.0, lesion_stats['mean_adc_signal'])
         self.assertEqual(4.0, lesion_stats['min_adc_signal'])
         self.assertEqual(5.0, lesion_stats['median_adc_signal'])
-        self.assertEqual(1.5,
-                         lesion_stats['relative_T1Post_signal'])
-        self.assertEqual(1.0,
-                         lesion_stats['relative_FLAIR_signal'])
+        self.assertEqual(1.5, lesion_stats['relative_T1Post_signal'])
+        self.assertEqual(1.0, lesion_stats['relative_FLAIR_signal'])
         self.assertEqual(1.5, lesion_stats['enhancement'])
-        self.assertEqual(1., lesion_stats['average_dist_to_ventricles_(voxels)'])
-        self.assertEqual(0., lesion_stats['minimum_dist_to_Ventricles_(voxels)'])
-        self.assertEqual(0., lesion_stats['lesion_volume_in_Frontal'])
-        self.assertEqual(0., lesion_stats['percentage_volume_in_Frontal'])
-        self.assertEqual(0., lesion_stats['lesion_volume_in_Parietal'], 2)
-        self.assertEqual(0., lesion_stats['percentage_volume_in_Parietal'])
-        self.assertEqual(2., lesion_stats['lesion_volume_in_Occipital'])
-        self.assertEqual(100. / 3, lesion_stats['percentage_volume_in_Occipital'])
-        self.assertEqual(4., lesion_stats['lesion_volume_in_Temporal'], 4)
-        self.assertEqual(200 / 3., lesion_stats['percentage_volume_in_Temporal'])
-        self.assertEqual(6., lesion_stats['lesion_volume_in_CorpusCallosum'])
-        self.assertEqual(100.,
-                         lesion_stats['percentage_volume_in_CorpusCallosum'])
+        self.assertEqual(1.0, lesion_stats['average_dist_to_ventricles_(voxels)'])
+        self.assertEqual(0.0, lesion_stats['minimum_dist_to_Ventricles_(voxels)'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_Frontal'])
+        self.assertEqual(0.0, lesion_stats['percentage_volume_in_Frontal'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_Parietal'], 2)
+        self.assertEqual(0.0, lesion_stats['percentage_volume_in_Parietal'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_Occipital'])
+        self.assertEqual(100.0 / 3, lesion_stats['percentage_volume_in_Occipital'])
+        self.assertEqual(4.0, lesion_stats['lesion_volume_in_Temporal'], 4)
+        self.assertEqual(200 / 3.0, lesion_stats['percentage_volume_in_Temporal'])
+        self.assertEqual(6.0, lesion_stats['lesion_volume_in_CorpusCallosum'])
+        self.assertEqual(100.0, lesion_stats['percentage_volume_in_CorpusCallosum'])
 
     def test_get_brain_volume_stats(self):
-        brain_seg = np.array( [0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0])
+        brain_seg = np.array([0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0])
         tissue_seg = np.array([0, 0, 1, 2, 3, 4, 5, 6, 1, 0, 0])
         ventricles_seg = np.array([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0])
 
@@ -596,18 +589,19 @@ class TestQuantification(TestTask):
             pipeline_dir=self.pipeline_dir,
             modalities_all=[Modality.T1],
             modalities_target=[Modality.T1Post],
-            dominant_tissue=Tissue.WHITE_MATTER)
+            dominant_tissue=Tissue.WHITE_MATTER,
+        )
 
         volume_stats = task.get_brain_volume_stats(
-            brain_seg, tissue_seg, ventricles_seg, voxel_volume=2.)
+            brain_seg, tissue_seg, ventricles_seg, voxel_volume=2.0
+        )
 
-        self.assertEqual(14., volume_stats['total_brain_volume'])
-        self.assertEqual(2., volume_stats['total_ventricles_volume'])
-        self.assertEqual(8., volume_stats['volume_of_background'])
-        self.assertEqual(4., volume_stats['volume_of_csf'])
-        self.assertEqual(2., volume_stats['volume_of_cortical_gray_matter'])
-        self.assertEqual(2., volume_stats['volume_of_white_matter'])
-        self.assertEqual(2., volume_stats['volume_of_deep_gray_matter'])
-        self.assertEqual(2., volume_stats['volume_of_brain_stem'])
-        self.assertEqual(2., volume_stats['volume_of_cerebellum'])
-
+        self.assertEqual(14.0, volume_stats['total_brain_volume'])
+        self.assertEqual(2.0, volume_stats['total_ventricles_volume'])
+        self.assertEqual(8.0, volume_stats['volume_of_background'])
+        self.assertEqual(4.0, volume_stats['volume_of_csf'])
+        self.assertEqual(2.0, volume_stats['volume_of_cortical_gray_matter'])
+        self.assertEqual(2.0, volume_stats['volume_of_white_matter'])
+        self.assertEqual(2.0, volume_stats['volume_of_deep_gray_matter'])
+        self.assertEqual(2.0, volume_stats['volume_of_brain_stem'])
+        self.assertEqual(2.0, volume_stats['volume_of_cerebellum'])

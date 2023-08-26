@@ -6,6 +6,19 @@ from pyalfe.tasks import Task
 
 
 class Initialization(Task):
+    """This task creates the output directories and links to the original
+    images in the input directory for each modality.
+
+    Attributes
+    ----------
+    pipeline_dir: PipelineDataDir
+        The pipeline data directory object.
+    modalities: list[Modality]
+        All the modalities for which output directories should be generated.
+    overwrite: bool
+        Whether to overwrite any existing output image. Default is True.
+    """
+
     logger = logging.getLogger('Initialization')
 
     def __init__(
@@ -22,9 +35,7 @@ class Initialization(Task):
         self.logger.info('Running initialization task.')
         for modality in self.modalities:
 
-            classified_image = self.pipeline_dir.get_input_image(
-                accession, modality
-            )
+            classified_image = self.pipeline_dir.get_input_image(accession, modality)
             if not os.path.exists(classified_image):
                 self.logger.warning(
                     f'{modality} image is missing.'

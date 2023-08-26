@@ -42,7 +42,7 @@ class TestIntegration(TestCase):
             shutil.copy(
                 os.path.join(
                     pathlib.Path(__file__).parent.resolve(),
-                    'data',
+                    '../data',
                     'cnsl_patient',
                     f'{modality}.nii.gz',
                 ),

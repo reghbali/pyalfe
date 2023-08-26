@@ -6,6 +6,18 @@ from pyalfe.image_processing import ImageProcessor
 
 
 class T1Preprocessing:
+    """This task preforms neck trimming and upsampling on the T1 image
+    if needed.
+
+    Attributes
+    ----------
+    image_processor: ImageProcessor
+        The image processor object.
+    pipeline_dir: PipelineDataDir
+        The pipeline data directory object.
+    overwrite: bool
+        Whether to overwrite any existing output image. Default is True.
+    """
 
     logger = logging.getLogger('T1Preprocessing')
 

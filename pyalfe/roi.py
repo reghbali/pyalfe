@@ -1,16 +1,8 @@
 import importlib
 
 roi_dict = {
-    'tissue_seg': {
-        'sub_dir': None,
-        'measure': 'volume',
-        'type': 'derived'
-    },
-    'VentriclesDist': {
-        'sub_dir': None,
-        'measure': 'distance',
-        'type': 'derived'
-    },
+    'tissue_seg': {'sub_dir': None, 'measure': 'volume', 'type': 'derived'},
+    'VentriclesDist': {'sub_dir': None, 'measure': 'distance', 'type': 'derived'},
     'template': {
         'sub_dir': 'TemplateReg',
         'measure': 'volume',
@@ -61,7 +53,7 @@ roi_dict = {
             'CorpusCallosum_Genu': [2],
             'CorpusCallosum_Body': [3],
             'CorpusCallosum_Isthmus': [4],
-            'CorpusCallosum_Splenium': [5]
-        }
-    }
+            'CorpusCallosum_Splenium': [5],
+        },
+    },
 }

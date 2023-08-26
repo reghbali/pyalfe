@@ -143,7 +143,8 @@ def get_image_processor_test(image_processor: ImageProcessor) -> type[TestCase]:
 
         def test_resample_new_dim(self):
             data = np.concatenate(
-                [np.ones((16, 16, 8)), np.zeros((16, 16, 8))], axis=-1)
+                [np.ones((16, 16, 8)), np.zeros((16, 16, 8))], axis=-1
+            )
             input_image_path = self.get_image_path('input.nii.gz')
             create_nifti(input_image_path, data)
 
@@ -272,9 +273,9 @@ def get_image_processor_test(image_processor: ImageProcessor) -> type[TestCase]:
             output = self.get_image_path('output.nii.gz')
             image_processor.label_mask_comp(input_image_path, output)
             np.testing.assert_array_equal(
-                get_nifti_data(output),
-                np.array([[[3, 0, 2, 2, 0, 1, 1, 1, 0]]])
+                get_nifti_data(output), np.array([[[3, 0, 2, 2, 0, 1, 1, 1, 0]]])
             )
+
     return TestImageProcessor
 
 

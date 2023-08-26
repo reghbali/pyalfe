@@ -16,6 +16,7 @@ class ImageProcessor(ABC):
     """
     Abstract class for ImageProcessors.
     """
+
     @staticmethod
     @abstractmethod
     def threshold(
@@ -538,8 +539,10 @@ class NilearnProcessor(ImageProcessor):
             int(ratios[2] * dims[2]),
         )
         resampled_image = nilearn.image.resample_img(
-            image, target_affine=new_affine,
-            target_shape=new_dims, interpolation='nearest'
+            image,
+            target_affine=new_affine,
+            target_shape=new_dims,
+            interpolation='nearest',
         )
         nib.save(resampled_image, output)
 
@@ -612,9 +615,7 @@ class NilearnProcessor(ImageProcessor):
         sorted_labels = labels[1:][np.argsort(freq[1:])[::-1]]
         sorted_comp_data = np.zeros_like(comp_image_data)
         for index, label in enumerate(sorted_labels):
-            sorted_comp_data[comp_image_data==label] = index + 1
+            sorted_comp_data[comp_image_data == label] = index + 1
 
-        sorted_comp_image = nib.Nifti1Image(
-            sorted_comp_data, nib_image.affine)
+        sorted_comp_image = nib.Nifti1Image(sorted_comp_data, nib_image.affine)
         nib.save(sorted_comp_image, output)
-

@@ -92,7 +92,7 @@ my_mri_data
 │   └───sub-123_FLAIR.nii.gz
 │───dwi
 │    │───sub-123_dwi.nii.gz
-│    └───sub-123_md.nii.gz   
+│    └───sub-123_md.nii.gz
 │───swi
 │    └───sub-123_swi.nii.gz
 └───perf

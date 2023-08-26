@@ -28,9 +28,7 @@ def download(assets):
     for asset in assets:
         if asset == 'models':
             archive_path = download_archive(
-                url=models_url,
-                download_dir=MODELS_PATH,
-                archive_name='models.tar.gz'
+                url=models_url, download_dir=MODELS_PATH, archive_name='models.tar.gz'
             )
             extract_tar(archive_path, MODELS_PATH)
         elif asset == 'greedy':
@@ -136,7 +134,7 @@ def run(
     if input_dir:
         options['input_dir'] = input_dir
     if output_dir:
-        options['processed_dir'] = output_dir
+        options['output_dir'] = output_dir
     if modalities:
         options['modalities'] = modalities
     if targets:
