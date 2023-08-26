@@ -1,7 +1,7 @@
 name: Integration Test
 
 on:
-  issue-comment:
+  issue_comment:
     types: [created]
 
 jobs:
