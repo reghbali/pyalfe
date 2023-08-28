@@ -6,76 +6,313 @@ import nibabel as nib
 import scipy.ndimage
 import nilearn.image
 import nilearn.masking
+import nilearn.regions
 import numpy as np
 
 from pyalfe.interfaces.c3d import C3D
 
 
 class ImageProcessor(ABC):
+    """
+    Abstract class for ImageProcessors.
+    """
+
     @staticmethod
     @abstractmethod
     def threshold(
         image, output, lower_bound, upper_bound, inside_target, outside_target
     ):
+        """Maps any pixel with value inside
+        ``[lower_bound , upper_bound]`` to
+        ``inside_target`` and any other pixel is mapped to ``outsize_target``.
+        The thresholded image is written to `output` path.
+
+        Parameters
+        ----------
+        image: str or Path
+            Path to the input image.
+        output: str or Path
+            Path to the output image.
+        lower_bound: int or float
+            The lower_bound for the threshold.
+        upper_bound: int or float
+            The upper_bound for the threshold.
+        inside_target: int or float
+            The target value for pixels that are inside
+             ``[lower_bound , upper_bound]``.
+        outside_target: int or float
+            The target value for the pixels that are not inside
+             ``[lower_bound , upper_bound]``.
+
+        Returns
+        -------
+
+        """
         pass
 
     @staticmethod
     def binarize(image, output):
+        """Converts an image to binary by mapping all non-zero values to 1.
+
+        Parameters
+        ----------
+        image: str or Path
+            Path to the input image.
+        output: str or Path
+            Path to the output image.
+
+        Returns
+        -------
+
+        """
         pass
 
     @staticmethod
     @abstractmethod
     def mask(image, mask, output):
+        """Masks the input image by setting the pixels outside the mask to zero.
+
+        Parameters
+        ----------
+        image: str or Path
+            Path to the input image.
+        mask: str or Path
+            Path to the mask.
+        output: str or Path
+            Path to the output image.
+
+        Returns
+        -------
+
+        """
         pass
 
     @staticmethod
     @abstractmethod
     def largest_mask_comp(image, output):
+        """Finds the largest connected component of an input mask image.
+
+        Parameters
+        ----------
+        image: str or Path
+            Path to the input image.
+        output: str or Path
+            Path to the output image.
+
+        Returns
+        -------
+
+        """
         pass
 
     @staticmethod
     @abstractmethod
     def holefill(binary_image, output):
+        """Fills the holes in a binary image.
+
+        Parameters
+        ----------
+        binary_image: str or Path
+            Path to the input binary image.
+        output: str or Path
+            Path to the output image.
+
+        Returns
+        -------
+
+        """
         pass
 
     @staticmethod
     @abstractmethod
     def reslice_to_ref(ref_image, moving_image, output):
+        """Reslice the moving_image to the ref_image space.
+
+        Parameters
+        ----------
+        ref_image: str or Path
+            Path to the reference image.
+        moving_image: str or Path
+            Path to the moving image.
+        output: str or Path
+            Path to the output image.
+
+        Returns
+        -------
+
+        """
         pass
 
     @staticmethod
     @abstractmethod
     def resample_new_dim(image, output, dim1, dim2, dim3, percent=True):
+        """Resample the image to new dimensions keeping the bounding box
+         the same, but changing the number of voxels in the image.
+
+        Parameters
+        ----------
+        image: str or Path
+            Path to the reference image.
+        output: str or Path
+            Path to the output image.
+        dim1: int
+            By default the percentage of the original number of voxels
+            along the first dimension. For example, to double
+            the number of voxel along the first dimension, set
+            ``dim1 = 200``. If ``percent`` is False, then ``dim1``
+            is interpreted as the number of voxels in the output image.
+        dim2: int
+            Similar to ``dim1`` but for the second axis.
+        dim3: int
+            Similar to ``dim1`` but for the third axis.
+        percent: bool
+            If True, the ``dim1``, ``dim2``, and ``dim3`` will be
+            interpreted as percentages of the original dimensions
+            instead of raw dimensions.
+
+        Returns
+        -------
+
+        """
         pass
 
     @staticmethod
     @abstractmethod
     def get_dims(image):
+        """
+
+        Parameters
+        ----------
+        image: str or Path
+            The path to the image.
+
+        Returns
+        -------
+        list
+            Returns a list containing the dimensions of the image.
+
+        """
         pass
 
     @staticmethod
     @abstractmethod
     def trim_largest_comp(image, output, trim_margin_vec):
+        """Finds the largest component of the image and trims the margins.
+        This function is usefull for trimming neck.
+
+        Parameters
+        ----------
+        image: str or Path
+            The path to the image.
+        output: str or Path
+            Path to the output image.
+        trim_margin_vec: tuple or list
+            The trim margins along the three dimensions in voxels. For example,
+            (5, 5, 5) means 5 voxels of background are kept in each side of
+            each dimension.
+
+        Returns
+        -------
+
+        """
         pass
 
     @staticmethod
     @abstractmethod
     def set_subtract(binary_image_1, binary_image_2, output):
+        """Performs set subtraction between of second binary image
+        from the first binary image.
+
+        Parameters
+        ----------
+        binary_image_1: str or Path
+            The path to the first image.
+        binary_image_2: str or Path
+            The path to the second image.
+        output: str or Path
+            Path to the output image.
+
+        Returns
+        -------
+
+        """
         pass
 
     @staticmethod
     @abstractmethod
     def dilate(binary_image, rad, output):
+        """Dilates binary image by a certain radius given in voxels.
+
+        Parameters
+        ----------
+        binary_image: str or Path
+            The path to the binary image.
+        rad: int
+            The dilation radius in voxels.
+        output
+
+        Returns
+        -------
+
+        """
         pass
 
     @staticmethod
     @abstractmethod
     def union(binary_image_1, binary_image_2, output):
+        """Takes the union of two binary images.
+
+        Parameters
+        ----------
+        binary_image_1: str or Path
+            The path to the first image.
+        binary_image_2: str or Path
+            The path to the second image.
+        output: str or Path
+            Path to the output image.
+
+        Returns
+        -------
+
+        """
         pass
 
     @staticmethod
     @abstractmethod
     def distance_transform(binary_image, output):
+        """Computes the distance transform of a binary image.
+
+        Parameters
+        ----------
+        binary_image: str or Path
+            The path to the binary image.
+        output: str or Path
+            Path to the output image.
+
+        Returns
+        -------
+
+        """
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def label_mask_comp(binary_image, output):
+        """Assigns discrete labels to the connected component of a 1 region in
+        a binary image. The largest region is assigned label 1,
+        the second largest is assigned label 2 and so forth.
+
+        Parameters
+        ----------
+        binary_image: str or Path
+            The path to the binary image.
+        output: str or Path
+            Path to the output image.
+
+        Returns
+        -------
+
+        """
         pass
 
 
@@ -184,6 +421,11 @@ class Convert3DProcessor(ImageProcessor):
     def distance_transform(binary_image, output):
         c3d = C3D()
         c3d.operand(binary_image).sdt().clip(0, 'inf').out(output).run()
+
+    @staticmethod
+    def label_mask_comp(binary_image, output):
+        c3d = C3D()
+        c3d.operand(binary_image).comp().out(output).run()
 
 
 class NilearnProcessor(ImageProcessor):
@@ -297,7 +539,10 @@ class NilearnProcessor(ImageProcessor):
             int(ratios[2] * dims[2]),
         )
         resampled_image = nilearn.image.resample_img(
-            image, target_affine=new_affine, target_shape=new_dims
+            image,
+            target_affine=new_affine,
+            target_shape=new_dims,
+            interpolation='nearest',
         )
         nib.save(resampled_image, output)
 
@@ -360,3 +605,17 @@ class NilearnProcessor(ImageProcessor):
         dist_data = scipy.ndimage.distance_transform_edt(1 - data)
         dist_image = nib.Nifti1Image(dist_data, nib_image.affine)
         nib.save(dist_image, output)
+
+    @staticmethod
+    def label_mask_comp(binary_image, output):
+        nib_image = nilearn.image.load_img(binary_image)
+        comp_image = nilearn.regions.connected_label_regions(nib_image)
+        comp_image_data = comp_image.get_fdata()
+        labels, freq = np.unique(comp_image_data, return_counts=True)
+        sorted_labels = labels[1:][np.argsort(freq[1:])[::-1]]
+        sorted_comp_data = np.zeros_like(comp_image_data)
+        for index, label in enumerate(sorted_labels):
+            sorted_comp_data[comp_image_data == label] = index + 1
+
+        sorted_comp_image = nib.Nifti1Image(sorted_comp_data, nib_image.affine)
+        nib.save(sorted_comp_image, output)

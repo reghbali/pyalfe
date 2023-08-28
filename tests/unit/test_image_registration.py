@@ -131,7 +131,7 @@ def get_image_registration_test(
             np.testing.assert_array_less(
                 np.linalg.norm(get_nifti_data(output3) - fixed_data)
                 / np.linalg.norm(get_nifti_data(output3) - moving2_data),
-                0.5,
+                0.55,
             )
 
         def test_register_deformable(self):

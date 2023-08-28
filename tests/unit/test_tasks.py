@@ -30,10 +30,8 @@ class MockInferenceModel(InferenceModel):
     def __init__(self, number_of_inputs=1):
         self.number_of_inputs = number_of_inputs
 
-    def predict_cases(self, image_tuple_list, output_list):
-        for image_tuple, output in zip(image_tuple_list, output_list):
-            assert len(image_tuple) == self.number_of_inputs
-            shutil.copy(image_tuple[-1], output)
+    def predict_cases(self, input_images, output):
+        shutil.copy(input_images[-1], output)
 
 
 class TestTask(TestCase):
@@ -42,14 +40,14 @@ class TestTask(TestCase):
     def setUp(self) -> None:
         self.test_dir = os.path.join('/tmp', 'tasks_tests')
 
-        processed_dir = os.path.join(self.test_dir, 'processed')
-        classified_dir = os.path.join(self.test_dir, 'classified')
+        processed_dir = os.path.join(self.test_dir, 'output')
+        classified_dir = os.path.join(self.test_dir, 'input')
 
         os.makedirs(processed_dir)
         os.mkdir(classified_dir)
 
         self.pipeline_dir = DefaultALFEDataDir(
-            processed=processed_dir, classified=classified_dir
+            output_dir=processed_dir, input_dir=classified_dir
         )
 
     def tearDown(self) -> None:
@@ -65,9 +63,7 @@ class TestInitialization(TestTask):
 
         accession = '12345'
         for modality in modalities:
-            classified_image = self.pipeline_dir.get_classified_image(
-                accession, modality
-            )
+            classified_image = self.pipeline_dir.get_input_image(accession, modality)
             pathlib.Path(classified_image).parent.mkdir(parents=True, exist_ok=True)
             with open(classified_image, 'wb') as _:
                 pass
@@ -75,7 +71,7 @@ class TestInitialization(TestTask):
         task.run(accession)
 
         for modality in modalities:
-            modality_image = self.pipeline_dir.get_processed_image(accession, modality)
+            modality_image = self.pipeline_dir.get_output_image(accession, modality)
             self.assertTrue(os.path.exists(modality_image))
 
     def test_run2(self):
@@ -86,9 +82,7 @@ class TestInitialization(TestTask):
 
         accession = '12345'
         for modality in modalities_existing:
-            classified_image = self.pipeline_dir.get_classified_image(
-                accession, modality
-            )
+            classified_image = self.pipeline_dir.get_input_image(accession, modality)
             pathlib.Path(classified_image).parent.mkdir(parents=True, exist_ok=True)
             with open(classified_image, 'wb') as _:
                 pass
@@ -96,7 +90,7 @@ class TestInitialization(TestTask):
         task.run(accession)
 
         for modality in modalities_existing:
-            modality_image = self.pipeline_dir.get_processed_image(accession, modality)
+            modality_image = self.pipeline_dir.get_output_image(accession, modality)
             self.assertTrue(os.path.exists(modality_image))
 
 
@@ -111,8 +105,8 @@ class TestSkullstripping(TestTask):
         )
 
         for modality in modalities:
-            self.pipeline_dir.create_dir('processed', accession, modality)
-            input_image = self.pipeline_dir.get_processed_image(accession, modality)
+            self.pipeline_dir.create_dir('output', accession, modality)
+            input_image = self.pipeline_dir.get_output_image(accession, modality)
             shutil.copy(
                 os.path.join(
                     'tests', 'data', 'brainomics02', f'anat_{modality.lower()}.nii.gz'
@@ -121,7 +115,7 @@ class TestSkullstripping(TestTask):
             )
         task.run(accession)
         for modality in modalities:
-            ss_image_path = self.pipeline_dir.get_processed_image(
+            ss_image_path = self.pipeline_dir.get_output_image(
                 accession, modality, image_type='skullstripped'
             )
             self.assertTrue(os.path.exists(ss_image_path))
@@ -132,8 +126,8 @@ class TestT1Preprocessing(TestTask):
         accession = 'brainomics02'
         task = T1Preprocessing(Convert3DProcessor, self.pipeline_dir)
 
-        self.pipeline_dir.create_dir('processed', accession, Modality.T1)
-        input_image = self.pipeline_dir.get_processed_image(
+        self.pipeline_dir.create_dir('output', accession, Modality.T1)
+        input_image = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='skullstripped'
         )
         shutil.copy(
@@ -141,7 +135,7 @@ class TestT1Preprocessing(TestTask):
         )
 
         task.run(accession)
-        output = self.pipeline_dir.get_processed_image(
+        output = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='trim_upsampled'
         )
         self.assertTrue(os.path.exists(output))
@@ -156,7 +150,7 @@ class TestCrossModalityRegistration(TestTask):
             GreedyRegistration(), self.pipeline_dir, modalities, modalities_target
         )
         for modality in modalities:
-            self.pipeline_dir.create_dir('processed', accession, modality)
+            self.pipeline_dir.create_dir('output', accession, modality)
             shutil.copy(
                 os.path.join(
                     'tests',
@@ -164,7 +158,7 @@ class TestCrossModalityRegistration(TestTask):
                     'brats10',
                     f'BraTS19_2013_10_1_{modality.lower()}.nii.gz',
                 ),
-                self.pipeline_dir.get_processed_image(
+                self.pipeline_dir.get_output_image(
                     accession, modality, task.image_type
                 ),
             )
@@ -173,7 +167,7 @@ class TestCrossModalityRegistration(TestTask):
             for modality in modalities:
 
                 print(modality, target)
-                output = self.pipeline_dir.get_processed_image(
+                output = self.pipeline_dir.get_output_image(
                     accession, modality, f'to_{target}_{task.image_type}'
                 )
                 self.assertTrue(os.path.exists(output), f'{output} is missing.')
@@ -188,11 +182,11 @@ class TestSingleModalitySegmentation(TestTask):
             model, Convert3DProcessor(), self.pipeline_dir, Modality.FLAIR
         )
 
-        self.pipeline_dir.create_dir('processed', accession, modality)
-        input_path = self.pipeline_dir.get_processed_image(
+        self.pipeline_dir.create_dir('output', accession, modality)
+        input_path = self.pipeline_dir.get_output_image(
             accession, modality, image_type=task.image_type_input
         )
-        output_path = self.pipeline_dir.get_processed_image(
+        output_path = self.pipeline_dir.get_output_image(
             accession,
             modality,
             image_type=task.image_type_output,
@@ -222,13 +216,13 @@ class TestMultiModalitySegmentation(TestTask):
         )
 
         for modality in modality_list:
-            self.pipeline_dir.create_dir('processed', accession, modality)
+            self.pipeline_dir.create_dir('output', accession, modality)
             if modality != output_modality:
                 resampling_target = output_modality
             else:
                 resampling_target = None
 
-            input_path = self.pipeline_dir.get_processed_image(
+            input_path = self.pipeline_dir.get_output_image(
                 accession,
                 modality,
                 image_type=task.image_type_input,
@@ -243,7 +237,7 @@ class TestMultiModalitySegmentation(TestTask):
                 ),
                 input_path,
             )
-        output_path = self.pipeline_dir.get_processed_image(
+        output_path = self.pipeline_dir.get_output_image(
             accession,
             output_modality,
             image_type=task.image_type_output,
@@ -256,7 +250,7 @@ class TestMultiModalitySegmentation(TestTask):
 class TestT1Postprocessing(TestTask):
     def test_run(self):
         accession = 'brats10'
-        input_path = self.pipeline_dir.get_processed_image(
+        input_path = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='skullstripped'
         )
         shutil.copy(
@@ -268,7 +262,7 @@ class TestT1Postprocessing(TestTask):
             ),
             input_path,
         )
-        tissue_seg_path = self.pipeline_dir.get_processed_image(
+        tissue_seg_path = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='tissue_seg'
         )
         shutil.copy(
@@ -280,7 +274,7 @@ class TestT1Postprocessing(TestTask):
             ),
             tissue_seg_path,
         )
-        output_path = self.pipeline_dir.get_processed_image(
+        output_path = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='VentriclesSeg'
         )
         task = T1Postprocessing(Convert3DProcessor, self.pipeline_dir)
@@ -300,7 +294,7 @@ class TestResampling(TestTask):
         )
 
         for modality in modalities:
-            self.pipeline_dir.create_dir('processed', accession, modality)
+            self.pipeline_dir.create_dir('output', accession, modality)
             shutil.copy(
                 os.path.join(
                     'tests',
@@ -308,7 +302,7 @@ class TestResampling(TestTask):
                     'brats10',
                     f'BraTS19_2013_10_1_{modality.lower()}.nii.gz',
                 ),
-                self.pipeline_dir.get_processed_image(
+                self.pipeline_dir.get_output_image(
                     accession, modality, task.image_type
                 ),
             )
@@ -316,11 +310,11 @@ class TestResampling(TestTask):
         template = roi_dict['template']['source']
         template_reg_sub_dir = roi_dict['template']['sub_dir']
 
-        t1ss = self.pipeline_dir.get_processed_image(
+        t1ss = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='skullstripped'
         )
 
-        template_to_t1 = self.pipeline_dir.get_processed_image(
+        template_to_t1 = self.pipeline_dir.get_output_image(
             accession,
             Modality.T1,
             resampling_origin='template',
@@ -328,7 +322,7 @@ class TestResampling(TestTask):
             sub_dir_name=template_reg_sub_dir,
         )
 
-        affine_transform = self.pipeline_dir.get_processed_image(
+        affine_transform = self.pipeline_dir.get_output_image(
             accession,
             Modality.T1,
             resampling_origin='template',
@@ -343,7 +337,7 @@ class TestResampling(TestTask):
         for modality in modalities_target:
             shutil.copy(
                 affine_transform,
-                self.pipeline_dir.get_processed_image(
+                self.pipeline_dir.get_output_image(
                     accession,
                     Modality.T1,
                     image_type=task.image_type,
@@ -352,7 +346,7 @@ class TestResampling(TestTask):
                     extension='.mat',
                 ),
             )
-        warp_transform = self.pipeline_dir.get_processed_image(
+        warp_transform = self.pipeline_dir.get_output_image(
             accession,
             Modality.T1,
             resampling_origin='template',
@@ -374,14 +368,14 @@ class TestResampling(TestTask):
 
         for roi_key, roi_properties in roi_dict.items():
             if roi_properties['type'] == 'derived':
-                roi_image = self.pipeline_dir.get_processed_image(
+                roi_image = self.pipeline_dir.get_output_image(
                     accession,
                     Modality.T1,
                     image_type=roi_key,
                     sub_dir_name=roi_properties['sub_dir'],
                 )
             elif roi_properties['type'] == 'registered':
-                roi_image = self.pipeline_dir.get_processed_image(
+                roi_image = self.pipeline_dir.get_output_image(
                     accession,
                     Modality.T1,
                     resampling_origin=roi_key,
@@ -396,7 +390,7 @@ class TestResampling(TestTask):
             for roi_key, roi_properties in roi_dict.items():
                 if roi_properties['type'] not in ['derived', 'registered']:
                     continue
-                output_path = self.pipeline_dir.get_processed_image(
+                output_path = self.pipeline_dir.get_output_image(
                     accession,
                     modality,
                     image_type=roi_key,
@@ -418,19 +412,17 @@ class TestT1Registration(TestTask):
             pipeline_dir=self.pipeline_dir,
         )
 
-        self.pipeline_dir.create_dir('processed', accession, Modality.T1)
-        input_image = self.pipeline_dir.get_processed_image(
+        self.pipeline_dir.create_dir('output', accession, Modality.T1)
+        input_image = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='skullstripped'
         )
         shutil.copy(
-            os.path.join(
-                'tests', 'data', 'brainomics02', 'anat_t1.nii.gz'),
-            input_image
+            os.path.join('tests', 'data', 'brainomics02', 'anat_t1.nii.gz'), input_image
         )
         task.run(accession)
 
         for roi_key in ['template', 'lobes']:
-            output_path = self.pipeline_dir.get_processed_image(
+            output_path = self.pipeline_dir.get_output_image(
                 accession,
                 Modality.T1,
                 resampling_origin=roi_key,
@@ -447,73 +439,169 @@ class TestQuantification(TestTask):
             Modality.T2,
             Modality.T1Post,
             Modality.FLAIR,
-            Modality.ASL]
+            Modality.ASL,
+        ]
         modalities_target = [Modality.T1Post, Modality.FLAIR]
 
         lesion_seg = np.array([0, 0, 1, 1, 0, 1, 1, 0, 0])
         tissue_seg = np.array([0, 1, 2, 3, 4, 5, 6, 3, 0])
         ventricles_distance = np.array([3, 2, 1, 0, 0, 1, 2, 3, 4])
         modality_images = {
-            Modality.T1: np.array([0, 1, 1, 1, 1, 1, 3, 3, 0]),
-            Modality.T2: np.array([0, 2, 2, 0, 4, 2, 2, 2, 0]),
-            Modality.ADC: np.array([0, 3, 0, 1, 0.5, 2, 2, 1, 1]),
-            Modality.T1Post: np.array([0, 1, 2, 2, 0, 5, 3, 2, 1]),
-            Modality.FLAIR: np.array([0, 2, 1, 2, 1, 3, 2, 2, 1])}
+            Modality.T1: np.array([0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 3.0, 3.0, 0.0]),
+            Modality.T2: np.array([0.0, 2.0, 2.0, 0.0, 4.0, 2.0, 2.0, 2.0, 0.0]),
+            Modality.ADC: np.array([0.0, 3.0, 0.0, 1.0, 0.5, 2.0, 2.0, 1.0, 1.0]),
+            Modality.T1Post: np.array([0.0, 1.0, 2.0, 2.0, 0.0, 5.0, 3.0, 2.0, 1.0]),
+            Modality.FLAIR: np.array([0.0, 2.0, 1.0, 2.0, 1.0, 3.0, 2.0, 2.0, 1.0]),
+        }
         template_images = {
-            'template': np.array([0, 1, 1, 1, 1, 1, 2, 1, 0]),
+            'template': np.array([0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 0.0]),
             'lobes': np.array([0, 1, 2, 3, 4, 5, 6, 6, 0]),
-            'CorpusCallosum': np.array([0, 1, 2, 3, 4, 5, 4, 3, 0, 0])}
+            'CorpusCallosum': np.array([0, 1, 2, 3, 4, 5, 4, 3, 0, 0]),
+        }
         voxel_volume = 2
         task = Quantification(
             pipeline_dir=self.pipeline_dir,
             modalities_all=modalities,
             modalities_target=modalities_target,
-            dominant_tissue=Tissue.WHITE_MATTER)
+            dominant_tissue=Tissue.WHITE_MATTER,
+        )
         lesion_stats = task.get_lesion_stats(
             lesion_seg=lesion_seg,
             tissue_seg=tissue_seg,
             ventricles_distance=ventricles_distance,
             modality_images=modality_images,
             template_images=template_images,
-            voxel_volume=voxel_volume)
+            voxel_volume=voxel_volume,
+        )
         print(lesion_stats)
-        self.assertEqual(lesion_stats['total_lesion_volume'], 8)
-        self.assertEqual(lesion_stats['lesion_volume_in_background'], 0)
-        self.assertEqual(lesion_stats['lesion_volume_in_csf'], 0)
-        self.assertEqual(
-            lesion_stats['lesion_volume_in_cortical_gray_matter'], 2)
-        self.assertEqual(lesion_stats['lesion_volume_in_white_matter'], 2)
-        self.assertEqual(lesion_stats['lesion_volume_in_deep_gray_matter'], 0)
-        self.assertEqual(lesion_stats['lesion_volume_in_brain_stem'], 2)
-        self.assertEqual(lesion_stats['lesion_volume_in_cerebellum'], 2)
-        self.assertEqual(lesion_stats['relative_T1_signal'], 0.5)
-        self.assertEqual(lesion_stats['relative_T2_signal'], 0.75)
-        self.assertEqual(lesion_stats['relative_ADC_signal'], 1.25)
-        self.assertEqual(lesion_stats['mean_adc_signal'], 1.25)
-        self.assertEqual(lesion_stats['min_adc_signal'], 0.0)
-        self.assertEqual(lesion_stats['median_adc_signal'], 1.5)
+        self.assertEqual(8.0, lesion_stats['total_lesion_volume'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_background'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_csf'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_cortical_gray_matter'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_white_matter'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_deep_gray_matter'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_brain_stem'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_cerebellum'])
+        self.assertEqual(0.5, lesion_stats['relative_T1_signal'])
+        self.assertEqual(0.75, lesion_stats['relative_T2_signal'])
+        self.assertEqual(1.25, lesion_stats['relative_ADC_signal'])
+        self.assertEqual(1.25, lesion_stats['mean_adc_signal'])
+        self.assertEqual(0.0, lesion_stats['min_adc_signal'])
+        self.assertEqual(1.5, lesion_stats['median_adc_signal'])
+        np.testing.assert_almost_equal(0.15, lesion_stats['five_percentile_adc_signal'])
         np.testing.assert_almost_equal(
-            lesion_stats['five_percentile_adc_signal'], 0.15)
-        np.testing.assert_almost_equal(
-            lesion_stats['ninety_five_percentile_adc_signal'], 2.0)
-        self.assertEqual(
-            lesion_stats['relative_T1Post_signal'], 1.5)
-        self.assertEqual(
-            lesion_stats['relative_FLAIR_signal'], 1.0)
-        self.assertEqual(
-            lesion_stats['enhancement'], 2.0)
-        self.assertEqual(
-            lesion_stats['average_dist_to_ventricles_(voxels)'], 1)
-        self.assertEqual(
-            lesion_stats['minimum_dist_to_Ventricles_(voxels)'], 0)
-        self.assertEqual(lesion_stats['lesion_volume_in_Frontal'], 0)
-        self.assertEqual(lesion_stats['percentage_volume_in_Frontal'], 0.0)
-        self.assertEqual(lesion_stats['lesion_volume_in_Parietal'], 2)
-        self.assertEqual(lesion_stats['percentage_volume_in_Parietal'], 25.0)
-        self.assertEqual(lesion_stats['lesion_volume_in_Occipital'], 2)
-        self.assertEqual(lesion_stats['percentage_volume_in_Occipital'], 25.0)
-        self.assertEqual(lesion_stats['lesion_volume_in_Temporal'], 4)
-        self.assertEqual(lesion_stats['percentage_volume_in_Temporal'], 50.0)
-        self.assertEqual(lesion_stats['lesion_volume_in_CorpusCallosum'], 8)
-        self.assertEqual(
-            lesion_stats['percentage_volume_in_CorpusCallosum'], 100.0)
+            2.0, lesion_stats['ninety_five_percentile_adc_signal']
+        )
+        self.assertEqual(1.5, lesion_stats['relative_T1Post_signal'])
+        self.assertEqual(1.0, lesion_stats['relative_FLAIR_signal'])
+        self.assertEqual(2.0, lesion_stats['enhancement'])
+        self.assertEqual(1.0, lesion_stats['average_dist_to_ventricles_(voxels)'])
+        self.assertEqual(0.0, lesion_stats['minimum_dist_to_Ventricles_(voxels)'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_Frontal'])
+        self.assertEqual(0.0, lesion_stats['percentage_volume_in_Frontal'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_Parietal'], 2)
+        self.assertEqual(25.0, lesion_stats['percentage_volume_in_Parietal'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_Occipital'])
+        self.assertEqual(25.0, lesion_stats['percentage_volume_in_Occipital'])
+        self.assertEqual(4.0, lesion_stats['lesion_volume_in_Temporal'], 4)
+        self.assertEqual(50.0, lesion_stats['percentage_volume_in_Temporal'])
+        self.assertEqual(8.0, lesion_stats['lesion_volume_in_CorpusCallosum'])
+        self.assertEqual(100.0, lesion_stats['percentage_volume_in_CorpusCallosum'])
+
+    def test_get_lesion_stats_with_label(self):
+        modalities = [
+            Modality.T1,
+            Modality.T2,
+            Modality.T1Post,
+            Modality.FLAIR,
+            Modality.ASL,
+        ]
+        modalities_target = [Modality.T1Post, Modality.FLAIR]
+
+        lesion_seg_comp = np.array([0, 0, 1, 2, 0, 2, 2, 0, 0])
+        tissue_seg = np.array([0, 1, 2, 3, 4, 5, 6, 3, 0])
+        ventricles_distance = np.array([3, 2, 1, 0, 0, 1, 2, 3, 4])
+        modality_images = {
+            Modality.T1: np.array([0.0, 1.0, 1.0, 2.0, 1.0, 1.0, 3.0, 4.0, 0.0]),
+            Modality.T2: np.array([0.0, 2.0, 2.0, 0.0, 4.0, 9.0, 0.0, 4.0, 0.0]),
+            Modality.ADC: np.array([0.0, 3.0, 0.0, 4.0, 0.5, 6.0, 5.0, 4.0, 1.0]),
+            Modality.T1Post: np.array([0.0, 1.0, 2.0, 2.0, 0.0, 5.0, 2.0, 2.0, 1.0]),
+            Modality.FLAIR: np.array([0.0, 2.0, 1.0, 2.0, 1.0, 2.0, 2.0, 2.0, 1.0]),
+        }
+        template_images = {
+            'template': np.array([0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 0.0]),
+            'lobes': np.array([0, 1, 2, 3, 4, 5, 6, 6, 0]),
+            'CorpusCallosum': np.array([0, 1, 2, 3, 4, 5, 4, 3, 0, 0]),
+        }
+        voxel_volume = 2
+        task = Quantification(
+            pipeline_dir=self.pipeline_dir,
+            modalities_all=modalities,
+            modalities_target=modalities_target,
+            dominant_tissue=Tissue.WHITE_MATTER,
+        )
+        lesion_stats = task.get_lesion_stats(
+            lesion_seg=lesion_seg_comp,
+            tissue_seg=tissue_seg,
+            ventricles_distance=ventricles_distance,
+            modality_images=modality_images,
+            template_images=template_images,
+            voxel_volume=voxel_volume,
+            lesion_label=2.0,
+        )
+        print(lesion_stats)
+        self.assertEqual(6.0, lesion_stats['total_lesion_volume'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_background'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_csf'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_cortical_gray_matter'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_white_matter'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_deep_gray_matter'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_brain_stem'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_cerebellum'])
+        self.assertEqual(0.5, lesion_stats['relative_T1_signal'])
+        self.assertEqual(0.75, lesion_stats['relative_T2_signal'])
+        self.assertEqual(1.25, lesion_stats['relative_ADC_signal'])
+        self.assertEqual(5.0, lesion_stats['mean_adc_signal'])
+        self.assertEqual(4.0, lesion_stats['min_adc_signal'])
+        self.assertEqual(5.0, lesion_stats['median_adc_signal'])
+        self.assertEqual(1.5, lesion_stats['relative_T1Post_signal'])
+        self.assertEqual(1.0, lesion_stats['relative_FLAIR_signal'])
+        self.assertEqual(1.5, lesion_stats['enhancement'])
+        self.assertEqual(1.0, lesion_stats['average_dist_to_ventricles_(voxels)'])
+        self.assertEqual(0.0, lesion_stats['minimum_dist_to_Ventricles_(voxels)'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_Frontal'])
+        self.assertEqual(0.0, lesion_stats['percentage_volume_in_Frontal'])
+        self.assertEqual(0.0, lesion_stats['lesion_volume_in_Parietal'], 2)
+        self.assertEqual(0.0, lesion_stats['percentage_volume_in_Parietal'])
+        self.assertEqual(2.0, lesion_stats['lesion_volume_in_Occipital'])
+        self.assertEqual(100.0 / 3, lesion_stats['percentage_volume_in_Occipital'])
+        self.assertEqual(4.0, lesion_stats['lesion_volume_in_Temporal'], 4)
+        self.assertEqual(200 / 3.0, lesion_stats['percentage_volume_in_Temporal'])
+        self.assertEqual(6.0, lesion_stats['lesion_volume_in_CorpusCallosum'])
+        self.assertEqual(100.0, lesion_stats['percentage_volume_in_CorpusCallosum'])
+
+    def test_get_brain_volume_stats(self):
+        brain_seg = np.array([0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0])
+        tissue_seg = np.array([0, 0, 1, 2, 3, 4, 5, 6, 1, 0, 0])
+        ventricles_seg = np.array([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0])
+
+        task = Quantification(
+            pipeline_dir=self.pipeline_dir,
+            modalities_all=[Modality.T1],
+            modalities_target=[Modality.T1Post],
+            dominant_tissue=Tissue.WHITE_MATTER,
+        )
+
+        volume_stats = task.get_brain_volume_stats(
+            brain_seg, tissue_seg, ventricles_seg, voxel_volume=2.0
+        )
+
+        self.assertEqual(14.0, volume_stats['total_brain_volume'])
+        self.assertEqual(2.0, volume_stats['total_ventricles_volume'])
+        self.assertEqual(8.0, volume_stats['volume_of_background'])
+        self.assertEqual(4.0, volume_stats['volume_of_csf'])
+        self.assertEqual(2.0, volume_stats['volume_of_cortical_gray_matter'])
+        self.assertEqual(2.0, volume_stats['volume_of_white_matter'])
+        self.assertEqual(2.0, volume_stats['volume_of_deep_gray_matter'])
+        self.assertEqual(2.0, volume_stats['volume_of_brain_stem'])
+        self.assertEqual(2.0, volume_stats['volume_of_cerebellum'])

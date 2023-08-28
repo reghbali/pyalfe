@@ -15,8 +15,8 @@ class TestIntegration(TestCase):
     def setUp(self) -> None:
         self.test_dir = os.path.join('/tmp', 'integration_test')
 
-        self.processed_dir = os.path.join(self.test_dir, 'processed')
-        self.classified_dir = os.path.join(self.test_dir, 'classified')
+        self.processed_dir = os.path.join(self.test_dir, 'output')
+        self.classified_dir = os.path.join(self.test_dir, 'input')
 
         os.makedirs(self.processed_dir)
         os.mkdir(self.classified_dir)
@@ -34,19 +34,19 @@ class TestIntegration(TestCase):
             Modality.ADC,
         ]
         pipeline_dir = DefaultALFEDataDir(
-            processed=self.processed_dir, classified=self.classified_dir
+            output=self.processed_dir, input=self.classified_dir
         )
 
         for modality in modalities:
-            pipeline_dir.create_dir('classified', accession, modality)
+            pipeline_dir.create_dir('input', accession, modality)
             shutil.copy(
                 os.path.join(
                     pathlib.Path(__file__).parent.resolve(),
-                    'data',
+                    '../data',
                     'cnsl_patient',
                     f'{modality}.nii.gz',
                 ),
-                pipeline_dir.get_classified_image(accession, modality),
+                pipeline_dir.get_input_image(accession, modality),
             )
 
         runner = CliRunner()
@@ -56,9 +56,9 @@ class TestIntegration(TestCase):
             accession,
             '-c',
             config_file,
-            '--classified-dir',
+            '--input-dir',
             self.classified_dir,
-            '--processed-dir',
+            '--output-dir',
             self.processed_dir,
             '--targets',
             ','.join(targets),
@@ -67,10 +67,10 @@ class TestIntegration(TestCase):
         self.assertEqual(result.exit_code, 0, msg=result.stdout)
 
         for modality in modalities:
-            processed_image_path = pipeline_dir.get_processed_image(accession, modality)
+            processed_image_path = pipeline_dir.get_output_image(accession, modality)
             self.assertTrue(os.path.exists(processed_image_path))
-            image_path = pipeline_dir.get_processed_image(accession, modality)
-            ss_image_path = pipeline_dir.get_processed_image(
+            image_path = pipeline_dir.get_output_image(accession, modality)
+            ss_image_path = pipeline_dir.get_output_image(
                 accession, modality, image_type='skullstripped'
             )
             self.assertTrue(
@@ -81,7 +81,7 @@ class TestIntegration(TestCase):
             )
 
         for modality in targets:
-            segmentation_path = pipeline_dir.get_processed_image(
+            segmentation_path = pipeline_dir.get_output_image(
                 accession,
                 modality,
                 image_type='CNNAbnormalMap_seg',

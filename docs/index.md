@@ -1,4 +1,0 @@
-# pyalfe
-
-```{tableofcontents}
-```

@@ -26,14 +26,17 @@ from pyalfe.tasks.t1_preprocessing import T1Preprocessing
 
 
 class Container(containers.DeclarativeContainer):
+    """
+    container objects for all the dependencies of the pipeline.
+    """
 
     logger = logging.getLogger('Container')
     config = providers.Configuration()
 
     pipeline_dir = providers.Singleton(
         DefaultALFEDataDir,
-        processed=config.options.processed_dir,
-        classified=config.options.classified_dir,
+        output_dir=config.options.output_dir,
+        input_dir=config.options.input_dir,
     )
 
     image_processor = providers.Selector(
@@ -127,6 +130,7 @@ class Container(containers.DeclarativeContainer):
         image_type_output='abnormal_seg',
         image_type_mask='skullstripping_mask',
         segmentation_dir='abnormalmap',
+        components=True,
         overwrite=config.options.overwrite_images,
     )
 
@@ -141,6 +145,7 @@ class Container(containers.DeclarativeContainer):
         image_type_output='abnormal_seg',
         image_type_mask='skullstripping_mask',
         segmentation_dir='abnormalmap',
+        components=True,
         overwrite=config.options.overwrite_images,
     )
 

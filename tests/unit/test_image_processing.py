@@ -1,5 +1,6 @@
 import os
 import shutil
+from pathlib import Path
 from unittest import TestCase
 
 import numpy as np
@@ -26,7 +27,7 @@ def get_image_processor_test(image_processor: ImageProcessor) -> type[TestCase]:
             create_nifti(input_image_path, data)
 
             threshold1 = self.get_image_path('threshold1.nii.gz')
-            image_processor.threshold(input_image_path, threshold1, 0, 1, 0, 1)
+            image_processor.threshold(Path(input_image_path), threshold1, 0, 1, 0, 1)
             np.testing.assert_array_equal(
                 get_nifti_data(threshold1), np.array([[[0, 0, 1, 1]]])
             )
@@ -141,7 +142,9 @@ def get_image_processor_test(image_processor: ImageProcessor) -> type[TestCase]:
             np.testing.assert_allclose(output_nifti.affine, affine)
 
         def test_resample_new_dim(self):
-            data = np.random.rand(16, 16, 16)
+            data = np.concatenate(
+                [np.ones((16, 16, 8)), np.zeros((16, 16, 8))], axis=-1
+            )
             input_image_path = self.get_image_path('input.nii.gz')
             create_nifti(input_image_path, data)
 
@@ -260,6 +263,17 @@ def get_image_processor_test(image_processor: ImageProcessor) -> type[TestCase]:
             image_processor.distance_transform(input_image_path, output)
             np.testing.assert_array_equal(
                 get_nifti_data(output), np.array([[[1, 0, 0, 1, 2, 1, 0]]])
+            )
+
+        def test_label_mask_comp(self):
+            data = np.array([[[1, 0, 1, 1, 0, 1, 1, 1, 0]]])
+            input_image_path = self.get_image_path('input.nii.gz')
+            create_nifti(input_image_path, data.astype(np.int16))
+
+            output = self.get_image_path('output.nii.gz')
+            image_processor.label_mask_comp(input_image_path, output)
+            np.testing.assert_array_equal(
+                get_nifti_data(output), np.array([[[3, 0, 2, 2, 0, 1, 1, 1, 0]]])
             )
 
     return TestImageProcessor

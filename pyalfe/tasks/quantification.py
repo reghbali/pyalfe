@@ -7,6 +7,7 @@ import pandas as pd
 
 from pyalfe.data_structure import PipelineDataDir, Tissue, Modality
 from pyalfe.roi import roi_dict
+from pyalfe.tasks import Task
 
 try:
     from radiomics import featureextractor
@@ -14,16 +15,33 @@ except ImportError:
     featureextractor = None
 
 
-class Quantification:
+class Quantification(Task):
+    """This task generates the quantification files.
+    This is the final task in the pipeline.
+
+    Attributes
+    ----------
+    pipeline_dir: PipelineDataDir
+        The pipeline data directory object.
+    modalities_all: list[Modality]
+        All the modalities for processed by the pipeline.
+    modalities_target: list[Modality]
+        Target modalities that are used to defince lesions.
+    dominant_tissue: bool
+        The dominant tissue where the tumor or lesion is expected to be
+        located at. THe options are `white_matter`, `gray_matter`, `auto`.
+        If `auto` is chosen, then the dominant tissue is chosen to be the tissue
+        with which the lesion most intersects with.
+    """
 
     logger = logging.getLogger('Quantification')
 
     def __init__(
         self,
         pipeline_dir: PipelineDataDir,
-        modalities_all,
-        modalities_target,
-        dominant_tissue=None,
+        modalities_all: list[Modality],
+        modalities_target: list[Modality],
+        dominant_tissue: bool = None,
     ):
         self.modalities_all = modalities_all
         self.modalities_target = modalities_target
@@ -54,7 +72,7 @@ class Quantification:
 
         for modality in self.modalities_all:
 
-            modality_image_to_target_file = self.pipeline_dir.get_processed_image(
+            modality_image_to_target_file = self.pipeline_dir.get_output_image(
                 accession,
                 modality,
                 image_type='skullstripped',
@@ -75,7 +93,7 @@ class Quantification:
             roi_sub_dir = roi_properties['sub_dir']
 
             if roi_properties['type'] == 'template':
-                template_image_to_target_file = self.pipeline_dir.get_processed_image(
+                template_image_to_target_file = self.pipeline_dir.get_output_image(
                     accession,
                     modality=target,
                     image_type=roi_key,
@@ -98,6 +116,26 @@ class Quantification:
             self.logger.debug(f'Pyradiomics failed with this error {e}.')
             return {}
 
+    def get_brain_volume_stats(
+        self, brain_mask, tissue_seg, ventricles_seg, voxel_volume
+    ):
+        stats = {}
+        brain_indices = np.where(brain_mask == 1)[0]
+        stats['total_brain_volume'] = len(brain_indices) * voxel_volume
+
+        if ventricles_seg is not None:
+            stats['total_ventricles_volume'] = (
+                len(np.where(ventricles_seg == 1)[0]) * voxel_volume
+            )
+
+        if tissue_seg is not None:
+            for tissue in Tissue:
+                stats[f'volume_of_{tissue.name.lower()}'] = (
+                    len(np.where(tissue_seg == tissue)[0]) * voxel_volume
+                )
+
+        return stats
+
     def get_lesion_stats(
         self,
         lesion_seg,
@@ -106,17 +144,17 @@ class Quantification:
         modality_images,
         template_images,
         voxel_volume,
+        lesion_label=1,
     ):
         stats = {}
-        lesion_indices = np.nonzero(lesion_seg)[0]
+        lesion_indices = np.where(lesion_seg == lesion_label)[0]
 
         volume = len(lesion_indices) * voxel_volume
         stats['total_lesion_volume'] = volume
         if volume == 0.0:
             return stats
 
-        unique_counts = np.unique(
-            tissue_seg[lesion_indices], return_counts=True)
+        unique_counts = np.unique(tissue_seg[lesion_indices], return_counts=True)
 
         if self.dominant_tissue and self.dominant_tissue != 'auto':
             invalid_tissue = True
@@ -156,35 +194,37 @@ class Quantification:
             )
 
             if len(healthy_dom_tissue_indices) == 0:
-                self.logger.warning(
-                    'There is np healthy voxel in the dominant tissue')
+                self.logger.warning('There is np healthy voxel in the dominant tissue')
 
             mean_signal = np.mean(modality_image[healthy_dom_tissue_indices])
             stats[f'relative_{modality_name}_signal'] = (
                 np.mean(modality_image[lesion_indices]) / mean_signal
             )
-            if modality_name in [Modality.ADC, Modality.ASL]:
+            if modality_name in [Modality.ADC, Modality.CBF]:
                 stats[f'relative_min_{modality_name.lower()}_signal'] = (
                     np.min(modality_image[lesion_indices]) / mean_signal
                 )
                 stats[f'min_{modality_name.lower()}_signal'] = np.min(
-                    modality_image[lesion_indices])
+                    modality_image[lesion_indices]
+                )
                 stats[f'mean_{modality_name.lower()}_signal'] = np.mean(
-                    modality_image[lesion_indices])
+                    modality_image[lesion_indices]
+                )
                 stats[f'median_{modality_name.lower()}_signal'] = np.median(
-                    modality_image[lesion_indices])
-                stats[f'five_percentile_{modality_name.lower()}_signal'] = np.percentile(
-                    modality_image[lesion_indices], 5
+                    modality_image[lesion_indices]
                 )
-                stats[f'ninety_five_percentile_{modality_name.lower()}_signal'] = np.percentile(
-                    modality_image[lesion_indices], 95
-                )
+                stats[
+                    f'five_percentile_{modality_name.lower()}_signal'
+                ] = np.percentile(modality_image[lesion_indices], 5)
+                stats[
+                    f'ninety_five_percentile_{modality_name.lower()}_signal'
+                ] = np.percentile(modality_image[lesion_indices], 95)
         if Modality.T1 in modality_images and Modality.T1Post in modality_images:
             t1_image = modality_images[Modality.T1]
             t1post_image = modality_images[Modality.T1Post]
-            stats['enhancement'] = (
-                    np.mean(t1post_image[lesion_indices]) /
-                    np.mean(t1_image[lesion_indices]))
+            stats['enhancement'] = np.mean(t1post_image[lesion_indices]) / np.mean(
+                t1_image[lesion_indices]
+            )
 
         if ventricles_distance is not None:
             stats['average_dist_to_ventricles_(voxels)'] = np.mean(
@@ -199,9 +239,10 @@ class Quantification:
                 continue
             regions = roi_dict[template_key]['regions']
             for region_key, region_values in regions.items():
-                stats[f'lesion_volume_in_{region_key}'] = np.sum(
-                    np.isin(template_image, region_values)[lesion_indices]
-                ) * voxel_volume
+                stats[f'lesion_volume_in_{region_key}'] = (
+                    np.sum(np.isin(template_image, region_values)[lesion_indices])
+                    * voxel_volume
+                )
                 stats[f'percentage_volume_in_{region_key}'] = (
                     stats[f'lesion_volume_in_{region_key}']
                     * 100
@@ -210,27 +251,77 @@ class Quantification:
 
         return stats
 
+    @staticmethod
+    def get_summary_update_from_individual(individual_lesion_df):
+        return {
+            'number_of_lesions': len(individual_lesion_df),
+            'largest_lesion_volume': individual_lesion_df['total_lesion_volume'].max(),
+            'average_lesion_volume': individual_lesion_df['total_lesion_volume'].mean(),
+        }
+
     def run(self, accession):
+        volumetric_quantification_file = self.pipeline_dir.get_quantification_file(
+            accession, Modality.T1, 'volumeMeasures'
+        )
+
+        brain_mask_file = self.pipeline_dir.get_output_image(
+            accession=accession, modality=Modality.T1, image_type='skullstripping_mask'
+        )
+
+        brain_mask, voxel_volume = self.load(brain_mask_file)
+
+        tissue_seg_file = self.pipeline_dir.get_output_image(
+            accession=accession, modality=Modality.T1, image_type='tissue_seg'
+        )
+
+        if not os.path.exists(tissue_seg_file):
+            tissue_seg = None
+        else:
+            tissue_seg, _ = self.load(tissue_seg_file)
+
+        ventricles_seg_file = self.pipeline_dir.get_output_image(
+            accession=accession, modality=Modality.T1, image_type='VentriclesSeg'
+        )
+
+        if not os.path.exists(ventricles_seg_file):
+            ventricles_seg = None
+        else:
+            ventricles_seg, _ = self.load(ventricles_seg_file)
+
+        volume_stats = self.get_brain_volume_stats(
+            brain_mask, tissue_seg, ventricles_seg, voxel_volume
+        )
+        pd.Series(volume_stats).to_csv(volumetric_quantification_file)
+
         for target in self.modalities_target:
-            quantification_file = self.pipeline_dir.get_quantification_file(
+            summary_quantification_file = self.pipeline_dir.get_quantification_file(
                 accession, target, 'SummaryLesionMeasures'
+            )
+            individual_quantification_file = self.pipeline_dir.get_quantification_file(
+                accession, target, 'IndividualLesionMeasures'
             )
             radiomics_file = self.pipeline_dir.get_quantification_file(
                 accession, target, 'radiomics'
             )
 
-            skullstripped_file = self.pipeline_dir.get_processed_image(
+            skullstripped_file = self.pipeline_dir.get_output_image(
                 accession, target, image_type='skullstripped'
             )
-            lesion_seg_file = self.pipeline_dir.get_processed_image(
+            lesion_seg_file = self.pipeline_dir.get_output_image(
                 accession=accession,
                 modality=target,
                 image_type='abnormal_seg',
                 sub_dir_name='abnormalmap',
             )
 
+            lesion_seg_comp_file = self.pipeline_dir.get_output_image(
+                accession=accession,
+                modality=target,
+                image_type='abnormal_seg_comp',
+                sub_dir_name='abnormalmap',
+            )
+
             if not os.path.exists(lesion_seg_file):
-                print(lesion_seg_file, 'lesion_seg does not exist')
                 self.logger.info(
                     f'Lesion seg file for {target} is missing.'
                     f'Skipping quantification for {target}.'
@@ -238,7 +329,7 @@ class Quantification:
                 continue
 
             lesion_seg, voxel_volume = self.load(lesion_seg_file)
-            tissue_seg_file = self.pipeline_dir.get_processed_image(
+            tissue_seg_file = self.pipeline_dir.get_output_image(
                 accession,
                 target,
                 image_type='tissue_seg',
@@ -255,7 +346,7 @@ class Quantification:
                 continue
             tissue_seg, _ = self.load(tissue_seg_file)
 
-            ventricles_distance_file = self.pipeline_dir.get_processed_image(
+            ventricles_distance_file = self.pipeline_dir.get_output_image(
                 accession=accession,
                 modality=target,
                 image_type='VentriclesDist',
@@ -271,7 +362,7 @@ class Quantification:
             modality_images = self.load_modality_images(accession, target)
             template_images = self.load_template_images(accession, target)
 
-            stats = self.get_lesion_stats(
+            summary_stats = self.get_lesion_stats(
                 lesion_seg,
                 tissue_seg,
                 ventricles_distance,
@@ -279,8 +370,35 @@ class Quantification:
                 template_images,
                 voxel_volume,
             )
-            pd.Series(stats).to_csv(quantification_file)
 
             if self.radiomics_enabled:
                 radiomics = self.get_radiomics(skullstripped_file, lesion_seg_file)
                 pd.Series(radiomics).to_csv(radiomics_file)
+
+            if not os.path.exists(lesion_seg_comp_file):
+                self.logger.info(
+                    f'Lesion seg comp file for {target} is missing.'
+                    f'Skipping individual lesion quantification for {target}.'
+                )
+            else:
+                lesion_seg_comp, _ = self.load(lesion_seg_comp_file)
+                number_of_lesions = int(np.max(lesion_seg_comp))
+                individual_lesion_stats = [
+                    self.get_lesion_stats(
+                        lesion_seg_comp,
+                        tissue_seg,
+                        ventricles_distance,
+                        modality_images,
+                        template_images,
+                        voxel_volume,
+                        lesion_label=label,
+                    )
+                    for label in range(1, number_of_lesions + 1)
+                ]
+
+                individual_lesion_df = pd.DataFrame(individual_lesion_stats)
+                individual_lesion_df.to_csv(individual_quantification_file)
+                summary_stats.update(
+                    self.get_summary_update_from_individual(individual_lesion_df)
+                )
+            pd.Series(summary_stats).to_csv(summary_quantification_file)

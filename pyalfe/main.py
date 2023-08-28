@@ -66,8 +66,8 @@ def download(assets):
 )
 @click.option('-m', '--modalities')
 @click.option('-t', '--targets')
-@click.option('-cd', '--classified-dir')
-@click.option('-pd', '--processed-dir')
+@click.option('-id', '--input-dir')
+@click.option('-pd', '--output-dir')
 @click.option(
     '-dt',
     '--dominant_tissue',
@@ -88,8 +88,8 @@ def download(assets):
 def run(
     accession: str,
     config: str,
-    classified_dir: str,
-    processed_dir: str,
+    input_dir: str,
+    output_dir: str,
     modalities: str,
     targets: str,
     dominant_tissue: str,
@@ -105,10 +105,10 @@ def run(
         the accession number for which you want to run the pipeline.
     config : str, default: ~/.config/pyalfe/config.ini
         the path to the config file.
-    classified_dir : str
-        the path to the directory containing input classified images
-    processed_dir : str
-        the path to the directory containing output processed images
+    input_dir : str
+        the path to the directory containing input input images
+    outpu_dir : str
+        the path to the directory containing output output images
     modalities : str
         comma separated modalities
     targets : str
@@ -131,10 +131,10 @@ def run(
 
     options = container.config.options()
 
-    if classified_dir:
-        options['classified_dir'] = classified_dir
-    if processed_dir:
-        options['processed_dir'] = processed_dir
+    if input_dir:
+        options['input_dir'] = input_dir
+    if output_dir:
+        options['output_dir'] = output_dir
     if modalities:
         options['modalities'] = modalities
     if targets:
@@ -158,20 +158,26 @@ def run(
 
 @main.command()
 def configure():
+    """
+    Configure the pipeline through a series of prompts.
 
-    classified_dir = click.prompt(
-        'Enter classified image directory', type=click.Path(exists=True)
+    Returns
+    -------
+    None
+    """
+    input_dir = click.prompt(
+        'Enter input image directory', type=click.Path(exists=True)
     )
-    processed_dir = click.prompt(
-        'Enter processed image directory', type=click.Path(exists=True)
+    output_dir = click.prompt(
+        'Enter output image directory', type=click.Path(exists=True)
     )
     modalities = click.prompt(
-        'Enter modalities separated by comma (enter for default)',
-        default='T1,T1Post,FLAIR,T2,ADC',
+        'Enter modalities separated by comma (press enter for default)',
+        default='T1,T1Post,FLAIR,T2,ADC,SWI,CBF',
         type=str,
     )
     targets = click.prompt(
-        'Enter target modalities separated by comma (enter for default)',
+        'Enter target modalities separated by comma (press enter for default)',
         default='T1Post,FLAIR',
         type=str,
     )
@@ -181,20 +187,20 @@ def configure():
         default='white_matter',
     )
     image_processor = click.prompt(
-        'image processor to use (enter for default)',
+        'image processor to use (press enter for default)',
         type=click.Choice(['c3d', 'nilearn']),
         default='c3d',
     )
     image_registration = click.prompt(
-        'image registration to use (enter for default)',
+        'image registration to use (press enter for default)',
         type=click.Choice(['greedy', 'ants']),
         default='greedy',
     )
     config_path = click.prompt('config path', default=DEFAULT_CFG)
     config = configparser.ConfigParser()
     config['options'] = {
-        'classified_dir': classified_dir,
-        'processed_dir': processed_dir,
+        'input_dir': input_dir,
+        'output_dir': output_dir,
         'modalities': modalities,
         'targets': targets,
         'dominant_tissue': dominant_tissue,

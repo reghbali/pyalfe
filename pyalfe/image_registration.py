@@ -4,7 +4,6 @@ import shutil
 from abc import ABC, abstractmethod
 
 from pyalfe.interfaces.greedy import Greedy
-from pyalfe.tools import GREEDY_PATH
 
 try:
     import ants
@@ -14,30 +13,121 @@ except ImportError:
 
 class ImageRegistration(ABC):
     @abstractmethod
-    def register_rigid(self, fixed, moving, transform_output, init_transform):
+    def register_rigid(self, fixed, moving, transform_output, init_transform=None):
+        """Performs rigid registration (translation and rotation).
+
+        Parameters
+        ----------
+        fixed: str or Path
+            The path to the fixed image.
+        moving: str or Path
+            The path to the moving image
+        transform_output: str to Path
+            The path to the rigid transform output
+        init_transform: str or Path
+            The path to the file storing the initial transform.
+            The default is None.
+
+        Returns
+        -------
+
+        """
         pass
 
     @abstractmethod
     def register_affine(
         self, fixed, moving, transform_output, init_transform, fast=False
     ):
+        """Performs affine registration (scaling, translation, and rotation)
+
+        Parameters
+        ----------
+        fixed: str or Path
+            The path to the fixed image.
+        moving: str or Path
+            The path to the moving image
+        transform_output: str to Path
+            The path to the rigid transform output
+        init_transform: str or Path
+            The path to the file storing the initial transform.
+            The default is None.
+        fast: bool
+            If True a fast method of registration is used with possibly lower
+            quality results. The default is False.
+
+        Returns
+        -------
+
+        """
         pass
 
     @abstractmethod
     def register_deformable(
         self, fixed, moving, transform_output, affine_transform=None
     ):
+        """Performs deformable registration.
+
+        Parameters
+        ----------
+        fixed: str or Path
+            The path to the fixed image.
+        moving: str or Path
+            The path to the moving image
+        transform_output: str to Path
+            The path to the rigid transform output
+        affine_transform: str or Path
+            The path to a file storing an affine transform that will be applied
+            to the moving image before the deformable registration. Default is
+            None.
+
+        Returns
+        -------
+
+        """
         pass
 
     @abstractmethod
     def reslice(self, fixed, moving, registration_output, *transform):
+        """Applies registration transforms to the moving image.
+
+        Parameters
+        ----------
+        fixed: str or Path
+            The path to the fixed image.
+        moving: str or Path
+            The path to the moving image
+        registration_output: str or Path
+            The path where output image will be written to.
+        transform: str or Path
+            The path to one or more transformation files that should be applied
+            sequentially.
+
+        Returns
+        -------
+
+        """
         pass
 
 
 class GreedyRegistration(ImageRegistration):
+    """
+    Implementation of ImageRegistration that uses the Greedy tool.
+    https://greedy.readthedocs.io/en/latest/
+
+    Greedy needs to be installed on your machine to use this class.
+
+    Attributes
+    ----------
+    greedy_path: str or Path
+       The path to the greedy binary. Default is greedy.
+
+    threads: int
+       Number of cpu threads to be passed to greedy. Default is 16.
+    """
+
     logger = logging.getLogger('GreedyRegistration')
 
-    def __init__(self, greedy_path=GREEDY_PATH, threads=16):
+    def __init__(self, greedy_path='greedy', threads=16):
         self.greedy_path = greedy_path
         self.threads = threads
 
@@ -113,6 +203,11 @@ class GreedyRegistration(ImageRegistration):
 
 
 class AntsRegistration(ImageRegistration):
+    """
+    Implementation of ImageRegistration that uses ANTsPy
+    https://github.com/ANTsX/ANTsPy
+    """
+
     def reslice(self, fixed, moving, registration_output, *transform):
         fixed_image = ants.image_read(fixed)
         moving_image = ants.image_read(moving)

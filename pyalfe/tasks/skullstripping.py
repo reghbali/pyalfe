@@ -8,6 +8,21 @@ from pyalfe.tasks import Task
 
 
 class Skullstripping(Task):
+    """This task performs skullstripping for all the modalities.
+
+    Attributes
+    ----------
+    inference_model: InferenceModel
+        The inference model object.
+    image_processor: ImageProcessor
+        The image processor object.
+    pipeline_dir: PipelineDataDir
+        The pipeline data directory object.
+    modalities: list[Modality]
+        All the modalities that should be skullstripped.
+    overwrite: bool
+        Whether to overwrite any existing output image. Default is True.
+    """
 
     logger = logging.getLogger('Skullstripping')
 
@@ -31,25 +46,26 @@ class Skullstripping(Task):
         mask_list = []
         output_list = []
         for modality in modalities:
-            image = self.pipeline_dir.get_processed_image(accession, modality)
-            pred = self.pipeline_dir.get_processed_image(
+            image = self.pipeline_dir.get_output_image(accession, modality)
+            pred = self.pipeline_dir.get_output_image(
                 accession, modality, image_type='skullstripping_pred'
             )
-            mask = self.pipeline_dir.get_processed_image(
+            mask = self.pipeline_dir.get_output_image(
                 accession, modality, image_type='skullstripping_mask'
             )
-            output = self.pipeline_dir.get_processed_image(
+            output = self.pipeline_dir.get_output_image(
                 accession, modality, image_type='skullstripped'
             )
             if not self.overwrite and os.path.exists(output):
                 continue
+            self.inference_model.predict_cases((image,), pred)
             images_tuple_list.append((image,))
             pred_list.append(pred)
             mask_list.append(mask)
             output_list.append(output)
         if not images_tuple_list:
             return
-        self.inference_model.predict_cases(images_tuple_list, pred_list)
+
         for image_tuple, pred, mask, output in zip(
             images_tuple_list, pred_list, mask_list, output_list
         ):
@@ -58,9 +74,10 @@ class Skullstripping(Task):
             self.image_processor.mask(image, mask, output)
 
     def run(self, accession):
+        self.logger.info('Running skullstripping task.')
         modalities_to_process = []
         for modality in self.modalities:
-            image = self.pipeline_dir.get_processed_image(accession, modality)
+            image = self.pipeline_dir.get_output_image(accession, modality)
             if not os.path.exists(image):
                 self.logger.info(
                     f'{modality} image is missing.'
