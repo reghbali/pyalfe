@@ -205,7 +205,7 @@ class MultiModalitySegmentation(Segmentation):
                 image_type=f'{self.image_type_output}_comp',
                 sub_dir_name=self.segmentation_dir,
             )
-            self.label_segmentation_components([seg_path], [comp_path])
+            self.label_segmentation_components(seg_path, comp_path)
 
 
 class SingleModalitySegmentation(MultiModalitySegmentation):
