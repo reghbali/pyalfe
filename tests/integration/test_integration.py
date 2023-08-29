@@ -15,11 +15,11 @@ class TestIntegration(TestCase):
     def setUp(self) -> None:
         self.test_dir = os.path.join('/tmp', 'integration_test')
 
-        self.processed_dir = os.path.join(self.test_dir, 'output')
-        self.classified_dir = os.path.join(self.test_dir, 'input')
+        self.output_dir = os.path.join(self.test_dir, 'output')
+        self.input_dir = os.path.join(self.test_dir, 'input')
 
-        os.makedirs(self.processed_dir)
-        os.mkdir(self.classified_dir)
+        os.makedirs(self.output_dir)
+        os.mkdir(self.input_dir)
 
     def tearDown(self) -> None:
         shutil.rmtree(self.test_dir)
@@ -33,9 +33,7 @@ class TestIntegration(TestCase):
             Modality.FLAIR,
             Modality.ADC,
         ]
-        pipeline_dir = DefaultALFEDataDir(
-            output=self.processed_dir, input=self.classified_dir
-        )
+        pipeline_dir = DefaultALFEDataDir(output=self.output_dir, input=self.input_dir)
 
         for modality in modalities:
             pipeline_dir.create_dir('input', accession, modality)
@@ -57,9 +55,9 @@ class TestIntegration(TestCase):
             '-c',
             config_file,
             '--input-dir',
-            self.classified_dir,
+            self.input_dir,
             '--output-dir',
-            self.processed_dir,
+            self.output_dir,
             '--targets',
             ','.join(targets),
         ]
