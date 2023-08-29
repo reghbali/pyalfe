@@ -33,7 +33,9 @@ class TestIntegration(TestCase):
             Modality.FLAIR,
             Modality.ADC,
         ]
-        pipeline_dir = DefaultALFEDataDir(output=self.output_dir, input=self.input_dir)
+        pipeline_dir = DefaultALFEDataDir(
+            output_dir=self.output_dir, input_dir=self.input_dir
+        )
 
         for modality in modalities:
             pipeline_dir.create_dir('input', accession, modality)
