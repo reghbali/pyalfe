@@ -84,7 +84,7 @@ class TestIntegration(TestCase):
             segmentation_path = pipeline_dir.get_output_image(
                 accession,
                 modality,
-                image_type='CNNAbnormalMap_seg',
+                image_type='abnormal_seg',
                 sub_dir_name='abnormalmap',
             )
             self.assertTrue(
