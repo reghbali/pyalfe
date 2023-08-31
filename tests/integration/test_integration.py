@@ -91,12 +91,19 @@ class TestIntegration(TestCase):
                 os.path.exists(segmentation_path),
                 msg=f'{segmentation_path} does not exist.',
             )
-            quantification_path = pipeline_dir.get_quantification_file(
+            summary_quantification_path = pipeline_dir.get_quantification_file(
                 accession, modality, 'SummaryLesionMeasures'
             )
-            self.assertTrue(
-                os.path.exists(quantification_path),
-                msg=f'{quantification_path} does not exist.',
+            individual_quantification_path = pipeline_dir.get_quantification_file(
+                accession, modality, 'IndividualLesionMeasures'
             )
-            quantification = pd.read_csv(quantification_path)
-            self.assertEqual(quantification.dropna().shape, (14, 2))
+
+            self.assertTrue(
+                os.path.exists(summary_quantification_path),
+                msg=f'{summary_quantification_path} does not exist.',
+            )
+            summary_quantification = pd.read_csv(summary_quantification_path)
+            self.assertEqual(summary_quantification.dropna().shape, (53, 2))
+
+            individual_quantification = pd.read_csv(individual_quantification_path)
+            self.assertEqual(individual_quantification.dropna().shape, (226, 51))
