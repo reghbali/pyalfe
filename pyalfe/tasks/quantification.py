@@ -101,11 +101,17 @@ class Quantification(Task):
                     resampling_origin=Modality.T1,
                     sub_dir_name=roi_sub_dir,
                 )
-                print(template_image_to_target_file)
+
                 if os.path.exists(template_image_to_target_file):
                     target_images[roi_key], _ = self.load(template_image_to_target_file)
+                    self.logger.info(
+                        'loaded template: ' + template_image_to_target_file
+                    )
                     target_images[roi_key] = np.round(target_images[roi_key])
                 else:
+                    self.logger.info(
+                        'missing template: ' + template_image_to_target_file
+                    )
                     target_images[roi_key] = None
         return target_images
 
@@ -117,7 +123,7 @@ class Quantification(Task):
             return {}
 
     def get_brain_volume_stats(
-        self, brain_mask, tissue_seg, ventricles_seg, voxel_volume
+        self, brain_mask, tissue_seg, ventricles_seg, template_images, voxel_volume
     ):
         stats = {}
         brain_indices = np.where(brain_mask == 1)[0]
@@ -132,6 +138,15 @@ class Quantification(Task):
             for tissue in Tissue:
                 stats[f'volume_of_{tissue.name.lower()}'] = (
                     len(np.where(tissue_seg == tissue)[0]) * voxel_volume
+                )
+
+        for template_key, template_image in template_images.items():
+            if 'regions' not in roi_dict[template_key]:
+                continue
+            regions = roi_dict[template_key]['regions']
+            for region_key, region_values in regions.items():
+                stats[f'volume_of_{region_key}'] = (
+                    np.sum(np.isin(template_image, region_values)) * voxel_volume
                 )
 
         return stats
@@ -219,6 +234,7 @@ class Quantification(Task):
                 stats[
                     f'ninety_five_percentile_{modality_name.lower()}_signal'
                 ] = np.percentile(modality_image[lesion_indices], 95)
+
         if Modality.T1 in modality_images and Modality.T1Post in modality_images:
             t1_image = modality_images[Modality.T1]
             t1post_image = modality_images[Modality.T1Post]
@@ -278,6 +294,8 @@ class Quantification(Task):
             tissue_seg = None
         else:
             tissue_seg, _ = self.load(tissue_seg_file)
+
+        template_images = self.load_template_images(accession, Modality.T1)
 
         ventricles_seg_file = self.pipeline_dir.get_output_image(
             accession=accession, modality=Modality.T1, image_type='VentriclesSeg'
