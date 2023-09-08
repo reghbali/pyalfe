@@ -33,7 +33,9 @@ class TestIntegration(TestCase):
             Modality.FLAIR,
             Modality.ADC,
         ]
-        pipeline_dir = DefaultALFEDataDir(output=self.output_dir, input=self.input_dir)
+        pipeline_dir = DefaultALFEDataDir(
+            output_dir=self.output_dir, input_dir=self.input_dir
+        )
 
         for modality in modalities:
             pipeline_dir.create_dir('input', accession, modality)
@@ -82,19 +84,26 @@ class TestIntegration(TestCase):
             segmentation_path = pipeline_dir.get_output_image(
                 accession,
                 modality,
-                image_type='CNNAbnormalMap_seg',
+                image_type='abnormal_seg',
                 sub_dir_name='abnormalmap',
             )
             self.assertTrue(
                 os.path.exists(segmentation_path),
                 msg=f'{segmentation_path} does not exist.',
             )
-            quantification_path = pipeline_dir.get_quantification_file(
+            summary_quantification_path = pipeline_dir.get_quantification_file(
                 accession, modality, 'SummaryLesionMeasures'
             )
-            self.assertTrue(
-                os.path.exists(quantification_path),
-                msg=f'{quantification_path} does not exist.',
+            individual_quantification_path = pipeline_dir.get_quantification_file(
+                accession, modality, 'IndividualLesionMeasures'
             )
-            quantification = pd.read_csv(quantification_path)
-            self.assertEqual(quantification.dropna().shape, (14, 2))
+
+            self.assertTrue(
+                os.path.exists(summary_quantification_path),
+                msg=f'{summary_quantification_path} does not exist.',
+            )
+            summary_quantification = pd.read_csv(summary_quantification_path)
+            self.assertEqual(summary_quantification.dropna().shape, (53, 2))
+
+            individual_quantification = pd.read_csv(individual_quantification_path)
+            self.assertEqual(individual_quantification.dropna().shape, (226, 51))

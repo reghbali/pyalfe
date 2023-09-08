@@ -584,6 +584,11 @@ class TestQuantification(TestTask):
         brain_seg = np.array([0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0])
         tissue_seg = np.array([0, 0, 1, 2, 3, 4, 5, 6, 1, 0, 0])
         ventricles_seg = np.array([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0])
+        template_images = {
+            'template': np.array([0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 0.0]),
+            'lobes': np.array([0, 1, 2, 3, 4, 5, 6, 6, 2, 3]),
+            'CorpusCallosum': np.array([0, 1, 2, 3, 4, 5, 4, 3, 0, 0]),
+        }
 
         task = Quantification(
             pipeline_dir=self.pipeline_dir,
@@ -593,7 +598,7 @@ class TestQuantification(TestTask):
         )
 
         volume_stats = task.get_brain_volume_stats(
-            brain_seg, tissue_seg, ventricles_seg, voxel_volume=2.0
+            brain_seg, tissue_seg, ventricles_seg, template_images, voxel_volume=2.0
         )
 
         self.assertEqual(14.0, volume_stats['total_brain_volume'])
@@ -605,3 +610,16 @@ class TestQuantification(TestTask):
         self.assertEqual(2.0, volume_stats['volume_of_deep_gray_matter'])
         self.assertEqual(2.0, volume_stats['volume_of_brain_stem'])
         self.assertEqual(2.0, volume_stats['volume_of_cerebellum'])
+        self.assertEqual(2.0, volume_stats['volume_of_Frontal'])
+        self.assertEqual(4.0, volume_stats['volume_of_Parietal'])
+        self.assertEqual(4.0, volume_stats['volume_of_Occipital'])
+        self.assertEqual(2.0, volume_stats['volume_of_AnteriorTemporal'])
+        self.assertEqual(2.0, volume_stats['volume_of_MiddleTemporal'])
+        self.assertEqual(4.0, volume_stats['volume_of_PosteriorTemporal'])
+        self.assertEqual(8.0, volume_stats['volume_of_Parietal_Occipital'])
+        self.assertEqual(14.0, volume_stats['volume_of_CorpusCallosum'])
+        self.assertEqual(2.0, volume_stats['volume_of_CorpusCallosum_Rostrum'])
+        self.assertEqual(2.0, volume_stats['volume_of_CorpusCallosum_Genu'])
+        self.assertEqual(4.0, volume_stats['volume_of_CorpusCallosum_Body'])
+        self.assertEqual(4.0, volume_stats['volume_of_CorpusCallosum_Isthmus'])
+        self.assertEqual(2.0, volume_stats['volume_of_CorpusCallosum_Splenium'])
