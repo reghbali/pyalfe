@@ -27,7 +27,7 @@ class Quantification(Task):
         All the modalities for processed by the pipeline.
     modalities_target: list[Modality]
         Target modalities that are used to defince lesions.
-    dominant_tissue: bool
+    dominant_tissue: str
         The dominant tissue where the tumor or lesion is expected to be
         located at. THe options are `white_matter`, `gray_matter`, `auto`.
         If `auto` is chosen, then the dominant tissue is chosen to be the tissue
@@ -41,7 +41,7 @@ class Quantification(Task):
         pipeline_dir: PipelineDataDir,
         modalities_all: list[Modality],
         modalities_target: list[Modality],
-        dominant_tissue: bool = None,
+        dominant_tissue: str = None,
     ):
         self.modalities_all = modalities_all
         self.modalities_target = modalities_target
@@ -112,7 +112,6 @@ class Quantification(Task):
                     self.logger.info(
                         'missing template: ' + template_image_to_target_file
                     )
-                    target_images[roi_key] = None
         return target_images
 
     def get_radiomics(self, skullstripped_file, lesion_seg_file):
@@ -284,32 +283,38 @@ class Quantification(Task):
             accession=accession, modality=Modality.T1, image_type='skullstripping_mask'
         )
 
-        brain_mask, voxel_volume = self.load(brain_mask_file)
-
-        tissue_seg_file = self.pipeline_dir.get_output_image(
-            accession=accession, modality=Modality.T1, image_type='tissue_seg'
-        )
-
-        if not os.path.exists(tissue_seg_file):
-            tissue_seg = None
+        if not os.path.exists(brain_mask_file):
+            self.logger.info(
+                'T1 skullstripping mask is missing.'
+                'Skipping brain volume quantification.'
+            )
         else:
-            tissue_seg, _ = self.load(tissue_seg_file)
+            brain_mask, voxel_volume = self.load(brain_mask_file)
 
-        template_images = self.load_template_images(accession, Modality.T1)
+            tissue_seg_file = self.pipeline_dir.get_output_image(
+                accession=accession, modality=Modality.T1, image_type='tissue_seg'
+            )
 
-        ventricles_seg_file = self.pipeline_dir.get_output_image(
-            accession=accession, modality=Modality.T1, image_type='VentriclesSeg'
-        )
+            if not os.path.exists(tissue_seg_file):
+                tissue_seg = None
+            else:
+                tissue_seg, _ = self.load(tissue_seg_file)
 
-        if not os.path.exists(ventricles_seg_file):
-            ventricles_seg = None
-        else:
-            ventricles_seg, _ = self.load(ventricles_seg_file)
+            template_images = self.load_template_images(accession, Modality.T1)
 
-        volume_stats = self.get_brain_volume_stats(
-            brain_mask, tissue_seg, ventricles_seg, voxel_volume
-        )
-        pd.Series(volume_stats).to_csv(volumetric_quantification_file)
+            ventricles_seg_file = self.pipeline_dir.get_output_image(
+                accession=accession, modality=Modality.T1, image_type='VentriclesSeg'
+            )
+
+            if not os.path.exists(ventricles_seg_file):
+                ventricles_seg = None
+            else:
+                ventricles_seg, _ = self.load(ventricles_seg_file)
+
+            volume_stats = self.get_brain_volume_stats(
+                brain_mask, tissue_seg, ventricles_seg, template_images, voxel_volume
+            )
+            pd.Series(volume_stats).to_csv(volumetric_quantification_file)
 
         for target in self.modalities_target:
             summary_quantification_file = self.pipeline_dir.get_quantification_file(

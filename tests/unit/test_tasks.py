@@ -4,6 +4,7 @@ import shutil
 from unittest import TestCase
 
 import numpy as np
+import pandas as pd
 
 from pyalfe.data_structure import DefaultALFEDataDir, Modality, Tissue
 from pyalfe.image_processing import Convert3DProcessor
@@ -24,6 +25,7 @@ from pyalfe.tasks.segmentation import (
 from pyalfe.tasks.skullstripping import Skullstripping
 from pyalfe.tasks.t1_postprocessing import T1Postprocessing
 from pyalfe.tasks.t1_preprocessing import T1Preprocessing
+from tests.utils import create_nifti
 
 
 class MockInferenceModel(InferenceModel):
@@ -623,3 +625,97 @@ class TestQuantification(TestTask):
         self.assertEqual(4.0, volume_stats['volume_of_CorpusCallosum_Body'])
         self.assertEqual(4.0, volume_stats['volume_of_CorpusCallosum_Isthmus'])
         self.assertEqual(2.0, volume_stats['volume_of_CorpusCallosum_Splenium'])
+
+    def test_run(self):
+        accession = '001'
+        modalities = [
+            Modality.T1,
+            Modality.T2,
+            Modality.T1Post,
+            Modality.FLAIR,
+            Modality.ASL,
+        ]
+        modalities_target = [Modality.FLAIR]
+
+        modality_images = {
+            Modality.T1: np.array([0.0, 1.0, 1.0, 2.0, 1.0, 1.0, 3.0, 4.0, 0.0]),
+            Modality.T2: np.array([0.0, 2.0, 2.0, 0.0, 4.0, 9.0, 0.0, 4.0, 0.0]),
+            Modality.ADC: np.array([0.0, 3.0, 0.0, 4.0, 0.5, 6.0, 5.0, 4.0, 1.0]),
+            Modality.T1Post: np.array([0.0, 1.0, 2.0, 2.0, 0.0, 5.0, 2.0, 2.0, 1.0]),
+            Modality.FLAIR: np.array([0.0, 2.0, 1.0, 2.0, 1.0, 2.0, 2.0, 2.0, 1.0]),
+        }
+
+        for modality, modality_image in modality_images.items():
+            create_nifti(
+                self.pipeline_dir.get_output_image(
+                    accession=accession, modality=modality, image_type='skullstripped'
+                ),
+                modality_image.astype(np.int16),
+            )
+            create_nifti(
+                self.pipeline_dir.get_output_image(
+                    accession=accession,
+                    modality=modality,
+                    image_type='skullstripping_mask',
+                ),
+                np.array([0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0]),
+            )
+
+        lesion_seg = np.array([0, 0, 1, 1, 0, 1, 1, 0, 0])
+        create_nifti(
+            self.pipeline_dir.get_output_image(
+                accession=accession,
+                modality=modality.FLAIR,
+                image_type='abnormal_seg',
+                sub_dir_name='abnormalmap',
+            ),
+            lesion_seg.astype(np.int16),
+        )
+        lesion_seg_comp = np.array([0, 0, 1, 2, 0, 2, 2, 0, 0])
+        create_nifti(
+            self.pipeline_dir.get_output_image(
+                accession=accession,
+                modality=modality.FLAIR,
+                image_type='abnormal_seg_comp',
+                sub_dir_name='abnormalmap',
+            ),
+            lesion_seg_comp.astype(np.int16),
+        )
+        tissue_seg = np.array([0, 1, 2, 3, 4, 5, 6, 3, 0])
+        create_nifti(
+            self.pipeline_dir.get_output_image(
+                accession=accession, modality=modality.FLAIR, image_type='tissue_seg'
+            ),
+            tissue_seg.astype(np.int16),
+        )
+
+        ventricles_distance = np.array([3, 2, 1, 0, 0, 1, 2, 3, 4])
+        create_nifti(
+            self.pipeline_dir.get_output_image(
+                accession, Modality.T1, 'VentriclesDist'
+            ),
+            ventricles_distance.astype(np.int16),
+        )
+
+        template_images = {
+            'template': np.array([0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 0.0]),
+            'lobes': np.array([0, 1, 2, 3, 4, 5, 6, 6, 0]),
+            'CorpusCallosum': np.array([0, 1, 2, 3, 4, 5, 4, 3, 0, 0]),
+        }
+
+        dominant_tissue = 'white_matter'
+        task = Quantification(
+            self.pipeline_dir,
+            modalities,
+            modalities_target,
+            dominant_tissue=dominant_tissue,
+        )
+
+        task.run(accession)
+
+        volumetric_quant_file = self.pipeline_dir.get_quantification_file(
+            accession, Modality.T1, 'volumeMeasures'
+        )
+
+        volumetric_quant = pd.read_csv(volumetric_quant_file)
+        pass
