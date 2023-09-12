@@ -85,7 +85,7 @@ class Quantification(Task):
                 modality_images[modality] = None
         return modality_images
 
-    def load_template_images(self, accession, target):
+    def load_template_images(self, accession, modality):
         target_images = {}
 
         for roi_key, roi_properties in roi_dict.items():
@@ -93,14 +93,23 @@ class Quantification(Task):
             roi_sub_dir = roi_properties['sub_dir']
 
             if roi_properties['type'] == 'template':
-                template_image_to_target_file = self.pipeline_dir.get_output_image(
-                    accession,
-                    modality=target,
-                    image_type=roi_key,
-                    resampling_target=target,
-                    resampling_origin=Modality.T1,
-                    sub_dir_name=roi_sub_dir,
-                )
+                if modality == Modality.T1:
+                    template_image_to_target_file = self.pipeline_dir.get_output_image(
+                        accession,
+                        modality=modality,
+                        resampling_target=modality,
+                        resampling_origin=roi_key,
+                        sub_dir_name=roi_sub_dir,
+                    )
+                else:
+                    template_image_to_target_file = self.pipeline_dir.get_output_image(
+                        accession,
+                        modality=modality,
+                        image_type=roi_key,
+                        resampling_target=modality,
+                        resampling_origin=Modality.T1,
+                        sub_dir_name=roi_sub_dir,
+                    )
 
                 if os.path.exists(template_image_to_target_file):
                     target_images[roi_key], _ = self.load(template_image_to_target_file)
