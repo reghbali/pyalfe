@@ -81,8 +81,6 @@ class Quantification(Task):
 
             if os.path.exists(modality_image_to_target_file):
                 modality_images[modality], _ = self.load(modality_image_to_target_file)
-            else:
-                modality_images[modality] = None
         return modality_images
 
     def load_template_images(self, accession, modality):
@@ -249,6 +247,11 @@ class Quantification(Task):
             stats['enhancement'] = np.mean(t1post_image[lesion_indices]) / np.mean(
                 t1_image[lesion_indices]
             )
+        else:
+            self.logger.info(
+                'Cannot quantify avg enhancement over the leasion because T1'
+                ' or T1Post are not registered to target modality'
+            )
 
         if ventricles_distance is not None:
             stats['average_dist_to_ventricles_(voxels)'] = np.mean(
@@ -370,7 +373,6 @@ class Quantification(Task):
             )
 
             if not os.path.exists(tissue_seg_file):
-                print('no tissue seg', tissue_seg_file)
                 self.logger.info(
                     f'Tissue seg file for {target} is missing.'
                     f'Skipping quantification for {target}.'
