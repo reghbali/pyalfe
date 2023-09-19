@@ -790,7 +790,9 @@ class TestQuantification(TestTask):
         volumetric_quant_file = self.pipeline_dir.get_quantification_file(
             accession, Modality.T1, 'volumeMeasures'
         )
-        volume_stats = pd.read_csv(volumetric_quant_file, squeeze=True, index_col=0)
+        volume_stats = pd.read_csv(volumetric_quant_file, index_col=0).squeeze(
+            "columns"
+        )
 
         self.assertEqual(14.0, volume_stats['total_brain_volume'])
         self.assertEqual(2.0, volume_stats['total_ventricles_volume'])
@@ -818,8 +820,8 @@ class TestQuantification(TestTask):
         summary_quantification_file = self.pipeline_dir.get_quantification_file(
             accession, Modality.FLAIR, 'SummaryLesionMeasures'
         )
-        lesion_stats = pd.read_csv(
-            summary_quantification_file, squeeze=True, index_col=0
+        lesion_stats = pd.read_csv(summary_quantification_file, index_col=0).squeeze(
+            "columns"
         )
 
         self.assertEqual(8.0, lesion_stats['total_lesion_volume'])
@@ -861,7 +863,7 @@ class TestQuantification(TestTask):
         )
         individual_lesion_stats = pd.read_csv(
             individual_quantification_file, squeeze=True, index_col=0
-        )
+        ).squeeze("columns")
         lesion_stats = individual_lesion_stats.iloc[1]
 
         self.assertEqual(6.0, lesion_stats['total_lesion_volume'])
@@ -893,4 +895,3 @@ class TestQuantification(TestTask):
         self.assertEqual(200 / 3.0, lesion_stats['percentage_volume_in_Temporal'])
         self.assertEqual(6.0, lesion_stats['lesion_volume_in_CorpusCallosum'])
         self.assertEqual(100.0, lesion_stats['percentage_volume_in_CorpusCallosum'])
-        pass
