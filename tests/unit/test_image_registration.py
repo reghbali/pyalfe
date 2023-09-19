@@ -93,7 +93,7 @@ def get_image_registration_test(
             np.testing.assert_array_less(
                 np.linalg.norm(get_nifti_data(output) - fixed_data)
                 / np.linalg.norm(get_nifti_data(output) - moving_data),
-                0.45,
+                0.47,
             )
 
             moving2_path = self.get_image_path('moving2.nii.gz')

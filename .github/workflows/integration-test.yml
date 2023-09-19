@@ -63,6 +63,10 @@ jobs:
               cp c3d*/bin/c3d $BIN/c3d
           fi
 
+      - name: Download models
+        run: |
+          pyalfe download models
+
       - name: Run tests
         run: |
           pytest tests/integration
