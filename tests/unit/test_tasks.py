@@ -862,7 +862,7 @@ class TestQuantification(TestTask):
             accession, Modality.FLAIR, 'IndividualLesionMeasures'
         )
         individual_lesion_stats = pd.read_csv(
-            individual_quantification_file, squeeze=True, index_col=0
+            individual_quantification_file, index_col=0
         ).squeeze("columns")
         lesion_stats = individual_lesion_stats.iloc[1]
 
