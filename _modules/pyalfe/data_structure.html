@@ -1,0 +1,946 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyalfe.data_structure &#8212; pyalfe</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyalfe/data_structure';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">pyalfe</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    PyALFE
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../guides/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guides/tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guides/dev.html">Development</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API docs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../guides/api.html">PyALFE reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/containers.html">pyalfe.containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/data_structure.html">pyalfe.data_structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/image_processing.html">pyalfe.image_processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/image_registration.html">pyalfe.image_registration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/inference.html">pyalfe.inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/main.html">pyalfe.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/pipeline.html">pyalfe.pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/roi.html">pyalfe.roi</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/reghbali/pyalfe" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/reghbali/pyalfe/issues/new?title=Issue%20on%20page%20%2F_modules/pyalfe/data_structure.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <h1>Source code for pyalfe.data_structure</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">importlib</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">auto</span><span class="p">,</span> <span class="n">IntEnum</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">bids</span> <span class="kn">import</span> <span class="n">BIDSLayout</span>
+
+<span class="kn">from</span> <span class="nn">strenum</span> <span class="kn">import</span> <span class="n">StrEnum</span>
+
+
+<div class="viewcode-block" id="Modality"><a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.Modality">[docs]</a><span class="k">class</span> <span class="nc">Modality</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+    <span class="n">T1</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">T1Post</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">T2</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FLAIR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SWI</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DWI</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SingleDWI</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ADC</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">EADC</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CBF</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ASL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PERFUSION</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Orientation"><a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.Orientation">[docs]</a><span class="k">class</span> <span class="nc">Orientation</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+    <span class="n">AXIAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SAGITTAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CORONAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Tissue"><a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.Tissue">[docs]</a><span class="k">class</span> <span class="nc">Tissue</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+    <span class="n">BACKGROUND</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">CSF</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">CORTICAL_GRAY_MATTER</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">WHITE_MATTER</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">DEEP_GRAY_MATTER</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">BRAIN_STEM</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">CEREBELLUM</span> <span class="o">=</span> <span class="mi">6</span></div>
+
+
+<div class="viewcode-block" id="PipelineDataDir"><a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.PipelineDataDir">[docs]</a><span class="k">class</span> <span class="nc">PipelineDataDir</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract PipelineDataDir&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PipelineDataDir.get_output_image"><a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.PipelineDataDir.get_output_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_output_image</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">accession</span><span class="p">,</span>
+        <span class="n">modality</span><span class="p">,</span>
+        <span class="n">image_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">resampling_target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">resampling_origin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">sub_dir_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.nii.gz&#39;</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates the path for an output image. All the implementations</span>
+<span class="sd">         should make the parent directories if they do not exist.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        accession: str</span>
+<span class="sd">            The accession or study number.</span>
+<span class="sd">        modality: Modality or str</span>
+<span class="sd">            Image modality.</span>
+<span class="sd">        image_type: str, default=None</span>
+<span class="sd">            Image type. For example: skullstripped.</span>
+<span class="sd">        resampling_target: Modality or str, default=None</span>
+<span class="sd">            The target space that the image has been resampled to. For example,</span>
+<span class="sd">            for a `T2` image that is resampled to `FLAIR`, resampling</span>
+<span class="sd">            target is `FLAIR`.</span>
+<span class="sd">        resampling_origin: Modality, str, default=None</span>
+<span class="sd">            The origin of image before resampling. For example, if a `template`</span>
+<span class="sd">            image is resampled to `T1`, the resampling origin is `template`.</span>
+<span class="sd">        sub_dir_name: str, default=None</span>
+<span class="sd">            The name of the sub directory inside the modality directory in</span>
+<span class="sd">            which the image is stored. If None the image is stored directory</span>
+<span class="sd">            inside the modality directory.</span>
+<span class="sd">        extension: str, default=&#39;.nii.gz&#39;</span>
+<span class="sd">            The extension of the image.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The path to output image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="PipelineDataDir.get_input_image"><a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.PipelineDataDir.get_input_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_input_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.nii.gz&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates the path for an input image.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        accession: str</span>
+<span class="sd">            The accession or study number.</span>
+<span class="sd">        modality: Modality or str</span>
+<span class="sd">            Image modality.</span>
+<span class="sd">        extension: str, default=&#39;.nii.gz&#39;</span>
+<span class="sd">            The extension of the image.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The path to input image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="PipelineDataDir.get_quantification_file"><a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.PipelineDataDir.get_quantification_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_quantification_file</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">,</span> <span class="n">quantification_file_type</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.csv&#39;</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates the path for an output quantification file.</span>
+<span class="sd">        All the implementations should make the parent directories</span>
+<span class="sd">        if they do not exist.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        accession: str</span>
+<span class="sd">            The accession or study number.</span>
+<span class="sd">        modality: Modality or str</span>
+<span class="sd">            Image modality.</span>
+<span class="sd">        quantification_file_type: str, default=None</span>
+<span class="sd">            Image type. For example: SummaryLesionMeasures.</span>
+<span class="sd">        extension: str, default=&#39;.csv&#39;</span>
+<span class="sd">            The extension of the quantification.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The path to quantification file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+
+
+<div class="viewcode-block" id="DefaultALFEDataDir"><a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.DefaultALFEDataDir">[docs]</a><span class="k">class</span> <span class="nc">DefaultALFEDataDir</span><span class="p">(</span><span class="n">PipelineDataDir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Default implementation of PipelineDataDir</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dir_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="n">output_dir</span><span class="p">,</span> <span class="s1">&#39;input&#39;</span><span class="p">:</span> <span class="n">input_dir</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_type</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="o">*</span><span class="n">sub_dir_names</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dir_dict</span><span class="p">[</span><span class="n">dir_type</span><span class="p">],</span> <span class="n">accession</span><span class="p">,</span> <span class="o">*</span><span class="n">sub_dir_names</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DefaultALFEDataDir.create_dir"><a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.DefaultALFEDataDir.create_dir">[docs]</a>    <span class="k">def</span> <span class="nf">create_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_type</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="o">*</span><span class="n">sub_dir_names</span><span class="p">,</span> <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">directory</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">dir_type</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="o">*</span><span class="n">sub_dir_names</span><span class="p">)</span>
+        <span class="n">Path</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="n">exists</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">directory</span></div>
+
+<div class="viewcode-block" id="DefaultALFEDataDir.get_output_image"><a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.DefaultALFEDataDir.get_output_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_output_image</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">accession</span><span class="p">,</span>
+        <span class="n">modality</span><span class="p">,</span>
+        <span class="n">image_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">resampling_target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">resampling_origin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">sub_dir_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.nii.gz&#39;</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate the path for an output image in ALFE default</span>
+<span class="sd">        dir structure format.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        accession: str</span>
+<span class="sd">            The accession or study number.</span>
+<span class="sd">        modality: Modality or str</span>
+<span class="sd">            Image modality.</span>
+<span class="sd">        image_type: str, default=None</span>
+<span class="sd">            Image type. For example: skullstripped.</span>
+<span class="sd">        resampling_target: Modality or str, default=None</span>
+<span class="sd">            The target space that the image has been resampled to. For example,</span>
+<span class="sd">            for a `T2` image that is resampled to `FLAIR`, resampling</span>
+<span class="sd">            target is `FLAIR`.</span>
+<span class="sd">        resampling_origin: Modality, str, default=None</span>
+<span class="sd">            The origin of image before resampling. For example, if a `template`</span>
+<span class="sd">            image is resampled to `T1`, the resampling origin is `template`.</span>
+<span class="sd">        sub_dir_name: str, default=None</span>
+<span class="sd">            The name of the sub directory inside the modality directory in</span>
+<span class="sd">            which the image is stored. If None the image is stored directory</span>
+<span class="sd">            inside the modality directory.</span>
+<span class="sd">        extension: str, default=&#39;.nii.gz&#39;</span>
+<span class="sd">            The extension of the image.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The path to output image.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        -------</span>
+<span class="sd">        &gt;&gt;&gt; from pyalfe.data_structure import DefaultALFEDataDir</span>
+<span class="sd">        &gt;&gt;&gt; data_dir = DefaultALFEDataDir(</span>
+<span class="sd">        output_dir=&#39;/mri-data/processed&#39;, input_dir=&#39;/mri-data/input&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; data_dir.get_output_image(&#39;34521&#39;, &#39;T1&#39;)</span>
+<span class="sd">        &#39;/mri-data/processed/34521/T1/34521_T1.nii.gz&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; data_dir.get_output_image(</span>
+<span class="sd">        &#39;34521&#39;, &#39;T2&#39;, image_type=&#39;skullstrippied&#39;)</span>
+<span class="sd">        &#39;/mri-data/processed/34521/T2/34521_T2_skullstrippied.nii.gz&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; data_dir.get_output_image(</span>
+<span class="sd">        &#39;34521&#39;, &#39;T1Post&#39;, resampling_target=&#39;T1Post&#39;, resampling_origin=&#39;template&#39;)</span>
+<span class="sd">        &#39;/mri-data/processed/34521/T1Post/34521_template_to_T1Post.nii.gz&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; data_dir.get_output_image(</span>
+<span class="sd">        &#39;34521&#39;, &#39;T2&#39;, image_type=&#39;abnormal_seg&#39;, sub_dir_name=&#39;abnormalmap&#39;)</span>
+<span class="sd">        &#39;/mri-data/processed/34521/T2/abnormalmap/34521_T2_abnormal_seg.nii.gz&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">resampling_origin</span><span class="p">:</span>
+            <span class="n">file_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">accession</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">modality</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">file_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">accession</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">resampling_origin</span><span class="si">}</span><span class="s1">&#39;</span>
+
+        <span class="k">if</span> <span class="n">resampling_target</span><span class="p">:</span>
+            <span class="n">file_name</span> <span class="o">+=</span> <span class="s1">&#39;_to_&#39;</span> <span class="o">+</span> <span class="n">resampling_target</span>
+
+        <span class="k">if</span> <span class="n">image_type</span><span class="p">:</span>
+            <span class="n">file_name</span> <span class="o">+=</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">image_type</span>
+
+        <span class="n">file_name</span> <span class="o">+=</span> <span class="n">extension</span>
+
+        <span class="k">if</span> <span class="n">sub_dir_name</span><span class="p">:</span>
+            <span class="n">file_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_dir</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">,</span> <span class="n">sub_dir_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">file_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_dir</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">file_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DefaultALFEDataDir.get_input_image"><a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.DefaultALFEDataDir.get_input_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_input_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.nii.gz&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate the path for an input image in</span>
+<span class="sd">        ALFE default dir structure format.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        accession: str</span>
+<span class="sd">            The accession or study number.</span>
+<span class="sd">        modality: Modality or str</span>
+<span class="sd">            Image modality.</span>
+<span class="sd">        extension: str, default=&#39;.nii.gz&#39;</span>
+<span class="sd">            The extension of the image.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The path to input image.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        -------</span>
+<span class="sd">        &gt;&gt;&gt; from pyalfe.data_structure import DefaultALFEDataDir</span>
+<span class="sd">        &gt;&gt;&gt; data_dir = DefaultALFEDataDir(</span>
+<span class="sd">        output_dir=&#39;/mri-data/processed&#39;, input_dir=&#39;/mri-data/input&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; data_dir.get_input_image(&#39;34521&#39;, &#39;T1&#39;)</span>
+<span class="sd">        &#39;/mri-data/input/34521/T1/T1.nii.gz&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">),</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">modality</span><span class="si">}</span><span class="s1">.nii.gz&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DefaultALFEDataDir.get_quantification_file"><a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.DefaultALFEDataDir.get_quantification_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_quantification_file</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">,</span> <span class="n">quantification_file_type</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.csv&#39;</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate the path for a quantification file in</span>
+<span class="sd">        ALFE default dir structure format.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        accession: str</span>
+<span class="sd">            The accession or study number.</span>
+<span class="sd">        modality: Modality or str</span>
+<span class="sd">            Image modality.</span>
+<span class="sd">        quantification_file_type: str, default=None</span>
+<span class="sd">            Image type. For example: SummaryLesionMeasures.</span>
+<span class="sd">        extension: str, default=&#39;.csv&#39;</span>
+<span class="sd">            The extension of the quantification.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The path to quantification file.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        -------</span>
+<span class="sd">        &gt;&gt;&gt; from pyalfe.data_structure import DefaultALFEDataDir</span>
+<span class="sd">        &gt;&gt;&gt; data_dir = DefaultALFEDataDir(</span>
+<span class="sd">        output_dir=&#39;/mri-data/processed&#39;, input_dir=&#39;/mri-data/input&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; data_dir.get_quantification_file(</span>
+<span class="sd">        &#39;34521&#39;, &#39;T1Post&#39;, quantification_file_type=&#39;IndividualLesionMeasures&#39;)</span>
+<span class="sd">        &#39;/mri-data/processed/34521/T1Post/quantification/34521_IndividualLesionMeasures.csv&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">quantification_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_dir</span><span class="p">(</span>
+            <span class="s1">&#39;output&#39;</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">,</span> <span class="s1">&#39;quantification&#39;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">quantification_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">accession</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">quantification_file_type</span><span class="si">}{</span><span class="n">extension</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="BIDSDataDir"><a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.BIDSDataDir">[docs]</a><span class="k">class</span> <span class="nc">BIDSDataDir</span><span class="p">(</span><span class="n">PipelineDataDir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    BIDS almost-compliant implementation of PipelineDataDir</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;BIDSDataDir&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_layout</span> <span class="o">=</span> <span class="n">BIDSLayout</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">input_dir</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">())</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span>
+            <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span> <span class="o">/</span> <span class="s1">&#39;dataset_description.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span>
+        <span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;ALFE Output&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;BIDSVersion&#39;</span><span class="p">:</span> <span class="s1">&#39;1.0.2&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;DatasetType&#39;</span><span class="p">:</span> <span class="s1">&#39;derivative&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;GeneratedBy&#39;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;ALFE&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;Version&#39;</span><span class="p">:</span> <span class="n">importlib</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">version</span><span class="p">(</span><span class="s1">&#39;pyalfe&#39;</span><span class="p">),</span>
+                        <span class="p">}</span>
+                    <span class="p">],</span>
+                <span class="p">},</span>
+                <span class="n">file</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_layout</span> <span class="o">=</span> <span class="n">BIDSLayout</span><span class="p">(</span>
+            <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(),</span> <span class="n">is_derivative</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+
+    <span class="n">modality_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">Modality</span><span class="o">.</span><span class="n">T1</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;suffix&#39;</span><span class="p">:</span> <span class="s1">&#39;T1w&#39;</span><span class="p">,</span> <span class="s1">&#39;datatype&#39;</span><span class="p">:</span> <span class="s1">&#39;anat&#39;</span><span class="p">},</span>
+        <span class="n">Modality</span><span class="o">.</span><span class="n">T1Post</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;suffix&#39;</span><span class="p">:</span> <span class="s1">&#39;T1w&#39;</span><span class="p">,</span> <span class="s1">&#39;ceagent&#39;</span><span class="p">:</span> <span class="s1">&#39;gadolinium&#39;</span><span class="p">,</span> <span class="s1">&#39;datatype&#39;</span><span class="p">:</span> <span class="s1">&#39;anat&#39;</span><span class="p">},</span>
+        <span class="n">Modality</span><span class="o">.</span><span class="n">T2</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;suffix&#39;</span><span class="p">:</span> <span class="s1">&#39;T2w&#39;</span><span class="p">,</span> <span class="s1">&#39;datatype&#39;</span><span class="p">:</span> <span class="s1">&#39;anat&#39;</span><span class="p">},</span>
+        <span class="n">Modality</span><span class="o">.</span><span class="n">FLAIR</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;suffix&#39;</span><span class="p">:</span> <span class="s1">&#39;FLAIR&#39;</span><span class="p">,</span> <span class="s1">&#39;datatype&#39;</span><span class="p">:</span> <span class="s1">&#39;anat&#39;</span><span class="p">},</span>
+        <span class="n">Modality</span><span class="o">.</span><span class="n">SWI</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;suffix&#39;</span><span class="p">:</span> <span class="s1">&#39;swi&#39;</span><span class="p">,</span> <span class="s1">&#39;datatype&#39;</span><span class="p">:</span> <span class="s1">&#39;swi&#39;</span><span class="p">},</span>
+        <span class="n">Modality</span><span class="o">.</span><span class="n">ADC</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;suffix&#39;</span><span class="p">:</span> <span class="s1">&#39;md&#39;</span><span class="p">,</span> <span class="s1">&#39;datatype&#39;</span><span class="p">:</span> <span class="s1">&#39;dwi&#39;</span><span class="p">},</span>
+        <span class="n">Modality</span><span class="o">.</span><span class="n">CBF</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;suffix&#39;</span><span class="p">:</span> <span class="s1">&#39;cbf&#39;</span><span class="p">,</span> <span class="s1">&#39;datatype&#39;</span><span class="p">:</span> <span class="s1">&#39;perf&#39;</span><span class="p">},</span>
+        <span class="n">Modality</span><span class="o">.</span><span class="n">ASL</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;suffix&#39;</span><span class="p">:</span> <span class="s1">&#39;asl&#39;</span><span class="p">,</span> <span class="s1">&#39;datatype&#39;</span><span class="p">:</span> <span class="s1">&#39;perf&#39;</span><span class="p">},</span>
+    <span class="p">}</span>
+
+<div class="viewcode-block" id="BIDSDataDir.get_input_image"><a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.BIDSDataDir.get_input_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_input_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.nii.gz&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates the path for an input image in BIDS dir structure format.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        accession: str</span>
+<span class="sd">            The accession or study number.</span>
+<span class="sd">        modality: Modality or str</span>
+<span class="sd">            Image modality.</span>
+<span class="sd">        extension: str, default=&#39;.nii.gz&#39;</span>
+<span class="sd">            The extension of the image.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The path to input image.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        -------</span>
+<span class="sd">        &gt;&gt;&gt; from pyalfe.data_structure import BIDSDataDir</span>
+<span class="sd">        &gt;&gt;&gt; data_dir = BIDSDataDir(</span>
+<span class="sd">        output_dir=&#39;/mri-data/processed&#39;, input_dir=&#39;/mri-data/input&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; data_dir.get_input_image(&#39;34521&#39;, &#39;T1&#39;)</span>
+<span class="sd">        &#39;/mri-data/input/sub-34521/anat/sub-34521_T1w.nii.gz&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; data_dir.get_input_image(&#39;34521&#39;, &#39;ADC&#39;)</span>
+<span class="sd">        &#39;/mri-data/input/sub-34521/derivative/dwi/sub-34521_md.nii.gz&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; data_dir.get_input_image(&#39;34521&#39;, &#39;CBF&#39;)</span>
+<span class="sd">        &#39;/mri-data/input/sub-34521/derivative/perf/sub-34521_cbf.nii.gz&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; data_dir.get_input_image(&#39;34521&#39;, &#39;SWI&#39;)</span>
+<span class="sd">        &#39;/mri-data/input/sub-34521/derivative/swi/sub-34521_swi.nii.gz&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; data_dir.get_input_image(&#39;34521&#39;, &#39;T1Post&#39;)</span>
+<span class="sd">        &#39;/mri-data/input/sub-34521/anat/sub-34521_ce-gadolinium_T1w.nii.gz&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">patterns</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;sub-</span><span class="si">{subject}</span><span class="s1">[/ses-</span><span class="si">{session}</span><span class="s1">]/</span><span class="si">{datatype}</span><span class="s1">/sub-</span><span class="si">{subject}</span><span class="s1">[_ses-</span><span class="si">{session}</span><span class="s1">]&#39;</span>
+            <span class="s1">&#39;[_task-</span><span class="si">{task}</span><span class="s1">][_acq-</span><span class="si">{acquisition}</span><span class="s1">][_ce-</span><span class="si">{ceagent}</span><span class="s1">][_rec-</span><span class="si">{reconstruction}</span><span class="s1">]&#39;</span>
+            <span class="s1">&#39;[_run-</span><span class="si">{run}</span><span class="s1">][_part-</span><span class="si">{part}</span><span class="s1">]_{suffix&lt;T1w|T2w|FLAIR|dwi|asl&gt;}&#39;</span>
+            <span class="s1">&#39;{extension&lt;.nii|.nii.gz&gt;|.nii.gz}&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;sub-</span><span class="si">{subject}</span><span class="s1">[/ses-</span><span class="si">{session}</span><span class="s1">]/derivative/</span><span class="si">{datatype}</span><span class="s1">/sub-</span><span class="si">{subject}</span><span class="s1">[_ses-</span><span class="si">{session}</span><span class="s1">]&#39;</span>
+            <span class="s1">&#39;[_task-</span><span class="si">{task}</span><span class="s1">][_acq-</span><span class="si">{acquisition}</span><span class="s1">][_ce-</span><span class="si">{ceagent}</span><span class="s1">][_rec-</span><span class="si">{reconstruction}</span><span class="s1">]&#39;</span>
+            <span class="s1">&#39;[_run-</span><span class="si">{run}</span><span class="s1">][_part-</span><span class="si">{part}</span><span class="s1">]_{suffix&lt;swi|cbf|md&gt;}&#39;</span>
+            <span class="s1">&#39;{extension&lt;.nii|.nii.gz&gt;|.nii.gz}&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="n">entities</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;subject&#39;</span><span class="p">:</span> <span class="n">accession</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">modality_dict</span><span class="p">[</span><span class="n">modality</span><span class="p">],</span>
+            <span class="s1">&#39;extension&#39;</span><span class="p">:</span> <span class="n">extension</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">candidates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="o">*</span><span class="n">entities</span><span class="p">,</span> <span class="n">patterns</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">default_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_layout</span><span class="o">.</span><span class="n">build_path</span><span class="p">(</span>
+                <span class="n">entities</span><span class="p">,</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Did not find any file matching </span><span class="si">{</span><span class="n">entities</span><span class="si">}</span><span class="s1"> &#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;when looking for </span><span class="si">{</span><span class="n">modality</span><span class="si">}</span><span class="s1"> image for </span><span class="si">{</span><span class="n">accession</span><span class="si">}</span><span class="s1">.&#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;Returning the default path </span><span class="si">{</span><span class="n">default_path</span><span class="si">}</span><span class="s1">.&#39;</span>
+            <span class="p">)</span>
+            <span class="c1"># I see you watching me, you should watch her.</span>
+            <span class="c1"># Cause she is sick of your tricks, I am the doctor.</span>
+            <span class="k">return</span> <span class="n">default_path</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">candidates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Multiple files matching </span><span class="si">{</span><span class="n">entities</span><span class="si">}</span><span class="s1"> were found &#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;when looking for </span><span class="si">{</span><span class="n">modality</span><span class="si">}</span><span class="s1"> image for </span><span class="si">{</span><span class="n">accession</span><span class="si">}</span><span class="s1">: &#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">candidates</span><span class="si">}</span><span class="s1">. Choosing </span><span class="si">{</span><span class="n">candidates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">.&#39;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">candidates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="BIDSDataDir.get_output_image"><a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.BIDSDataDir.get_output_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_output_image</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">accession</span><span class="p">,</span>
+        <span class="n">modality</span><span class="p">,</span>
+        <span class="n">image_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">resampling_target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">resampling_origin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">sub_dir_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.nii.gz&#39;</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates the path for an output image in BIDS dir structure format.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        accession: str</span>
+<span class="sd">            The accession or study number.</span>
+<span class="sd">        modality: Modality or str</span>
+<span class="sd">            Image modality.</span>
+<span class="sd">        image_type: str, default=None</span>
+<span class="sd">            Image type. For example: skullstripped.</span>
+<span class="sd">        resampling_target: Modality or str, default=None</span>
+<span class="sd">            The target space that the image has been resampled to. For example,</span>
+<span class="sd">            for a `T2` image that is resampled to `FLAIR`, resampling</span>
+<span class="sd">            target is `FLAIR`.</span>
+<span class="sd">        resampling_origin: Modality, str, default=None</span>
+<span class="sd">            The origin of image before resampling. For example, if a `template`</span>
+<span class="sd">            image is resampled to `T1`, the resampling origin is `template`.</span>
+<span class="sd">        sub_dir_name: str, default=None</span>
+<span class="sd">            The name of the sub directory inside the modality directory in</span>
+<span class="sd">            which the image is stored. If None the image is stored directory</span>
+<span class="sd">            inside the modality directory.</span>
+<span class="sd">        extension: str, default=&#39;.nii.gz&#39;</span>
+<span class="sd">            The extension of the image.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The path to output image.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        -------</span>
+<span class="sd">        &gt;&gt;&gt; from pyalfe.data_structure import BIDSDataDir</span>
+<span class="sd">        &gt;&gt;&gt; data_dir = BIDSDataDir(</span>
+<span class="sd">        output_dir=&#39;/mri-data/processed&#39;, input_dir=&#39;/mri-data/input&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; data_dir.get_output_image(&#39;34521&#39;, &#39;T1&#39;)</span>
+<span class="sd">        &#39;/mri-data/processed/sub-34521/anat/sub-34521_T1w.nii.gz&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; data_dir.get_output_image(&#39;34521&#39;, &#39;T2&#39;, image_type=&#39;skullstrippied&#39;)</span>
+<span class="sd">        &#39;/mri-data/processed/sub-34521/anat/sub-34521_desc-skullstrippied_T2w.nii.gz&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; data_dir.get_output_image(</span>
+<span class="sd">        &#39;34521&#39;, &#39;T1Post&#39;, resampling_target=&#39;T1Post&#39;, resampling_origin=&#39;template&#39;)</span>
+<span class="sd">        &#39;/mri-data/processed/sub-34521/anat/sub-34521_ce-gadolinium_space-orig_desc-template_T1w.nii.gz&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; data_dir.get_output_image(</span>
+<span class="sd">        &#39;34521&#39;, &#39;T2&#39;, image_type=&#39;abnormal_seg&#39;, sub_dir_name=&#39;abnormalmap&#39;)</span>
+<span class="sd">        &#39;/mri-data/processed/sub-34521/anat/sub-34521_desc-abnormalseg_dseg.nii.gz&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;sub-</span><span class="si">{subject}</span><span class="s1">[/ses-</span><span class="si">{session}</span><span class="s1">]/</span><span class="si">{datatype}</span><span class="s1">/sub-</span><span class="si">{subject}</span><span class="s1">&#39;</span>
+            <span class="s1">&#39;[_ce-</span><span class="si">{ceagent}</span><span class="s1">][_space-</span><span class="si">{space}</span><span class="s1">][_desc-</span><span class="si">{desc}</span><span class="s1">]&#39;</span>
+            <span class="s1">&#39;_{suffix&lt;T1w|T2w|FLAIR|swi|asl|cbf|md|mask|dseg|probseg&gt;}&#39;</span>
+            <span class="s1">&#39;{extension&lt;.nii|.nii.gz&gt;|.nii.gz}&#39;</span>
+        <span class="p">]</span>
+        <span class="n">entities</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;subject&#39;</span><span class="p">:</span> <span class="n">accession</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">modality_dict</span><span class="p">[</span><span class="n">modality</span><span class="p">],</span>
+            <span class="s1">&#39;extension&#39;</span><span class="p">:</span> <span class="n">extension</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">resampling_target</span> <span class="o">==</span> <span class="n">modality</span><span class="p">:</span>
+            <span class="n">entities</span><span class="p">[</span><span class="s1">&#39;space&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;orig&#39;</span>
+        <span class="k">elif</span> <span class="n">resampling_target</span><span class="p">:</span>
+            <span class="n">entities</span><span class="p">[</span><span class="s1">&#39;space&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resampling_target</span>
+
+        <span class="k">if</span> <span class="n">resampling_origin</span><span class="p">:</span>
+            <span class="n">entities</span><span class="p">[</span><span class="s1">&#39;desc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resampling_origin</span>
+
+        <span class="k">if</span> <span class="n">image_type</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?i)prob&#39;</span><span class="p">,</span> <span class="n">image_type</span><span class="p">):</span>
+                <span class="n">entities</span><span class="p">[</span><span class="s1">&#39;suffix&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;probseg&#39;</span>
+            <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?i)seg&#39;</span><span class="p">,</span> <span class="n">image_type</span><span class="p">):</span>
+                <span class="n">entities</span><span class="p">[</span><span class="s1">&#39;suffix&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;dseg&#39;</span>
+            <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?i)mask&#39;</span><span class="p">,</span> <span class="n">image_type</span><span class="p">):</span>
+                <span class="n">entities</span><span class="p">[</span><span class="s1">&#39;suffix&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;mask&#39;</span>
+
+            <span class="k">if</span> <span class="s1">&#39;desc&#39;</span> <span class="ow">in</span> <span class="n">entities</span><span class="p">:</span>
+                <span class="n">entities</span><span class="p">[</span><span class="s1">&#39;desc&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[^A-Za-z0-9]+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">image_type</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">entities</span><span class="p">[</span><span class="s1">&#39;desc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[^A-Za-z0-9]+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">image_type</span><span class="p">)</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_layout</span><span class="o">.</span><span class="n">build_path</span><span class="p">(</span><span class="n">entities</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">Path</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="BIDSDataDir.get_quantification_file"><a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.BIDSDataDir.get_quantification_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_quantification_file</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">,</span> <span class="n">quantification_file_type</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.csv&#39;</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate the path for a quantification file in</span>
+<span class="sd">        BIDS dir structure format.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        accession: str</span>
+<span class="sd">            The accession or study number.</span>
+<span class="sd">        modality: Modality or str</span>
+<span class="sd">            Image modality.</span>
+<span class="sd">        quantification_file_type: str, default=None</span>
+<span class="sd">            Image type. For example: SummaryLesionMeasures.</span>
+<span class="sd">        extension: str, default=&#39;.csv&#39;</span>
+<span class="sd">            The extension of the quantification.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The path to quantification file.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        -------</span>
+<span class="sd">        &gt;&gt;&gt; from pyalfe.data_structure import BIDSDataDir</span>
+<span class="sd">        &gt;&gt;&gt; data_dir = BIDSDataDir(</span>
+<span class="sd">        output_dir=&#39;/mri-data/processed&#39;, input_dir=&#39;/mri-data/input&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; data_dir.get_quantification_file(</span>
+<span class="sd">        &#39;34521&#39;, &#39;T1Post&#39;, quantification_file_type=&#39;IndividualLesionMeasures&#39;)</span>
+<span class="sd">        &#39;/mri-data/processed/sub-34521/anat/quantification/sub-34521_ce-gadolinium_desc-T1Post_IndividualLesionMeasures.csv&#39;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s1">&#39;sub-</span><span class="si">{subject}</span><span class="s1">[/ses-</span><span class="si">{session}</span><span class="s1">]/</span><span class="si">{datatype}</span><span class="s1">/quantification/&#39;</span>
+            <span class="s1">&#39;sub-</span><span class="si">{subject}</span><span class="s1">[_ses-</span><span class="si">{session}</span><span class="s1">][_ce-</span><span class="si">{ceagent}</span><span class="s1">][_desc-</span><span class="si">{desc}</span><span class="s1">]&#39;</span>
+            <span class="s1">&#39;_</span><span class="si">{file_type}</span><span class="s1">{extension&lt;.tsv|.csv&gt;}&#39;</span>
+        <span class="p">)</span>
+
+        <span class="n">entities</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;subject&#39;</span><span class="p">:</span> <span class="n">accession</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">modality_dict</span><span class="p">[</span><span class="n">modality</span><span class="p">],</span>
+            <span class="s1">&#39;extension&#39;</span><span class="p">:</span> <span class="n">extension</span><span class="p">,</span>
+            <span class="s1">&#39;desc&#39;</span><span class="p">:</span> <span class="n">modality</span><span class="p">,</span>
+            <span class="s1">&#39;file_type&#39;</span><span class="p">:</span> <span class="n">quantification_file_type</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_layout</span><span class="o">.</span><span class="n">build_path</span><span class="p">(</span><span class="n">entities</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">Path</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div></div>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Reza Eghbali
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
