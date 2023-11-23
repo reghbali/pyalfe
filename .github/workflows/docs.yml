@@ -20,7 +20,7 @@ jobs:
 
       - name: Install package
         run: |
-          pip install .
+          pip install ".[docs]"
 
       # Build the book
       - name: Build the book
