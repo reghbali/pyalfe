@@ -4,7 +4,13 @@ parts:
   - caption: Guides
     chapters:
       - file: guides/install
-      - file: guides/dev
-  - caption: API docs
+      - file: guides/usage
+      - file: guides/tutorial
+  - caption: Advanced
     chapters:
-      - glob: api/*
+      - file: advanced/extend
+      - file: advanced/dev
+      - file: api/api.md
+        sections:
+          - glob: api/*/*
+          - glob: api/*
