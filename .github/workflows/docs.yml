@@ -8,6 +8,8 @@ permissions:
 # This job installs dependencies, builds the book, and pushes it to `gh-pages`
 jobs:
   deploy-book:
+    permisions:
+      contents: write # for Git to git push
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
