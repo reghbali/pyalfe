@@ -40,7 +40,7 @@ jobs:
         run: |
           export BIN=~/.local/bin
 
-          pip install pytest antspyx
+          pip install pytest
 
           mkdir -p $BIN
           cd /tmp
