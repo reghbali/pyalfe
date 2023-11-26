@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: [ "3.9" ]
+        python-version: [ "3.9", "3.11"]
 
     steps:
       - name: Get branch
@@ -61,7 +61,7 @@ jobs:
 
       - name: Install package
         run: |
-          pip install .
+          pip install -e .
 
       - name: Download models
         run: |
