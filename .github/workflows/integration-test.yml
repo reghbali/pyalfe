@@ -49,13 +49,13 @@ jobs:
 
           if [[ ! -f $BIN/greedy ]]; then
               curl -o greedy.tgz -L https://sourceforge.net/projects/greedy-reg/files/Nightly/greedy-nightly-Linux-gcc64.tar.gz
-              gunzip greedy.tgz
+              tar xf greedy.tgz
               cp greedy*/bin/greedy $BIN/greedy
           fi
 
           if [[ ! -f $BIN/c3d ]]; then
               curl -o c3d.tgz -L https://sourceforge.net/projects/c3d/files/c3d/Nightly/c3d-nightly-Linux-gcc64.tar.gz
-              gunzip c3d.tgz
+              tar xf c3d.tgz
               cp c3d*/bin/c3d $BIN/c3d
           fi
 
