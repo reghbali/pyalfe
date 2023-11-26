@@ -38,10 +38,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version}}
 
-      - name: Install package
-        run: |
-          pip install .
-
       - name: Install test dependencies
         run: |
           export BIN=~/.local/bin
@@ -62,6 +58,10 @@ jobs:
               tar xf c3d.tgz
               cp c3d*/bin/c3d $BIN/c3d
           fi
+
+      - name: Install package
+        run: |
+          pip install .
 
       - name: Download models
         run: |
