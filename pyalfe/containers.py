@@ -65,7 +65,7 @@ class Container(containers.DeclarativeContainer):
         model_dir=str(
             MODELS_PATH.joinpath(
                 'nnunetv2',
-                'Dataset500_Task500_FLAIR',
+                'Dataset500_FLAIR',
                 'nnUNetTrainer__nnUNetPlans__3d_fullres',
             )
         ),
