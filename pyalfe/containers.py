@@ -52,13 +52,15 @@ class Container(containers.DeclarativeContainer):
     )
     parent_dir = os.path.dirname(__file__)
     skullstripping_model = providers.Singleton(
-        NNUnet,
+        NNUnetV2,
         model_dir=str(
             MODELS_PATH.joinpath(
-                'nnunet', 'Task502_SS', 'nnUNetTrainerV2__nnUNetPlansv2.1'
+                'nnunetv2',
+                'Dataset502_SS',
+                'nnUNetTrainer__nnUNetPlans__3d_fullres'
             )
         ),
-        fold=1,
+        folds=(2,),
     )
     flair_model = providers.Singleton(
         NNUnetV2,

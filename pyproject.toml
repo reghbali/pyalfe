@@ -23,6 +23,7 @@ dependencies = [
     "nilearn",
     "matplotlib",
     "nnunet",
+    "nnunetv2",
     "pybids"
 ]
 
