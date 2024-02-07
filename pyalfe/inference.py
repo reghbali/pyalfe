@@ -39,10 +39,11 @@ class NNUnet(InferenceModel):
         self.n_threads_preprocessing = n_threads_preprocessing
         self.n_threads_save = n_threads_save
 
-    def predict_cases(self, input_images, output):
+    def predict_cases(self, input_image_tuple_list, output_list):
 
-        if os.path.exists(output):
-            os.remove(output)
+        for output in output_list:
+            if os.path.exists(output):
+                os.remove(output)
         text_trap = io.StringIO()
         sys.stdout = text_trap
         from nnunet.inference.predict import predict_cases_fast
@@ -50,8 +51,8 @@ class NNUnet(InferenceModel):
         sys.stdout = sys.__stdout__
         predict_cases_fast(
             self.model_dir,
-            [input_images],
-            [output],
+            input_image_tuple_list,
+            output_list,
             folds=self.fold,
             num_threads_nifti_save=self.n_threads_save,
             num_threads_preprocessing=self.n_threads_preprocessing,
@@ -71,9 +72,10 @@ class NNUnetV2(InferenceModel):
         self.n_threads_preprocessing = n_threads_preprocessing
         self.n_threads_save = n_threads_save
 
-    def predict_cases(self, input_images, output):
-        if os.path.exists(output):
-            os.remove(output)
+    def predict_cases(self, input_image_tuple_list, output_list):
+        for output in output_list:
+            if os.path.exists(output):
+                os.remove(output)
         text_trap = io.StringIO()
         sys.stdout = text_trap
         from nnunetv2.inference.predict_from_raw_data import nnUNetPredictor
@@ -87,8 +89,8 @@ class NNUnetV2(InferenceModel):
             checkpoint_name='checkpoint_final.pth',
         )
         predictor.predict_from_files(
-            [input_images],
-            [output],
+            input_image_tuple_list,
+            output_list,
             num_processes_preprocessing=self.n_threads_preprocessing,
             num_processes_segmentation_export=self.n_threads_save,
         )

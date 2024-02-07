@@ -32,8 +32,9 @@ class MockInferenceModel(InferenceModel):
     def __init__(self, number_of_inputs=1):
         self.number_of_inputs = number_of_inputs
 
-    def predict_cases(self, input_images, output):
-        shutil.copy(input_images[-1], output)
+    def predict_cases(self, input_image_tuple_list, output_list):
+        for output, input_images in zip(output_list, input_image_tuple_list):
+            shutil.copy(input_images[-1], output)
 
 
 class TestTask(TestCase):

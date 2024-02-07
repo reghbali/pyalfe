@@ -58,7 +58,7 @@ class Skullstripping(Task):
             )
             if not self.overwrite and os.path.exists(output):
                 continue
-            self.inference_model.predict_cases((image,), pred)
+            self.inference_model.predict_cases([(image,)], [pred])
             images_tuple_list.append((image,))
             pred_list.append(pred)
             mask_list.append(mask)
