@@ -22,10 +22,11 @@ class TestIntegration(TestCase):
         os.mkdir(self.input_dir)
 
     def tearDown(self) -> None:
-        shutil.rmtree(self.test_dir)
+        #shutil.rmtree(self.test_dir)
+        pass
 
     def test_run(self):
-        accession = 'cnsl_patient'
+        accession = 'upenn-gbm'
         modalities = [
             Modality.T1,
             Modality.T2,
@@ -43,7 +44,8 @@ class TestIntegration(TestCase):
                 os.path.join(
                     pathlib.Path(__file__).parent.resolve(),
                     '../data',
-                    'cnsl_patient',
+                    accession,
+                    modality,
                     f'{modality}.nii.gz',
                 ),
                 pipeline_dir.get_input_image(accession, modality),
@@ -106,4 +108,4 @@ class TestIntegration(TestCase):
             self.assertEqual(summary_quantification.dropna().shape, (53, 2))
 
             individual_quantification = pd.read_csv(individual_quantification_path)
-            self.assertEqual(individual_quantification.dropna().shape, (226, 51))
+            self.assertEqual(individual_quantification.dropna().shape, (1, 51))
