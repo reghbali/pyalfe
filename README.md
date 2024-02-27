@@ -15,7 +15,7 @@ To use Greedy and Convert3d, these command line tools should be downloaded using
 
 Clone the repo
 ```bash
-git clone git@git.ucsf.edu:rauschecker-sugrue-labs/pyalfe.git
+git clone git@github.com:reghbali/pyalfe.git
 cd pyalfe
 ```
 
