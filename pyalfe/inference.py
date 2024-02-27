@@ -64,7 +64,7 @@ class NNUnetV2(InferenceModel):
         self,
         model_dir: str,
         folds: Optional[tuple[str]] = None,
-        n_threads_preprocessing: int = 6,
+        n_threads_preprocessing: int = 1,
         n_threads_save: int = 1,
     ) -> None:
         self.model_dir = model_dir

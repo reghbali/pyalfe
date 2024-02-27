@@ -50,7 +50,9 @@ class Container(containers.DeclarativeContainer):
         greedy=providers.Factory(GreedyRegistration),
         ants=providers.Factory(AntsRegistration),
     )
+
     parent_dir = os.path.dirname(__file__)
+
     skullstripping_model = providers.Singleton(
         NNUnetV2,
         model_dir=str(
@@ -62,6 +64,7 @@ class Container(containers.DeclarativeContainer):
         ),
         folds=(2,),
     )
+
     flair_model = providers.Singleton(
         NNUnetV2,
         model_dir=str(
@@ -73,23 +76,29 @@ class Container(containers.DeclarativeContainer):
         ),
         folds=(4,),
     )
+
     enhancement_model = providers.Singleton(
-        NNUnet,
+        NNUnetV2,
         model_dir=str(
             MODELS_PATH.joinpath(
-                'nnunet', 'Task503_Enhancement', 'nnUNetTrainerV2__nnUNetPlansv2.1'
+                'nnunetv2',
+                'Dataset503_Enhancement',
+                'nnUNetTrainer__nnUNetPlans__3d_fullres'
             )
         ),
-        fold=1,
+        folds=(0,),
     )
+
     tissue_model = providers.Singleton(
-        NNUnet,
+        NNUnetV2,
         model_dir=str(
             MODELS_PATH.joinpath(
-                'nnunet', 'Task504_Tissue', 'nnUNetTrainerV2__nnUNetPlansv2.1'
+                'nnunetv2',
+                'Dataset504_Tissue',
+                'nnUNetTrainer__nnUNetPlans__3d_fullres'
             )
         ),
-        fold=1,
+        folds=(3,),
     )
 
     initialization = providers.Singleton(
