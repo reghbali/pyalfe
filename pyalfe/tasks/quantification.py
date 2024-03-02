@@ -222,7 +222,7 @@ class Quantification(Task):
                 np.mean(modality_image[lesion_indices]) / mean_signal
             )
             if modality_name in [Modality.ADC, Modality.CBF]:
-                stats[f'relative_min_{modality_name.lower()}_signal'] = (
+                stats[f'relative_min_{modality_name}_signal'] = (
                     np.min(modality_image[lesion_indices]) / mean_signal
                 )
                 stats[f'min_{modality_name}_signal'] = np.min(
