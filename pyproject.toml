@@ -20,7 +20,7 @@ dependencies = [
     "huggingface_hub",
     "torch",
     "pandas",
-    "pybids"
+    "pybids",
     "nibabel",
     "nilearn",
     "matplotlib",
