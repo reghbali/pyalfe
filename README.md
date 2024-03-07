@@ -25,7 +25,7 @@ Then run (we recommend using a python virtual environment)
 pip install --upgrade pip
 ```
 
-You can either instal pyalfe in [development mode](#development-mode-installation) or [build and install](#build-and-install).
+You can either install pyalfe in [development mode](#development-mode-installation) or [build and install](#build-and-install).
 ### Option 1: Development mode installation
 
 First update the setuptools
