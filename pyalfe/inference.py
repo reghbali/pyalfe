@@ -4,6 +4,8 @@ import sys
 from abc import ABC, abstractmethod
 from typing import Optional
 
+import torch
+
 
 class InferenceModel(ABC):
     """The parent class for all inference models."""
@@ -64,7 +66,7 @@ class NNUnetV2(InferenceModel):
         self,
         model_dir: str,
         folds: Optional[tuple[str]] = None,
-        n_threads_preprocessing: int = 6,
+        n_threads_preprocessing: int = 1,
         n_threads_save: int = 1,
     ) -> None:
         self.model_dir = model_dir
@@ -82,7 +84,12 @@ class NNUnetV2(InferenceModel):
 
         sys.stdout = sys.__stdout__
 
-        predictor = nnUNetPredictor()
+        if torch.cuda.is_available():
+            device = torch.device('cuda')
+        else:
+            device = torch.device('cpu')
+
+        predictor = nnUNetPredictor(device=device)
         predictor.initialize_from_trained_model_folder(
             self.model_dir,
             use_folds=self.folds,

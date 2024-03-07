@@ -34,7 +34,7 @@ jobs:
 
       - name: Install package
         run: |
-          pip install .
+          pip install -e ".[ants]"
 
       - name: Install test dependencies
         run: |
