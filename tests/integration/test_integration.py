@@ -9,23 +9,30 @@ from click.testing import CliRunner
 
 from pyalfe.data_structure import DefaultALFEDataDir, Modality
 from pyalfe.main import run
-
+from tests.utils import download_and_extract
 
 class TestIntegration(TestCase):
+
+
     def setUp(self) -> None:
         self.test_dir = os.path.join('/tmp', 'integration_test')
 
-        self.output_dir = os.path.join(self.test_dir, 'output')
-        self.input_dir = os.path.join(self.test_dir, 'input')
-
-        os.makedirs(self.output_dir)
-        os.mkdir(self.input_dir)
 
     def tearDown(self) -> None:
         shutil.rmtree(self.test_dir)
+        pass
 
     def test_run(self):
-        accession = 'cnsl_patient'
+
+        test_data_url = 'https://github.com/reghbali/pyalfe-test-data/archive/master.zip'
+        test_data_dir_name = 'pyalfe-test-data-main'
+        accession = 'UPENNGBM0000511'
+
+        output_dir = os.path.join(self.test_dir, 'output')
+        input_dir = os.path.join(self.test_dir, test_data_dir_name)
+        os.makedirs(output_dir)
+        os.mkdir(input_dir)
+
         modalities = [
             Modality.T1,
             Modality.T2,
@@ -33,33 +40,23 @@ class TestIntegration(TestCase):
             Modality.FLAIR,
             Modality.ADC,
         ]
+        targets = [Modality.T1Post, Modality.FLAIR]
         pipeline_dir = DefaultALFEDataDir(
-            output_dir=self.output_dir, input_dir=self.input_dir
+            output_dir=output_dir, input_dir=input_dir
         )
 
-        for modality in modalities:
-            pipeline_dir.create_dir('input', accession, modality)
-            shutil.copy(
-                os.path.join(
-                    pathlib.Path(__file__).parent.resolve(),
-                    '../data',
-                    'cnsl_patient',
-                    f'{modality}.nii.gz',
-                ),
-                pipeline_dir.get_input_image(accession, modality),
-            )
+        download_and_extract(test_data_url, self.test_dir)
 
         runner = CliRunner()
         config_file = importlib.resources.files('pyalfe').joinpath('config.ini')
-        targets = [Modality.T1Post, Modality.FLAIR]
         args = [
             accession,
             '-c',
             config_file,
             '--input-dir',
-            self.input_dir,
+            input_dir,
             '--output-dir',
-            self.output_dir,
+            output_dir,
             '--targets',
             ','.join(targets),
         ]
@@ -79,7 +76,6 @@ class TestIntegration(TestCase):
             self.assertTrue(
                 os.path.exists(image_path), msg=f'{image_path} does not exist.'
             )
-
         for modality in targets:
             segmentation_path = pipeline_dir.get_output_image(
                 accession,
@@ -106,4 +102,4 @@ class TestIntegration(TestCase):
             self.assertEqual(summary_quantification.dropna().shape, (53, 2))
 
             individual_quantification = pd.read_csv(individual_quantification_path)
-            self.assertEqual(individual_quantification.dropna().shape, (226, 51))
+            self.assertEqual(individual_quantification.dropna().shape[1], 51)

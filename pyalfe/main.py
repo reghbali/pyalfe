@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 
 import click
+import huggingface_hub
 
 from pyalfe.containers import Container
 from pyalfe.models import MODELS_PATH, models_url
@@ -27,10 +28,9 @@ def main():
 def download(assets):
     for asset in assets:
         if asset == 'models':
-            archive_path = download_archive(
-                url=models_url, download_dir=MODELS_PATH, archive_name='models.tar.gz'
+            archive_path = huggingface_hub.snapshot_download(
+                repo_id=models_url, local_dir=MODELS_PATH
             )
-            extract_tar(archive_path, MODELS_PATH)
         elif asset == 'greedy':
             archive_path = download_archive(
                 url=greedy_url,
@@ -41,6 +41,8 @@ def download(assets):
                 dst=os.path.dirname(GREEDY_PATH),
                 binary_name='greedy',
             )
+            if os.path.exists(archive_path):
+                os.remove(archive_path)
         elif asset == 'c3d':
             archive_path = download_archive(
                 url=c3d_url,
@@ -51,10 +53,11 @@ def download(assets):
                 dst=os.path.dirname(C3D_PATH),
                 binary_name='c3d',
             )
+            if os.path.exists(archive_path):
+                os.remove(archive_path)
         else:
             click.print(f'asset {asset} is not recognized.')
-        if os.path.exists(archive_path):
-            os.remove(archive_path)
+
 
 
 @main.command()

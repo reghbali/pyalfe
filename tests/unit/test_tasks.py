@@ -32,8 +32,9 @@ class MockInferenceModel(InferenceModel):
     def __init__(self, number_of_inputs=1):
         self.number_of_inputs = number_of_inputs
 
-    def predict_cases(self, input_images, output):
-        shutil.copy(input_images[-1], output)
+    def predict_cases(self, input_image_tuple_list, output_list):
+        for output, input_images in zip(output_list, input_image_tuple_list):
+            shutil.copy(input_images[-1], output)
 
 
 class TestTask(TestCase):
@@ -486,12 +487,12 @@ class TestQuantification(TestTask):
         self.assertEqual(0.5, lesion_stats['relative_T1_signal'])
         self.assertEqual(0.75, lesion_stats['relative_T2_signal'])
         self.assertEqual(1.25, lesion_stats['relative_ADC_signal'])
-        self.assertEqual(1.25, lesion_stats['mean_adc_signal'])
-        self.assertEqual(0.0, lesion_stats['min_adc_signal'])
-        self.assertEqual(1.5, lesion_stats['median_adc_signal'])
-        np.testing.assert_almost_equal(0.15, lesion_stats['five_percentile_adc_signal'])
+        self.assertEqual(1.25, lesion_stats['mean_ADC_signal'])
+        self.assertEqual(0.0, lesion_stats['min_ADC_signal'])
+        self.assertEqual(1.5, lesion_stats['median_ADC_signal'])
+        np.testing.assert_almost_equal(0.15, lesion_stats['five_percentile_ADC_signal'])
         np.testing.assert_almost_equal(
-            2.0, lesion_stats['ninety_five_percentile_adc_signal']
+            2.0, lesion_stats['ninety_five_percentile_ADC_signal']
         )
         self.assertEqual(1.5, lesion_stats['relative_T1Post_signal'])
         self.assertEqual(1.0, lesion_stats['relative_FLAIR_signal'])
@@ -561,9 +562,9 @@ class TestQuantification(TestTask):
         self.assertEqual(0.5, lesion_stats['relative_T1_signal'])
         self.assertEqual(0.75, lesion_stats['relative_T2_signal'])
         self.assertEqual(1.25, lesion_stats['relative_ADC_signal'])
-        self.assertEqual(5.0, lesion_stats['mean_adc_signal'])
-        self.assertEqual(4.0, lesion_stats['min_adc_signal'])
-        self.assertEqual(5.0, lesion_stats['median_adc_signal'])
+        self.assertEqual(5.0, lesion_stats['mean_ADC_signal'])
+        self.assertEqual(4.0, lesion_stats['min_ADC_signal'])
+        self.assertEqual(5.0, lesion_stats['median_ADC_signal'])
         self.assertEqual(1.5, lesion_stats['relative_T1Post_signal'])
         self.assertEqual(1.0, lesion_stats['relative_FLAIR_signal'])
         self.assertEqual(1.5, lesion_stats['enhancement'])
@@ -835,12 +836,12 @@ class TestQuantification(TestTask):
         self.assertEqual(0.4375, lesion_stats['relative_T1_signal'])
         self.assertEqual(0.6875, lesion_stats['relative_T2_signal'])
         self.assertEqual(0.9375, lesion_stats['relative_ADC_signal'])
-        self.assertEqual(3.75, lesion_stats['mean_adc_signal'])
-        self.assertEqual(0.0, lesion_stats['min_adc_signal'])
-        self.assertEqual(4.5, lesion_stats['median_adc_signal'])
-        np.testing.assert_almost_equal(0.6, lesion_stats['five_percentile_adc_signal'])
+        self.assertEqual(3.75, lesion_stats['mean_ADC_signal'])
+        self.assertEqual(0.0, lesion_stats['min_ADC_signal'])
+        self.assertEqual(4.5, lesion_stats['median_ADC_signal'])
+        np.testing.assert_almost_equal(0.6, lesion_stats['five_percentile_ADC_signal'])
         np.testing.assert_almost_equal(
-            lesion_stats['ninety_five_percentile_adc_signal'], 5.85
+            lesion_stats['ninety_five_percentile_ADC_signal'], 5.85
         )
         self.assertEqual(1.375, lesion_stats['relative_T1Post_signal'])
         self.assertEqual(0.875, lesion_stats['relative_FLAIR_signal'])
@@ -877,9 +878,9 @@ class TestQuantification(TestTask):
         self.assertEqual(0.5, lesion_stats['relative_T1_signal'])
         self.assertEqual(0.75, lesion_stats['relative_T2_signal'])
         self.assertEqual(1.25, lesion_stats['relative_ADC_signal'])
-        self.assertEqual(5.0, lesion_stats['mean_adc_signal'])
-        self.assertEqual(4.0, lesion_stats['min_adc_signal'])
-        self.assertEqual(5.0, lesion_stats['median_adc_signal'])
+        self.assertEqual(5.0, lesion_stats['mean_ADC_signal'])
+        self.assertEqual(4.0, lesion_stats['min_ADC_signal'])
+        self.assertEqual(5.0, lesion_stats['median_ADC_signal'])
         self.assertEqual(1.5, lesion_stats['relative_T1Post_signal'])
         self.assertEqual(1.0, lesion_stats['relative_FLAIR_signal'])
         self.assertEqual(1.5, lesion_stats['enhancement'])

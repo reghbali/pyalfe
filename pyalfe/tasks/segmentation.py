@@ -37,7 +37,7 @@ class Segmentation(Task):
         -------
 
         """
-        self.inference_model.predict_cases(images, pred)
+        self.inference_model.predict_cases([images], [pred])
 
     def post_process(self, pred, mask, seg):
         """Post processes the prediction segmentation image by applying an

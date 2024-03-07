@@ -222,23 +222,23 @@ class Quantification(Task):
                 np.mean(modality_image[lesion_indices]) / mean_signal
             )
             if modality_name in [Modality.ADC, Modality.CBF]:
-                stats[f'relative_min_{modality_name.lower()}_signal'] = (
+                stats[f'relative_min_{modality_name}_signal'] = (
                     np.min(modality_image[lesion_indices]) / mean_signal
                 )
-                stats[f'min_{modality_name.lower()}_signal'] = np.min(
+                stats[f'min_{modality_name}_signal'] = np.min(
                     modality_image[lesion_indices]
                 )
-                stats[f'mean_{modality_name.lower()}_signal'] = np.mean(
+                stats[f'mean_{modality_name}_signal'] = np.mean(
                     modality_image[lesion_indices]
                 )
-                stats[f'median_{modality_name.lower()}_signal'] = np.median(
+                stats[f'median_{modality_name}_signal'] = np.median(
                     modality_image[lesion_indices]
                 )
                 stats[
-                    f'five_percentile_{modality_name.lower()}_signal'
+                    f'five_percentile_{modality_name}_signal'
                 ] = np.percentile(modality_image[lesion_indices], 5)
                 stats[
-                    f'ninety_five_percentile_{modality_name.lower()}_signal'
+                    f'ninety_five_percentile_{modality_name}_signal'
                 ] = np.percentile(modality_image[lesion_indices], 95)
 
         if Modality.T1 in modality_images and Modality.T1Post in modality_images:

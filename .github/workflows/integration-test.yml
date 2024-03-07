@@ -61,7 +61,7 @@ jobs:
 
       - name: Install package
         run: |
-          pip install -e .
+          pip install -e ".[ants]"
 
       - name: Download models
         run: |

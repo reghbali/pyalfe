@@ -17,13 +17,15 @@ dependencies = [
     "numpy",
     "Click",
     "dependency_injector",
+    "huggingface_hub",
     "torch",
     "pandas",
+    "pybids",
     "nibabel",
     "nilearn",
     "matplotlib",
     "nnunet",
-    "pybids"
+    "nnunetv2",
 ]
 
 [project.license]
