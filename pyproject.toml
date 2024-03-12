@@ -44,7 +44,14 @@ pyalfe = ["*.ini"]
 "pyalfe.templates" = ["oasis/*.nii.gz"]
 
 [tool.setuptools]
-packages = ["pyalfe"]
+packages = [
+    "pyalfe",
+    "pyalfe.intefaces",
+    "pyalfe.models",
+    "pyalfe.tasks",
+    "pyalfe.tools",
+    "pyalfe.utils"
+]
 
 [tool.ruff]
 line-length = 88
