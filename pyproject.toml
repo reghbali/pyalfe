@@ -46,7 +46,7 @@ pyalfe = ["*.ini"]
 [tool.setuptools]
 packages = [
     "pyalfe",
-    "pyalfe.intefaces",
+    "pyalfe.interfaces",
     "pyalfe.models",
     "pyalfe.tasks",
     "pyalfe.tools",
