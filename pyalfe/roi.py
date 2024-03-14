@@ -56,4 +56,20 @@ roi_dict = {
             'CorpusCallosum_Splenium': [5],
         },
     },
+    'Tissue': {
+        'sub_dir': 'TemplateReg',
+        'measure': 'volume',
+        'type': 'template',
+        'source': importlib.resources.files('pyalfe').joinpath(
+            'templates', 'oasis', 'T_template0_Tissue.nii.gz'
+        ),
+        'regions': {
+            'CSF': [1],
+            'Cortical Gray Matter': [2],
+            'White Matter': [3],
+            'Deep Gray Matter': [4],
+            'Brain Stem': [5],
+            'Cerebellum': [6],
+        },
+    },
 }
