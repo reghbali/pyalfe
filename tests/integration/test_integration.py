@@ -17,10 +17,8 @@ class TestIntegration(TestCase):
     def setUp(self) -> None:
         self.test_dir = os.path.join('/tmp', 'integration_test')
 
-
     def tearDown(self) -> None:
         shutil.rmtree(self.test_dir)
-        pass
 
     def test_run(self):
 
@@ -99,7 +97,7 @@ class TestIntegration(TestCase):
                 msg=f'{summary_quantification_path} does not exist.',
             )
             summary_quantification = pd.read_csv(summary_quantification_path)
-            self.assertEqual(summary_quantification.dropna().shape, (53, 2))
+            self.assertEqual(summary_quantification.dropna().shape, (63, 2))
 
             individual_quantification = pd.read_csv(individual_quantification_path)
-            self.assertEqual(individual_quantification.dropna().shape[1], 51)
+            self.assertEqual(individual_quantification.dropna().shape[1], 61)

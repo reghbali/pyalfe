@@ -17,6 +17,7 @@ from pyalfe.tasks.registration import (
     T1Registration,
 )
 from pyalfe.tasks.segmentation import (
+    TissueWithPriorSegementation,
     SingleModalitySegmentation,
     MultiModalitySegmentation,
 )
@@ -94,7 +95,7 @@ class Container(containers.DeclarativeContainer):
         model_dir=str(
             MODELS_PATH.joinpath(
                 'nnunetv2',
-                'Dataset504_Tissue',
+                'Dataset510_Tissue_W_Prior',
                 'nnUNetTrainer__nnUNetPlans__3d_fullres'
             )
         ),
@@ -163,15 +164,13 @@ class Container(containers.DeclarativeContainer):
     )
 
     tissue_segmentation = providers.Singleton(
-        SingleModalitySegmentation,
+        TissueWithPriorSegementation,
         inference_model=tissue_model,
         image_processor=image_processor,
         pipeline_dir=pipeline_dir,
-        modality=Modality.T1,
         image_type_input='trim_upsampled',
         image_type_output='tissue_seg',
-        image_type_mask=None,
-        segmentation_dir=None,
+        template_name='Tissue',
         overwrite=config.options.overwrite_images,
     )
 
