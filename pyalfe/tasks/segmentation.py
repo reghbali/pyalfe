@@ -131,7 +131,7 @@ class MultiModalitySegmentation(Segmentation):
         pipeline_dir: PipelineDataDir,
         modality_list: list[str],
         output_modality: str,
-        image_type_input: str= 'skullstripped',
+        image_type_input: str = 'skullstripped',
         image_type_output: str = 'abnormal_seg',
         image_type_mask: str = None,
         segmentation_dir: str = 'abnormalmap',
@@ -303,11 +303,11 @@ class TissueWithPriorSegementation(Segmentation):
         inference_model: InferenceModel,
         image_processor: ImageProcessor,
         pipeline_dir: PipelineDataDir,
-        image_type_input: str= 'trim_upsampled',
-        image_type_output: str='tissue_seg',
-        template_name: str='Tissue',
+        image_type_input: str = 'trim_upsampled',
+        image_type_output: str = 'tissue_seg',
+        template_name: str = 'Tissue',
         overwrite: bool = True,
-        ):
+    ):
         super().__init__(inference_model, image_processor)
         self.pipeline_dir = pipeline_dir
         self.image_type_input = image_type_input
@@ -319,31 +319,27 @@ class TissueWithPriorSegementation(Segmentation):
 
     def run(self, accession):
         t1_image_path = self.pipeline_dir.get_output_image(
-                accession,
-                Modality.T1,
-                image_type=self.image_type_input,
-                )
+            accession,
+            Modality.T1,
+            image_type=self.image_type_input,
+        )
         tissue_prior_path = self.pipeline_dir.get_output_image(
             accession,
             Modality.T1,
             resampling_origin=self.template_name,
             resampling_target=Modality.T1,
-            sub_dir_name=roi_dict[self.template_name]['sub_dir']
+            sub_dir_name=roi_dict[self.template_name]['sub_dir'],
         )
         pred_path = self.pipeline_dir.get_output_image(
-            accession,
-            Modality.T1,
-            image_type=f'{self.image_type_output}_pred'
+            accession, Modality.T1, image_type=f'{self.image_type_output}_pred'
         )
 
         if self.overwrite or not os.path.exists(pred_path):
             self.predict([t1_image_path, tissue_prior_path], pred_path)
 
         seg_path = self.pipeline_dir.get_output_image(
-            accession,
-            Modality.T1,
-            image_type=self.image_type_output
+            accession, Modality.T1, image_type=self.image_type_output
         )
-        
+
         if self.overwrite or not os.path.exists(seg_path):
             self.post_process(pred_path, seg_path)

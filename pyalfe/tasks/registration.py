@@ -247,9 +247,7 @@ class T1Registration:
             )
             return
         if not os.path.exists(t1trim_upsampled):
-            self.logger.info(
-                'T1 trim upsampled is missing. Skipping T1Registration'
-            )
+            self.logger.info('T1 trim upsampled is missing. Skipping T1Registration')
             return
 
         template = roi_dict['template']['source']

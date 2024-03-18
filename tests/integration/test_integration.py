@@ -1,6 +1,5 @@
 import importlib.resources
 import os
-import pathlib
 import shutil
 from unittest import TestCase
 
@@ -11,9 +10,8 @@ from pyalfe.data_structure import DefaultALFEDataDir, Modality
 from pyalfe.main import run
 from tests.utils import download_and_extract
 
+
 class TestIntegration(TestCase):
-
-
     def setUp(self) -> None:
         self.test_dir = os.path.join('/tmp', 'integration_test')
 
@@ -22,7 +20,9 @@ class TestIntegration(TestCase):
 
     def test_run(self):
 
-        test_data_url = 'https://github.com/reghbali/pyalfe-test-data/archive/master.zip'
+        test_data_url = (
+            'https://github.com/reghbali/pyalfe-test-data/archive/master.zip'
+        )
         test_data_dir_name = 'pyalfe-test-data-main'
         accession = 'UPENNGBM0000511'
 
@@ -39,9 +39,7 @@ class TestIntegration(TestCase):
             Modality.ADC,
         ]
         targets = [Modality.T1Post, Modality.FLAIR]
-        pipeline_dir = DefaultALFEDataDir(
-            output_dir=output_dir, input_dir=input_dir
-        )
+        pipeline_dir = DefaultALFEDataDir(output_dir=output_dir, input_dir=input_dir)
 
         download_and_extract(test_data_url, self.test_dir)
 

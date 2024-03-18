@@ -32,4 +32,3 @@ def download_and_extract(url: str, dest_dir: str, archive_name: str = None):
         file.write(response.content)
 
     shutil.unpack_archive(archive_file_path, dest_dir)
-

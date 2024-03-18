@@ -189,17 +189,15 @@ class TestTissueWithPriorSegementation(TestTask):
         input_path = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type=task.image_type_input
         )
-        prior_path =  self.pipeline_dir.get_output_image(
+        prior_path = self.pipeline_dir.get_output_image(
             accession,
             Modality.T1,
             resampling_origin=task.template_name,
             resampling_target=Modality.T1,
-            sub_dir_name=roi_dict[task.template_name]['sub_dir']
+            sub_dir_name=roi_dict[task.template_name]['sub_dir'],
         )
         output_path = self.pipeline_dir.get_output_image(
-            accession,
-            Modality.T1,
-            image_type=task.image_type_output
+            accession, Modality.T1, image_type=task.image_type_output
         )
         shutil.copy(
             os.path.join('tests', 'data', 'brats10', 'BraTS19_2013_10_1_t1.nii.gz'),
@@ -464,13 +462,12 @@ class TestT1Registration(TestTask):
             accession, Modality.T1, image_type='trim_upsampled'
         )
         shutil.copy(
-            os.path.join('tests', 'data', 'brainomics02', 'anat_t1.nii.gz'),
-            input_image
+            os.path.join('tests', 'data', 'brainomics02', 'anat_t1.nii.gz'), input_image
         )
         Convert3DProcessor.binarize(input_image, input_mask)
         shutil.copy(
             os.path.join('tests', 'data', 'brainomics02', 'anat_t1.nii.gz'),
-            input_image_trim_upsampled
+            input_image_trim_upsampled,
         )
         task.run(accession)
 

@@ -6,7 +6,7 @@ from dependency_injector import containers, providers
 from pyalfe.data_structure import DefaultALFEDataDir, Modality
 from pyalfe.image_processing import Convert3DProcessor, NilearnProcessor
 from pyalfe.image_registration import GreedyRegistration, AntsRegistration
-from pyalfe.inference import NNUnet, NNUnetV2
+from pyalfe.inference import NNUnetV2
 from pyalfe.models import MODELS_PATH
 from pyalfe.pipeline import PyALFEPipelineRunner
 from pyalfe.tasks.initialization import Initialization
@@ -58,9 +58,7 @@ class Container(containers.DeclarativeContainer):
         NNUnetV2,
         model_dir=str(
             MODELS_PATH.joinpath(
-                'nnunetv2',
-                'Dataset502_SS',
-                'nnUNetTrainer__nnUNetPlans__3d_fullres'
+                'nnunetv2', 'Dataset502_SS', 'nnUNetTrainer__nnUNetPlans__3d_fullres'
             )
         ),
         folds=(2,),
@@ -84,7 +82,7 @@ class Container(containers.DeclarativeContainer):
             MODELS_PATH.joinpath(
                 'nnunetv2',
                 'Dataset503_Enhancement',
-                'nnUNetTrainer__nnUNetPlans__3d_fullres'
+                'nnUNetTrainer__nnUNetPlans__3d_fullres',
             )
         ),
         folds=(0,),
@@ -96,7 +94,7 @@ class Container(containers.DeclarativeContainer):
             MODELS_PATH.joinpath(
                 'nnunetv2',
                 'Dataset510_Tissue_W_Prior',
-                'nnUNetTrainer__nnUNetPlans__3d_fullres'
+                'nnUNetTrainer__nnUNetPlans__3d_fullres',
             )
         ),
         folds=(3,),
