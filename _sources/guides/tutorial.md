@@ -1,7 +1,9 @@
 # Tutorial
 
 In this tutorial, you will download sample data, install pyalfe, and run it on this data.
-This tutorial requires `git` and `python>=3.9`.
+This tutorial requires `git`, `python>=3.9`, [greedy](https://sourceforge.net/projects/greedy-reg/files/),
+and [c3d](https://sourceforge.net/projects/c3d/).
+
 
 ## Data download and directory setup
 
@@ -10,7 +12,7 @@ This tutorial requires `git` and `python>=3.9`.
 git clone https://github.com/reghbali/pyalfe-test-data.git
 ```
 This will create a directory named `pyalfe-test-data` and downloads the tutorial
-data inside it. The data is the MRI scan of a glioblastoma patient and is 
+data inside it. The data is the MRI scan of a glioblastoma patient and is
 taken from the [UPenn-GBM dataset](https://www.nature.com/articles/s41597-022-01560-7).
 
 2. Create an output directory where you have write access
@@ -36,10 +38,8 @@ Download models
 pyalfe download models
 ```
 
+
 ## Run
 ```bash
 pyalfe run UPENNGBM0000511 --input-dir alfe/input  --output-dir alfe/output
 ```
-
-
-

@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>pyalfe.data_structure &#8212; pyalfe</title>
   
@@ -19,48 +18,45 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/data_structure';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -75,7 +71,15 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -110,11 +114,14 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -129,9 +136,11 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="../intro.html">
+  
   
   
   
@@ -141,12 +150,23 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../_static/logo.png" class="logo__image only-light" alt="pyalfe - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="pyalfe - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -164,7 +184,9 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="api.html">PyALFE reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../advanced/extend.html">Extending PyALFE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/dev.html">Development</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="api.html">API reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="interfaces/c3d.html">pyalfe.interfaces.c3d</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interfaces/greedy.html">pyalfe.interfaces.greedy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tasks/initialization.html">pyalfe.tasks.initialization</a></li>
@@ -186,8 +208,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="roi.html">pyalfe.roi</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../advanced/extend.html">Extending PyALFE</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../advanced/dev.html">Development</a></li>
 </ul>
 
     </div>
@@ -358,24 +378,28 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
+
 
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -391,6 +415,65 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality"><code class="docutils literal notranslate"><span class="pre">Modality</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.T1"><code class="docutils literal notranslate"><span class="pre">Modality.T1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.T1Post"><code class="docutils literal notranslate"><span class="pre">Modality.T1Post</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.T2"><code class="docutils literal notranslate"><span class="pre">Modality.T2</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.FLAIR"><code class="docutils literal notranslate"><span class="pre">Modality.FLAIR</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.SWI"><code class="docutils literal notranslate"><span class="pre">Modality.SWI</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.DWI"><code class="docutils literal notranslate"><span class="pre">Modality.DWI</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.SingleDWI"><code class="docutils literal notranslate"><span class="pre">Modality.SingleDWI</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.ADC"><code class="docutils literal notranslate"><span class="pre">Modality.ADC</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.EADC"><code class="docutils literal notranslate"><span class="pre">Modality.EADC</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.CBF"><code class="docutils literal notranslate"><span class="pre">Modality.CBF</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.ASL"><code class="docutils literal notranslate"><span class="pre">Modality.ASL</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.PERFUSION"><code class="docutils literal notranslate"><span class="pre">Modality.PERFUSION</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Orientation"><code class="docutils literal notranslate"><span class="pre">Orientation</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Orientation.AXIAL"><code class="docutils literal notranslate"><span class="pre">Orientation.AXIAL</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Orientation.SAGITTAL"><code class="docutils literal notranslate"><span class="pre">Orientation.SAGITTAL</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Orientation.CORONAL"><code class="docutils literal notranslate"><span class="pre">Orientation.CORONAL</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue"><code class="docutils literal notranslate"><span class="pre">Tissue</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue.BACKGROUND"><code class="docutils literal notranslate"><span class="pre">Tissue.BACKGROUND</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue.CSF"><code class="docutils literal notranslate"><span class="pre">Tissue.CSF</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue.CORTICAL_GRAY_MATTER"><code class="docutils literal notranslate"><span class="pre">Tissue.CORTICAL_GRAY_MATTER</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue.WHITE_MATTER"><code class="docutils literal notranslate"><span class="pre">Tissue.WHITE_MATTER</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue.DEEP_GRAY_MATTER"><code class="docutils literal notranslate"><span class="pre">Tissue.DEEP_GRAY_MATTER</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue.BRAIN_STEM"><code class="docutils literal notranslate"><span class="pre">Tissue.BRAIN_STEM</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue.CEREBELLUM"><code class="docutils literal notranslate"><span class="pre">Tissue.CEREBELLUM</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PipelineDataDir"><code class="docutils literal notranslate"><span class="pre">PipelineDataDir</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PipelineDataDir.get_output_image"><code class="docutils literal notranslate"><span class="pre">PipelineDataDir.get_output_image()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PipelineDataDir.get_input_image"><code class="docutils literal notranslate"><span class="pre">PipelineDataDir.get_input_image()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PipelineDataDir.get_quantification_file"><code class="docutils literal notranslate"><span class="pre">PipelineDataDir.get_quantification_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.DefaultALFEDataDir"><code class="docutils literal notranslate"><span class="pre">DefaultALFEDataDir</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.DefaultALFEDataDir.create_dir"><code class="docutils literal notranslate"><span class="pre">DefaultALFEDataDir.create_dir()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.DefaultALFEDataDir.get_output_image"><code class="docutils literal notranslate"><span class="pre">DefaultALFEDataDir.get_output_image()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.DefaultALFEDataDir.get_input_image"><code class="docutils literal notranslate"><span class="pre">DefaultALFEDataDir.get_input_image()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.DefaultALFEDataDir.get_quantification_file"><code class="docutils literal notranslate"><span class="pre">DefaultALFEDataDir.get_quantification_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.BIDSDataDir"><code class="docutils literal notranslate"><span class="pre">BIDSDataDir</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.BIDSDataDir.logger"><code class="docutils literal notranslate"><span class="pre">BIDSDataDir.logger</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.BIDSDataDir.modality_dict"><code class="docutils literal notranslate"><span class="pre">BIDSDataDir.modality_dict</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.BIDSDataDir.get_input_image"><code class="docutils literal notranslate"><span class="pre">BIDSDataDir.get_input_image()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.BIDSDataDir.get_output_image"><code class="docutils literal notranslate"><span class="pre">BIDSDataDir.get_output_image()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.BIDSDataDir.get_quantification_file"><code class="docutils literal notranslate"><span class="pre">BIDSDataDir.get_quantification_file()</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -398,149 +481,149 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section id="module-pyalfe.data_structure">
-<span id="pyalfe-data-structure"></span><h1>pyalfe.data_structure<a class="headerlink" href="#module-pyalfe.data_structure" title="Permalink to this heading">#</a></h1>
+<span id="pyalfe-data-structure"></span><h1>pyalfe.data_structure<a class="headerlink" href="#module-pyalfe.data_structure" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Modality">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.data_structure.</span></span><span class="sig-name descname"><span class="pre">Modality</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#Modality"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.Modality" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.data_structure.</span></span><span class="sig-name descname"><span class="pre">Modality</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#Modality"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.Modality" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">StrEnum</span></code></p>
 <p>An enumeration.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Modality.T1">
-<span class="sig-name descname"><span class="pre">T1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'T1'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.T1" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">T1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'T1'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.T1" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Modality.T1Post">
-<span class="sig-name descname"><span class="pre">T1Post</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'T1Post'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.T1Post" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">T1Post</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'T1Post'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.T1Post" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Modality.T2">
-<span class="sig-name descname"><span class="pre">T2</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'T2'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.T2" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">T2</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'T2'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.T2" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Modality.FLAIR">
-<span class="sig-name descname"><span class="pre">FLAIR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FLAIR'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.FLAIR" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">FLAIR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FLAIR'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.FLAIR" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Modality.SWI">
-<span class="sig-name descname"><span class="pre">SWI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SWI'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.SWI" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">SWI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SWI'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.SWI" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Modality.DWI">
-<span class="sig-name descname"><span class="pre">DWI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DWI'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.DWI" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">DWI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DWI'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.DWI" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Modality.SingleDWI">
-<span class="sig-name descname"><span class="pre">SingleDWI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SingleDWI'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.SingleDWI" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">SingleDWI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SingleDWI'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.SingleDWI" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Modality.ADC">
-<span class="sig-name descname"><span class="pre">ADC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ADC'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.ADC" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ADC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ADC'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.ADC" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Modality.EADC">
-<span class="sig-name descname"><span class="pre">EADC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'EADC'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.EADC" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">EADC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'EADC'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.EADC" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Modality.CBF">
-<span class="sig-name descname"><span class="pre">CBF</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CBF'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.CBF" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">CBF</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CBF'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.CBF" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Modality.ASL">
-<span class="sig-name descname"><span class="pre">ASL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ASL'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.ASL" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ASL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ASL'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.ASL" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Modality.PERFUSION">
-<span class="sig-name descname"><span class="pre">PERFUSION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'PERFUSION'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.PERFUSION" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">PERFUSION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'PERFUSION'</span></em><a class="headerlink" href="#pyalfe.data_structure.Modality.PERFUSION" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Orientation">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.data_structure.</span></span><span class="sig-name descname"><span class="pre">Orientation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#Orientation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.Orientation" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.data_structure.</span></span><span class="sig-name descname"><span class="pre">Orientation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#Orientation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.Orientation" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">StrEnum</span></code></p>
 <p>An enumeration.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Orientation.AXIAL">
-<span class="sig-name descname"><span class="pre">AXIAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AXIAL'</span></em><a class="headerlink" href="#pyalfe.data_structure.Orientation.AXIAL" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">AXIAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AXIAL'</span></em><a class="headerlink" href="#pyalfe.data_structure.Orientation.AXIAL" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Orientation.SAGITTAL">
-<span class="sig-name descname"><span class="pre">SAGITTAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SAGITTAL'</span></em><a class="headerlink" href="#pyalfe.data_structure.Orientation.SAGITTAL" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">SAGITTAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SAGITTAL'</span></em><a class="headerlink" href="#pyalfe.data_structure.Orientation.SAGITTAL" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Orientation.CORONAL">
-<span class="sig-name descname"><span class="pre">CORONAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CORONAL'</span></em><a class="headerlink" href="#pyalfe.data_structure.Orientation.CORONAL" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">CORONAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CORONAL'</span></em><a class="headerlink" href="#pyalfe.data_structure.Orientation.CORONAL" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Tissue">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.data_structure.</span></span><span class="sig-name descname"><span class="pre">Tissue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#Tissue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.Tissue" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.data_structure.</span></span><span class="sig-name descname"><span class="pre">Tissue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#Tissue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.Tissue" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code></p>
 <p>An enumeration.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Tissue.BACKGROUND">
-<span class="sig-name descname"><span class="pre">BACKGROUND</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#pyalfe.data_structure.Tissue.BACKGROUND" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">BACKGROUND</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#pyalfe.data_structure.Tissue.BACKGROUND" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Tissue.CSF">
-<span class="sig-name descname"><span class="pre">CSF</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#pyalfe.data_structure.Tissue.CSF" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">CSF</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#pyalfe.data_structure.Tissue.CSF" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Tissue.CORTICAL_GRAY_MATTER">
-<span class="sig-name descname"><span class="pre">CORTICAL_GRAY_MATTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#pyalfe.data_structure.Tissue.CORTICAL_GRAY_MATTER" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">CORTICAL_GRAY_MATTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#pyalfe.data_structure.Tissue.CORTICAL_GRAY_MATTER" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Tissue.WHITE_MATTER">
-<span class="sig-name descname"><span class="pre">WHITE_MATTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#pyalfe.data_structure.Tissue.WHITE_MATTER" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">WHITE_MATTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#pyalfe.data_structure.Tissue.WHITE_MATTER" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Tissue.DEEP_GRAY_MATTER">
-<span class="sig-name descname"><span class="pre">DEEP_GRAY_MATTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#pyalfe.data_structure.Tissue.DEEP_GRAY_MATTER" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">DEEP_GRAY_MATTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#pyalfe.data_structure.Tissue.DEEP_GRAY_MATTER" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Tissue.BRAIN_STEM">
-<span class="sig-name descname"><span class="pre">BRAIN_STEM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#pyalfe.data_structure.Tissue.BRAIN_STEM" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">BRAIN_STEM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#pyalfe.data_structure.Tissue.BRAIN_STEM" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.Tissue.CEREBELLUM">
-<span class="sig-name descname"><span class="pre">CEREBELLUM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#pyalfe.data_structure.Tissue.CEREBELLUM" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">CEREBELLUM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#pyalfe.data_structure.Tissue.CEREBELLUM" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyalfe.data_structure.PipelineDataDir">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.data_structure.</span></span><span class="sig-name descname"><span class="pre">PipelineDataDir</span></span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#PipelineDataDir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.PipelineDataDir" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.data_structure.</span></span><span class="sig-name descname"><span class="pre">PipelineDataDir</span></span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#PipelineDataDir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.PipelineDataDir" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <p>Abstract PipelineDataDir</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.data_structure.PipelineDataDir.get_output_image">
-<span class="sig-name descname"><span class="pre">get_output_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resampling_target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resampling_origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_dir_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.nii.gz'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#PipelineDataDir.get_output_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.PipelineDataDir.get_output_image" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_output_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resampling_target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resampling_origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_dir_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.nii.gz'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#PipelineDataDir.get_output_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.PipelineDataDir.get_output_image" title="Link to this definition">#</a></dt>
 <dd><dl class="simple">
 <dt>Generates the path for an output image. All the implementations</dt><dd><p>should make the parent directories if they do not exist.</p>
 </dd>
@@ -573,7 +656,7 @@ inside the modality directory.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.data_structure.PipelineDataDir.get_input_image">
-<span class="sig-name descname"><span class="pre">get_input_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.nii.gz'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#PipelineDataDir.get_input_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.PipelineDataDir.get_input_image" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_input_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.nii.gz'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#PipelineDataDir.get_input_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.PipelineDataDir.get_input_image" title="Link to this definition">#</a></dt>
 <dd><p>Generates the path for an input image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -594,7 +677,7 @@ inside the modality directory.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.data_structure.PipelineDataDir.get_quantification_file">
-<span class="sig-name descname"><span class="pre">get_quantification_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantification_file_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.csv'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#PipelineDataDir.get_quantification_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.PipelineDataDir.get_quantification_file" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_quantification_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantification_file_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.csv'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#PipelineDataDir.get_quantification_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.PipelineDataDir.get_quantification_file" title="Link to this definition">#</a></dt>
 <dd><p>Generates the path for an output quantification file.
 All the implementations should make the parent directories
 if they do not exist.</p>
@@ -620,17 +703,17 @@ if they do not exist.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyalfe.data_structure.DefaultALFEDataDir">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.data_structure.</span></span><span class="sig-name descname"><span class="pre">DefaultALFEDataDir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#DefaultALFEDataDir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.DefaultALFEDataDir" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.data_structure.</span></span><span class="sig-name descname"><span class="pre">DefaultALFEDataDir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#DefaultALFEDataDir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.DefaultALFEDataDir" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyalfe.data_structure.PipelineDataDir" title="pyalfe.data_structure.PipelineDataDir"><code class="xref py py-class docutils literal notranslate"><span class="pre">PipelineDataDir</span></code></a></p>
 <p>Default implementation of PipelineDataDir</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.data_structure.DefaultALFEDataDir.create_dir">
-<span class="sig-name descname"><span class="pre">create_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">sub_dir_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#DefaultALFEDataDir.create_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.DefaultALFEDataDir.create_dir" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">create_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">sub_dir_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#DefaultALFEDataDir.create_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.DefaultALFEDataDir.create_dir" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.data_structure.DefaultALFEDataDir.get_output_image">
-<span class="sig-name descname"><span class="pre">get_output_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resampling_target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resampling_origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_dir_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.nii.gz'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#DefaultALFEDataDir.get_output_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.DefaultALFEDataDir.get_output_image" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_output_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resampling_target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resampling_origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_dir_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.nii.gz'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#DefaultALFEDataDir.get_output_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.DefaultALFEDataDir.get_output_image" title="Link to this definition">#</a></dt>
 <dd><p>Generate the path for an output image in ALFE default
 dir structure format.</p>
 <dl class="field-list simple">
@@ -684,7 +767,7 @@ inside the modality directory.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.data_structure.DefaultALFEDataDir.get_input_image">
-<span class="sig-name descname"><span class="pre">get_input_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.nii.gz'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#DefaultALFEDataDir.get_input_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.DefaultALFEDataDir.get_input_image" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_input_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.nii.gz'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#DefaultALFEDataDir.get_input_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.DefaultALFEDataDir.get_input_image" title="Link to this definition">#</a></dt>
 <dd><p>Generate the path for an input image in
 ALFE default dir structure format.</p>
 <dl class="field-list simple">
@@ -714,7 +797,7 @@ ALFE default dir structure format.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.data_structure.DefaultALFEDataDir.get_quantification_file">
-<span class="sig-name descname"><span class="pre">get_quantification_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantification_file_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.csv'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#DefaultALFEDataDir.get_quantification_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.DefaultALFEDataDir.get_quantification_file" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_quantification_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantification_file_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.csv'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#DefaultALFEDataDir.get_quantification_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.DefaultALFEDataDir.get_quantification_file" title="Link to this definition">#</a></dt>
 <dd><p>Generate the path for a quantification file in
 ALFE default dir structure format.</p>
 <dl class="field-list simple">
@@ -748,22 +831,22 @@ ALFE default dir structure format.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyalfe.data_structure.BIDSDataDir">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.data_structure.</span></span><span class="sig-name descname"><span class="pre">BIDSDataDir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#BIDSDataDir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.BIDSDataDir" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.data_structure.</span></span><span class="sig-name descname"><span class="pre">BIDSDataDir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#BIDSDataDir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.BIDSDataDir" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyalfe.data_structure.PipelineDataDir" title="pyalfe.data_structure.PipelineDataDir"><code class="xref py py-class docutils literal notranslate"><span class="pre">PipelineDataDir</span></code></a></p>
 <p>BIDS almost-compliant implementation of PipelineDataDir</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.BIDSDataDir.logger">
-<span class="sig-name descname"><span class="pre">logger</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Logger</span> <span class="pre">BIDSDataDir</span> <span class="pre">(WARNING)&gt;</span></em><a class="headerlink" href="#pyalfe.data_structure.BIDSDataDir.logger" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">logger</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Logger</span> <span class="pre">BIDSDataDir</span> <span class="pre">(WARNING)&gt;</span></em><a class="headerlink" href="#pyalfe.data_structure.BIDSDataDir.logger" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.data_structure.BIDSDataDir.modality_dict">
-<span class="sig-name descname"><span class="pre">modality_dict</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{Modality.ADC:</span> <span class="pre">{'datatype':</span> <span class="pre">'dwi',</span> <span class="pre">'suffix':</span> <span class="pre">'md'},</span> <span class="pre">Modality.ASL:</span> <span class="pre">{'datatype':</span> <span class="pre">'perf',</span> <span class="pre">'suffix':</span> <span class="pre">'asl'},</span> <span class="pre">Modality.CBF:</span> <span class="pre">{'datatype':</span> <span class="pre">'perf',</span> <span class="pre">'suffix':</span> <span class="pre">'cbf'},</span> <span class="pre">Modality.FLAIR:</span> <span class="pre">{'datatype':</span> <span class="pre">'anat',</span> <span class="pre">'suffix':</span> <span class="pre">'FLAIR'},</span> <span class="pre">Modality.SWI:</span> <span class="pre">{'datatype':</span> <span class="pre">'swi',</span> <span class="pre">'suffix':</span> <span class="pre">'swi'},</span> <span class="pre">Modality.T1:</span> <span class="pre">{'datatype':</span> <span class="pre">'anat',</span> <span class="pre">'suffix':</span> <span class="pre">'T1w'},</span> <span class="pre">Modality.T1Post:</span> <span class="pre">{'ceagent':</span> <span class="pre">'gadolinium',</span> <span class="pre">'datatype':</span> <span class="pre">'anat',</span> <span class="pre">'suffix':</span> <span class="pre">'T1w'},</span> <span class="pre">Modality.T2:</span> <span class="pre">{'datatype':</span> <span class="pre">'anat',</span> <span class="pre">'suffix':</span> <span class="pre">'T2w'}}</span></em><a class="headerlink" href="#pyalfe.data_structure.BIDSDataDir.modality_dict" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">modality_dict</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{Modality.ADC:</span> <span class="pre">{'datatype':</span> <span class="pre">'dwi',</span> <span class="pre">'suffix':</span> <span class="pre">'md'},</span> <span class="pre">Modality.ASL:</span> <span class="pre">{'datatype':</span> <span class="pre">'perf',</span> <span class="pre">'suffix':</span> <span class="pre">'asl'},</span> <span class="pre">Modality.CBF:</span> <span class="pre">{'datatype':</span> <span class="pre">'perf',</span> <span class="pre">'suffix':</span> <span class="pre">'cbf'},</span> <span class="pre">Modality.FLAIR:</span> <span class="pre">{'datatype':</span> <span class="pre">'anat',</span> <span class="pre">'suffix':</span> <span class="pre">'FLAIR'},</span> <span class="pre">Modality.SWI:</span> <span class="pre">{'datatype':</span> <span class="pre">'swi',</span> <span class="pre">'suffix':</span> <span class="pre">'swi'},</span> <span class="pre">Modality.T1:</span> <span class="pre">{'datatype':</span> <span class="pre">'anat',</span> <span class="pre">'suffix':</span> <span class="pre">'T1w'},</span> <span class="pre">Modality.T1Post:</span> <span class="pre">{'ceagent':</span> <span class="pre">'gadolinium',</span> <span class="pre">'datatype':</span> <span class="pre">'anat',</span> <span class="pre">'suffix':</span> <span class="pre">'T1w'},</span> <span class="pre">Modality.T2:</span> <span class="pre">{'datatype':</span> <span class="pre">'anat',</span> <span class="pre">'suffix':</span> <span class="pre">'T2w'}}</span></em><a class="headerlink" href="#pyalfe.data_structure.BIDSDataDir.modality_dict" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.data_structure.BIDSDataDir.get_input_image">
-<span class="sig-name descname"><span class="pre">get_input_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.nii.gz'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#BIDSDataDir.get_input_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.BIDSDataDir.get_input_image" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_input_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.nii.gz'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#BIDSDataDir.get_input_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.BIDSDataDir.get_input_image" title="Link to this definition">#</a></dt>
 <dd><p>Generates the path for an input image in BIDS dir structure format.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -808,7 +891,7 @@ ALFE default dir structure format.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.data_structure.BIDSDataDir.get_output_image">
-<span class="sig-name descname"><span class="pre">get_output_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resampling_target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resampling_origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_dir_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.nii.gz'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#BIDSDataDir.get_output_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.BIDSDataDir.get_output_image" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_output_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resampling_target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resampling_origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_dir_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.nii.gz'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#BIDSDataDir.get_output_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.BIDSDataDir.get_output_image" title="Link to this definition">#</a></dt>
 <dd><p>Generates the path for an output image in BIDS dir structure format.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -860,7 +943,7 @@ inside the modality directory.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.data_structure.BIDSDataDir.get_quantification_file">
-<span class="sig-name descname"><span class="pre">get_quantification_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantification_file_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.csv'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#BIDSDataDir.get_quantification_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.BIDSDataDir.get_quantification_file" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_quantification_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantification_file_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.csv'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#BIDSDataDir.get_quantification_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.BIDSDataDir.get_quantification_file" title="Link to this definition">#</a></dt>
 <dd><p>Generate the path for a quantification file in
 BIDS dir structure format.</p>
 <dl class="field-list simple">
@@ -919,11 +1002,10 @@ BIDS dir structure format.</p>
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="containers.html"
@@ -943,15 +1025,78 @@ BIDS dir structure format.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality"><code class="docutils literal notranslate"><span class="pre">Modality</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.T1"><code class="docutils literal notranslate"><span class="pre">Modality.T1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.T1Post"><code class="docutils literal notranslate"><span class="pre">Modality.T1Post</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.T2"><code class="docutils literal notranslate"><span class="pre">Modality.T2</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.FLAIR"><code class="docutils literal notranslate"><span class="pre">Modality.FLAIR</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.SWI"><code class="docutils literal notranslate"><span class="pre">Modality.SWI</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.DWI"><code class="docutils literal notranslate"><span class="pre">Modality.DWI</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.SingleDWI"><code class="docutils literal notranslate"><span class="pre">Modality.SingleDWI</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.ADC"><code class="docutils literal notranslate"><span class="pre">Modality.ADC</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.EADC"><code class="docutils literal notranslate"><span class="pre">Modality.EADC</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.CBF"><code class="docutils literal notranslate"><span class="pre">Modality.CBF</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.ASL"><code class="docutils literal notranslate"><span class="pre">Modality.ASL</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Modality.PERFUSION"><code class="docutils literal notranslate"><span class="pre">Modality.PERFUSION</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Orientation"><code class="docutils literal notranslate"><span class="pre">Orientation</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Orientation.AXIAL"><code class="docutils literal notranslate"><span class="pre">Orientation.AXIAL</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Orientation.SAGITTAL"><code class="docutils literal notranslate"><span class="pre">Orientation.SAGITTAL</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Orientation.CORONAL"><code class="docutils literal notranslate"><span class="pre">Orientation.CORONAL</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue"><code class="docutils literal notranslate"><span class="pre">Tissue</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue.BACKGROUND"><code class="docutils literal notranslate"><span class="pre">Tissue.BACKGROUND</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue.CSF"><code class="docutils literal notranslate"><span class="pre">Tissue.CSF</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue.CORTICAL_GRAY_MATTER"><code class="docutils literal notranslate"><span class="pre">Tissue.CORTICAL_GRAY_MATTER</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue.WHITE_MATTER"><code class="docutils literal notranslate"><span class="pre">Tissue.WHITE_MATTER</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue.DEEP_GRAY_MATTER"><code class="docutils literal notranslate"><span class="pre">Tissue.DEEP_GRAY_MATTER</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue.BRAIN_STEM"><code class="docutils literal notranslate"><span class="pre">Tissue.BRAIN_STEM</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue.CEREBELLUM"><code class="docutils literal notranslate"><span class="pre">Tissue.CEREBELLUM</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PipelineDataDir"><code class="docutils literal notranslate"><span class="pre">PipelineDataDir</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PipelineDataDir.get_output_image"><code class="docutils literal notranslate"><span class="pre">PipelineDataDir.get_output_image()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PipelineDataDir.get_input_image"><code class="docutils literal notranslate"><span class="pre">PipelineDataDir.get_input_image()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PipelineDataDir.get_quantification_file"><code class="docutils literal notranslate"><span class="pre">PipelineDataDir.get_quantification_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.DefaultALFEDataDir"><code class="docutils literal notranslate"><span class="pre">DefaultALFEDataDir</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.DefaultALFEDataDir.create_dir"><code class="docutils literal notranslate"><span class="pre">DefaultALFEDataDir.create_dir()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.DefaultALFEDataDir.get_output_image"><code class="docutils literal notranslate"><span class="pre">DefaultALFEDataDir.get_output_image()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.DefaultALFEDataDir.get_input_image"><code class="docutils literal notranslate"><span class="pre">DefaultALFEDataDir.get_input_image()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.DefaultALFEDataDir.get_quantification_file"><code class="docutils literal notranslate"><span class="pre">DefaultALFEDataDir.get_quantification_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.BIDSDataDir"><code class="docutils literal notranslate"><span class="pre">BIDSDataDir</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.BIDSDataDir.logger"><code class="docutils literal notranslate"><span class="pre">BIDSDataDir.logger</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.BIDSDataDir.modality_dict"><code class="docutils literal notranslate"><span class="pre">BIDSDataDir.modality_dict</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.BIDSDataDir.get_input_image"><code class="docutils literal notranslate"><span class="pre">BIDSDataDir.get_input_image()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.BIDSDataDir.get_output_image"><code class="docutils literal notranslate"><span class="pre">BIDSDataDir.get_output_image()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.BIDSDataDir.get_quantification_file"><code class="docutils literal notranslate"><span class="pre">BIDSDataDir.get_quantification_file()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
@@ -969,6 +1114,7 @@ By Reza Eghbali
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2023.
@@ -995,8 +1141,8 @@ By Reza Eghbali
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>

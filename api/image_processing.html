@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>pyalfe.image_processing &#8212; pyalfe</title>
   
@@ -19,48 +18,45 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/image_processing';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -75,7 +71,15 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -110,11 +114,14 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -129,9 +136,11 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="../intro.html">
+  
   
   
   
@@ -141,12 +150,23 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../_static/logo.png" class="logo__image only-light" alt="pyalfe - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="pyalfe - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -164,7 +184,9 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="api.html">PyALFE reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../advanced/extend.html">Extending PyALFE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/dev.html">Development</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="api.html">API reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="interfaces/c3d.html">pyalfe.interfaces.c3d</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interfaces/greedy.html">pyalfe.interfaces.greedy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tasks/initialization.html">pyalfe.tasks.initialization</a></li>
@@ -186,8 +208,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="roi.html">pyalfe.roi</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../advanced/extend.html">Extending PyALFE</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../advanced/dev.html">Development</a></li>
 </ul>
 
     </div>
@@ -358,24 +378,28 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
+
 
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -391,6 +415,65 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor"><code class="docutils literal notranslate"><span class="pre">ImageProcessor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.threshold"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.threshold()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.binarize"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.binarize()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.mask"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.mask()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.largest_mask_comp"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.largest_mask_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.holefill"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.holefill()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.reslice_to_ref"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.reslice_to_ref()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.resample_new_dim"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.resample_new_dim()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.get_dims"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.get_dims()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.trim_largest_comp"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.trim_largest_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.set_subtract"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.set_subtract()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.dilate"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.dilate()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.union"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.union()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.distance_transform"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.distance_transform()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.label_mask_comp"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.label_mask_comp()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.threshold"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.threshold()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.binarize"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.binarize()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.mask"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.mask()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.largest_mask_comp"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.largest_mask_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.holefill"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.holefill()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.reslice_to_ref"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.reslice_to_ref()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.resample_new_dim"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.resample_new_dim()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.get_dims"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.get_dims()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.trim_largest_comp"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.trim_largest_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.set_subtract"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.set_subtract()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.dilate"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.dilate()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.union"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.union()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.distance_transform"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.distance_transform()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.label_mask_comp"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.label_mask_comp()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.crop_img"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.crop_img()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.threshold"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.threshold()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.binarize"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.binarize()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.mask"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.mask()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.largest_mask_comp"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.largest_mask_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.holefill"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.holefill()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.reslice_to_ref"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.reslice_to_ref()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.resample_new_dim"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.resample_new_dim()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.get_dims"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.get_dims()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.trim_largest_comp"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.trim_largest_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.set_subtract"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.set_subtract()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.dilate"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.dilate()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.union"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.union()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.distance_transform"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.distance_transform()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.label_mask_comp"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.label_mask_comp()</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -398,18 +481,18 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section id="module-pyalfe.image_processing">
-<span id="pyalfe-image-processing"></span><h1>pyalfe.image_processing<a class="headerlink" href="#module-pyalfe.image_processing" title="Permalink to this heading">#</a></h1>
+<span id="pyalfe-image-processing"></span><h1>pyalfe.image_processing<a class="headerlink" href="#module-pyalfe.image_processing" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyalfe.image_processing.ImageProcessor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.image_processing.</span></span><span class="sig-name descname"><span class="pre">ImageProcessor</span></span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.image_processing.</span></span><span class="sig-name descname"><span class="pre">ImageProcessor</span></span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <p>Abstract class for ImageProcessors.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.ImageProcessor.threshold">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_bound</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_bound</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inside_target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outside_target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.threshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.threshold" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_bound</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_bound</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inside_target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outside_target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.threshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.threshold" title="Link to this definition">#</a></dt>
 <dd><p>Maps any pixel with value inside
 <code class="docutils literal notranslate"><span class="pre">[lower_bound</span> <span class="pre">,</span> <span class="pre">upper_bound]</span></code> to
 <code class="docutils literal notranslate"><span class="pre">inside_target</span></code> and any other pixel is mapped to <code class="docutils literal notranslate"><span class="pre">outsize_target</span></code>.
@@ -438,7 +521,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.ImageProcessor.binarize">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">binarize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.binarize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.binarize" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">binarize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.binarize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.binarize" title="Link to this definition">#</a></dt>
 <dd><p>Converts an image to binary by mapping all non-zero values to 1.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -452,7 +535,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.ImageProcessor.mask">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.mask" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.mask" title="Link to this definition">#</a></dt>
 <dd><p>Masks the input image by setting the pixels outside the mask to zero.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -467,7 +550,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.ImageProcessor.largest_mask_comp">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">largest_mask_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.largest_mask_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.largest_mask_comp" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">largest_mask_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.largest_mask_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.largest_mask_comp" title="Link to this definition">#</a></dt>
 <dd><p>Finds the largest connected component of an input mask image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -481,7 +564,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.ImageProcessor.holefill">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">holefill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.holefill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.holefill" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">holefill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.holefill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.holefill" title="Link to this definition">#</a></dt>
 <dd><p>Fills the holes in a binary image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -495,7 +578,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.ImageProcessor.reslice_to_ref">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reslice_to_ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moving_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.reslice_to_ref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.reslice_to_ref" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reslice_to_ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moving_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.reslice_to_ref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.reslice_to_ref" title="Link to this definition">#</a></dt>
 <dd><p>Reslice the moving_image to the ref_image space.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -510,7 +593,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.ImageProcessor.resample_new_dim">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resample_new_dim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.resample_new_dim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.resample_new_dim" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resample_new_dim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.resample_new_dim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.resample_new_dim" title="Link to this definition">#</a></dt>
 <dd><dl class="simple">
 <dt>Resample the image to new dimensions keeping the bounding box</dt><dd><p>the same, but changing the number of voxels in the image.</p>
 </dd>
@@ -537,7 +620,7 @@ instead of raw dimensions.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.ImageProcessor.get_dims">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_dims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.get_dims"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.get_dims" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_dims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.get_dims"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.get_dims" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>image</strong> (<em>str</em><em> or </em><em>Path</em>) – The path to the image.</p>
@@ -553,7 +636,7 @@ instead of raw dimensions.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.ImageProcessor.trim_largest_comp">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">trim_largest_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trim_margin_vec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.trim_largest_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.trim_largest_comp" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">trim_largest_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trim_margin_vec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.trim_largest_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.trim_largest_comp" title="Link to this definition">#</a></dt>
 <dd><p>Finds the largest component of the image and trims the margins.
 This function is usefull for trimming neck.</p>
 <dl class="field-list simple">
@@ -571,7 +654,7 @@ each dimension.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.ImageProcessor.set_subtract">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_subtract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_image_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.set_subtract"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.set_subtract" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_subtract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_image_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.set_subtract"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.set_subtract" title="Link to this definition">#</a></dt>
 <dd><p>Performs set subtraction between of second binary image
 from the first binary image.</p>
 <dl class="field-list simple">
@@ -587,7 +670,7 @@ from the first binary image.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.ImageProcessor.dilate">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dilate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.dilate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.dilate" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dilate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.dilate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.dilate" title="Link to this definition">#</a></dt>
 <dd><p>Dilates binary image by a certain radius given in voxels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -602,7 +685,7 @@ from the first binary image.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.ImageProcessor.union">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_image_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.union"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.union" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_image_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.union"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.union" title="Link to this definition">#</a></dt>
 <dd><p>Takes the union of two binary images.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -617,7 +700,7 @@ from the first binary image.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.ImageProcessor.distance_transform">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distance_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.distance_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.distance_transform" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distance_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.distance_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.distance_transform" title="Link to this definition">#</a></dt>
 <dd><p>Computes the distance transform of a binary image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -631,7 +714,7 @@ from the first binary image.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.ImageProcessor.label_mask_comp">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label_mask_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.label_mask_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.label_mask_comp" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label_mask_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.label_mask_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.label_mask_comp" title="Link to this definition">#</a></dt>
 <dd><p>Assigns discrete labels to the connected component of a 1 region in
 a binary image. The largest region is assigned label 1,
 the second largest is assigned label 2 and so forth.</p>
@@ -649,11 +732,11 @@ the second largest is assigned label 2 and so forth.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyalfe.image_processing.Convert3DProcessor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.image_processing.</span></span><span class="sig-name descname"><span class="pre">Convert3DProcessor</span></span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.image_processing.</span></span><span class="sig-name descname"><span class="pre">Convert3DProcessor</span></span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyalfe.image_processing.ImageProcessor" title="pyalfe.image_processing.ImageProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageProcessor</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.Convert3DProcessor.threshold">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_bound</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_bound</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inside_target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outside_target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.threshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.threshold" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_bound</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_bound</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inside_target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outside_target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.threshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.threshold" title="Link to this definition">#</a></dt>
 <dd><p>Maps any pixel with value inside
 <code class="docutils literal notranslate"><span class="pre">[lower_bound</span> <span class="pre">,</span> <span class="pre">upper_bound]</span></code> to
 <code class="docutils literal notranslate"><span class="pre">inside_target</span></code> and any other pixel is mapped to <code class="docutils literal notranslate"><span class="pre">outsize_target</span></code>.
@@ -682,7 +765,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.Convert3DProcessor.binarize">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">binarize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.binarize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.binarize" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">binarize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.binarize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.binarize" title="Link to this definition">#</a></dt>
 <dd><p>Converts an image to binary by mapping all non-zero values to 1.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -696,7 +779,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.Convert3DProcessor.mask">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.mask" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.mask" title="Link to this definition">#</a></dt>
 <dd><p>Masks the input image by setting the pixels outside the mask to zero.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -711,7 +794,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.Convert3DProcessor.largest_mask_comp">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">largest_mask_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.largest_mask_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.largest_mask_comp" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">largest_mask_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.largest_mask_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.largest_mask_comp" title="Link to this definition">#</a></dt>
 <dd><p>Finds the largest connected component of an input mask image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -725,7 +808,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.Convert3DProcessor.holefill">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">holefill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.holefill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.holefill" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">holefill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.holefill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.holefill" title="Link to this definition">#</a></dt>
 <dd><p>Fills the holes in a binary image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -739,7 +822,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.Convert3DProcessor.reslice_to_ref">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reslice_to_ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moving_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.reslice_to_ref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.reslice_to_ref" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reslice_to_ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moving_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.reslice_to_ref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.reslice_to_ref" title="Link to this definition">#</a></dt>
 <dd><p>Reslice the moving_image to the ref_image space.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -754,7 +837,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.Convert3DProcessor.resample_new_dim">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resample_new_dim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.resample_new_dim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.resample_new_dim" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resample_new_dim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.resample_new_dim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.resample_new_dim" title="Link to this definition">#</a></dt>
 <dd><dl class="simple">
 <dt>Resample the image to new dimensions keeping the bounding box</dt><dd><p>the same, but changing the number of voxels in the image.</p>
 </dd>
@@ -781,7 +864,7 @@ instead of raw dimensions.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.Convert3DProcessor.get_dims">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_dims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.get_dims"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.get_dims" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_dims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.get_dims"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.get_dims" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>image</strong> (<em>str</em><em> or </em><em>Path</em>) – The path to the image.</p>
@@ -797,7 +880,7 @@ instead of raw dimensions.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.Convert3DProcessor.trim_largest_comp">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">trim_largest_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trim_margin_vec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.trim_largest_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.trim_largest_comp" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">trim_largest_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trim_margin_vec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.trim_largest_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.trim_largest_comp" title="Link to this definition">#</a></dt>
 <dd><p>Finds the largest component of the image and trims the margins.
 This function is usefull for trimming neck.</p>
 <dl class="field-list simple">
@@ -815,7 +898,7 @@ each dimension.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.Convert3DProcessor.set_subtract">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_subtract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_image_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.set_subtract"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.set_subtract" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_subtract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_image_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.set_subtract"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.set_subtract" title="Link to this definition">#</a></dt>
 <dd><p>Performs set subtraction between of second binary image
 from the first binary image.</p>
 <dl class="field-list simple">
@@ -831,7 +914,7 @@ from the first binary image.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.Convert3DProcessor.dilate">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dilate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.dilate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.dilate" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dilate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.dilate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.dilate" title="Link to this definition">#</a></dt>
 <dd><p>Dilates binary image by a certain radius given in voxels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -846,7 +929,7 @@ from the first binary image.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.Convert3DProcessor.union">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_image_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.union"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.union" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_image_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.union"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.union" title="Link to this definition">#</a></dt>
 <dd><p>Takes the union of two binary images.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -861,7 +944,7 @@ from the first binary image.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.Convert3DProcessor.distance_transform">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distance_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.distance_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.distance_transform" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distance_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.distance_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.distance_transform" title="Link to this definition">#</a></dt>
 <dd><p>Computes the distance transform of a binary image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -875,7 +958,7 @@ from the first binary image.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.Convert3DProcessor.label_mask_comp">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label_mask_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.label_mask_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.label_mask_comp" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label_mask_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.label_mask_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.label_mask_comp" title="Link to this definition">#</a></dt>
 <dd><p>Assigns discrete labels to the connected component of a 1 region in
 a binary image. The largest region is assigned label 1,
 the second largest is assigned label 2 and so forth.</p>
@@ -893,16 +976,16 @@ the second largest is assigned label 2 and so forth.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyalfe.image_processing.NilearnProcessor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.image_processing.</span></span><span class="sig-name descname"><span class="pre">NilearnProcessor</span></span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.image_processing.</span></span><span class="sig-name descname"><span class="pre">NilearnProcessor</span></span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyalfe.image_processing.ImageProcessor" title="pyalfe.image_processing.ImageProcessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageProcessor</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.NilearnProcessor.crop_img">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">crop_img</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.crop_img"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.crop_img" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">crop_img</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.crop_img"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.crop_img" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.NilearnProcessor.threshold">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_bound</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_bound</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inside_target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outside_target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.threshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.threshold" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_bound</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_bound</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inside_target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outside_target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.threshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.threshold" title="Link to this definition">#</a></dt>
 <dd><p>Maps any pixel with value inside
 <code class="docutils literal notranslate"><span class="pre">[lower_bound</span> <span class="pre">,</span> <span class="pre">upper_bound]</span></code> to
 <code class="docutils literal notranslate"><span class="pre">inside_target</span></code> and any other pixel is mapped to <code class="docutils literal notranslate"><span class="pre">outsize_target</span></code>.
@@ -931,7 +1014,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.NilearnProcessor.binarize">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">binarize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.binarize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.binarize" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">binarize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.binarize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.binarize" title="Link to this definition">#</a></dt>
 <dd><p>Converts an image to binary by mapping all non-zero values to 1.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -945,7 +1028,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.NilearnProcessor.mask">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.mask" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.mask" title="Link to this definition">#</a></dt>
 <dd><p>Masks the input image by setting the pixels outside the mask to zero.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -960,7 +1043,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.NilearnProcessor.largest_mask_comp">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">largest_mask_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.largest_mask_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.largest_mask_comp" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">largest_mask_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.largest_mask_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.largest_mask_comp" title="Link to this definition">#</a></dt>
 <dd><p>Finds the largest connected component of an input mask image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -974,7 +1057,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.NilearnProcessor.holefill">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">holefill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.holefill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.holefill" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">holefill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.holefill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.holefill" title="Link to this definition">#</a></dt>
 <dd><p>Fills the holes in a binary image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -988,7 +1071,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.NilearnProcessor.reslice_to_ref">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reslice_to_ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moving_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.reslice_to_ref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.reslice_to_ref" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reslice_to_ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moving_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.reslice_to_ref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.reslice_to_ref" title="Link to this definition">#</a></dt>
 <dd><p>Reslice the moving_image to the ref_image space.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1003,7 +1086,7 @@ The thresholded image is written to <cite>output</cite> path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.NilearnProcessor.resample_new_dim">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resample_new_dim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.resample_new_dim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.resample_new_dim" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resample_new_dim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.resample_new_dim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.resample_new_dim" title="Link to this definition">#</a></dt>
 <dd><dl class="simple">
 <dt>Resample the image to new dimensions keeping the bounding box</dt><dd><p>the same, but changing the number of voxels in the image.</p>
 </dd>
@@ -1030,7 +1113,7 @@ instead of raw dimensions.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.NilearnProcessor.get_dims">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_dims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.get_dims"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.get_dims" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_dims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.get_dims"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.get_dims" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>image</strong> (<em>str</em><em> or </em><em>Path</em>) – The path to the image.</p>
@@ -1046,7 +1129,7 @@ instead of raw dimensions.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.NilearnProcessor.trim_largest_comp">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">trim_largest_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trim_margin_vec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.trim_largest_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.trim_largest_comp" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">trim_largest_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trim_margin_vec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.trim_largest_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.trim_largest_comp" title="Link to this definition">#</a></dt>
 <dd><p>Finds the largest component of the image and trims the margins.
 This function is usefull for trimming neck.</p>
 <dl class="field-list simple">
@@ -1064,7 +1147,7 @@ each dimension.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.NilearnProcessor.set_subtract">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_subtract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_image_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.set_subtract"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.set_subtract" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_subtract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_image_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.set_subtract"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.set_subtract" title="Link to this definition">#</a></dt>
 <dd><p>Performs set subtraction between of second binary image
 from the first binary image.</p>
 <dl class="field-list simple">
@@ -1080,7 +1163,7 @@ from the first binary image.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.NilearnProcessor.dilate">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dilate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.dilate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.dilate" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dilate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.dilate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.dilate" title="Link to this definition">#</a></dt>
 <dd><p>Dilates binary image by a certain radius given in voxels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1095,7 +1178,7 @@ from the first binary image.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.NilearnProcessor.union">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_image_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.union"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.union" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_image_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.union"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.union" title="Link to this definition">#</a></dt>
 <dd><p>Takes the union of two binary images.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1110,7 +1193,7 @@ from the first binary image.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.NilearnProcessor.distance_transform">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distance_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.distance_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.distance_transform" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distance_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.distance_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.distance_transform" title="Link to this definition">#</a></dt>
 <dd><p>Computes the distance transform of a binary image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1124,7 +1207,7 @@ from the first binary image.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.image_processing.NilearnProcessor.label_mask_comp">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label_mask_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.label_mask_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.label_mask_comp" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label_mask_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binary_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.label_mask_comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.label_mask_comp" title="Link to this definition">#</a></dt>
 <dd><p>Assigns discrete labels to the connected component of a 1 region in
 a binary image. The largest region is assigned label 1,
 the second largest is assigned label 2 and so forth.</p>
@@ -1167,11 +1250,10 @@ the second largest is assigned label 2 and so forth.</p>
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="data_structure.html"
@@ -1191,15 +1273,78 @@ the second largest is assigned label 2 and so forth.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor"><code class="docutils literal notranslate"><span class="pre">ImageProcessor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.threshold"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.threshold()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.binarize"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.binarize()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.mask"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.mask()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.largest_mask_comp"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.largest_mask_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.holefill"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.holefill()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.reslice_to_ref"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.reslice_to_ref()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.resample_new_dim"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.resample_new_dim()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.get_dims"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.get_dims()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.trim_largest_comp"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.trim_largest_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.set_subtract"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.set_subtract()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.dilate"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.dilate()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.union"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.union()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.distance_transform"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.distance_transform()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.label_mask_comp"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.label_mask_comp()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.threshold"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.threshold()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.binarize"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.binarize()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.mask"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.mask()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.largest_mask_comp"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.largest_mask_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.holefill"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.holefill()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.reslice_to_ref"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.reslice_to_ref()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.resample_new_dim"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.resample_new_dim()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.get_dims"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.get_dims()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.trim_largest_comp"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.trim_largest_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.set_subtract"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.set_subtract()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.dilate"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.dilate()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.union"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.union()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.distance_transform"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.distance_transform()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.label_mask_comp"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.label_mask_comp()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.crop_img"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.crop_img()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.threshold"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.threshold()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.binarize"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.binarize()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.mask"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.mask()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.largest_mask_comp"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.largest_mask_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.holefill"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.holefill()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.reslice_to_ref"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.reslice_to_ref()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.resample_new_dim"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.resample_new_dim()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.get_dims"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.get_dims()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.trim_largest_comp"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.trim_largest_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.set_subtract"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.set_subtract()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.dilate"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.dilate()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.union"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.union()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.distance_transform"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.distance_transform()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.label_mask_comp"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.label_mask_comp()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
@@ -1217,6 +1362,7 @@ By Reza Eghbali
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2023.
@@ -1243,8 +1389,8 @@ By Reza Eghbali
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>

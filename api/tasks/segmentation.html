@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="../../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>pyalfe.tasks.segmentation &#8212; pyalfe</title>
   
@@ -19,48 +18,45 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/clipboard.min.js"></script>
-    <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/tasks/segmentation';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -75,7 +71,15 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -110,11 +114,14 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -129,9 +136,11 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="../../intro.html">
+  
   
   
   
@@ -141,12 +150,23 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="pyalfe - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="pyalfe - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -164,7 +184,9 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../api.html">PyALFE reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../advanced/extend.html">Extending PyALFE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced/dev.html">Development</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../api.html">API reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../interfaces/c3d.html">pyalfe.interfaces.c3d</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../interfaces/greedy.html">pyalfe.interfaces.greedy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="initialization.html">pyalfe.tasks.initialization</a></li>
@@ -186,8 +208,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../roi.html">pyalfe.roi</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../advanced/extend.html">Extending PyALFE</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../advanced/dev.html">Development</a></li>
 </ul>
 
     </div>
@@ -358,24 +378,28 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
+
 
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -391,6 +415,34 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.Segmentation"><code class="docutils literal notranslate"><span class="pre">Segmentation</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.Segmentation.predict"><code class="docutils literal notranslate"><span class="pre">Segmentation.predict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.Segmentation.post_process"><code class="docutils literal notranslate"><span class="pre">Segmentation.post_process()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.Segmentation.label_segmentation_components"><code class="docutils literal notranslate"><span class="pre">Segmentation.label_segmentation_components()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.Segmentation.run"><code class="docutils literal notranslate"><span class="pre">Segmentation.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.MultiModalitySegmentation"><code class="docutils literal notranslate"><span class="pre">MultiModalitySegmentation</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.MultiModalitySegmentation.logger"><code class="docutils literal notranslate"><span class="pre">MultiModalitySegmentation.logger</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.MultiModalitySegmentation.run"><code class="docutils literal notranslate"><span class="pre">MultiModalitySegmentation.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.SingleModalitySegmentation"><code class="docutils literal notranslate"><span class="pre">SingleModalitySegmentation</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.SingleModalitySegmentation.logger"><code class="docutils literal notranslate"><span class="pre">SingleModalitySegmentation.logger</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.TissueWithPriorSegementation"><code class="docutils literal notranslate"><span class="pre">TissueWithPriorSegementation</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.TissueWithPriorSegementation.logger"><code class="docutils literal notranslate"><span class="pre">TissueWithPriorSegementation.logger</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.TissueWithPriorSegementation.run"><code class="docutils literal notranslate"><span class="pre">TissueWithPriorSegementation.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -398,18 +450,18 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section id="module-pyalfe.tasks.segmentation">
-<span id="pyalfe-tasks-segmentation"></span><h1>pyalfe.tasks.segmentation<a class="headerlink" href="#module-pyalfe.tasks.segmentation" title="Permalink to this heading">#</a></h1>
+<span id="pyalfe-tasks-segmentation"></span><h1>pyalfe.tasks.segmentation<a class="headerlink" href="#module-pyalfe.tasks.segmentation" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyalfe.tasks.segmentation.Segmentation">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.tasks.segmentation.</span></span><span class="sig-name descname"><span class="pre">Segmentation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inference_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../inference.html#pyalfe.inference.InferenceModel" title="pyalfe.inference.InferenceModel"><span class="pre">InferenceModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_processor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../image_processing.html#pyalfe.image_processing.ImageProcessor" title="pyalfe.image_processing.ImageProcessor"><span class="pre">ImageProcessor</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#Segmentation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.Segmentation" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.tasks.segmentation.</span></span><span class="sig-name descname"><span class="pre">Segmentation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inference_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../inference.html#pyalfe.inference.InferenceModel" title="pyalfe.inference.InferenceModel"><span class="pre">InferenceModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_processor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../image_processing.html#pyalfe.image_processing.ImageProcessor" title="pyalfe.image_processing.ImageProcessor"><span class="pre">ImageProcessor</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#Segmentation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.Segmentation" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></p>
 <p>This is the parent class for segmentation tasks.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.tasks.segmentation.Segmentation.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#Segmentation.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.Segmentation.predict" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#Segmentation.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.Segmentation.predict" title="Link to this definition">#</a></dt>
 <dd><p>Creates a prediction image given the input images.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -423,7 +475,7 @@ document.write(`
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.tasks.segmentation.Segmentation.post_process">
-<span class="sig-name descname"><span class="pre">post_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#Segmentation.post_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.Segmentation.post_process" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">post_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#Segmentation.post_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.Segmentation.post_process" title="Link to this definition">#</a></dt>
 <dd><p>Post processes the prediction segmentation image by applying an
 optional mask to create the final segmentation. For example, in a
 lesion segmentation task you can remove any lesion outside the brain
@@ -441,7 +493,7 @@ by applying a brain mask.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.tasks.segmentation.Segmentation.label_segmentation_components">
-<span class="sig-name descname"><span class="pre">label_segmentation_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#Segmentation.label_segmentation_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.Segmentation.label_segmentation_components" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">label_segmentation_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#Segmentation.label_segmentation_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.Segmentation.label_segmentation_components" title="Link to this definition">#</a></dt>
 <dd><p>Breaks down a binary segmentation into individual connected
 components.</p>
 <dl class="field-list simple">
@@ -456,7 +508,7 @@ components.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.tasks.segmentation.Segmentation.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#Segmentation.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.Segmentation.run" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#Segmentation.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.Segmentation.run" title="Link to this definition">#</a></dt>
 <dd><p>Runs the task for an accession.</p>
 </dd></dl>
 
@@ -464,7 +516,7 @@ components.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyalfe.tasks.segmentation.MultiModalitySegmentation">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.tasks.segmentation.</span></span><span class="sig-name descname"><span class="pre">MultiModalitySegmentation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inference_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../inference.html#pyalfe.inference.InferenceModel" title="pyalfe.inference.InferenceModel"><span class="pre">InferenceModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_processor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../image_processing.html#pyalfe.image_processing.ImageProcessor" title="pyalfe.image_processing.ImageProcessor"><span class="pre">ImageProcessor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../data_structure.html#pyalfe.data_structure.PipelineDataDir" title="pyalfe.data_structure.PipelineDataDir"><span class="pre">PipelineDataDir</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'skullstripped'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'abnormal_seg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segmentation_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'abnormalmap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#MultiModalitySegmentation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.MultiModalitySegmentation" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.tasks.segmentation.</span></span><span class="sig-name descname"><span class="pre">MultiModalitySegmentation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inference_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../inference.html#pyalfe.inference.InferenceModel" title="pyalfe.inference.InferenceModel"><span class="pre">InferenceModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_processor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../image_processing.html#pyalfe.image_processing.ImageProcessor" title="pyalfe.image_processing.ImageProcessor"><span class="pre">ImageProcessor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../data_structure.html#pyalfe.data_structure.PipelineDataDir" title="pyalfe.data_structure.PipelineDataDir"><span class="pre">PipelineDataDir</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_modality</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'skullstripped'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'abnormal_seg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segmentation_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'abnormalmap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#MultiModalitySegmentation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.MultiModalitySegmentation" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyalfe.tasks.segmentation.Segmentation" title="pyalfe.tasks.segmentation.Segmentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Segmentation</span></code></a></p>
 <p>This task generates a segmentation from several input modalities.</p>
 <dl class="field-list simple">
@@ -494,12 +546,12 @@ Default is True.</p></li>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.tasks.segmentation.MultiModalitySegmentation.logger">
-<span class="sig-name descname"><span class="pre">logger</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Logger</span> <span class="pre">MultiModalitySegmentation</span> <span class="pre">(DEBUG)&gt;</span></em><a class="headerlink" href="#pyalfe.tasks.segmentation.MultiModalitySegmentation.logger" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">logger</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Logger</span> <span class="pre">MultiModalitySegmentation</span> <span class="pre">(DEBUG)&gt;</span></em><a class="headerlink" href="#pyalfe.tasks.segmentation.MultiModalitySegmentation.logger" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.tasks.segmentation.MultiModalitySegmentation.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#MultiModalitySegmentation.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.MultiModalitySegmentation.run" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#MultiModalitySegmentation.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.MultiModalitySegmentation.run" title="Link to this definition">#</a></dt>
 <dd><p>Runs the task for an accession.</p>
 </dd></dl>
 
@@ -507,15 +559,13 @@ Default is True.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyalfe.tasks.segmentation.SingleModalitySegmentation">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.tasks.segmentation.</span></span><span class="sig-name descname"><span class="pre">SingleModalitySegmentation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inference_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../inference.html#pyalfe.inference.InferenceModel" title="pyalfe.inference.InferenceModel"><span class="pre">InferenceModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_processor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../image_processing.html#pyalfe.image_processing.ImageProcessor" title="pyalfe.image_processing.ImageProcessor"><span class="pre">ImageProcessor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../data_structure.html#pyalfe.data_structure.PipelineDataDir" title="pyalfe.data_structure.PipelineDataDir"><span class="pre">PipelineDataDir</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'skullstripped'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'abnormal_seg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segmentation_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'abnormalmap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#SingleModalitySegmentation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.SingleModalitySegmentation" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.tasks.segmentation.</span></span><span class="sig-name descname"><span class="pre">SingleModalitySegmentation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inference_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../inference.html#pyalfe.inference.InferenceModel" title="pyalfe.inference.InferenceModel"><span class="pre">InferenceModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_processor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../image_processing.html#pyalfe.image_processing.ImageProcessor" title="pyalfe.image_processing.ImageProcessor"><span class="pre">ImageProcessor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../data_structure.html#pyalfe.data_structure.PipelineDataDir" title="pyalfe.data_structure.PipelineDataDir"><span class="pre">PipelineDataDir</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">modality</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'skullstripped'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'abnormal_seg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segmentation_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'abnormalmap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#SingleModalitySegmentation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.SingleModalitySegmentation" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyalfe.tasks.segmentation.MultiModalitySegmentation" title="pyalfe.tasks.segmentation.MultiModalitySegmentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiModalitySegmentation</span></code></a></p>
 <p>This task generates a segmentation from a single input modality.</p>
 <blockquote>
 <div><p>Parameters</p>
 </div></blockquote>
 <dl class="simple">
-<dt>inference_model: InferenceModel</dt><dd><p>The inference model object.</p>
-</dd>
 <dt>image_processor: ImageProcessor</dt><dd><p>The image processor object.</p>
 </dd>
 <dt>pipeline_dir: PipelineDataDir</dt><dd><p>The pipeline data directory object.</p>
@@ -544,8 +594,45 @@ Default is True.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pyalfe.tasks.segmentation.SingleModalitySegmentation.logger">
-<span class="sig-name descname"><span class="pre">logger</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Logger</span> <span class="pre">SingleModalitySegmentation</span> <span class="pre">(DEBUG)&gt;</span></em><a class="headerlink" href="#pyalfe.tasks.segmentation.SingleModalitySegmentation.logger" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">logger</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Logger</span> <span class="pre">SingleModalitySegmentation</span> <span class="pre">(DEBUG)&gt;</span></em><a class="headerlink" href="#pyalfe.tasks.segmentation.SingleModalitySegmentation.logger" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyalfe.tasks.segmentation.TissueWithPriorSegementation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.tasks.segmentation.</span></span><span class="sig-name descname"><span class="pre">TissueWithPriorSegementation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inference_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../inference.html#pyalfe.inference.InferenceModel" title="pyalfe.inference.InferenceModel"><span class="pre">InferenceModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_processor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../image_processing.html#pyalfe.image_processing.ImageProcessor" title="pyalfe.image_processing.ImageProcessor"><span class="pre">ImageProcessor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../data_structure.html#pyalfe.data_structure.PipelineDataDir" title="pyalfe.data_structure.PipelineDataDir"><span class="pre">PipelineDataDir</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'trim_upsampled'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'tissue_seg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Tissue'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#TissueWithPriorSegementation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.TissueWithPriorSegementation" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyalfe.tasks.segmentation.Segmentation" title="pyalfe.tasks.segmentation.Segmentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Segmentation</span></code></a></p>
+<p>This task generates tissue segmentation from T1 and a prior atlas based
+segementation.</p>
+<blockquote>
+<div><p>Parameters</p>
+</div></blockquote>
+<dl class="simple">
+<dt>image_processor: ImageProcessor</dt><dd><p>The image processor object.</p>
+</dd>
+<dt>pipeline_dir: PipelineDataDir</dt><dd><p>The pipeline data directory object.</p>
+</dd>
+<dt>image_type_input: str = ‘skullstripped’</dt><dd><p>The type of image that should be used as input.
+Default is <cite>skullstripped</cite>.</p>
+</dd>
+<dt>image_type_output: str</dt><dd><p>The type of output image that segmentation should be saved as.
+Default is <cite>tissue_seg</cite>.</p>
+</dd>
+<dt>overwrite: bool = True</dt><dd><p>Whether to overwrite existing output segmentation images.
+Default is True.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.tasks.segmentation.TissueWithPriorSegementation.logger">
+<span class="sig-name descname"><span class="pre">logger</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Logger</span> <span class="pre">TissueWithPriorSegementation</span> <span class="pre">(DEBUG)&gt;</span></em><a class="headerlink" href="#pyalfe.tasks.segmentation.TissueWithPriorSegementation.logger" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyalfe.tasks.segmentation.TissueWithPriorSegementation.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#TissueWithPriorSegementation.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.TissueWithPriorSegementation.run" title="Link to this definition">#</a></dt>
+<dd><p>Runs the task for an accession.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -576,11 +663,10 @@ Default is True.</p>
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="registration.html"
@@ -600,15 +686,47 @@ Default is True.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.Segmentation"><code class="docutils literal notranslate"><span class="pre">Segmentation</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.Segmentation.predict"><code class="docutils literal notranslate"><span class="pre">Segmentation.predict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.Segmentation.post_process"><code class="docutils literal notranslate"><span class="pre">Segmentation.post_process()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.Segmentation.label_segmentation_components"><code class="docutils literal notranslate"><span class="pre">Segmentation.label_segmentation_components()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.Segmentation.run"><code class="docutils literal notranslate"><span class="pre">Segmentation.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.MultiModalitySegmentation"><code class="docutils literal notranslate"><span class="pre">MultiModalitySegmentation</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.MultiModalitySegmentation.logger"><code class="docutils literal notranslate"><span class="pre">MultiModalitySegmentation.logger</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.MultiModalitySegmentation.run"><code class="docutils literal notranslate"><span class="pre">MultiModalitySegmentation.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.SingleModalitySegmentation"><code class="docutils literal notranslate"><span class="pre">SingleModalitySegmentation</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.SingleModalitySegmentation.logger"><code class="docutils literal notranslate"><span class="pre">SingleModalitySegmentation.logger</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.TissueWithPriorSegementation"><code class="docutils literal notranslate"><span class="pre">TissueWithPriorSegementation</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.TissueWithPriorSegementation.logger"><code class="docutils literal notranslate"><span class="pre">TissueWithPriorSegementation.logger</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.TissueWithPriorSegementation.run"><code class="docutils literal notranslate"><span class="pre">TissueWithPriorSegementation.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
@@ -626,6 +744,7 @@ By Reza Eghbali
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2023.
@@ -652,8 +771,8 @@ By Reza Eghbali
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>
