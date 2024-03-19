@@ -234,12 +234,12 @@ class Quantification(Task):
                 stats[f'median_{modality_name}_signal'] = np.median(
                     modality_image[lesion_indices]
                 )
-                stats[
-                    f'five_percentile_{modality_name}_signal'
-                ] = np.percentile(modality_image[lesion_indices], 5)
-                stats[
-                    f'ninety_five_percentile_{modality_name}_signal'
-                ] = np.percentile(modality_image[lesion_indices], 95)
+                stats[f'five_percentile_{modality_name}_signal'] = np.percentile(
+                    modality_image[lesion_indices], 5
+                )
+                stats[f'ninety_five_percentile_{modality_name}_signal'] = np.percentile(
+                    modality_image[lesion_indices], 95
+                )
 
         if Modality.T1 in modality_images and Modality.T1Post in modality_images:
             t1_image = modality_images[Modality.T1]

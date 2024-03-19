@@ -1,6 +1,5 @@
 import importlib.resources
 import os
-import pathlib
 import shutil
 from unittest import TestCase
 
@@ -11,20 +10,19 @@ from pyalfe.data_structure import DefaultALFEDataDir, Modality
 from pyalfe.main import run
 from tests.utils import download_and_extract
 
+
 class TestIntegration(TestCase):
-
-
     def setUp(self) -> None:
         self.test_dir = os.path.join('/tmp', 'integration_test')
 
-
     def tearDown(self) -> None:
         shutil.rmtree(self.test_dir)
-        pass
 
     def test_run(self):
 
-        test_data_url = 'https://github.com/reghbali/pyalfe-test-data/archive/master.zip'
+        test_data_url = (
+            'https://github.com/reghbali/pyalfe-test-data/archive/master.zip'
+        )
         test_data_dir_name = 'pyalfe-test-data-main'
         accession = 'UPENNGBM0000511'
 
@@ -41,9 +39,7 @@ class TestIntegration(TestCase):
             Modality.ADC,
         ]
         targets = [Modality.T1Post, Modality.FLAIR]
-        pipeline_dir = DefaultALFEDataDir(
-            output_dir=output_dir, input_dir=input_dir
-        )
+        pipeline_dir = DefaultALFEDataDir(output_dir=output_dir, input_dir=input_dir)
 
         download_and_extract(test_data_url, self.test_dir)
 
@@ -99,7 +95,7 @@ class TestIntegration(TestCase):
                 msg=f'{summary_quantification_path} does not exist.',
             )
             summary_quantification = pd.read_csv(summary_quantification_path)
-            self.assertEqual(summary_quantification.dropna().shape, (53, 2))
+            self.assertEqual(summary_quantification.dropna().shape, (63, 2))
 
             individual_quantification = pd.read_csv(individual_quantification_path)
-            self.assertEqual(individual_quantification.dropna().shape[1], 51)
+            self.assertEqual(individual_quantification.dropna().shape[1], 61)

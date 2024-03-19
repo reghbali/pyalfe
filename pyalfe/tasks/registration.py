@@ -237,11 +237,17 @@ class T1Registration:
         t1ss_mask = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='skullstripped_mask'
         )
+        t1trim_upsampled = self.pipeline_dir.get_output_image(
+            accession, Modality.T1, image_type='trim_upsampled'
+        )
 
         if not os.path.exists(t1ss):
             self.logger.info(
                 'T1 skullstripped image is missing. Skipping T1Registration'
             )
+            return
+        if not os.path.exists(t1trim_upsampled):
+            self.logger.info('T1 trim upsampled is missing. Skipping T1Registration')
             return
 
         template = roi_dict['template']['source']
@@ -257,8 +263,6 @@ class T1Registration:
             sub_dir_name=template_reg_sub_dir,
             extension='.mat',
         )
-
-        self.image_processor.binarize(t1ss, t1ss_mask)
 
         if self.overwrite or not os.path.exists(rigid_init_transform):
             self.image_registration.register_rigid(
@@ -285,7 +289,7 @@ class T1Registration:
 
         if self.overwrite or not os.path.exists(affine_transform):
             self.image_registration.register_affine(
-                t1ss,
+                t1trim_upsampled,
                 template,
                 affine_transform,
                 init_transform=rigid_init_transform,
@@ -303,7 +307,7 @@ class T1Registration:
 
         if self.overwrite or not os.path.exists(warp_transform):
             self.image_registration.register_deformable(
-                t1ss,
+                t1trim_upsampled,
                 template,
                 transform_output=warp_transform,
                 affine_transform=affine_transform,
@@ -323,7 +327,7 @@ class T1Registration:
 
             if self.overwrite or not os.path.exists(roi_template_to_t1):
                 self.image_registration.reslice(
-                    t1ss,
+                    t1trim_upsampled,
                     roi_template,
                     roi_template_to_t1,
                     warp_transform,

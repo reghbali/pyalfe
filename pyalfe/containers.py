@@ -6,7 +6,7 @@ from dependency_injector import containers, providers
 from pyalfe.data_structure import DefaultALFEDataDir, Modality
 from pyalfe.image_processing import Convert3DProcessor, NilearnProcessor
 from pyalfe.image_registration import GreedyRegistration, AntsRegistration
-from pyalfe.inference import NNUnet, NNUnetV2
+from pyalfe.inference import NNUnetV2
 from pyalfe.models import MODELS_PATH
 from pyalfe.pipeline import PyALFEPipelineRunner
 from pyalfe.tasks.initialization import Initialization
@@ -17,6 +17,7 @@ from pyalfe.tasks.registration import (
     T1Registration,
 )
 from pyalfe.tasks.segmentation import (
+    TissueWithPriorSegementation,
     SingleModalitySegmentation,
     MultiModalitySegmentation,
 )
@@ -57,9 +58,7 @@ class Container(containers.DeclarativeContainer):
         NNUnetV2,
         model_dir=str(
             MODELS_PATH.joinpath(
-                'nnunetv2',
-                'Dataset502_SS',
-                'nnUNetTrainer__nnUNetPlans__3d_fullres'
+                'nnunetv2', 'Dataset502_SS', 'nnUNetTrainer__nnUNetPlans__3d_fullres'
             )
         ),
         folds=(2,),
@@ -83,7 +82,7 @@ class Container(containers.DeclarativeContainer):
             MODELS_PATH.joinpath(
                 'nnunetv2',
                 'Dataset503_Enhancement',
-                'nnUNetTrainer__nnUNetPlans__3d_fullres'
+                'nnUNetTrainer__nnUNetPlans__3d_fullres',
             )
         ),
         folds=(0,),
@@ -94,8 +93,8 @@ class Container(containers.DeclarativeContainer):
         model_dir=str(
             MODELS_PATH.joinpath(
                 'nnunetv2',
-                'Dataset504_Tissue',
-                'nnUNetTrainer__nnUNetPlans__3d_fullres'
+                'Dataset510_Tissue_W_Prior',
+                'nnUNetTrainer__nnUNetPlans__3d_fullres',
             )
         ),
         folds=(3,),
@@ -163,15 +162,13 @@ class Container(containers.DeclarativeContainer):
     )
 
     tissue_segmentation = providers.Singleton(
-        SingleModalitySegmentation,
+        TissueWithPriorSegementation,
         inference_model=tissue_model,
         image_processor=image_processor,
         pipeline_dir=pipeline_dir,
-        modality=Modality.T1,
         image_type_input='trim_upsampled',
         image_type_output='tissue_seg',
-        image_type_mask=None,
-        segmentation_dir=None,
+        template_name='Tissue',
         overwrite=config.options.overwrite_images,
     )
 

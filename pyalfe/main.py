@@ -10,7 +10,6 @@ from pyalfe.containers import Container
 from pyalfe.models import MODELS_PATH, models_url
 from pyalfe.tools import C3D_PATH, GREEDY_PATH, c3d_url, greedy_url
 from pyalfe.utils import download_archive, extract_binary_from_archive
-from pyalfe.utils.archive import extract_tar
 
 DEFAULT_CFG = os.path.expanduser(os.path.join('~', '.config', 'pyalfe', 'config.ini'))
 # importlib.resources.files('pyalfe').joinpath('config.ini')
@@ -57,7 +56,6 @@ def download(assets):
                 os.remove(archive_path)
         else:
             click.print(f'asset {asset} is not recognized.')
-
 
 
 @main.command()

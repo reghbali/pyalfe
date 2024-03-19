@@ -19,6 +19,7 @@ from pyalfe.tasks.registration import (
     T1Registration,
 )
 from pyalfe.tasks.segmentation import (
+    TissueWithPriorSegementation,
     SingleModalitySegmentation,
     MultiModalitySegmentation,
 )
@@ -174,6 +175,41 @@ class TestCrossModalityRegistration(TestTask):
                     accession, modality, f'to_{target}_{task.image_type}'
                 )
                 self.assertTrue(os.path.exists(output), f'{output} is missing.')
+
+
+class TestTissueWithPriorSegementation(TestTask):
+    def test_run(self):
+        accession = '10000'
+        model = MockInferenceModel()
+        task = TissueWithPriorSegementation(
+            model, Convert3DProcessor(), self.pipeline_dir
+        )
+
+        self.pipeline_dir.create_dir('output', accession, Modality.T1)
+        input_path = self.pipeline_dir.get_output_image(
+            accession, Modality.T1, image_type=task.image_type_input
+        )
+        prior_path = self.pipeline_dir.get_output_image(
+            accession,
+            Modality.T1,
+            resampling_origin=task.template_name,
+            resampling_target=Modality.T1,
+            sub_dir_name=roi_dict[task.template_name]['sub_dir'],
+        )
+        output_path = self.pipeline_dir.get_output_image(
+            accession, Modality.T1, image_type=task.image_type_output
+        )
+        shutil.copy(
+            os.path.join('tests', 'data', 'brats10', 'BraTS19_2013_10_1_t1.nii.gz'),
+            input_path,
+        )
+        shutil.copy(
+            os.path.join('tests', 'data', 'brats10', 'BraTS19_2013_10_1_t1.nii.gz'),
+            prior_path,
+        )
+        task.run(accession)
+
+        self.assertTrue(os.path.exists(output_path))
 
 
 class TestSingleModalitySegmentation(TestTask):
@@ -419,8 +455,19 @@ class TestT1Registration(TestTask):
         input_image = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='skullstripped'
         )
+        input_mask = self.pipeline_dir.get_output_image(
+            accession, Modality.T1, image_type='skullstripped_mask'
+        )
+        input_image_trim_upsampled = self.pipeline_dir.get_output_image(
+            accession, Modality.T1, image_type='trim_upsampled'
+        )
         shutil.copy(
             os.path.join('tests', 'data', 'brainomics02', 'anat_t1.nii.gz'), input_image
+        )
+        Convert3DProcessor.binarize(input_image, input_mask)
+        shutil.copy(
+            os.path.join('tests', 'data', 'brainomics02', 'anat_t1.nii.gz'),
+            input_image_trim_upsampled,
         )
         task.run(accession)
 
