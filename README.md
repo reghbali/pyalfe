@@ -82,6 +82,39 @@ Enter input image directory: /path/to/my_mri_data
 ```
 The classified directory (`classified_dir`) is the input directory to PyALFE and should be organized by accessions (or session ids). Inside the directory for each accession there should be a directory for each available modality.
 Here is an example that follow ALFE default structure:
+```
+my_mri_data
+│
+│───12345
+│   │
+│   │───T1
+│   │   └── T1.nii.gz
+│   │───T1Post
+│   │   └── T1Post.nii.gz
+│   │───FLAIR
+│   │   └── FLAIR.nii.gz
+│   │───ADC
+│   │   └── ADC.nii.gz
+│   │───T2
+│   │   └── T2.nii.gz
+│   └───CBF
+│       └── CBF.nii.gz
+└───12356
+.   │
+.   │───T1
+.   │   └── T1.nii.gz
+    │───T1Post
+    │   └── T1Post.nii.gz
+    │───FLAIR
+    │   └── FLAIR.nii.gz
+    │───ADC
+    │   └── ADC.nii.gz
+    └───T2
+        └── T2.nii.gz
+```
+To use this directory the user should provide `path/to/my_mri_data` as the classified directory. This config value can be overwritten when calling `pyalfe run` via `-cd` or `--classified-dir` option.
+
+pyALFE also supports BIDS directories. Here is an example of input dir organized in BIDS format:
 
 ```
 my_mri_data
@@ -99,38 +132,7 @@ my_mri_data
      └───sub-123_cbf.nii.gz
 
 ```
-To use this directory the user should provide `path/to/my_mri_data` as the classified directory. This config value can be overwritten when calling `pyalfe run` via `-cd` or `--classified-dir` option.
 
-pyALFE also supports BIDS directories. Here is an example of input dir organized in BIDS format:
-```
-my_mri_data
-│
-│───12345
-│   │
-│   │───T1
-│   │   └── T1.nii.gz
-│   │───T1Post
-│   │   └── T1Post.nii.gz
-│   │───FLAIR
-│   │   └── FLAIR.nii.gz
-│   │───ADC
-│   │   └── ADC.nii.gz
-│   └───T2
-│       └── T2.nii.gz
-│
-└───12356
-.   │
-.   │───T1
-.   │   └── T1.nii.gz
-    │───T1Post
-    │   └── T1Post.nii.gz
-    │───FLAIR
-    │   └── FLAIR.nii.gz
-    │───ADC
-    │   └── ADC.nii.gz
-    └───T2
-        └── T2.nii.gz
-```
 #### Processed directory
 ```bash
 Enter input image directory: /path/to/processed_data_dir
