@@ -53,7 +53,7 @@ class CrossModalityRegistration:
             if not os.path.exists(target_image):
                 self.logger.info(
                     f'{target} is missing.'
-                    f'Skipping CrossModalityRegistration for target {target}.'
+                    f' Skipping CrossModalityRegistration for target {target}.'
                 )
                 continue
             for modality in self.modalities_all:
@@ -63,7 +63,7 @@ class CrossModalityRegistration:
                 if not os.path.exists(modality_image):
                     self.logger.info(
                         f'{modality} is missing'
-                        f'Skipping CrossModalityRegistration for {modality}.'
+                        f' Skipping CrossModalityRegistration for {modality}.'
                     )
                     continue
                 output = self.pipeline_dir.get_output_image(
@@ -145,7 +145,7 @@ class Resampling:
             )
             if not os.path.exists(target_image):
                 self.logger.info(
-                    f'{target} is missing.' f'Skipping Resampling for target {target}.'
+                    f'{target} is missing. Skipping Resampling for target {target}.'
                 )
                 continue
 
