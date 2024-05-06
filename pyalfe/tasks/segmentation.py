@@ -167,7 +167,7 @@ class MultiModalitySegmentation(Segmentation):
             if not os.path.exists(image_path):
                 self.logger.info(
                     f'{image_path} is missing.'
-                    f'Skipping {self.image_type_output} segmentation.'
+                    f' Skipping {self.image_type_output} segmentation.'
                 )
                 return
             image_path_list.append(image_path)
@@ -323,6 +323,11 @@ class TissueWithPriorSegementation(Segmentation):
             Modality.T1,
             image_type=self.image_type_input,
         )
+        if not os.path.exists(t1_image_path):
+            self.logger.info(
+                f'{t1_image_path} is missing.'
+                ' Skipping Tissue segmentation.')
+            return
         tissue_prior_path = self.pipeline_dir.get_output_image(
             accession,
             Modality.T1,
@@ -330,6 +335,11 @@ class TissueWithPriorSegementation(Segmentation):
             resampling_target=Modality.T1,
             sub_dir_name=roi_dict[self.template_name]['sub_dir'],
         )
+        if not os.path.exists(tissue_prior_path):
+            self.logger.info(
+                f'{tissue_prior_path} is missing.'
+                ' Skipping Tissue segmentation.')
+            return
         pred_path = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type=f'{self.image_type_output}_pred'
         )
