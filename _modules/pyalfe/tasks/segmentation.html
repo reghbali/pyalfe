@@ -545,7 +545,7 @@ document.write(`
             <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">image_path</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">image_path</span><span class="si">}</span><span class="s1"> is missing.&#39;</span>
-                    <span class="sa">f</span><span class="s1">&#39; Skipping </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image_type_output</span><span class="si">}</span><span class="s1"> segmentation.&#39;</span>
+                    <span class="sa">f</span><span class="s1">&#39;Skipping </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image_type_output</span><span class="si">}</span><span class="s1"> segmentation.&#39;</span>
                 <span class="p">)</span>
                 <span class="k">return</span>
             <span class="n">image_path_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>
@@ -710,11 +710,6 @@ document.write(`
             <span class="n">Modality</span><span class="o">.</span><span class="n">T1</span><span class="p">,</span>
             <span class="n">image_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_type_input</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">t1_image_path</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">t1_image_path</span><span class="si">}</span><span class="s1"> is missing.&#39;</span>
-                <span class="s1">&#39; Skipping Tissue segmentation.&#39;</span><span class="p">)</span>
-            <span class="k">return</span>
         <span class="n">tissue_prior_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="o">.</span><span class="n">get_output_image</span><span class="p">(</span>
             <span class="n">accession</span><span class="p">,</span>
             <span class="n">Modality</span><span class="o">.</span><span class="n">T1</span><span class="p">,</span>
@@ -722,11 +717,6 @@ document.write(`
             <span class="n">resampling_target</span><span class="o">=</span><span class="n">Modality</span><span class="o">.</span><span class="n">T1</span><span class="p">,</span>
             <span class="n">sub_dir_name</span><span class="o">=</span><span class="n">roi_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">template_name</span><span class="p">][</span><span class="s1">&#39;sub_dir&#39;</span><span class="p">],</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">tissue_prior_path</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">tissue_prior_path</span><span class="si">}</span><span class="s1"> is missing.&#39;</span>
-                <span class="s1">&#39; Skipping Tissue segmentation.&#39;</span><span class="p">)</span>
-            <span class="k">return</span>
         <span class="n">pred_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="o">.</span><span class="n">get_output_image</span><span class="p">(</span>
             <span class="n">accession</span><span class="p">,</span> <span class="n">Modality</span><span class="o">.</span><span class="n">T1</span><span class="p">,</span> <span class="n">image_type</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image_type_output</span><span class="si">}</span><span class="s1">_pred&#39;</span>
         <span class="p">)</span>
