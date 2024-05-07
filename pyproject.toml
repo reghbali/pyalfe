@@ -11,6 +11,7 @@ authors = [
     {name = "Reza Eghbali", email="eghbali68@gmail.com"},
     {email = "reza.eghbali@ucsf.edu"}
 ]
+readme = "README.md"
 dependencies = [
     "scipy",
     "StrEnum",
