@@ -416,7 +416,7 @@ document.write(`
             <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">target_image</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s1"> is missing.&#39;</span>
-                    <span class="sa">f</span><span class="s1">&#39;Skipping CrossModalityRegistration for target </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s1">.&#39;</span>
+                    <span class="sa">f</span><span class="s1">&#39; Skipping CrossModalityRegistration for target </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s1">.&#39;</span>
                 <span class="p">)</span>
                 <span class="k">continue</span>
             <span class="k">for</span> <span class="n">modality</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modalities_all</span><span class="p">:</span>
@@ -426,7 +426,7 @@ document.write(`
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">modality_image</span><span class="p">):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
                         <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">modality</span><span class="si">}</span><span class="s1"> is missing&#39;</span>
-                        <span class="sa">f</span><span class="s1">&#39;Skipping CrossModalityRegistration for </span><span class="si">{</span><span class="n">modality</span><span class="si">}</span><span class="s1">.&#39;</span>
+                        <span class="sa">f</span><span class="s1">&#39; Skipping CrossModalityRegistration for </span><span class="si">{</span><span class="n">modality</span><span class="si">}</span><span class="s1">.&#39;</span>
                     <span class="p">)</span>
                     <span class="k">continue</span>
                 <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="o">.</span><span class="n">get_output_image</span><span class="p">(</span>
@@ -514,7 +514,7 @@ document.write(`
             <span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">target_image</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s1"> is missing.&#39;</span> <span class="sa">f</span><span class="s1">&#39;Skipping Resampling for target </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s1">.&#39;</span>
+                    <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s1"> is missing. Skipping Resampling for target </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s1">.&#39;</span>
                 <span class="p">)</span>
                 <span class="k">continue</span>
 
