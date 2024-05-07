@@ -1,0 +1,17 @@
+name: Publish Python distribution package  to PyPI and TestPyPI
+
+on: push
+
+jobs:
+  build:
+    name: Build distribution 📦
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+    uses: actions/setup-python@v4
+    with:
+      python-version: "3.x"
+
+
