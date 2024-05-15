@@ -362,7 +362,7 @@ document.write(`
 
 <span class="kn">from</span> <span class="nn">dependency_injector</span> <span class="kn">import</span> <span class="n">containers</span><span class="p">,</span> <span class="n">providers</span>
 
-<span class="kn">from</span> <span class="nn">pyalfe.data_structure</span> <span class="kn">import</span> <span class="n">DefaultALFEDataDir</span><span class="p">,</span> <span class="n">Modality</span>
+<span class="kn">from</span> <span class="nn">pyalfe.data_structure</span> <span class="kn">import</span> <span class="n">DefaultALFEDataDir</span><span class="p">,</span> <span class="n">BIDSDataDir</span><span class="p">,</span> <span class="n">Modality</span>
 <span class="kn">from</span> <span class="nn">pyalfe.image_processing</span> <span class="kn">import</span> <span class="n">Convert3DProcessor</span><span class="p">,</span> <span class="n">NilearnProcessor</span>
 <span class="kn">from</span> <span class="nn">pyalfe.image_registration</span> <span class="kn">import</span> <span class="n">GreedyRegistration</span><span class="p">,</span> <span class="n">AntsRegistration</span>
 <span class="kn">from</span> <span class="nn">pyalfe.inference</span> <span class="kn">import</span> <span class="n">NNUnetV2</span>
@@ -395,10 +395,18 @@ document.write(`
     <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;Container&#39;</span><span class="p">)</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Configuration</span><span class="p">()</span>
 
-    <span class="n">pipeline_dir</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">DefaultALFEDataDir</span><span class="p">,</span>
-        <span class="n">output_dir</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span>
-        <span class="n">input_dir</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">input_dir</span><span class="p">,</span>
+    <span class="n">pipeline_dir</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Selector</span><span class="p">(</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">data_dir_structure</span><span class="p">,</span>
+        <span class="n">alfe</span><span class="o">=</span><span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
+            <span class="n">DefaultALFEDataDir</span><span class="p">,</span>
+            <span class="n">output_dir</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span>
+            <span class="n">input_dir</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">input_dir</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">bids</span><span class="o">=</span><span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
+            <span class="n">BIDSDataDir</span><span class="p">,</span>
+            <span class="n">output_dir</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span>
+            <span class="n">input_dir</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">input_dir</span><span class="p">,</span>
+        <span class="p">),</span>
     <span class="p">)</span>
 
     <span class="n">image_processor</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Selector</span><span class="p">(</span>
