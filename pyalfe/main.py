@@ -96,6 +96,7 @@ def run(
     dominant_tissue: str,
     image_processor: str,
     image_registration: str,
+    data_dir_structure: str,
     overwrite: bool,
 ) -> None:
     """Runs the pipeline for an accession number.
@@ -116,10 +117,12 @@ def run(
         comma separated target modalities
     dominant_tissue : str, default='white_matter'
         dominant tissue
-    image_processor : str, default=c3d
+    image_processor : str, default='c3d'
         image processor that is used by the pipeline.
-    image_registration : str, default=greedy
+    image_registration : str, default='greedy'
         image registration that is used by the pipeline.
+    data_dir_structure: str, default='alfe'
+        the data directory structure, it can be 'alfe' or 'bids'.
     overwrite : bool
         if True, the pipeline overwrites existing output images.
 
@@ -146,6 +149,8 @@ def run(
         options['image_processor'] = image_processor
     if image_registration:
         options['image_registration'] = image_registration
+    if data_dir_structure:
+        options['data_dir_structure'] = data_dir_structure
     options['overwrite_images'] = overwrite
 
     container.config.from_dict(options)
@@ -197,6 +202,11 @@ def configure():
         type=click.Choice(['greedy', 'ants']),
         default='greedy',
     )
+    data_dir_structure = click.prompt(
+        'data directory structure (press enter for default)',
+        type=click.Choice(['alfe', 'bids']),
+        default='alfe',
+    )
     config_path = click.prompt('config path', default=DEFAULT_CFG)
     config = configparser.ConfigParser()
     config['options'] = {
@@ -207,6 +217,7 @@ def configure():
         'dominant_tissue': dominant_tissue,
         'image_processor': image_processor,
         'image_registration': image_registration,
+        'data_dir_structure': data_dir_structure,
     }
 
     config_parent_path = os.path.dirname(config_path)
