@@ -49,7 +49,7 @@ pip install --upgrade build
 Run the following commands in the parent pyalfe directory to build the whl file and install pyalfe
 ```bash
 python -m build
-pip install dist/pyalfe-0.0.1-py3-none-any.whl
+pip install dist/pyalfe-0.1.0-py3-none-any.whl
 ```
 
 ### Download models
