@@ -76,12 +76,12 @@ pyalfe configure
 ```
 which prompt the you to enter the following required configurations:
 
-#### Classified directory
+#### Input directory
 ```bash
 Enter input image directory: /path/to/my_mri_data
 ```
-The classified directory (`classified_dir`) is the input directory to PyALFE and should be organized by accessions (or session ids). Inside the directory for each accession there should be a directory for each available modality.
-Here is an example that follow ALFE default structure:
+The input directory (`input_dir`) contains the images that will be processed by PyALFE and should be organized by accessions (or session ids). Inside the directory for each accession there should be a directory for each available modality.
+Here is an example that follows ALFE default structure:
 ```
 my_mri_data
 │
@@ -112,7 +112,7 @@ my_mri_data
     └───T2
         └── T2.nii.gz
 ```
-To use this directory the user should provide `path/to/my_mri_data` as the classified directory. This config value can be overwritten when calling `pyalfe run` via `-cd` or `--classified-dir` option.
+To use this directory the user should provide `path/to/my_mri_data` as the input directory. This config value can be overwritten when calling `pyalfe run` via `-cd` or `--input-dir` option.
 
 pyALFE also supports BIDS directories. Here is an example of input dir organized in BIDS format:
 
@@ -121,6 +121,7 @@ my_mri_data
 │
 │───anat
 │   │───sub-123_T1w.nii.gz
+│   │───sub-123_ce-gadolinium_T1w.nii.gz
 │   │───sub-123_T2w.nii.gz
 │   └───sub-123_FLAIR.nii.gz
 │───dwi
@@ -133,13 +134,13 @@ my_mri_data
 
 ```
 
-#### Processed directory
+#### Output directory
 ```bash
-Enter input image directory: /path/to/processed_data_dir
+Enter output image directory: /path/to/output_dir
 ```
-The processed image directory (`processed_dir`) is where ALFE writes all its output to.
+The output image directory (`output_dir`) is where pyALFE writes all its output to.
 It can be any valid path in filesystem that user have write access to.
-This config value can be overwritten when calling `pyalfe run` via `-pd` or `--processed-dir` option.
+This config value can be overwritten when calling `pyalfe run` via `-pd` or `--output-dir` option.
 
 #### Modalities
 ```bash

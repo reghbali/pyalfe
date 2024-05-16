@@ -4,15 +4,9 @@ import os
 from pathlib import Path
 
 import click
-import huggingface_hub
 
-from pyalfe.containers import Container
-from pyalfe.models import MODELS_PATH, models_url
-from pyalfe.tools import C3D_PATH, GREEDY_PATH, c3d_url, greedy_url
-from pyalfe.utils import download_archive, extract_binary_from_archive
 
 DEFAULT_CFG = os.path.expanduser(os.path.join('~', '.config', 'pyalfe', 'config.ini'))
-# importlib.resources.files('pyalfe').joinpath('config.ini')
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -25,6 +19,11 @@ def main():
 @main.command()
 @click.argument('assets', nargs=-1)
 def download(assets):
+    import huggingface_hub
+    from pyalfe.models import MODELS_PATH, models_url
+    from pyalfe.tools import C3D_PATH, GREEDY_PATH, c3d_url, greedy_url
+    from pyalfe.utils import download_archive, extract_binary_from_archive
+
     for asset in assets:
         if asset == 'models':
             archive_path = huggingface_hub.snapshot_download(
@@ -130,6 +129,8 @@ def run(
     -------
     None
     """
+    from pyalfe.containers import Container
+
     container = Container()
     container.config.from_ini(config, required=True, envs_required=True)
 
