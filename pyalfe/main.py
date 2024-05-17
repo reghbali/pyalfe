@@ -67,7 +67,7 @@ def download(assets):
 @click.option('-m', '--modalities')
 @click.option('-t', '--targets')
 @click.option('-id', '--input-dir')
-@click.option('-pd', '--output-dir')
+@click.option('-od', '--output-dir')
 @click.option(
     '-dt',
     '--dominant_tissue',
@@ -84,6 +84,11 @@ def download(assets):
     '-ir',
     '--image-registration',
     type=click.Choice(['greedy', 'ants'], case_sensitive=False),
+)
+@click.option(
+    '-dds',
+    '--data_dir_structure',
+    type=click.Choice(['alfe', 'bids'], case_sensitive=False),
 )
 def run(
     accession: str,
