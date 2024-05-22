@@ -87,7 +87,7 @@ def download(assets):
 )
 @click.option(
     '-dds',
-    '--data_dir_structure',
+    '--data-dir-structure',
     type=click.Choice(['alfe', 'bids'], case_sensitive=False),
 )
 def run(

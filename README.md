@@ -112,25 +112,40 @@ my_mri_data
     └───T2
         └── T2.nii.gz
 ```
-To use this directory the user should provide `path/to/my_mri_data` as the input directory. This config value can be overwritten when calling `pyalfe run` via `-cd` or `--input-dir` option.
+To use this directory the user should provide `path/to/my_mri_data` as the input directory. This config value can be overwritten when calling `pyalfe run` via `-id` or `--input-dir` option.
 
 pyALFE also supports BIDS directories. Here is an example of input dir organized in BIDS format:
 
 ```
 my_mri_data
 │
-│───anat
-│   │───sub-123_T1w.nii.gz
-│   │───sub-123_ce-gadolinium_T1w.nii.gz
-│   │───sub-123_T2w.nii.gz
-│   └───sub-123_FLAIR.nii.gz
-│───dwi
-│    │───sub-123_dwi.nii.gz
-│    └───sub-123_md.nii.gz
-│───swi
-│    └───sub-123_swi.nii.gz
-└───perf
-     └───sub-123_cbf.nii.gz
+│───sub-01
+│   │───anat
+│   │   │───sub-01_T1w.nii.gz
+│   │   │───sub-01_ce-gadolinium_T1w.nii.gz
+│   │   │───sub-01_T2w.nii.gz
+│   │   └───sub-01_FLAIR.nii.gz
+│   │───dwi
+│   │    │───sub-01_dwi.nii.gz
+│   │    └───sub-01_md.nii.gz
+│   │───swi
+│   │    └───sub-01_swi.nii.gz
+│   └───perf
+│       └───sub-01_cbf.nii.gz
+│
+└───sub-02
+.   │───anat
+.   │   │───sub-02_T1w.nii.gz
+.   │   │───sub-02_ce-gadolinium_T1w.nii.gz
+    │   │───sub-02_T2w.nii.gz
+    │   └───sub-02_FLAIR.nii.gz
+    │───dwi
+    │    │───sub-02_dwi.nii.gz
+    │    └───sub-02_md.nii.gz
+    │───swi
+    │    └───sub-02_swi.nii.gz
+    └───perf
+        └───sub-02_cbf.nii.gz
 
 ```
 
@@ -140,7 +155,8 @@ Enter output image directory: /path/to/output_dir
 ```
 The output image directory (`output_dir`) is where pyALFE writes all its output to.
 It can be any valid path in filesystem that user have write access to.
-This config value can be overwritten when calling `pyalfe run` via `-pd` or `--output-dir` option.
+This config value can be overwritten when calling `pyalfe run` via `-od` or `--output-dir` option.
+
 
 #### Modalities
 ```bash
@@ -186,6 +202,14 @@ Currently, pyalfe can be configures to use either greedy or ants for image regis
 In other to use greedy, you have to download it using the [download command](#download-models-and-tools). To use ants,
 install pyalfe with ants support ``pip install pyalfe[ants]``.
 This config value can be overwritten when calling `pyalfe run` via `-ir` or `--image-registration` option.
+
+#### Dierctory Data Structure
+```bash
+data directory structure (press enter for default) (alfe, bids) [alfe]: 
+```
+
+The directory structure that pyALFE expects in the input directory and will follow when creating the output. See [Inupt directory](#### Input directory) for information on ALFE and BIDS.
+This config value can be overwritten when calling `payalfe run` via `-dds` or `--data-dir-structure` option.
 
 ### Running the pipeline
 To run PyALFE for an accession
