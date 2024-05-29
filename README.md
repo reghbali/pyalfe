@@ -1,6 +1,7 @@
 # PyALFE
 
 Python implementation of Automated Lesion and Feature Extraction (ALFE) pipeline.
+We developed this pipeline for analysis of brain MRIs of patients suffering from conditions that cause brain lesions. It utilizes image processing tools, image registration tools, and deep learning segmentation models to produce a set of features that describe the lesion in the brain.
 
 ## Requirements
 
@@ -9,7 +10,7 @@ PyALFE supports Linux x86-64, Mac x86-64, and Mac arm64 and requires python 3.9+
 ### Image registration and processing
 PyALFE can be configured to use either [Greedy](https://greedy.readthedocs.io/en/latest/) or [AntsPy](https://antspy.readthedocs.io/en/latest/registration.html) registration tools.
 Similarly, PyALFE can can be configured to use [Convert3D](https://sourceforge.net/p/c3d/git/ci/master/tree/doc/c3d.md) or python native library [Nilearn](https://nilearn.github.io/stable/index.html) for image processing tasks.
-To use Greedy and Convert3d, these command line tools should be downloaded using the [download command](#download-models-and-tools).
+To use Greedy and Convert3d, these command line tools should be installed on your system.
 
 ## Installation
 
@@ -190,7 +191,7 @@ image processor to use (c3d, nilearn) [c3d]:
 ```
 Currently, pyalfe can be configures to use either Convert3D (a.k.a. c3d) or Nilearn for image processing tasks.
 The default is Convert3d aka c3d. In other to use c3d,
-you have to download it using the [download command](#download-models-and-tools).
+you have to download it using the [download command](#download-models).
 To use Nilearn, you do not need to run any extra command since it is already installed when you install pyalfe.
 This config value can be overwritten when calling `pyalfe run` via `-ip` or `--image_processing` option.
 
@@ -199,16 +200,16 @@ This config value can be overwritten when calling `pyalfe run` via `-ip` or `--i
 image registration to use (greedy, ants) [greedy]:
 ```
 Currently, pyalfe can be configures to use either greedy or ants for image registration tasks. The default is greedy.
-In other to use greedy, you have to download it using the [download command](#download-models-and-tools). To use ants,
+In other to use greedy, you have to download it using the [download command](#download-models). To use ants,
 install pyalfe with ants support ``pip install pyalfe[ants]``.
 This config value can be overwritten when calling `pyalfe run` via `-ir` or `--image-registration` option.
 
 #### Dierctory Data Structure
 ```bash
-data directory structure (press enter for default) (alfe, bids) [alfe]: 
+data directory structure (press enter for default) (alfe, bids) [alfe]:
 ```
 
-The directory structure that pyALFE expects in the input directory and will follow when creating the output. See [Inupt directory](#### Input directory) for information on ALFE and BIDS.
+The directory structure that pyALFE expects in the input directory and will follow when creating the output. See [Inupt directory](#input-directory) for information on ALFE and BIDS.
 This config value can be overwritten when calling `payalfe run` via `-dds` or `--data-dir-structure` option.
 
 ### Running the pipeline
