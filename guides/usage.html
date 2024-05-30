@@ -422,13 +422,14 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classified-directory">Classified directory</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#processed-directory">Processed directory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#input-directory">Input directory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-directory">Output directory</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modalities">Modalities</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#target-modalities">Target modalities</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dominant-tissue">Dominant Tissue</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-processor">Image processor</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-registration">Image Registration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dierctory-data-structure">Dierctory Data Structure</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-the-pipeline">Running the pipeline</a></li>
@@ -445,6 +446,9 @@ document.write(`
                   
   <section id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h1>
+<p>We recommend running the configure command first to create a configuration file for the pipeline.
+However, you can skip to <a class="reference internal" href="#running-the-pipeline"><span class="xref myst">Running the pipeline</span></a> section if you prefer to provide all the required configuration through command line
+options.</p>
 <section id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h2>
 <p>To configrue the PyALFE pipeline you should run:</p>
@@ -452,31 +456,13 @@ document.write(`
 </pre></div>
 </div>
 <p>which prompt the you to enter the following required configurations:</p>
-<section id="classified-directory">
-<h3>Classified directory<a class="headerlink" href="#classified-directory" title="Link to this heading">#</a></h3>
+<section id="input-directory">
+<h3>Input directory<a class="headerlink" href="#input-directory" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Enter<span class="w"> </span>input<span class="w"> </span>image<span class="w"> </span>directory:<span class="w"> </span>/path/to/my_mri_data
 </pre></div>
 </div>
-<p>The classified directory (<code class="docutils literal notranslate"><span class="pre">classified_dir</span></code>) is the input directory to PyALFE and should be organized by accessions (or session ids). Inside the directory for each accession there should be a directory for each available modality.
-Here is an example that follow ALFE default structure:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>my_mri_data
-│
-│───anat
-│   │───sub-123_T1w.nii.gz
-│   │───sub-123_T2w.nii.gz
-│   └───sub-123_FLAIR.nii.gz
-│───dwi
-│    │───sub-123_dwi.nii.gz
-│    └───sub-123_md.nii.gz
-│───swi
-│    └───sub-123_swi.nii.gz
-└───perf
-     └───sub-123_cbf.nii.gz
-
-</pre></div>
-</div>
-<p>To use this directory the user should provide <code class="docutils literal notranslate"><span class="pre">path/to/my_mri_data</span></code> as the classified directory. This config value can be overwritten when calling <code class="docutils literal notranslate"><span class="pre">pyalfe</span> <span class="pre">run</span></code> via <code class="docutils literal notranslate"><span class="pre">-cd</span></code> or <code class="docutils literal notranslate"><span class="pre">--classified-dir</span></code> option.</p>
-<p>pyALFE also supports BIDS directories. Here is an example of input dir organized in BIDS format:</p>
+<p>The input directory (<code class="docutils literal notranslate"><span class="pre">input_dir</span></code>) contains the images that will be processed by PyALFE and should be organized by accessions (or session ids). Inside the directory for each accession there should be a directory for each available modality.
+Here is an example that follows ALFE default structure:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>my_mri_data
 │
 │───12345
@@ -489,9 +475,10 @@ Here is an example that follow ALFE default structure:</p>
 │   │   └── FLAIR.nii.gz
 │   │───ADC
 │   │   └── ADC.nii.gz
-│   └───T2
-│       └── T2.nii.gz
-│
+│   │───T2
+│   │   └── T2.nii.gz
+│   └───CBF
+│       └── CBF.nii.gz
 └───12356
 .   │
 .   │───T1
@@ -506,15 +493,49 @@ Here is an example that follow ALFE default structure:</p>
         └── T2.nii.gz
 </pre></div>
 </div>
-</section>
-<section id="processed-directory">
-<h3>Processed directory<a class="headerlink" href="#processed-directory" title="Link to this heading">#</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Enter<span class="w"> </span>input<span class="w"> </span>image<span class="w"> </span>directory:<span class="w"> </span>/path/to/processed_data_dir
+<p>To use this directory the user should provide <code class="docutils literal notranslate"><span class="pre">path/to/my_mri_data</span></code> as the input directory. This config value can be overwritten when calling <code class="docutils literal notranslate"><span class="pre">pyalfe</span> <span class="pre">run</span></code> via <code class="docutils literal notranslate"><span class="pre">-id</span></code> or <code class="docutils literal notranslate"><span class="pre">--input-dir</span></code> option.</p>
+<p>pyALFE also supports BIDS directories. Here is an example of input dir organized in BIDS format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>my_mri_data
+│
+│───sub-01
+│   │───anat
+│   │   │───sub-01_T1w.nii.gz
+│   │   │───sub-01_ce-gadolinium_T1w.nii.gz
+│   │   │───sub-01_T2w.nii.gz
+│   │   └───sub-01_FLAIR.nii.gz
+│   │───dwi
+│   │    │───sub-01_dwi.nii.gz
+│   │    └───sub-01_md.nii.gz
+│   │───swi
+│   │    └───sub-01_swi.nii.gz
+│   └───perf
+│       └───sub-01_cbf.nii.gz
+│
+└───sub-02
+.   │───anat
+.   │   │───sub-02_T1w.nii.gz
+.   │   │───sub-02_ce-gadolinium_T1w.nii.gz
+    │   │───sub-02_T2w.nii.gz
+    │   └───sub-02_FLAIR.nii.gz
+    │───dwi
+    │    │───sub-02_dwi.nii.gz
+    │    └───sub-02_md.nii.gz
+    │───swi
+    │    └───sub-02_swi.nii.gz
+    └───perf
+        └───sub-02_cbf.nii.gz
+
 </pre></div>
 </div>
-<p>The processed image directory (<code class="docutils literal notranslate"><span class="pre">processed_dir</span></code>) is where ALFE writes all its output to.
+</section>
+<section id="output-directory">
+<h3>Output directory<a class="headerlink" href="#output-directory" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Enter<span class="w"> </span>output<span class="w"> </span>image<span class="w"> </span>directory:<span class="w"> </span>/path/to/output_dir
+</pre></div>
+</div>
+<p>The output image directory (<code class="docutils literal notranslate"><span class="pre">output_dir</span></code>) is where pyALFE writes all its output to.
 It can be any valid path in filesystem that user have write access to.
-This config value can be overwritten when calling <code class="docutils literal notranslate"><span class="pre">pyalfe</span> <span class="pre">run</span></code> via <code class="docutils literal notranslate"><span class="pre">-pd</span></code> or <code class="docutils literal notranslate"><span class="pre">--processed-dir</span></code> option.</p>
+This config value can be overwritten when calling <code class="docutils literal notranslate"><span class="pre">pyalfe</span> <span class="pre">run</span></code> via <code class="docutils literal notranslate"><span class="pre">-od</span></code> or <code class="docutils literal notranslate"><span class="pre">--output-dir</span></code> option.</p>
 </section>
 <section id="modalities">
 <h3>Modalities<a class="headerlink" href="#modalities" title="Link to this heading">#</a></h3>
@@ -552,7 +573,7 @@ This config value can be overwritten when calling <code class="docutils literal 
 </div>
 <p>Currently, pyalfe can be configures to use either Convert3D (a.k.a. c3d) or Nilearn for image processing tasks.
 The default is Convert3d aka c3d. In other to use c3d,
-you have to download it using the <a class="reference internal" href="#download-models-and-tools"><span class="xref myst">download command</span></a>.
+you have to download it using the <a class="reference internal" href="#download-models"><span class="xref myst">download command</span></a>.
 To use Nilearn, you do not need to run any extra command since it is already installed when you install pyalfe.
 This config value can be overwritten when calling <code class="docutils literal notranslate"><span class="pre">pyalfe</span> <span class="pre">run</span></code> via <code class="docutils literal notranslate"><span class="pre">-ip</span></code> or <code class="docutils literal notranslate"><span class="pre">--image_processing</span></code> option.</p>
 </section>
@@ -562,9 +583,17 @@ This config value can be overwritten when calling <code class="docutils literal 
 </pre></div>
 </div>
 <p>Currently, pyalfe can be configures to use either greedy or ants for image registration tasks. The default is greedy.
-In other to use greedy, you have to download it using the <a class="reference internal" href="#download-models-and-tools"><span class="xref myst">download command</span></a>. To use ants,
+In other to use greedy, you have to download it using the <a class="reference internal" href="#download-models"><span class="xref myst">download command</span></a>. To use ants,
 install pyalfe with ants support <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pyalfe[ants]</span></code>.
 This config value can be overwritten when calling <code class="docutils literal notranslate"><span class="pre">pyalfe</span> <span class="pre">run</span></code> via <code class="docutils literal notranslate"><span class="pre">-ir</span></code> or <code class="docutils literal notranslate"><span class="pre">--image-registration</span></code> option.</p>
+</section>
+<section id="dierctory-data-structure">
+<h3>Dierctory Data Structure<a class="headerlink" href="#dierctory-data-structure" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>data<span class="w"> </span>directory<span class="w"> </span>structure<span class="w"> </span><span class="o">(</span>press<span class="w"> </span>enter<span class="w"> </span><span class="k">for</span><span class="w"> </span>default<span class="o">)</span><span class="w"> </span><span class="o">(</span>alfe,<span class="w"> </span>bids<span class="o">)</span><span class="w"> </span><span class="o">[</span>alfe<span class="o">]</span>:
+</pre></div>
+</div>
+<p>The directory structure that pyALFE expects in the input directory and will follow when creating the output. See <a class="reference internal" href="#input-directory"><span class="xref myst">Inupt directory</span></a> for information on ALFE and BIDS.
+This config value can be overwritten when calling <code class="docutils literal notranslate"><span class="pre">payalfe</span> <span class="pre">run</span></code> via <code class="docutils literal notranslate"><span class="pre">-dds</span></code> or <code class="docutils literal notranslate"><span class="pre">--data-dir-structure</span></code> option.</p>
 </section>
 </section>
 <section id="running-the-pipeline">
@@ -649,13 +678,14 @@ This config value can be overwritten when calling <code class="docutils literal 
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classified-directory">Classified directory</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#processed-directory">Processed directory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#input-directory">Input directory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-directory">Output directory</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modalities">Modalities</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#target-modalities">Target modalities</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dominant-tissue">Dominant Tissue</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-processor">Image processor</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-registration">Image Registration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dierctory-data-structure">Dierctory Data Structure</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-the-pipeline">Running the pipeline</a></li>

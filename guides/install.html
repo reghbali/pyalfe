@@ -422,7 +422,8 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-registration-and-processing">Image registration and processing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-1-development-mode-installation">Option 1: Development mode installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-1-pypi-installation">Option 1: Pypi installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-2-development-mode-installation">Option 2: Development mode installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-2-build-and-install">Option 2: Build and install</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#download-models">Download models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyradiomics-support">Pyradiomics support</a></li>
@@ -446,10 +447,17 @@ document.write(`
 <p>PyALFE can be configured to use either <a class="reference external" href="https://greedy.readthedocs.io/en/latest/">Greedy</a> or <a class="reference external" href="https://antspy.readthedocs.io/en/latest/registration.html">AntsPy</a> registration tools.
 Similarly, PyALFE can be configured to use <a class="reference external" href="https://sourceforge.net/p/c3d/git/ci/master/tree/doc/c3d.md">Convert3D</a> or python native library <a class="reference external" href="https://nilearn.github.io/stable/index.html">Nilearn</a> for image processing tasks.
 To use Greedy and Convert3d, these command line tools should be downloaded using the <a class="reference internal" href="#download-models-and-tools"><span class="xref myst">download command</span></a>.</p>
-<p>You can either instal pyalfe in <a class="reference internal" href="#development-mode-installation"><span class="xref myst">development mode</span></a> or <a class="reference internal" href="#build-and-install"><span class="xref myst">build and install</span></a>.</p>
 </section>
-<section id="option-1-development-mode-installation">
-<h2>Option 1: Development mode installation<a class="headerlink" href="#option-1-development-mode-installation" title="Link to this heading">#</a></h2>
+<section id="option-1-pypi-installation">
+<h2>Option 1: Pypi installation<a class="headerlink" href="#option-1-pypi-installation" title="Link to this heading">#</a></h2>
+<p>You can install pyalfe by running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>pyalfe
+</pre></div>
+</div>
+<p>You can either install pyalfe from source after cloning the repo using <a class="reference internal" href="#development-mode-installation"><span class="xref myst">development mode</span></a> or <a class="reference internal" href="#build-and-install"><span class="xref myst">build and install</span></a>.</p>
+</section>
+<section id="option-2-development-mode-installation">
+<h2>Option 2: Development mode installation<a class="headerlink" href="#option-2-development-mode-installation" title="Link to this heading">#</a></h2>
 <p>First update the setuptools</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>setuptools
 </pre></div>
@@ -467,7 +475,7 @@ To use Greedy and Convert3d, these command line tools should be downloaded using
 </div>
 <p>Run the following commands in the parent pyalfe directory to build the whl file and install pyalfe</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>build
-pip<span class="w"> </span>install<span class="w"> </span>dist/pyalfe-0.0.1-py3-none-any.whl
+pip<span class="w"> </span>install<span class="w"> </span>dist/pyalfe-*-py3-none-any.whl
 </pre></div>
 </div>
 </section>
@@ -569,7 +577,8 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/pyalfe-0.0.1-py3-
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-registration-and-processing">Image registration and processing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-1-development-mode-installation">Option 1: Development mode installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-1-pypi-installation">Option 1: Pypi installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-2-development-mode-installation">Option 2: Development mode installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-2-build-and-install">Option 2: Build and install</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#download-models">Download models</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyradiomics-support">Pyradiomics support</a></li>
