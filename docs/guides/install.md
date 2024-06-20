@@ -7,9 +7,15 @@ PyALFE can be configured to use either [Greedy](https://greedy.readthedocs.io/en
 Similarly, PyALFE can be configured to use [Convert3D](https://sourceforge.net/p/c3d/git/ci/master/tree/doc/c3d.md) or python native library [Nilearn](https://nilearn.github.io/stable/index.html) for image processing tasks.
 To use Greedy and Convert3d, these command line tools should be downloaded using the [download command](#download-models-and-tools).
 
+### Option 1: Pypi installation
+You can install pyalfe by running:
+```bash
+pip install pyalfe
+```
 
-You can either instal pyalfe in [development mode](#development-mode-installation) or [build and install](#build-and-install).
-### Option 1: Development mode installation
+You can either install pyalfe from source after cloning the repo using [development mode](#development-mode-installation) or [build and install](#build-and-install).
+
+### Option 2: Development mode installation
 
 First update the setuptools
 ```bash
@@ -19,6 +25,7 @@ pip install --upgrade setuptools
 Run the following command in the parent pyalfe directory:
 
 ```bash
+
 pip install -e .
 ```
 
@@ -32,7 +39,7 @@ pip install --upgrade build
 Run the following commands in the parent pyalfe directory to build the whl file and install pyalfe
 ```bash
 python -m build
-pip install dist/pyalfe-0.0.1-py3-none-any.whl
+pip install dist/pyalfe-*-py3-none-any.whl
 ```
 
 ### Download models

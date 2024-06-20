@@ -477,7 +477,7 @@ class BIDSDataDir(PipelineDataDir):
             'sub-{subject}[/ses-{session}]/{datatype}/sub-{subject}'
             '[_ce-{ceagent}][_space-{space}][_desc-{desc}]'
             '_{suffix<T1w|T2w|FLAIR|swi|asl|cbf|md|mask|dseg|probseg>}'
-            '{extension<.nii|.nii.gz>|.nii.gz}'
+            '{extension<.nii|.nii.gz|.mat>|.nii.gz}'
         ]
         entities = {
             'subject': accession,

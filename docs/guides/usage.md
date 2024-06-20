@@ -1,5 +1,8 @@
 ## Usage
 
+We recommend running the configure command first to create a configuration file for the pipeline.
+However, you can skip to [Running the pipeline](#running-the-pipeline) section if you prefer to provide all the required configuration through command line
+options.
 ### Configuration
 To configrue the PyALFE pipeline you should run:
 ```bash
@@ -7,32 +10,12 @@ pyalfe configure
 ```
 which prompt the you to enter the following required configurations:
 
-#### Classified directory
+#### Input directory
 ```bash
 Enter input image directory: /path/to/my_mri_data
 ```
-The classified directory (`classified_dir`) is the input directory to PyALFE and should be organized by accessions (or session ids). Inside the directory for each accession there should be a directory for each available modality.
-Here is an example that follow ALFE default structure:
-
-```
-my_mri_data
-│
-│───anat
-│   │───sub-123_T1w.nii.gz
-│   │───sub-123_T2w.nii.gz
-│   └───sub-123_FLAIR.nii.gz
-│───dwi
-│    │───sub-123_dwi.nii.gz
-│    └───sub-123_md.nii.gz
-│───swi
-│    └───sub-123_swi.nii.gz
-└───perf
-     └───sub-123_cbf.nii.gz
-
-```
-To use this directory the user should provide `path/to/my_mri_data` as the classified directory. This config value can be overwritten when calling `pyalfe run` via `-cd` or `--classified-dir` option.
-
-pyALFE also supports BIDS directories. Here is an example of input dir organized in BIDS format:
+The input directory (`input_dir`) contains the images that will be processed by PyALFE and should be organized by accessions (or session ids). Inside the directory for each accession there should be a directory for each available modality.
+Here is an example that follows ALFE default structure:
 ```
 my_mri_data
 │
@@ -46,9 +29,10 @@ my_mri_data
 │   │   └── FLAIR.nii.gz
 │   │───ADC
 │   │   └── ADC.nii.gz
-│   └───T2
-│       └── T2.nii.gz
-│
+│   │───T2
+│   │   └── T2.nii.gz
+│   └───CBF
+│       └── CBF.nii.gz
 └───12356
 .   │
 .   │───T1
@@ -62,13 +46,51 @@ my_mri_data
     └───T2
         └── T2.nii.gz
 ```
-#### Processed directory
-```bash
-Enter input image directory: /path/to/processed_data_dir
+To use this directory the user should provide `path/to/my_mri_data` as the input directory. This config value can be overwritten when calling `pyalfe run` via `-id` or `--input-dir` option.
+
+pyALFE also supports BIDS directories. Here is an example of input dir organized in BIDS format:
+
 ```
-The processed image directory (`processed_dir`) is where ALFE writes all its output to.
+my_mri_data
+│
+│───sub-01
+│   │───anat
+│   │   │───sub-01_T1w.nii.gz
+│   │   │───sub-01_ce-gadolinium_T1w.nii.gz
+│   │   │───sub-01_T2w.nii.gz
+│   │   └───sub-01_FLAIR.nii.gz
+│   │───dwi
+│   │    │───sub-01_dwi.nii.gz
+│   │    └───sub-01_md.nii.gz
+│   │───swi
+│   │    └───sub-01_swi.nii.gz
+│   └───perf
+│       └───sub-01_cbf.nii.gz
+│
+└───sub-02
+.   │───anat
+.   │   │───sub-02_T1w.nii.gz
+.   │   │───sub-02_ce-gadolinium_T1w.nii.gz
+    │   │───sub-02_T2w.nii.gz
+    │   └───sub-02_FLAIR.nii.gz
+    │───dwi
+    │    │───sub-02_dwi.nii.gz
+    │    └───sub-02_md.nii.gz
+    │───swi
+    │    └───sub-02_swi.nii.gz
+    └───perf
+        └───sub-02_cbf.nii.gz
+
+```
+
+#### Output directory
+```bash
+Enter output image directory: /path/to/output_dir
+```
+The output image directory (`output_dir`) is where pyALFE writes all its output to.
 It can be any valid path in filesystem that user have write access to.
-This config value can be overwritten when calling `pyalfe run` via `-pd` or `--processed-dir` option.
+This config value can be overwritten when calling `pyalfe run` via `-od` or `--output-dir` option.
+
 
 #### Modalities
 ```bash
@@ -102,7 +124,7 @@ image processor to use (c3d, nilearn) [c3d]:
 ```
 Currently, pyalfe can be configures to use either Convert3D (a.k.a. c3d) or Nilearn for image processing tasks.
 The default is Convert3d aka c3d. In other to use c3d,
-you have to download it using the [download command](#download-models-and-tools).
+you have to download it using the [download command](#download-models).
 To use Nilearn, you do not need to run any extra command since it is already installed when you install pyalfe.
 This config value can be overwritten when calling `pyalfe run` via `-ip` or `--image_processing` option.
 
@@ -111,9 +133,17 @@ This config value can be overwritten when calling `pyalfe run` via `-ip` or `--i
 image registration to use (greedy, ants) [greedy]:
 ```
 Currently, pyalfe can be configures to use either greedy or ants for image registration tasks. The default is greedy.
-In other to use greedy, you have to download it using the [download command](#download-models-and-tools). To use ants,
+In other to use greedy, you have to download it using the [download command](#download-models). To use ants,
 install pyalfe with ants support ``pip install pyalfe[ants]``.
 This config value can be overwritten when calling `pyalfe run` via `-ir` or `--image-registration` option.
+
+#### Dierctory Data Structure
+```bash
+data directory structure (press enter for default) (alfe, bids) [alfe]:
+```
+
+The directory structure that pyALFE expects in the input directory and will follow when creating the output. See [Inupt directory](#input-directory) for information on ALFE and BIDS.
+This config value can be overwritten when calling `payalfe run` via `-dds` or `--data-dir-structure` option.
 
 ### Running the pipeline
 To run PyALFE for an accession

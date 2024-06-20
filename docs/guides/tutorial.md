@@ -22,7 +22,7 @@ mkdir -p pyalfe-output
 
 ## Installation
 
-Create a python virtual environment and activate
+Create a python virtual environment and activate it
 ```bash
 python3 -m venv venv
 source venv/bin/activate
@@ -41,5 +41,5 @@ pyalfe download models
 
 ## Run
 ```bash
-pyalfe run UPENNGBM0000511 --input-dir alfe/input  --output-dir alfe/output
+pyalfe run UPENNGBM0000511 --input-dir pyalfe-test-data  --output-dir pyalfe-output
 ```

@@ -3,7 +3,7 @@ import os
 
 from dependency_injector import containers, providers
 
-from pyalfe.data_structure import DefaultALFEDataDir, Modality
+from pyalfe.data_structure import DefaultALFEDataDir, BIDSDataDir, Modality
 from pyalfe.image_processing import Convert3DProcessor, NilearnProcessor
 from pyalfe.image_registration import GreedyRegistration, AntsRegistration
 from pyalfe.inference import NNUnetV2
@@ -34,10 +34,18 @@ class Container(containers.DeclarativeContainer):
     logger = logging.getLogger('Container')
     config = providers.Configuration()
 
-    pipeline_dir = providers.Singleton(
-        DefaultALFEDataDir,
-        output_dir=config.options.output_dir,
-        input_dir=config.options.input_dir,
+    pipeline_dir = providers.Selector(
+        config.options.data_dir_structure,
+        alfe=providers.Singleton(
+            DefaultALFEDataDir,
+            output_dir=config.options.output_dir,
+            input_dir=config.options.input_dir,
+        ),
+        bids=providers.Singleton(
+            BIDSDataDir,
+            output_dir=config.options.output_dir,
+            input_dir=config.options.input_dir,
+        ),
     )
 
     image_processor = providers.Selector(
