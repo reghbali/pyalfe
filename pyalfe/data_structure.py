@@ -1,3 +1,4 @@
+import glob
 import importlib
 import json
 import logging
@@ -8,6 +9,7 @@ import os
 from pathlib import Path
 
 from bids import BIDSLayout
+import pydicom
 
 from strenum import StrEnum
 
@@ -556,3 +558,98 @@ class BIDSDataDir(PipelineDataDir):
         ret = self.output_layout.build_path(entities, pattern, validate=False)
         Path(ret).parent.mkdir(parents=True, exist_ok=True)
         return ret
+
+
+class PatientDicomDir():
+    """This class is designe to work with directories containing raw dicom 
+    files for a patient that are organized as:
+    patient_id
+        └─ accession (study_id)
+            └─ series_id
+                ├─ instance_0.dcm
+                └─ instance_1.dcm
+    """
+    def __init__(self, patient_dir) -> None:
+        self.patient_dir = patient_dir
+
+    def is_dicom_file(self, file):
+        """Function to check if file is a dicom file.
+        The first 128 bytes are preamble the next 4 bytes should
+        contain DICM otherwise it is not a dicom file. Adapted from
+        https://github.com/icometrix/dicom2nifti/blob/main/dicom2nifti/common.py
+
+        Parameters
+        ----------
+        file: str
+            file to check for the DICM header block
+
+        Return
+        ------
+        bool
+            True if it is a dicom file otherwise False.
+        """
+        file_stream = open(file, 'rb')
+        file_stream.seek(128)
+        data = file_stream.read(4)
+        file_stream.close()
+        if data == b'DICM':
+            return True
+        try:
+            dicom_headers = pydicom.read_file(
+                file,
+                defer_size="1 KB",
+                stop_before_pixels=True,
+                force=True)
+            if dicom_headers is not None:
+                return True
+        except:
+            pass
+        return False
+
+    def get_all_dicom_series_instances(self, accession):
+        """This method returns a dictionary where the keys are the series IDs
+        available for a patient-accession (study) and the values are the list
+        of all the instances in the series.
+
+        Parameters
+        ----------
+        accession: str
+            The accession or study number.
+
+        Returns
+        -------
+        dict[str, list[str]]
+            A dictionary with series IDs as keys and
+            list of instances as values.
+        """
+        ret = {}
+        accession_path = os.path.join(self.patient_dir, accession)
+        for path in glob.glob(accession_path, '*'):
+            instances = []
+            for file in glob.glob(path, '*'):
+                if os.path.isfile(file) and self.is_dicom_file(file):
+                    instances.append(file)
+            if len(instances) > 0:
+                series_id = os.path.basename(path)
+                ret[series_id] = instances
+        return ret
+            
+
+    def get_series(self, accession, series_id):
+        """This method returns the path to a series.
+        
+        Parameters
+        ----------
+        patient_id: str
+            The patient_id.
+        accession: str
+            The accession or study number.
+        series_id: str
+            The series ID.
+
+        Returns
+        -------
+        str
+        The path to the series directory
+        """
+        return os.path.join(self.patient_dir, accession, series_id)
