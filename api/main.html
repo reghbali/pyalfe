@@ -427,6 +427,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe-download">download</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe-process-dicom">process-dicom</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe-run">run</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">Parameters</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Returns</a></li>
@@ -473,6 +474,51 @@ document.write(`
 <dt class="sig sig-object std" id="cmdoption-pyalfe-download-arg-ASSETS">
 <span class="sig-name descname"><span class="pre">ASSETS</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-pyalfe-download-arg-ASSETS" title="Link to this definition">#</a></dt>
 <dd><p>Optional argument(s)</p>
+</dd></dl>
+
+</section>
+<section id="pyalfe-process-dicom">
+<h3>process-dicom<a class="headerlink" href="#pyalfe-process-dicom" title="Link to this heading">#</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pyalfe<span class="w"> </span>process-dicom<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>ACCESSION<span class="w"> </span>DICOM_DIR
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-pyalfe-process-dicom-c">
+<span id="cmdoption-pyalfe-process-dicom-config"></span><span class="sig-name descname"><span class="pre">-c</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--config</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;config&gt;</span></span><a class="headerlink" href="#cmdoption-pyalfe-process-dicom-c" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-pyalfe-process-dicom-nd">
+<span id="cmdoption-pyalfe-process-dicom-nifti-dir"></span><span class="sig-name descname"><span class="pre">-nd</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--nifti-dir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;nifti_dir&gt;</span></span><a class="headerlink" href="#cmdoption-pyalfe-process-dicom-nd" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-pyalfe-process-dicom-dds">
+<span id="cmdoption-pyalfe-process-dicom-data-dir-structure"></span><span class="sig-name descname"><span class="pre">-dds</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--data-dir-structure</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;data_dir_structure&gt;</span></span><a class="headerlink" href="#cmdoption-pyalfe-process-dicom-dds" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Options<span class="colon">:</span></dt>
+<dd class="field-odd"><p>alfe | bids</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-pyalfe-process-dicom-ow">
+<span id="cmdoption-pyalfe-process-dicom-overwrite"></span><span id="cmdoption-pyalfe-process-dicom-now"></span><span id="cmdoption-pyalfe-process-dicom-no-overwrite"></span><span class="sig-name descname"><span class="pre">-ow</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--overwrite</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">-now</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--no-overwrite</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-pyalfe-process-dicom-ow" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-pyalfe-process-dicom-arg-ACCESSION">
+<span class="sig-name descname"><span class="pre">ACCESSION</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-pyalfe-process-dicom-arg-ACCESSION" title="Link to this definition">#</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-pyalfe-process-dicom-arg-DICOM_DIR">
+<span class="sig-name descname"><span class="pre">DICOM_DIR</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-pyalfe-process-dicom-arg-DICOM_DIR" title="Link to this definition">#</a></dt>
+<dd><p>Required argument</p>
 </dd></dl>
 
 </section>
@@ -583,6 +629,11 @@ document.write(`
 </dl>
 </dd></dl>
 
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-pyalfe-run-dcm">
+<span id="cmdoption-pyalfe-run-dicom-dir"></span><span class="sig-name descname"><span class="pre">-dcm</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--dicom-dir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;dicom_dir&gt;</span></span><a class="headerlink" href="#cmdoption-pyalfe-run-dcm" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 <p class="rubric">Arguments</p>
 <dl class="std option">
 <dt class="sig sig-object std" id="cmdoption-pyalfe-run-arg-ACCESSION">
@@ -665,6 +716,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe-download">download</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe-process-dicom">process-dicom</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe-run">run</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">Parameters</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Returns</a></li>

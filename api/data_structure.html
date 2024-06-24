@@ -473,6 +473,12 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.BIDSDataDir.get_quantification_file"><code class="docutils literal notranslate"><span class="pre">BIDSDataDir.get_quantification_file()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PatientDicomDataDir"><code class="docutils literal notranslate"><span class="pre">PatientDicomDataDir</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PatientDicomDataDir.is_dicom_file"><code class="docutils literal notranslate"><span class="pre">PatientDicomDataDir.is_dicom_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PatientDicomDataDir.get_all_dicom_series_instances"><code class="docutils literal notranslate"><span class="pre">PatientDicomDataDir.get_all_dicom_series_instances()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PatientDicomDataDir.get_series"><code class="docutils literal notranslate"><span class="pre">PatientDicomDataDir.get_series()</span></code></a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -976,6 +982,87 @@ BIDS dir structure format.</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="pyalfe.data_structure.PatientDicomDataDir">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.data_structure.</span></span><span class="sig-name descname"><span class="pre">PatientDicomDataDir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dicom_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#PatientDicomDataDir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.PatientDicomDataDir" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class is designe to work with directories containing raw dicom
+files for a patient that are organized as:
+patient_id</p>
+<blockquote>
+<div><dl class="simple">
+<dt>└─ accession (study_uid)</dt><dd><dl class="simple">
+<dt>└─ series_uid</dt><dd><p>├─ instance_0.dcm
+└─ instance_1.dcm</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyalfe.data_structure.PatientDicomDataDir.is_dicom_file">
+<span class="sig-name descname"><span class="pre">is_dicom_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#PatientDicomDataDir.is_dicom_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.PatientDicomDataDir.is_dicom_file" title="Link to this definition">#</a></dt>
+<dd><p>Function to check if file is a dicom file.
+The first 128 bytes are preamble the next 4 bytes should
+contain DICM otherwise it is not a dicom file. Adapted from
+<a class="github reference external" href="https://github.com/icometrix/dicom2nifti/blob/main/dicom2nifti/common.py">icometrix/dicom2nifti</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – file to check for the DICM header block</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if it is a dicom file otherwise False.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyalfe.data_structure.PatientDicomDataDir.get_all_dicom_series_instances">
+<span class="sig-name descname"><span class="pre">get_all_dicom_series_instances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#PatientDicomDataDir.get_all_dicom_series_instances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.PatientDicomDataDir.get_all_dicom_series_instances" title="Link to this definition">#</a></dt>
+<dd><p>This method returns a dictionary where the keys are the series IDs
+available for a patient-accession (study) and the values are the list
+of all the instances in the series.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>accession</strong> (<em>str</em>) – The accession or study number.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary with series IDs as keys and
+list of instances as values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, list[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyalfe.data_structure.PatientDicomDataDir.get_series">
+<span class="sig-name descname"><span class="pre">get_series</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">series_uid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#PatientDicomDataDir.get_series"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.PatientDicomDataDir.get_series" title="Link to this definition">#</a></dt>
+<dd><p>This method returns the path to a series.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>patient_id</strong> (<em>str</em>) – The patient_id.</p></li>
+<li><p><strong>accession</strong> (<em>str</em>) – The accession or study number.</p></li>
+<li><p><strong>series_uid</strong> (<em>str</em>) – The series ID.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>str</em></p></li>
+<li><p><em>The path to the series directory</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
     <script type="text/x-thebe-config">
@@ -1092,6 +1179,12 @@ BIDS dir structure format.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.BIDSDataDir.get_input_image"><code class="docutils literal notranslate"><span class="pre">BIDSDataDir.get_input_image()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.BIDSDataDir.get_output_image"><code class="docutils literal notranslate"><span class="pre">BIDSDataDir.get_output_image()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.BIDSDataDir.get_quantification_file"><code class="docutils literal notranslate"><span class="pre">BIDSDataDir.get_quantification_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PatientDicomDataDir"><code class="docutils literal notranslate"><span class="pre">PatientDicomDataDir</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PatientDicomDataDir.is_dicom_file"><code class="docutils literal notranslate"><span class="pre">PatientDicomDataDir.is_dicom_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PatientDicomDataDir.get_all_dicom_series_instances"><code class="docutils literal notranslate"><span class="pre">PatientDicomDataDir.get_all_dicom_series_instances()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PatientDicomDataDir.get_series"><code class="docutils literal notranslate"><span class="pre">PatientDicomDataDir.get_series()</span></code></a></li>
 </ul>
 </li>
 </ul>
