@@ -3,12 +3,18 @@ import os
 
 from dependency_injector import containers, providers
 
-from pyalfe.data_structure import DefaultALFEDataDir, BIDSDataDir, Modality
+from pyalfe.data_structure import (
+    DefaultALFEDataDir,
+    BIDSDataDir,
+    PatientDicomDataDir,
+    Modality
+    )
 from pyalfe.image_processing import Convert3DProcessor, NilearnProcessor
 from pyalfe.image_registration import GreedyRegistration, AntsRegistration
 from pyalfe.inference import NNUnetV2
 from pyalfe.models import MODELS_PATH
-from pyalfe.pipeline import PyALFEPipelineRunner
+from pyalfe.pipeline import PyALFEPipelineRunner, DicomProcessingPipelineRunner
+from pyalfe.tasks.dicom_processing import DicomProcessing
 from pyalfe.tasks.initialization import Initialization
 from pyalfe.tasks.quantification import Quantification
 from pyalfe.tasks.registration import (
@@ -26,12 +32,11 @@ from pyalfe.tasks.t1_postprocessing import T1Postprocessing
 from pyalfe.tasks.t1_preprocessing import T1Preprocessing
 
 
-class Container(containers.DeclarativeContainer):
+class PipelineContainer(containers.DeclarativeContainer):
     """
     container objects for all the dependencies of the pipeline.
     """
 
-    logger = logging.getLogger('Container')
     config = providers.Configuration()
 
     pipeline_dir = providers.Selector(
@@ -212,7 +217,7 @@ class Container(containers.DeclarativeContainer):
         dominant_tissue=config.options.dominant_tissue,
     )
 
-    pipeline_runner = providers.Singleton(
+    pyalfe_pipeline_runner = providers.Singleton(
         PyALFEPipelineRunner,
         initialization=initialization,
         skullstripping=skullstripping,
@@ -225,4 +230,41 @@ class Container(containers.DeclarativeContainer):
         t1_registration=t1_registration,
         resampling=resampling,
         quantification=quantification,
+    )
+
+
+class DicomProcessingContianer(containers.DeclarativeContainer):
+    """Contianer for dicom processing pipeline depedencies"""
+
+    config = providers.Configuration()
+
+    pipeline_dir = providers.Selector(
+        config.options.data_dir_structure,
+        alfe=providers.Singleton(
+            DefaultALFEDataDir,
+            output_dir=os.devnull,
+            input_dir=config.options.input_dir,
+        ),
+        bids=providers.Singleton(
+            BIDSDataDir,
+            output_dir=os.devnull,
+            input_dir=config.options.input_dir,
+        ),
+    )
+    
+    dicom_dir = providers.Singleton(
+        PatientDicomDataDir,
+        dicom_dir=config.options.dicom_dir
+    )
+
+    dicom_processing = providers.Singleton(
+        DicomProcessing,
+        pipeline_dir=pipeline_dir,
+        dicom_dir=dicom_dir,
+        overwrite=config.options.overwrite_images
+    )
+
+    dicom_processing_pipeline_runner = providers.Singleton(
+        DicomProcessingPipelineRunner,
+        dicom_processing=dicom_processing
     )

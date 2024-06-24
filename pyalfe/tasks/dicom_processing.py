@@ -2,11 +2,12 @@ from collections import defaultdict
 import logging
 import math
 import os
+from pathlib import Path
 import subprocess
 
 from pyalfe.data_structure import (
     PipelineDataDir,
-    DicomDir,
+    PatientDicomDataDir,
     Modality,
     Orientation
 )
@@ -29,7 +30,7 @@ class DicomProcessing(Task):
     def __init__(
         self,
         pipeline_dir: PipelineDataDir,
-        dicom_dir: DicomDir,
+        dicom_dir: PatientDicomDataDir,
         overwrite: bool = True,
         ) -> None:
         super().__init__()
@@ -60,10 +61,12 @@ class DicomProcessing(Task):
         -------
         """
         nifti_dir = os.path.dirname(nifti_path)
-        nifti_name = os.path.basename(nifti_path)
+        Path(nifti_dir).mkdir(parents=True, exist_ok=True)
+        nifti_name = os.path.basename(nifti_path).split('.')[0]
         cmd_parts = [ 
             'dcm2niix',
-            '-z', 'y', '-b',
+            '-z', 'y',
+            '-b', 'y',
             '-f', nifti_name,
             '-o', nifti_dir]
 
@@ -93,7 +96,7 @@ class DicomProcessing(Task):
                 return math.inf
         return min(
             image_list,
-            lambda image_meta: none_to_inf(image_meta.slice_thickness)
+            key=lambda image_meta: none_to_inf(image_meta.slice_thickness)
             )
 
     
@@ -122,14 +125,16 @@ class DicomProcessing(Task):
         classified = defaultdict(defaultdict(list).copy)
         converted, conversion_failed = defaultdict(str), defaultdict(str)
         skipped = []
-        series_instances = self.dicom_dir.get_all_dicom_series_instances(
+        meta_series_map = {}
+        all_series_instances = self.dicom_dir.get_all_dicom_series_instances(
             accession)
 
-        for series_id, instances in series_instances.items():
+        for series_uid, instances in all_series_instances.items():
             if len(instances) == 0:
                 continue
 
-            dicom_meta = extract_dicom_meta(instances[0])
+            dicom_meta = extract_dicom_meta(
+                instances[0], series_uid=series_uid)
             modality = detect_modality(
                 dicom_meta.series_desc,
                 dicom_meta.seq,
@@ -146,18 +151,24 @@ class DicomProcessing(Task):
 
         for modality, orientations in classified.items():
             orientation_best = defaultdict(Modality)
+            
             for orientation, image_list in orientations.items():
                 orientation_best[orientation] = self.get_best(image_list)
-            selected_orientation = self.select_orientation(orientation_best)
+
+            selected_orientation, selected_image_meta = self.select_orientation(orientation_best)
             nifti_path = self.pipeline_dir.get_input_image(
                 accession=accession, modality=modality)
-            selected_image_meta = orientation_best[selected_orientation]
-            dicom_dir = selected_image_meta.path
-            max_echo_series_crc = get_max_echo_series_crc(dicom_dir)
+            selected_series_uid = selected_image_meta.series_uid
+            dicom_dir = self.dicom_dir.get_series(
+                accession, selected_series_uid)
+            max_echo_series_crc = get_max_echo_series_crc(
+                all_series_instances[selected_series_uid])
+
             conversion_status = self.dicom2nifti(
                 dcm_series_dir=dicom_dir,
                 nifti_path=nifti_path,
                 series_crc=max_echo_series_crc)
+        
             if conversion_status == 0:
                 self.logger.warning(f'failed to convert {dicom_dir} to nifti.')
                 conversion_failed[modality] = selected_image_meta

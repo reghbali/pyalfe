@@ -560,17 +560,17 @@ class BIDSDataDir(PipelineDataDir):
         return ret
 
 
-class PatientDicomDir():
+class PatientDicomDataDir():
     """This class is designe to work with directories containing raw dicom 
     files for a patient that are organized as:
     patient_id
-        └─ accession (study_id)
-            └─ series_id
+        └─ accession (study_uid)
+            └─ series_uid
                 ├─ instance_0.dcm
                 └─ instance_1.dcm
     """
-    def __init__(self, patient_dir) -> None:
-        self.patient_dir = patient_dir
+    def __init__(self, dicom_dir) -> None:
+        self.dicom_dir = dicom_dir
 
     def is_dicom_file(self, file):
         """Function to check if file is a dicom file.
@@ -623,19 +623,19 @@ class PatientDicomDir():
             list of instances as values.
         """
         ret = {}
-        accession_path = os.path.join(self.patient_dir, accession)
-        for path in glob.glob(accession_path, '*'):
+        accession_path = os.path.join(self.dicom_dir, accession)
+        for path in glob.glob(os.path.join(accession_path, '*')):
             instances = []
-            for file in glob.glob(path, '*'):
+            for file in glob.glob(os.path.join(path, '*')):
                 if os.path.isfile(file) and self.is_dicom_file(file):
                     instances.append(file)
             if len(instances) > 0:
-                series_id = os.path.basename(path)
-                ret[series_id] = instances
+                series_uid = os.path.basename(path)
+                ret[series_uid] = instances
         return ret
             
 
-    def get_series(self, accession, series_id):
+    def get_series(self, accession, series_uid):
         """This method returns the path to a series.
         
         Parameters
@@ -644,7 +644,7 @@ class PatientDicomDir():
             The patient_id.
         accession: str
             The accession or study number.
-        series_id: str
+        series_uid: str
             The series ID.
 
         Returns
@@ -652,4 +652,4 @@ class PatientDicomDir():
         str
         The path to the series directory
         """
-        return os.path.join(self.patient_dir, accession, series_id)
+        return os.path.join(self.dicom_dir, accession, series_uid)
