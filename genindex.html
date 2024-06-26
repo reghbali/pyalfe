@@ -17,12 +17,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
@@ -36,9 +36,9 @@
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
-  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -138,6 +138,8 @@
         <div class="sidebar-primary-item">
 
   
+    
+  
 
 <a class="navbar-brand logo" href="intro.html">
   
@@ -159,7 +161,7 @@
 
  <script>
  document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
     <span class="search-button__default-text">Search</span>
     <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -316,10 +318,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
@@ -327,7 +329,7 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
@@ -663,12 +665,30 @@ document.write(`
 </li>
       <li><a href="api/interfaces/c3d.html#pyalfe.interfaces.c3d.C3D.clip">clip() (pyalfe.interfaces.c3d.C3D method)</a>
 </li>
+      <li><a href="api/containers.html#pyalfe.containers.DicomProcessingContianer.cls_providers">cls_providers (pyalfe.containers.DicomProcessingContianer attribute)</a>
+
+      <ul>
+        <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.cls_providers">(pyalfe.containers.PipelineContainer attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api/interfaces/c3d.html#pyalfe.interfaces.c3d.C3D.comp">comp() (pyalfe.interfaces.c3d.C3D method)</a>
 </li>
-      <li><a href="api/image_processing.html#pyalfe.image_processing.Convert3DProcessor">Convert3DProcessor (class in pyalfe.image_processing)</a>
+      <li><a href="api/containers.html#pyalfe.containers.DicomProcessingContianer.config">config (pyalfe.containers.DicomProcessingContianer attribute)</a>
+
+      <ul>
+        <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.config">(pyalfe.containers.PipelineContainer attribute)</a>
 </li>
+      </ul></li>
+      <li><a href="api/containers.html#pyalfe.containers.DicomProcessingContianer.containers">containers (pyalfe.containers.DicomProcessingContianer attribute)</a>
+
+      <ul>
+        <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.containers">(pyalfe.containers.PipelineContainer attribute)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/image_processing.html#pyalfe.image_processing.Convert3DProcessor">Convert3DProcessor (class in pyalfe.image_processing)</a>
+</li>
       <li><a href="api/utils/archive.html#pyalfe.utils.archive.copy_matching_paths">copy_matching_paths() (in module pyalfe.utils.archive)</a>
 </li>
       <li><a href="api/data_structure.html#pyalfe.data_structure.Orientation.CORONAL">CORONAL (pyalfe.data_structure.Orientation attribute)</a>
@@ -679,6 +699,12 @@ document.write(`
 </li>
       <li><a href="api/image_processing.html#pyalfe.image_processing.NilearnProcessor.crop_img">crop_img() (pyalfe.image_processing.NilearnProcessor static method)</a>
 </li>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.cross_modality_registration">cross_modality_registration (pyalfe.containers.PipelineContainer attribute)</a>
+
+      <ul>
+        <li><a href="api/pipeline.html#pyalfe.pipeline.PyALFEPipelineRunner.cross_modality_registration">(pyalfe.pipeline.PyALFEPipelineRunner attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api/tasks/registration.html#pyalfe.tasks.registration.CrossModalityRegistration">CrossModalityRegistration (class in pyalfe.tasks.registration)</a>
 </li>
       <li><a href="api/data_structure.html#pyalfe.data_structure.Tissue.CSF">CSF (pyalfe.data_structure.Tissue attribute)</a>
@@ -700,6 +726,20 @@ document.write(`
         <li><a href="api/main.html#cmdoption-pyalfe-process-dicom-arg-DICOM_DIR">pyalfe-process-dicom command line option</a>
 </li>
       </ul></li>
+      <li><a href="api/containers.html#pyalfe.containers.DicomProcessingContianer.dicom_dir">dicom_dir (pyalfe.containers.DicomProcessingContianer attribute)</a>
+</li>
+      <li><a href="api/containers.html#pyalfe.containers.DicomProcessingContianer.dicom_processing">dicom_processing (pyalfe.containers.DicomProcessingContianer attribute)</a>
+
+      <ul>
+        <li><a href="api/pipeline.html#pyalfe.pipeline.DicomProcessingPipelineRunner.dicom_processing">(pyalfe.pipeline.DicomProcessingPipelineRunner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/containers.html#pyalfe.containers.DicomProcessingContianer.dicom_processing_pipeline_runner">dicom_processing_pipeline_runner (pyalfe.containers.DicomProcessingContianer attribute)</a>
+</li>
+      <li><a href="api/containers.html#pyalfe.containers.DicomProcessingContianer">DicomProcessingContianer (class in pyalfe.containers)</a>
+</li>
+      <li><a href="api/pipeline.html#pyalfe.pipeline.DicomProcessingPipelineRunner">DicomProcessingPipelineRunner (class in pyalfe.pipeline)</a>
+</li>
       <li><a href="api/image_processing.html#pyalfe.image_processing.Convert3DProcessor.dilate">dilate() (pyalfe.image_processing.Convert3DProcessor static method)</a>
 
       <ul>
@@ -740,12 +780,20 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/data_structure.html#pyalfe.data_structure.Modality.EADC">EADC (pyalfe.data_structure.Modality attribute)</a>
 </li>
-      <li><a href="api/interfaces/greedy.html#pyalfe.interfaces.greedy.Greedy.epsilon">epsilon() (pyalfe.interfaces.greedy.Greedy method)</a>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.enhancement_model">enhancement_model (pyalfe.containers.PipelineContainer attribute)</a>
 </li>
-      <li><a href="api/utils/archive.html#pyalfe.utils.archive.extract_binary_from_archive">extract_binary_from_archive() (in module pyalfe.utils.archive)</a>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.enhancement_segmentation">enhancement_segmentation (pyalfe.containers.PipelineContainer attribute)</a>
+
+      <ul>
+        <li><a href="api/pipeline.html#pyalfe.pipeline.PyALFEPipelineRunner.enhancement_segmentation">(pyalfe.pipeline.PyALFEPipelineRunner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/interfaces/greedy.html#pyalfe.interfaces.greedy.Greedy.epsilon">epsilon() (pyalfe.interfaces.greedy.Greedy method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/utils/archive.html#pyalfe.utils.archive.extract_binary_from_archive">extract_binary_from_archive() (in module pyalfe.utils.archive)</a>
+</li>
       <li><a href="api/utils/archive.html#pyalfe.utils.archive.extract_file_from_archive">extract_file_from_archive() (in module pyalfe.utils.archive)</a>
 </li>
       <li><a href="api/utils/archive.html#pyalfe.utils.archive.extract_file_from_dmg">extract_file_from_dmg() (in module pyalfe.utils.archive)</a>
@@ -762,6 +810,16 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/data_structure.html#pyalfe.data_structure.Modality.FLAIR">FLAIR (pyalfe.data_structure.Modality attribute)</a>
 </li>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.flair_model">flair_model (pyalfe.containers.PipelineContainer attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.flair_segmentation">flair_segmentation (pyalfe.containers.PipelineContainer attribute)</a>
+
+      <ul>
+        <li><a href="api/pipeline.html#pyalfe.pipeline.PyALFEPipelineRunner.flair_segmentation">(pyalfe.pipeline.PyALFEPipelineRunner attribute)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -846,9 +904,11 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/interfaces/greedy.html#pyalfe.interfaces.greedy.Greedy.image_centers">image_centers() (pyalfe.interfaces.greedy.Greedy method)</a>
 </li>
-      <li><a href="api/tasks/registration.html#pyalfe.tasks.registration.Resampling.image_processor">image_processor (pyalfe.tasks.registration.Resampling attribute)</a>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.image_processor">image_processor (pyalfe.containers.PipelineContainer attribute)</a>
 
       <ul>
+        <li><a href="api/tasks/registration.html#pyalfe.tasks.registration.Resampling.image_processor">(pyalfe.tasks.registration.Resampling attribute)</a>
+</li>
         <li><a href="api/tasks/registration.html#pyalfe.tasks.registration.T1Registration.image_processor">(pyalfe.tasks.registration.T1Registration attribute)</a>
 </li>
         <li><a href="api/tasks/skullstripping.html#pyalfe.tasks.skullstripping.Skullstripping.image_processor">(pyalfe.tasks.skullstripping.Skullstripping attribute)</a>
@@ -858,9 +918,11 @@ document.write(`
         <li><a href="api/tasks/t1_preprocessing.html#pyalfe.tasks.t1_preprocessing.T1Preprocessing.image_processor">(pyalfe.tasks.t1_preprocessing.T1Preprocessing attribute)</a>
 </li>
       </ul></li>
-      <li><a href="api/tasks/registration.html#pyalfe.tasks.registration.CrossModalityRegistration.image_registration">image_registration (pyalfe.tasks.registration.CrossModalityRegistration attribute)</a>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.image_registration">image_registration (pyalfe.containers.PipelineContainer attribute)</a>
 
       <ul>
+        <li><a href="api/tasks/registration.html#pyalfe.tasks.registration.CrossModalityRegistration.image_registration">(pyalfe.tasks.registration.CrossModalityRegistration attribute)</a>
+</li>
         <li><a href="api/tasks/registration.html#pyalfe.tasks.registration.Resampling.image_registration">(pyalfe.tasks.registration.Resampling attribute)</a>
 </li>
         <li><a href="api/tasks/registration.html#pyalfe.tasks.registration.T1Registration.image_registration">(pyalfe.tasks.registration.T1Registration attribute)</a>
@@ -872,10 +934,10 @@ document.write(`
         <li><a href="api/tasks/registration.html#pyalfe.tasks.registration.Resampling.image_type">(pyalfe.tasks.registration.Resampling attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/image_processing.html#pyalfe.image_processing.ImageProcessor">ImageProcessor (class in pyalfe.image_processing)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/image_registration.html#pyalfe.image_registration.ImageRegistration">ImageRegistration (class in pyalfe.image_registration)</a>
 </li>
       <li><a href="api/tasks/skullstripping.html#pyalfe.tasks.skullstripping.Skullstripping.inference_model">inference_model (pyalfe.tasks.skullstripping.Skullstripping attribute)</a>
@@ -884,8 +946,20 @@ document.write(`
 </li>
       <li><a href="api/interfaces/c3d.html#pyalfe.interfaces.c3d.C3D.info">info() (pyalfe.interfaces.c3d.C3D method)</a>
 </li>
+      <li><a href="api/containers.html#pyalfe.containers.DicomProcessingContianer.inherited_providers">inherited_providers (pyalfe.containers.DicomProcessingContianer attribute)</a>
+
+      <ul>
+        <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.inherited_providers">(pyalfe.containers.PipelineContainer attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api/tasks/initialization.html#pyalfe.tasks.initialization.Initialization">Initialization (class in pyalfe.tasks.initialization)</a>
 </li>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.initialization">initialization (pyalfe.containers.PipelineContainer attribute)</a>
+
+      <ul>
+        <li><a href="api/pipeline.html#pyalfe.pipeline.PyALFEPipelineRunner.initialization">(pyalfe.pipeline.PyALFEPipelineRunner attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api/interfaces/greedy.html#pyalfe.interfaces.greedy.Greedy.initialize_affine">initialize_affine() (pyalfe.interfaces.greedy.Greedy method)</a>
 </li>
       <li><a href="api/interfaces/greedy.html#pyalfe.interfaces.greedy.Greedy.input">input() (pyalfe.interfaces.greedy.Greedy method)</a>
@@ -1000,6 +1074,8 @@ document.write(`
     module
 
       <ul>
+        <li><a href="api/containers.html#module-pyalfe.containers">pyalfe.containers</a>
+</li>
         <li><a href="api/data_structure.html#module-pyalfe.data_structure">pyalfe.data_structure</a>
 </li>
         <li><a href="api/image_processing.html#module-pyalfe.image_processing">pyalfe.image_processing</a>
@@ -1011,6 +1087,8 @@ document.write(`
         <li><a href="api/interfaces/c3d.html#module-pyalfe.interfaces.c3d">pyalfe.interfaces.c3d</a>
 </li>
         <li><a href="api/interfaces/greedy.html#module-pyalfe.interfaces.greedy">pyalfe.interfaces.greedy</a>
+</li>
+        <li><a href="api/pipeline.html#module-pyalfe.pipeline">pyalfe.pipeline</a>
 </li>
         <li><a href="api/roi.html#module-pyalfe.roi">pyalfe.roi</a>
 </li>
@@ -1093,13 +1171,19 @@ document.write(`
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.parent_dir">parent_dir (pyalfe.containers.PipelineContainer attribute)</a>
+</li>
       <li><a href="api/data_structure.html#pyalfe.data_structure.PatientDicomDataDir">PatientDicomDataDir (class in pyalfe.data_structure)</a>
 </li>
       <li><a href="api/data_structure.html#pyalfe.data_structure.Modality.PERFUSION">PERFUSION (pyalfe.data_structure.Modality attribute)</a>
 </li>
-      <li><a href="api/tasks/initialization.html#pyalfe.tasks.initialization.Initialization.pipeline_dir">pipeline_dir (pyalfe.tasks.initialization.Initialization attribute)</a>
+      <li><a href="api/containers.html#pyalfe.containers.DicomProcessingContianer.pipeline_dir">pipeline_dir (pyalfe.containers.DicomProcessingContianer attribute)</a>
 
       <ul>
+        <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.pipeline_dir">(pyalfe.containers.PipelineContainer attribute)</a>
+</li>
+        <li><a href="api/tasks/initialization.html#pyalfe.tasks.initialization.Initialization.pipeline_dir">(pyalfe.tasks.initialization.Initialization attribute)</a>
+</li>
         <li><a href="api/tasks/quantification.html#pyalfe.tasks.quantification.Quantification.pipeline_dir">(pyalfe.tasks.quantification.Quantification attribute)</a>
 </li>
         <li><a href="api/tasks/registration.html#pyalfe.tasks.registration.CrossModalityRegistration.pipeline_dir">(pyalfe.tasks.registration.CrossModalityRegistration attribute)</a>
@@ -1115,7 +1199,11 @@ document.write(`
         <li><a href="api/tasks/t1_preprocessing.html#pyalfe.tasks.t1_preprocessing.T1Preprocessing.pipeline_dir">(pyalfe.tasks.t1_preprocessing.T1Preprocessing attribute)</a>
 </li>
       </ul></li>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer">PipelineContainer (class in pyalfe.containers)</a>
+</li>
       <li><a href="api/data_structure.html#pyalfe.data_structure.PipelineDataDir">PipelineDataDir (class in pyalfe.data_structure)</a>
+</li>
+      <li><a href="api/pipeline.html#pyalfe.pipeline.PipelineRunner">PipelineRunner (class in pyalfe.pipeline)</a>
 </li>
       <li><a href="api/interfaces/c3d.html#pyalfe.interfaces.c3d.C3D.popas">popas() (pyalfe.interfaces.c3d.C3D method)</a>
 </li>
@@ -1133,6 +1221,12 @@ document.write(`
       </ul></li>
       <li><a href="api/tasks/skullstripping.html#pyalfe.tasks.skullstripping.Skullstripping.process_modalities">process_modalities() (pyalfe.tasks.skullstripping.Skullstripping method)</a>
 </li>
+      <li><a href="api/containers.html#pyalfe.containers.DicomProcessingContianer.providers">providers (pyalfe.containers.DicomProcessingContianer attribute)</a>
+
+      <ul>
+        <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.providers">(pyalfe.containers.PipelineContainer attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api/interfaces/c3d.html#pyalfe.interfaces.c3d.C3D.push">push() (pyalfe.interfaces.c3d.C3D method)</a>
 </li>
       <li>
@@ -1229,6 +1323,13 @@ document.write(`
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li>
+    pyalfe.containers
+
+      <ul>
+        <li><a href="api/containers.html#module-pyalfe.containers">module</a>
+</li>
+      </ul></li>
+      <li>
     pyalfe.data_structure
 
       <ul>
@@ -1268,6 +1369,13 @@ document.write(`
 
       <ul>
         <li><a href="api/interfaces/greedy.html#module-pyalfe.interfaces.greedy">module</a>
+</li>
+      </ul></li>
+      <li>
+    pyalfe.pipeline
+
+      <ul>
+        <li><a href="api/pipeline.html#module-pyalfe.pipeline">module</a>
 </li>
       </ul></li>
       <li>
@@ -1340,6 +1448,10 @@ document.write(`
         <li><a href="api/utils/download.html#module-pyalfe.utils.download">module</a>
 </li>
       </ul></li>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.pyalfe_pipeline_runner">pyalfe_pipeline_runner (pyalfe.containers.PipelineContainer attribute)</a>
+</li>
+      <li><a href="api/pipeline.html#pyalfe.pipeline.PyALFEPipelineRunner">PyALFEPipelineRunner (class in pyalfe.pipeline)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -1348,6 +1460,14 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/tasks/quantification.html#pyalfe.tasks.quantification.Quantification">Quantification (class in pyalfe.tasks.quantification)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.quantification">quantification (pyalfe.containers.PipelineContainer attribute)</a>
+
+      <ul>
+        <li><a href="api/pipeline.html#pyalfe.pipeline.PyALFEPipelineRunner.quantification">(pyalfe.pipeline.PyALFEPipelineRunner attribute)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -1392,6 +1512,12 @@ document.write(`
       </ul></li>
       <li><a href="api/tasks/registration.html#pyalfe.tasks.registration.Resampling">Resampling (class in pyalfe.tasks.registration)</a>
 </li>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.resampling">resampling (pyalfe.containers.PipelineContainer attribute)</a>
+
+      <ul>
+        <li><a href="api/pipeline.html#pyalfe.pipeline.PyALFEPipelineRunner.resampling">(pyalfe.pipeline.PyALFEPipelineRunner attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api/image_registration.html#pyalfe.image_registration.AntsRegistration.reslice">reslice() (pyalfe.image_registration.AntsRegistration method)</a>
 
       <ul>
@@ -1418,6 +1544,8 @@ document.write(`
 
       <ul>
         <li><a href="api/interfaces/greedy.html#pyalfe.interfaces.greedy.Greedy.run">(pyalfe.interfaces.greedy.Greedy method)</a>
+</li>
+        <li><a href="api/pipeline.html#pyalfe.pipeline.PipelineRunner.run">(pyalfe.pipeline.PipelineRunner method)</a>
 </li>
         <li><a href="api/tasks/initialization.html#pyalfe.tasks.initialization.Initialization.run">(pyalfe.tasks.initialization.Initialization method)</a>
 </li>
@@ -1472,6 +1600,14 @@ document.write(`
 </li>
       <li><a href="api/tasks/skullstripping.html#pyalfe.tasks.skullstripping.Skullstripping">Skullstripping (class in pyalfe.tasks.skullstripping)</a>
 </li>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.skullstripping">skullstripping (pyalfe.containers.PipelineContainer attribute)</a>
+
+      <ul>
+        <li><a href="api/pipeline.html#pyalfe.pipeline.PyALFEPipelineRunner.skullstripping">(pyalfe.pipeline.PyALFEPipelineRunner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.skullstripping_model">skullstripping_model (pyalfe.containers.PipelineContainer attribute)</a>
+</li>
       <li><a href="api/data_structure.html#pyalfe.data_structure.Modality.SWI">SWI (pyalfe.data_structure.Modality attribute)</a>
 </li>
   </ul></td>
@@ -1482,6 +1618,24 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/data_structure.html#pyalfe.data_structure.Modality.T1">T1 (pyalfe.data_structure.Modality attribute)</a>
 </li>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.t1_postprocessing">t1_postprocessing (pyalfe.containers.PipelineContainer attribute)</a>
+
+      <ul>
+        <li><a href="api/pipeline.html#pyalfe.pipeline.PyALFEPipelineRunner.t1_postprocessing">(pyalfe.pipeline.PyALFEPipelineRunner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.t1_preprocessing">t1_preprocessing (pyalfe.containers.PipelineContainer attribute)</a>
+
+      <ul>
+        <li><a href="api/pipeline.html#pyalfe.pipeline.PyALFEPipelineRunner.t1_preprocessing">(pyalfe.pipeline.PyALFEPipelineRunner attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.t1_registration">t1_registration (pyalfe.containers.PipelineContainer attribute)</a>
+
+      <ul>
+        <li><a href="api/pipeline.html#pyalfe.pipeline.PyALFEPipelineRunner.t1_registration">(pyalfe.pipeline.PyALFEPipelineRunner attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api/data_structure.html#pyalfe.data_structure.Modality.T1Post">T1Post (pyalfe.data_structure.Modality attribute)</a>
 </li>
       <li><a href="api/tasks/t1_postprocessing.html#pyalfe.tasks.t1_postprocessing.T1Postprocessing">T1Postprocessing (class in pyalfe.tasks.t1_postprocessing)</a>
@@ -1496,10 +1650,10 @@ document.write(`
 </li>
       <li><a href="api/interfaces/greedy.html#pyalfe.interfaces.greedy.Greedy.threads">threads() (pyalfe.interfaces.greedy.Greedy method)</a>
 </li>
-      <li><a href="api/interfaces/c3d.html#pyalfe.interfaces.c3d.C3D.thresh">thresh() (pyalfe.interfaces.c3d.C3D method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/interfaces/c3d.html#pyalfe.interfaces.c3d.C3D.thresh">thresh() (pyalfe.interfaces.c3d.C3D method)</a>
+</li>
       <li><a href="api/image_processing.html#pyalfe.image_processing.Convert3DProcessor.threshold">threshold() (pyalfe.image_processing.Convert3DProcessor static method)</a>
 
       <ul>
@@ -1510,6 +1664,14 @@ document.write(`
       </ul></li>
       <li><a href="api/data_structure.html#pyalfe.data_structure.Tissue">Tissue (class in pyalfe.data_structure)</a>
 </li>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.tissue_model">tissue_model (pyalfe.containers.PipelineContainer attribute)</a>
+</li>
+      <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.tissue_segmentation">tissue_segmentation (pyalfe.containers.PipelineContainer attribute)</a>
+
+      <ul>
+        <li><a href="api/pipeline.html#pyalfe.pipeline.PyALFEPipelineRunner.tissue_segmentation">(pyalfe.pipeline.PyALFEPipelineRunner attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api/tasks/segmentation.html#pyalfe.tasks.segmentation.TissueWithPriorSegementation">TissueWithPriorSegementation (class in pyalfe.tasks.segmentation)</a>
 </li>
       <li><a href="api/interfaces/greedy.html#pyalfe.interfaces.greedy.Greedy.transforms">transforms() (pyalfe.interfaces.greedy.Greedy method)</a>
@@ -1546,6 +1708,14 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/data_structure.html#pyalfe.data_structure.Tissue.WHITE_MATTER">WHITE_MATTER (pyalfe.data_structure.Tissue attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/containers.html#pyalfe.containers.DicomProcessingContianer.wiring_config">wiring_config (pyalfe.containers.DicomProcessingContianer attribute)</a>
+
+      <ul>
+        <li><a href="api/containers.html#pyalfe.containers.PipelineContainer.wiring_config">(pyalfe.containers.PipelineContainer attribute)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -1611,8 +1781,8 @@ By Reza Eghbali
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

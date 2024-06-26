@@ -18,12 +18,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
@@ -37,9 +37,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
@@ -139,6 +139,8 @@
         <div class="sidebar-primary-item">
 
   
+    
+  
 
 <a class="navbar-brand logo" href="../intro.html">
   
@@ -160,7 +162,7 @@
 
  <script>
  document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
     <span class="search-button__default-text">Search</span>
     <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -382,10 +384,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
@@ -393,12 +395,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -414,6 +418,55 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer"><code class="docutils literal notranslate"><span class="pre">PipelineContainer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.config"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.config</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.pipeline_dir"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.pipeline_dir</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.image_processor"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.image_processor</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.image_registration"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.image_registration</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.parent_dir"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.parent_dir</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.skullstripping_model"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.skullstripping_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.flair_model"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.flair_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.enhancement_model"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.enhancement_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.tissue_model"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.tissue_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.initialization"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.initialization</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.skullstripping"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.skullstripping</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.t1_preprocessing"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.t1_preprocessing</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.cross_modality_registration"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.cross_modality_registration</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.flair_segmentation"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.flair_segmentation</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.enhancement_segmentation"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.enhancement_segmentation</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.tissue_segmentation"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.tissue_segmentation</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.t1_postprocessing"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.t1_postprocessing</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.t1_registration"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.t1_registration</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.resampling"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.resampling</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.quantification"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.quantification</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.pyalfe_pipeline_runner"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.pyalfe_pipeline_runner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.cls_providers"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.cls_providers</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.containers"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.containers</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.inherited_providers"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.inherited_providers</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.providers"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.providers</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.wiring_config"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.wiring_config</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.config"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.config</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.pipeline_dir"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.pipeline_dir</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.dicom_dir"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.dicom_dir</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.dicom_processing"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.dicom_processing</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.dicom_processing_pipeline_runner"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.dicom_processing_pipeline_runner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.cls_providers"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.cls_providers</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.containers"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.containers</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.inherited_providers"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.inherited_providers</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.providers"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.providers</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.wiring_config"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.wiring_config</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -423,8 +476,202 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="pyalfe-containers">
-<h1>pyalfe.containers<a class="headerlink" href="#pyalfe-containers" title="Link to this heading">#</a></h1>
+  <section id="module-pyalfe.containers">
+<span id="pyalfe-containers"></span><h1>pyalfe.containers<a class="headerlink" href="#module-pyalfe.containers" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.containers.</span></span><span class="sig-name descname"><span class="pre">PipelineContainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">overriding_providers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/containers.html#PipelineContainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.containers.PipelineContainer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeContainer</span></code></p>
+<p>container objects for all the dependencies of the pipeline.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Configuration('config')&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.config" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.pipeline_dir">
+<span class="sig-name descname"><span class="pre">pipeline_dir</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Selector(&lt;dependency_injector.providers.ConfigurationOption('config.options.data_dir_structure')&gt;,</span> <span class="pre">alfe=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.data_structure.DefaultALFEDataDir'&gt;)&gt;,</span> <span class="pre">bids=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.data_structure.BIDSDataDir'&gt;)&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.pipeline_dir" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.image_processor">
+<span class="sig-name descname"><span class="pre">image_processor</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Selector(&lt;dependency_injector.providers.ConfigurationOption('config.options.image_processor')&gt;,</span> <span class="pre">c3d=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.image_processing.Convert3DProcessor'&gt;)&gt;,</span> <span class="pre">nilearn=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.image_processing.NilearnProcessor'&gt;)&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.image_processor" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.image_registration">
+<span class="sig-name descname"><span class="pre">image_registration</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Selector(&lt;dependency_injector.providers.ConfigurationOption('config.options.image_registration')&gt;,</span> <span class="pre">greedy=&lt;dependency_injector.providers.Factory(&lt;class</span> <span class="pre">'pyalfe.image_registration.GreedyRegistration'&gt;)&gt;,</span> <span class="pre">ants=&lt;dependency_injector.providers.Factory(&lt;class</span> <span class="pre">'pyalfe.image_registration.AntsRegistration'&gt;)&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.image_registration" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.parent_dir">
+<span class="sig-name descname"><span class="pre">parent_dir</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/opt/hostedtoolcache/Python/3.9.19/x64/lib/python3.9/site-packages/pyalfe'</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.parent_dir" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.skullstripping_model">
+<span class="sig-name descname"><span class="pre">skullstripping_model</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.inference.NNUnetV2'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.skullstripping_model" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.flair_model">
+<span class="sig-name descname"><span class="pre">flair_model</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.inference.NNUnetV2'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.flair_model" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.enhancement_model">
+<span class="sig-name descname"><span class="pre">enhancement_model</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.inference.NNUnetV2'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.enhancement_model" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.tissue_model">
+<span class="sig-name descname"><span class="pre">tissue_model</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.inference.NNUnetV2'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.tissue_model" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.initialization">
+<span class="sig-name descname"><span class="pre">initialization</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.initialization.Initialization'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.initialization" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.skullstripping">
+<span class="sig-name descname"><span class="pre">skullstripping</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.skullstripping.Skullstripping'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.skullstripping" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.t1_preprocessing">
+<span class="sig-name descname"><span class="pre">t1_preprocessing</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.t1_preprocessing.T1Preprocessing'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.t1_preprocessing" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.cross_modality_registration">
+<span class="sig-name descname"><span class="pre">cross_modality_registration</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.registration.CrossModalityRegistration'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.cross_modality_registration" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.flair_segmentation">
+<span class="sig-name descname"><span class="pre">flair_segmentation</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.segmentation.SingleModalitySegmentation'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.flair_segmentation" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.enhancement_segmentation">
+<span class="sig-name descname"><span class="pre">enhancement_segmentation</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.segmentation.MultiModalitySegmentation'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.enhancement_segmentation" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.tissue_segmentation">
+<span class="sig-name descname"><span class="pre">tissue_segmentation</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.segmentation.TissueWithPriorSegementation'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.tissue_segmentation" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.t1_postprocessing">
+<span class="sig-name descname"><span class="pre">t1_postprocessing</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.t1_postprocessing.T1Postprocessing'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.t1_postprocessing" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.t1_registration">
+<span class="sig-name descname"><span class="pre">t1_registration</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.registration.T1Registration'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.t1_registration" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.resampling">
+<span class="sig-name descname"><span class="pre">resampling</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.registration.Resampling'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.resampling" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.quantification">
+<span class="sig-name descname"><span class="pre">quantification</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.quantification.Quantification'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.quantification" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.pyalfe_pipeline_runner">
+<span class="sig-name descname"><span class="pre">pyalfe_pipeline_runner</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.pipeline.PyALFEPipelineRunner'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.pyalfe_pipeline_runner" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.cls_providers">
+<span class="sig-name descname"><span class="pre">cls_providers</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'config':</span> <span class="pre">&lt;dependency_injector.providers.Configuration('config')&gt;,</span> <span class="pre">'cross_modality_registration':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.registration.CrossModalityRegistration'&gt;)&gt;,</span> <span class="pre">'enhancement_model':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.inference.NNUnetV2'&gt;)&gt;,</span> <span class="pre">'enhancement_segmentation':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.segmentation.MultiModalitySegmentation'&gt;)&gt;,</span> <span class="pre">'flair_model':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.inference.NNUnetV2'&gt;)&gt;,</span> <span class="pre">'flair_segmentation':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.segmentation.SingleModalitySegmentation'&gt;)&gt;,</span> <span class="pre">'image_processor':</span> <span class="pre">&lt;dependency_injector.providers.Selector(&lt;dependency_injector.providers.ConfigurationOption('config.options.image_processor')&gt;,</span> <span class="pre">c3d=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.image_processing.Convert3DProcessor'&gt;)&gt;,</span> <span class="pre">nilearn=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.image_processing.NilearnProcessor'&gt;)&gt;)&gt;,</span> <span class="pre">'image_registration':</span> <span class="pre">&lt;dependency_injector.providers.Selector(&lt;dependency_injector.providers.ConfigurationOption('config.options.image_registration')&gt;,</span> <span class="pre">greedy=&lt;dependency_injector.providers.Factory(&lt;class</span> <span class="pre">'pyalfe.image_registration.GreedyRegistration'&gt;)&gt;,</span> <span class="pre">ants=&lt;dependency_injector.providers.Factory(&lt;class</span> <span class="pre">'pyalfe.image_registration.AntsRegistration'&gt;)&gt;)&gt;,</span> <span class="pre">'initialization':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.initialization.Initialization'&gt;)&gt;,</span> <span class="pre">'pipeline_dir':</span> <span class="pre">&lt;dependency_injector.providers.Selector(&lt;dependency_injector.providers.ConfigurationOption('config.options.data_dir_structure')&gt;,</span> <span class="pre">alfe=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.data_structure.DefaultALFEDataDir'&gt;)&gt;,</span> <span class="pre">bids=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.data_structure.BIDSDataDir'&gt;)&gt;)&gt;,</span> <span class="pre">'pyalfe_pipeline_runner':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.pipeline.PyALFEPipelineRunner'&gt;)&gt;,</span> <span class="pre">'quantification':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.quantification.Quantification'&gt;)&gt;,</span> <span class="pre">'resampling':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.registration.Resampling'&gt;)&gt;,</span> <span class="pre">'skullstripping':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.skullstripping.Skullstripping'&gt;)&gt;,</span> <span class="pre">'skullstripping_model':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.inference.NNUnetV2'&gt;)&gt;,</span> <span class="pre">'t1_postprocessing':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.t1_postprocessing.T1Postprocessing'&gt;)&gt;,</span> <span class="pre">'t1_preprocessing':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.t1_preprocessing.T1Preprocessing'&gt;)&gt;,</span> <span class="pre">'t1_registration':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.registration.T1Registration'&gt;)&gt;,</span> <span class="pre">'tissue_model':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.inference.NNUnetV2'&gt;)&gt;,</span> <span class="pre">'tissue_segmentation':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.segmentation.TissueWithPriorSegementation'&gt;)&gt;}</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.cls_providers" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.containers">
+<span class="sig-name descname"><span class="pre">containers</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.containers" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.inherited_providers">
+<span class="sig-name descname"><span class="pre">inherited_providers</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.inherited_providers" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.providers">
+<span class="sig-name descname"><span class="pre">providers</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'config':</span> <span class="pre">&lt;dependency_injector.providers.Configuration('config')&gt;,</span> <span class="pre">'cross_modality_registration':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.registration.CrossModalityRegistration'&gt;)&gt;,</span> <span class="pre">'enhancement_model':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.inference.NNUnetV2'&gt;)&gt;,</span> <span class="pre">'enhancement_segmentation':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.segmentation.MultiModalitySegmentation'&gt;)&gt;,</span> <span class="pre">'flair_model':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.inference.NNUnetV2'&gt;)&gt;,</span> <span class="pre">'flair_segmentation':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.segmentation.SingleModalitySegmentation'&gt;)&gt;,</span> <span class="pre">'image_processor':</span> <span class="pre">&lt;dependency_injector.providers.Selector(&lt;dependency_injector.providers.ConfigurationOption('config.options.image_processor')&gt;,</span> <span class="pre">c3d=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.image_processing.Convert3DProcessor'&gt;)&gt;,</span> <span class="pre">nilearn=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.image_processing.NilearnProcessor'&gt;)&gt;)&gt;,</span> <span class="pre">'image_registration':</span> <span class="pre">&lt;dependency_injector.providers.Selector(&lt;dependency_injector.providers.ConfigurationOption('config.options.image_registration')&gt;,</span> <span class="pre">greedy=&lt;dependency_injector.providers.Factory(&lt;class</span> <span class="pre">'pyalfe.image_registration.GreedyRegistration'&gt;)&gt;,</span> <span class="pre">ants=&lt;dependency_injector.providers.Factory(&lt;class</span> <span class="pre">'pyalfe.image_registration.AntsRegistration'&gt;)&gt;)&gt;,</span> <span class="pre">'initialization':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.initialization.Initialization'&gt;)&gt;,</span> <span class="pre">'pipeline_dir':</span> <span class="pre">&lt;dependency_injector.providers.Selector(&lt;dependency_injector.providers.ConfigurationOption('config.options.data_dir_structure')&gt;,</span> <span class="pre">alfe=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.data_structure.DefaultALFEDataDir'&gt;)&gt;,</span> <span class="pre">bids=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.data_structure.BIDSDataDir'&gt;)&gt;)&gt;,</span> <span class="pre">'pyalfe_pipeline_runner':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.pipeline.PyALFEPipelineRunner'&gt;)&gt;,</span> <span class="pre">'quantification':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.quantification.Quantification'&gt;)&gt;,</span> <span class="pre">'resampling':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.registration.Resampling'&gt;)&gt;,</span> <span class="pre">'skullstripping':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.skullstripping.Skullstripping'&gt;)&gt;,</span> <span class="pre">'skullstripping_model':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.inference.NNUnetV2'&gt;)&gt;,</span> <span class="pre">'t1_postprocessing':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.t1_postprocessing.T1Postprocessing'&gt;)&gt;,</span> <span class="pre">'t1_preprocessing':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.t1_preprocessing.T1Preprocessing'&gt;)&gt;,</span> <span class="pre">'t1_registration':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.registration.T1Registration'&gt;)&gt;,</span> <span class="pre">'tissue_model':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.inference.NNUnetV2'&gt;)&gt;,</span> <span class="pre">'tissue_segmentation':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.segmentation.TissueWithPriorSegementation'&gt;)&gt;}</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.providers" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.wiring_config">
+<span class="sig-name descname"><span class="pre">wiring_config</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.containers.WiringConfiguration</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#pyalfe.containers.PipelineContainer.wiring_config" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyalfe.containers.DicomProcessingContianer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.containers.</span></span><span class="sig-name descname"><span class="pre">DicomProcessingContianer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">overriding_providers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/containers.html#DicomProcessingContianer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.containers.DicomProcessingContianer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeContainer</span></code></p>
+<p>Contianer for dicom processing pipeline depedencies</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.DicomProcessingContianer.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Configuration('config')&gt;</span></em><a class="headerlink" href="#pyalfe.containers.DicomProcessingContianer.config" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.DicomProcessingContianer.pipeline_dir">
+<span class="sig-name descname"><span class="pre">pipeline_dir</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Selector(&lt;dependency_injector.providers.ConfigurationOption('config.options.data_dir_structure')&gt;,</span> <span class="pre">alfe=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.data_structure.DefaultALFEDataDir'&gt;)&gt;,</span> <span class="pre">bids=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.data_structure.BIDSDataDir'&gt;)&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.DicomProcessingContianer.pipeline_dir" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.DicomProcessingContianer.dicom_dir">
+<span class="sig-name descname"><span class="pre">dicom_dir</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.data_structure.PatientDicomDataDir'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.DicomProcessingContianer.dicom_dir" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.DicomProcessingContianer.dicom_processing">
+<span class="sig-name descname"><span class="pre">dicom_processing</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.dicom_processing.DicomProcessing'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.DicomProcessingContianer.dicom_processing" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.DicomProcessingContianer.dicom_processing_pipeline_runner">
+<span class="sig-name descname"><span class="pre">dicom_processing_pipeline_runner</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.pipeline.DicomProcessingPipelineRunner'&gt;)&gt;</span></em><a class="headerlink" href="#pyalfe.containers.DicomProcessingContianer.dicom_processing_pipeline_runner" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.DicomProcessingContianer.cls_providers">
+<span class="sig-name descname"><span class="pre">cls_providers</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'config':</span> <span class="pre">&lt;dependency_injector.providers.Configuration('config')&gt;,</span> <span class="pre">'dicom_dir':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.data_structure.PatientDicomDataDir'&gt;)&gt;,</span> <span class="pre">'dicom_processing':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.dicom_processing.DicomProcessing'&gt;)&gt;,</span> <span class="pre">'dicom_processing_pipeline_runner':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.pipeline.DicomProcessingPipelineRunner'&gt;)&gt;,</span> <span class="pre">'pipeline_dir':</span> <span class="pre">&lt;dependency_injector.providers.Selector(&lt;dependency_injector.providers.ConfigurationOption('config.options.data_dir_structure')&gt;,</span> <span class="pre">alfe=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.data_structure.DefaultALFEDataDir'&gt;)&gt;,</span> <span class="pre">bids=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.data_structure.BIDSDataDir'&gt;)&gt;)&gt;}</span></em><a class="headerlink" href="#pyalfe.containers.DicomProcessingContianer.cls_providers" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.DicomProcessingContianer.containers">
+<span class="sig-name descname"><span class="pre">containers</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#pyalfe.containers.DicomProcessingContianer.containers" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.DicomProcessingContianer.inherited_providers">
+<span class="sig-name descname"><span class="pre">inherited_providers</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#pyalfe.containers.DicomProcessingContianer.inherited_providers" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.DicomProcessingContianer.providers">
+<span class="sig-name descname"><span class="pre">providers</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'config':</span> <span class="pre">&lt;dependency_injector.providers.Configuration('config')&gt;,</span> <span class="pre">'dicom_dir':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.data_structure.PatientDicomDataDir'&gt;)&gt;,</span> <span class="pre">'dicom_processing':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.tasks.dicom_processing.DicomProcessing'&gt;)&gt;,</span> <span class="pre">'dicom_processing_pipeline_runner':</span> <span class="pre">&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.pipeline.DicomProcessingPipelineRunner'&gt;)&gt;,</span> <span class="pre">'pipeline_dir':</span> <span class="pre">&lt;dependency_injector.providers.Selector(&lt;dependency_injector.providers.ConfigurationOption('config.options.data_dir_structure')&gt;,</span> <span class="pre">alfe=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.data_structure.DefaultALFEDataDir'&gt;)&gt;,</span> <span class="pre">bids=&lt;dependency_injector.providers.Singleton(&lt;class</span> <span class="pre">'pyalfe.data_structure.BIDSDataDir'&gt;)&gt;)&gt;}</span></em><a class="headerlink" href="#pyalfe.containers.DicomProcessingContianer.providers" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.containers.DicomProcessingContianer.wiring_config">
+<span class="sig-name descname"><span class="pre">wiring_config</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;dependency_injector.containers.WiringConfiguration</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#pyalfe.containers.DicomProcessingContianer.wiring_config" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 
     <script type="text/x-thebe-config">
@@ -482,6 +729,62 @@ document.write(`
             
             
               
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer"><code class="docutils literal notranslate"><span class="pre">PipelineContainer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.config"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.config</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.pipeline_dir"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.pipeline_dir</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.image_processor"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.image_processor</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.image_registration"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.image_registration</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.parent_dir"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.parent_dir</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.skullstripping_model"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.skullstripping_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.flair_model"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.flair_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.enhancement_model"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.enhancement_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.tissue_model"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.tissue_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.initialization"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.initialization</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.skullstripping"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.skullstripping</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.t1_preprocessing"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.t1_preprocessing</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.cross_modality_registration"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.cross_modality_registration</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.flair_segmentation"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.flair_segmentation</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.enhancement_segmentation"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.enhancement_segmentation</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.tissue_segmentation"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.tissue_segmentation</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.t1_postprocessing"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.t1_postprocessing</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.t1_registration"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.t1_registration</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.resampling"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.resampling</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.quantification"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.quantification</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.pyalfe_pipeline_runner"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.pyalfe_pipeline_runner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.cls_providers"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.cls_providers</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.containers"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.containers</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.inherited_providers"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.inherited_providers</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.providers"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.providers</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.wiring_config"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.wiring_config</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.config"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.config</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.pipeline_dir"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.pipeline_dir</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.dicom_dir"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.dicom_dir</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.dicom_processing"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.dicom_processing</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.dicom_processing_pipeline_runner"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.dicom_processing_pipeline_runner</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.cls_providers"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.cls_providers</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.containers"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.containers</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.inherited_providers"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.inherited_providers</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.providers"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.providers</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DicomProcessingContianer.wiring_config"><code class="docutils literal notranslate"><span class="pre">DicomProcessingContianer.wiring_config</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
             
           </div>
           <footer class="bd-footer-content">
@@ -525,8 +828,8 @@ By Reza Eghbali
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

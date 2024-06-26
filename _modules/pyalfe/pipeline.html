@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pyalfe.inference &#8212; pyalfe</title>
+    <title>pyalfe.pipeline &#8212; pyalfe</title>
   
   
   
@@ -56,7 +56,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyalfe/inference';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pyalfe/pipeline';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -281,7 +281,7 @@
       
       
       
-      <li><a href="https://github.com/reghbali/pyalfe/issues/new?title=Issue%20on%20page%20%2F_modules/pyalfe/inference.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/reghbali/pyalfe/issues/new?title=Issue%20on%20page%20%2F_modules/pyalfe/pipeline.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -359,127 +359,115 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <h1>Source code for pyalfe.inference</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">io</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+  <h1>Source code for pyalfe.pipeline</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pyalfe.tasks.dicom_processing</span> <span class="kn">import</span> <span class="n">DicomProcessing</span>
+<span class="kn">from</span> <span class="nn">pyalfe.tasks.initialization</span> <span class="kn">import</span> <span class="n">Initialization</span>
+<span class="kn">from</span> <span class="nn">pyalfe.tasks.quantification</span> <span class="kn">import</span> <span class="n">Quantification</span>
+<span class="kn">from</span> <span class="nn">pyalfe.tasks.registration</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CrossModalityRegistration</span><span class="p">,</span>
+    <span class="n">Resampling</span><span class="p">,</span>
+    <span class="n">T1Registration</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pyalfe.tasks.segmentation</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SingleModalitySegmentation</span><span class="p">,</span>
+    <span class="n">MultiModalitySegmentation</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pyalfe.tasks.skullstripping</span> <span class="kn">import</span> <span class="n">Skullstripping</span>
+<span class="kn">from</span> <span class="nn">pyalfe.tasks.t1_postprocessing</span> <span class="kn">import</span> <span class="n">T1Postprocessing</span>
+<span class="kn">from</span> <span class="nn">pyalfe.tasks.t1_preprocessing</span> <span class="kn">import</span> <span class="n">T1Preprocessing</span>
 
-<span class="kn">import</span> <span class="nn">torch</span>
 
+<div class="viewcode-block" id="PipelineRunner">
+<a class="viewcode-back" href="../../api/pipeline.html#pyalfe.pipeline.PipelineRunner">[docs]</a>
+<span class="k">class</span> <span class="nc">PipelineRunner</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">steps</span> <span class="o">=</span> <span class="n">steps</span>
 
-<div class="viewcode-block" id="InferenceModel">
-<a class="viewcode-back" href="../../api/inference.html#pyalfe.inference.InferenceModel">[docs]</a>
-<span class="k">class</span> <span class="nc">InferenceModel</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The parent class for all inference models.&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="InferenceModel.predict_cases">
-<a class="viewcode-back" href="../../api/inference.html#pyalfe.inference.InferenceModel.predict_cases">[docs]</a>
-    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">predict_cases</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">input_image_tuple_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">],</span> <span class="n">output_list</span><span class="p">:</span> <span class="nb">list</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        input_image_tuple_list</span>
-<span class="sd">        output_list</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
+<div class="viewcode-block" id="PipelineRunner.run">
+<a class="viewcode-back" href="../../api/pipeline.html#pyalfe.pipeline.PipelineRunner.run">[docs]</a>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">steps</span><span class="p">:</span>
+            <span class="n">step</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">accession</span><span class="p">)</span></div>
 </div>
 
 
 
-<div class="viewcode-block" id="NNUnet">
-<a class="viewcode-back" href="../../api/inference.html#pyalfe.inference.NNUnet">[docs]</a>
-<span class="k">class</span> <span class="nc">NNUnet</span><span class="p">(</span><span class="n">InferenceModel</span><span class="p">):</span>
+<div class="viewcode-block" id="PyALFEPipelineRunner">
+<a class="viewcode-back" href="../../api/pipeline.html#pyalfe.pipeline.PyALFEPipelineRunner">[docs]</a>
+<span class="k">class</span> <span class="nc">PyALFEPipelineRunner</span><span class="p">(</span><span class="n">PipelineRunner</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The pyalfe pipeline runner.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    initialization: Initialization</span>
+<span class="sd">        The initialization task object.</span>
+<span class="sd">    skullstripping: Skullstripping</span>
+<span class="sd">        The skulstripping task object.</span>
+<span class="sd">    t1_preprocessing: T1Preprocessing</span>
+<span class="sd">        The t1 preprocessing task object.</span>
+<span class="sd">    cross_modality_registration: CrossModalityRegistration</span>
+<span class="sd">        The cross modality registration object.</span>
+<span class="sd">    flair_segmentation: SingleModalitySegmentation</span>
+<span class="sd">        The flair segmentation object.</span>
+<span class="sd">    enhancement_segmentation: MultiModalitySegmentation</span>
+<span class="sd">        The enhancement segmentation object.</span>
+<span class="sd">    tissue_segmentation: SingleModalitySegmentation</span>
+<span class="sd">        The tissue segmentation object.</span>
+<span class="sd">    t1_postprocessing: T1Postprocessing</span>
+<span class="sd">        The t1 postprocessing object.</span>
+<span class="sd">    t1_registration: T1Registration</span>
+<span class="sd">        The t1 registration object.</span>
+<span class="sd">    resampling: Resampling</span>
+<span class="sd">        The resampling object.</span>
+<span class="sd">    quantification: Quantification</span>
+<span class="sd">        The quantification object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">model_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">fold</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">n_threads_preprocessing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span>
-        <span class="n">n_threads_save</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model_dir</span> <span class="o">=</span> <span class="n">model_dir</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fold</span> <span class="o">=</span> <span class="n">fold</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_threads_preprocessing</span> <span class="o">=</span> <span class="n">n_threads_preprocessing</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_threads_save</span> <span class="o">=</span> <span class="n">n_threads_save</span>
-
-<div class="viewcode-block" id="NNUnet.predict_cases">
-<a class="viewcode-back" href="../../api/inference.html#pyalfe.inference.NNUnet.predict_cases">[docs]</a>
-    <span class="k">def</span> <span class="nf">predict_cases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_image_tuple_list</span><span class="p">,</span> <span class="n">output_list</span><span class="p">):</span>
-
-        <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">output_list</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output</span><span class="p">):</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
-        <span class="n">text_trap</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">text_trap</span>
-        <span class="kn">from</span> <span class="nn">nnunet.inference.predict</span> <span class="kn">import</span> <span class="n">predict_cases_fast</span>
-
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">__stdout__</span>
-        <span class="n">predict_cases_fast</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">model_dir</span><span class="p">,</span>
-            <span class="n">input_image_tuple_list</span><span class="p">,</span>
-            <span class="n">output_list</span><span class="p">,</span>
-            <span class="n">folds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fold</span><span class="p">,</span>
-            <span class="n">num_threads_nifti_save</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_threads_save</span><span class="p">,</span>
-            <span class="n">num_threads_preprocessing</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_threads_preprocessing</span><span class="p">,</span>
-        <span class="p">)</span></div>
-</div>
+        <span class="n">initialization</span><span class="p">:</span> <span class="n">Initialization</span><span class="p">,</span>
+        <span class="n">skullstripping</span><span class="p">:</span> <span class="n">Skullstripping</span><span class="p">,</span>
+        <span class="n">t1_preprocessing</span><span class="p">:</span> <span class="n">T1Preprocessing</span><span class="p">,</span>
+        <span class="n">cross_modality_registration</span><span class="p">:</span> <span class="n">CrossModalityRegistration</span><span class="p">,</span>
+        <span class="n">flair_segmentation</span><span class="p">:</span> <span class="n">SingleModalitySegmentation</span><span class="p">,</span>
+        <span class="n">enhancement_segmentation</span><span class="p">:</span> <span class="n">MultiModalitySegmentation</span><span class="p">,</span>
+        <span class="n">tissue_segmentation</span><span class="p">:</span> <span class="n">SingleModalitySegmentation</span><span class="p">,</span>
+        <span class="n">t1_postprocessing</span><span class="p">:</span> <span class="n">T1Postprocessing</span><span class="p">,</span>
+        <span class="n">t1_registration</span><span class="p">:</span> <span class="n">T1Registration</span><span class="p">,</span>
+        <span class="n">resampling</span><span class="p">:</span> <span class="n">Resampling</span><span class="p">,</span>
+        <span class="n">quantification</span><span class="p">:</span> <span class="n">Quantification</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">steps</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">initialization</span><span class="p">,</span>
+            <span class="n">skullstripping</span><span class="p">,</span>
+            <span class="n">t1_preprocessing</span><span class="p">,</span>
+            <span class="n">cross_modality_registration</span><span class="p">,</span>
+            <span class="n">flair_segmentation</span><span class="p">,</span>
+            <span class="n">enhancement_segmentation</span><span class="p">,</span>
+            <span class="n">t1_postprocessing</span><span class="p">,</span>
+            <span class="n">t1_registration</span><span class="p">,</span>
+            <span class="n">tissue_segmentation</span><span class="p">,</span>
+            <span class="n">resampling</span><span class="p">,</span>
+            <span class="n">quantification</span>
+        <span class="p">]</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span></div>
 
 
 
-<div class="viewcode-block" id="NNUnetV2">
-<a class="viewcode-back" href="../../api/inference.html#pyalfe.inference.NNUnetV2">[docs]</a>
-<span class="k">class</span> <span class="nc">NNUnetV2</span><span class="p">(</span><span class="n">InferenceModel</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">model_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">folds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">n_threads_preprocessing</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="n">n_threads_save</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model_dir</span> <span class="o">=</span> <span class="n">model_dir</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">folds</span> <span class="o">=</span> <span class="n">folds</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_threads_preprocessing</span> <span class="o">=</span> <span class="n">n_threads_preprocessing</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_threads_save</span> <span class="o">=</span> <span class="n">n_threads_save</span>
 
-<div class="viewcode-block" id="NNUnetV2.predict_cases">
-<a class="viewcode-back" href="../../api/inference.html#pyalfe.inference.NNUnetV2.predict_cases">[docs]</a>
-    <span class="k">def</span> <span class="nf">predict_cases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_image_tuple_list</span><span class="p">,</span> <span class="n">output_list</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">output_list</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output</span><span class="p">):</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
-        <span class="n">text_trap</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">text_trap</span>
-        <span class="kn">from</span> <span class="nn">nnunetv2.inference.predict_from_raw_data</span> <span class="kn">import</span> <span class="n">nnUNetPredictor</span>
+<div class="viewcode-block" id="DicomProcessingPipelineRunner">
+<a class="viewcode-back" href="../../api/pipeline.html#pyalfe.pipeline.DicomProcessingPipelineRunner">[docs]</a>
+<span class="k">class</span> <span class="nc">DicomProcessingPipelineRunner</span><span class="p">(</span><span class="n">PipelineRunner</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Dicom processing pipeline runner</span>
 
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">__stdout__</span>
-
-        <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
-            <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
-
-        <span class="n">predictor</span> <span class="o">=</span> <span class="n">nnUNetPredictor</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
-        <span class="n">predictor</span><span class="o">.</span><span class="n">initialize_from_trained_model_folder</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">model_dir</span><span class="p">,</span>
-            <span class="n">use_folds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">folds</span><span class="p">,</span>
-            <span class="n">checkpoint_name</span><span class="o">=</span><span class="s1">&#39;checkpoint_final.pth&#39;</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">predictor</span><span class="o">.</span><span class="n">predict_from_files</span><span class="p">(</span>
-            <span class="n">input_image_tuple_list</span><span class="p">,</span>
-            <span class="n">output_list</span><span class="p">,</span>
-            <span class="n">num_processes_preprocessing</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_threads_preprocessing</span><span class="p">,</span>
-            <span class="n">num_processes_segmentation_export</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_threads_save</span><span class="p">,</span>
-        <span class="p">)</span></div>
-</div>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dicom_processing: DicomProcessing</span>
+<span class="sd">        The dicom processing object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dicom_processing</span><span class="p">:</span> <span class="n">DicomProcessing</span><span class="p">):</span>
+        <span class="n">steps</span> <span class="o">=</span> <span class="p">[</span><span class="n">dicom_processing</span><span class="p">]</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span></div>
 
 </pre></div>
 
