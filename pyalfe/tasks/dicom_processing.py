@@ -164,7 +164,7 @@ class DicomProcessing(Task):
             max_echo_series_crc = get_max_echo_series_crc(
                 all_series_instances[selected_series_uid]
             )
-
+            print(dicom_dir, nifti_path)
             conversion_status = self.dicom2nifti(
                 dcm_series_dir=dicom_dir,
                 nifti_path=nifti_path,

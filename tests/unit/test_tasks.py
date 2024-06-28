@@ -6,11 +6,17 @@ from unittest import TestCase
 import numpy as np
 import pandas as pd
 
-from pyalfe.data_structure import DefaultALFEDataDir, Modality, Tissue
+from pyalfe.data_structure import (
+    DefaultALFEDataDir,
+    PatientDicomDataDir,
+    Modality,
+    Tissue,
+)
 from pyalfe.image_processing import Convert3DProcessor
 from pyalfe.image_registration import GreedyRegistration
 from pyalfe.inference import InferenceModel
 from pyalfe.roi import roi_dict
+from pyalfe.tasks.dicom_processing import DicomProcessing
 from pyalfe.tasks.initialization import Initialization
 from pyalfe.tasks.quantification import Quantification
 from pyalfe.tasks.registration import (
@@ -44,14 +50,14 @@ class TestTask(TestCase):
     def setUp(self) -> None:
         self.test_dir = os.path.join('/tmp', 'tasks_tests')
 
-        processed_dir = os.path.join(self.test_dir, 'output')
-        classified_dir = os.path.join(self.test_dir, 'input')
+        output_dir = os.path.join(self.test_dir, 'output')
+        input_dir = os.path.join(self.test_dir, 'input')
 
-        os.makedirs(processed_dir)
-        os.mkdir(classified_dir)
+        os.makedirs(output_dir)
+        os.mkdir(input_dir)
 
         self.pipeline_dir = DefaultALFEDataDir(
-            output_dir=processed_dir, input_dir=classified_dir
+            output_dir=output_dir, input_dir=input_dir
         )
 
     def tearDown(self) -> None:
@@ -169,7 +175,6 @@ class TestCrossModalityRegistration(TestTask):
         task.run(accession)
         for target in modalities_target:
             for modality in modalities:
-
                 print(modality, target)
                 output = self.pipeline_dir.get_output_image(
                     accession, modality, f'to_{target}_{task.image_type}'
@@ -943,3 +948,36 @@ class TestQuantification(TestTask):
         self.assertEqual(200 / 3.0, lesion_stats['percentage_volume_in_Temporal'])
         self.assertEqual(6.0, lesion_stats['lesion_volume_in_CorpusCallosum'])
         self.assertEqual(100.0, lesion_stats['percentage_volume_in_CorpusCallosum'])
+
+
+class TestDicomProcessing(TestTask):
+    def setUp(self) -> None:
+        super().setUp()
+        self.dicom_input_dir = os.path.join(self.test_dir, 'dicom')
+        os.mkdir(self.dicom_input_dir)
+
+        self.dicom_data_dir = PatientDicomDataDir(self.dicom_input_dir)
+
+    def test_dicom2nifti(self):
+        pass
+
+    def test_get_best(self):
+        pass
+
+    def test_select_orientation(self):
+        pass
+
+    def test_run(self):
+        accession = '05152010'
+        shutil.copytree(
+            os.path.join('tests', 'data', 'upenn_gbm', 'UPENN-GBM-00621', accession),
+            os.path.join(self.dicom_input_dir, accession),
+        )
+        task = DicomProcessing(
+            pipeline_dir=self.pipeline_dir, dicom_dir=self.dicom_data_dir
+        )
+        task.run(accession)
+
+        for modality in [Modality.T1, Modality.T2, Modality.FLAIR, Modality.T1Post]:
+            nifti_image = self.pipeline_dir.get_input_image(accession, modality)
+            self.assertTrue(os.path.exists(nifti_image))
