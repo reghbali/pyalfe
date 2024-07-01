@@ -126,13 +126,13 @@ class DicomProcessing(Task):
         classified = defaultdict(defaultdict(list).copy)
         converted, conversion_failed = defaultdict(str), defaultdict(str)
         skipped = []
-        all_series_instances = self.dicom_dir.get_all_dicom_series_instances(accession)
+        all_series = self.dicom_dir.get_all_dicom_series_instances(accession)
 
-        for series_uid, instances in all_series_instances.items():
-            if len(instances) == 0:
-                continue
+        for series in all_series.values():
 
-            dicom_meta = extract_dicom_meta(instances[0], series_uid=series_uid)
+            dicom_meta = extract_dicom_meta(
+                series.instances[0], series_uid=series.series_uid
+            )
             modality = detect_modality(
                 dicom_meta.series_desc,
                 dicom_meta.seq,
@@ -153,26 +153,24 @@ class DicomProcessing(Task):
             for orientation, image_list in orientations.items():
                 orientation_best[orientation] = self.get_best(image_list)
 
-            selected_orientation, selected_image_meta = self.select_orientation(
-                orientation_best
-            )
+            _, selected_image_meta = self.select_orientation(orientation_best)
             nifti_path = self.pipeline_dir.get_input_image(
                 accession=accession, modality=modality
             )
             selected_series_uid = selected_image_meta.series_uid
-            dicom_dir = self.dicom_dir.get_series(accession, selected_series_uid)
+            dcm_series_dir = all_series[selected_series_uid].series_path
             max_echo_series_crc = get_max_echo_series_crc(
-                all_series_instances[selected_series_uid]
+                all_series[selected_series_uid].instances
             )
 
             conversion_status = self.dicom2nifti(
-                dcm_series_dir=dicom_dir,
+                dcm_series_dir=dcm_series_dir,
                 nifti_path=nifti_path,
                 series_crc=max_echo_series_crc,
             )
 
             if conversion_status == 0:
-                self.logger.warning(f'failed to convert {dicom_dir} to nifti.')
+                self.logger.warning(f'failed to convert {dcm_series_dir} to nifti.')
                 conversion_failed[modality] = selected_image_meta
                 continue
             converted[modality] = selected_image_meta
