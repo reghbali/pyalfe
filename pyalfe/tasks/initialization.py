@@ -27,6 +27,7 @@ class Initialization(Task):
         modalities: list[Modality],
         overwrite: bool = True,
     ) -> None:
+        super().__init__()
         self.pipeline_dir = pipeline_dir
         self.modalities = modalities
         self.overwrite = overwrite

@@ -1,3 +1,5 @@
+import collections
+import glob
 import importlib
 import json
 import logging
@@ -8,6 +10,7 @@ import os
 from pathlib import Path
 
 from bids import BIDSLayout
+import SimpleITK as sitk
 
 from strenum import StrEnum
 
@@ -41,6 +44,9 @@ class Tissue(IntEnum):
     DEEP_GRAY_MATTER = 4
     BRAIN_STEM = 5
     CEREBELLUM = 6
+
+
+Series = collections.namedtuple('Series', ['series_uid', 'series_path', 'instances'])
 
 
 class PipelineDataDir(ABC):
@@ -556,3 +562,65 @@ class BIDSDataDir(PipelineDataDir):
         ret = self.output_layout.build_path(entities, pattern, validate=False)
         Path(ret).parent.mkdir(parents=True, exist_ok=True)
         return ret
+
+
+class PatientDicomDataDir:
+    """This class is designe to work with directories containing raw dicom
+    files for a patient that are organized as:
+    patient_id
+        └─ accession (study)
+            └─ series
+                ├─ instance_0.dcm
+                └─ instance_1.dcm
+    """
+
+    def __init__(self, dicom_dir) -> None:
+        self.dicom_dir = dicom_dir
+
+    def get_all_dicom_series_instances(self, accession):
+        """This method returns a dictionary where the keys are the series IDs
+        available for a patient-accession (study) and the values are the list
+        of all the instances in the series.
+
+        Parameters
+        ----------
+        accession: str
+            The accession or study number.
+
+        Returns
+        -------
+        dict[str, list[str]]
+            A dictionary with series IDs as keys and
+            list of instances as values.
+        """
+        ret = {}
+        accession_path = os.path.join(self.dicom_dir, accession)
+        for path in glob.glob(os.path.join(accession_path, '*')):
+            series_uids = sitk.ImageSeriesReader.GetGDCMSeriesIDs(path)
+            if len(series_uids) == 0:
+                continue
+            series_uid = series_uids[0]
+            instances = sitk.ImageSeriesReader.GetGDCMSeriesFileNames(path, series_uid)
+            ret[series_uid] = Series(
+                series_uid=series_uid, series_path=path, instances=instances
+            )
+        return ret
+
+    def get_series(self, accession, series_uid):
+        """This method returns the path to a series.
+
+        Parameters
+        ----------
+        patient_id: str
+            The patient_id.
+        accession: str
+            The accession or study number.
+        series_uid: str
+            The series ID.
+
+        Returns
+        -------
+        str
+        The path to the series directory
+        """
+        return os.path.join(self.dicom_dir, accession, series_uid)

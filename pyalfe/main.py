@@ -90,6 +90,11 @@ def download(assets):
     '--data-dir-structure',
     type=click.Choice(['alfe', 'bids'], case_sensitive=False),
 )
+@click.option(
+    '-dcm',
+    '--dicom-dir',
+    type=click.Path(), default=None
+)
 def run(
     accession: str,
     config: str,
@@ -134,9 +139,9 @@ def run(
     -------
     None
     """
-    from pyalfe.containers import Container
+    from pyalfe.containers import PipelineContainer
 
-    container = Container()
+    container = PipelineContainer()
     container.config.from_ini(config, required=True, envs_required=True)
 
     options = container.config.options()
@@ -163,7 +168,7 @@ def run(
     click.echo(options)
 
     container.init_resources()
-    pipeline_runner = container.pipeline_runner()
+    pipeline_runner = container.pyalfe_pipeline_runner()
 
     pipeline_runner.run(accession)
 
@@ -232,6 +237,54 @@ def configure():
 
     with open(config_path, 'w') as conf:
         config.write(conf)
+
+
+@main.command()
+@click.argument('accession')
+@click.argument('dicom_dir')
+@click.option(
+    '-c',
+    '--config',
+    default=DEFAULT_CFG,
+)
+@click.option('-nd', '--nifti-dir')
+@click.option(
+    '-dds',
+    '--data-dir-structure',
+    type=click.Choice(['alfe', 'bids'], case_sensitive=False),
+)
+@click.option('-ow/-now', '--overwrite/--no-overwrite', default=True)
+def process_dicom(
+    accession: str,
+    dicom_dir: str,
+    config: str,
+    nifti_dir: str,
+    data_dir_structure: str,
+    overwrite: bool,
+    ):
+    from pyalfe.containers import DicomProcessingContianer
+
+    container = DicomProcessingContianer()
+    container.config.from_ini(config, required=True, envs_required=True)
+    
+    options = container.config.options()
+
+    options['dicom_dir'] = dicom_dir
+
+    if nifti_dir:    
+        options['nifti_dir'] = nifti_dir
+    else:
+        options['nifti_dir'] = options['input_dir']
+    if data_dir_structure:
+        options['data_dir_structure'] = data_dir_structure
+    options['overwrite_images'] = overwrite
+
+    container.init_resources()
+    pipeline_runner = container.dicom_processing_pipeline_runner()
+
+    pipeline_runner.run(accession)
+
+
 
 
 if __name__ == '__main__':
