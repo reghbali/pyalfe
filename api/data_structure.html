@@ -454,6 +454,12 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue.CEREBELLUM"><code class="docutils literal notranslate"><span class="pre">Tissue.CEREBELLUM</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Series"><code class="docutils literal notranslate"><span class="pre">Series</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Series.instances"><code class="docutils literal notranslate"><span class="pre">Series.instances</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Series.series_path"><code class="docutils literal notranslate"><span class="pre">Series.series_path</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Series.series_uid"><code class="docutils literal notranslate"><span class="pre">Series.series_uid</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PipelineDataDir"><code class="docutils literal notranslate"><span class="pre">PipelineDataDir</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PipelineDataDir.get_output_image"><code class="docutils literal notranslate"><span class="pre">PipelineDataDir.get_output_image()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PipelineDataDir.get_input_image"><code class="docutils literal notranslate"><span class="pre">PipelineDataDir.get_input_image()</span></code></a></li>
@@ -476,7 +482,6 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PatientDicomDataDir"><code class="docutils literal notranslate"><span class="pre">PatientDicomDataDir</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PatientDicomDataDir.is_dicom_file"><code class="docutils literal notranslate"><span class="pre">PatientDicomDataDir.is_dicom_file()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PatientDicomDataDir.get_all_dicom_series_instances"><code class="docutils literal notranslate"><span class="pre">PatientDicomDataDir.get_all_dicom_series_instances()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PatientDicomDataDir.get_series"><code class="docutils literal notranslate"><span class="pre">PatientDicomDataDir.get_series()</span></code></a></li>
 </ul>
@@ -622,6 +627,30 @@ document.write(`
 <dt class="sig sig-object py" id="pyalfe.data_structure.Tissue.CEREBELLUM">
 <span class="sig-name descname"><span class="pre">CEREBELLUM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#pyalfe.data_structure.Tissue.CEREBELLUM" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyalfe.data_structure.Series">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.data_structure.</span></span><span class="sig-name descname"><span class="pre">Series</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series_uid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">series_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instances</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyalfe.data_structure.Series" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.data_structure.Series.instances">
+<span class="sig-name descname"><span class="pre">instances</span></span><a class="headerlink" href="#pyalfe.data_structure.Series.instances" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.data_structure.Series.series_path">
+<span class="sig-name descname"><span class="pre">series_path</span></span><a class="headerlink" href="#pyalfe.data_structure.Series.series_path" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.data_structure.Series.series_uid">
+<span class="sig-name descname"><span class="pre">series_uid</span></span><a class="headerlink" href="#pyalfe.data_structure.Series.series_uid" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -993,34 +1022,14 @@ files for a patient that are organized as:
 patient_id</p>
 <blockquote>
 <div><dl class="simple">
-<dt>└─ accession (study_uid)</dt><dd><dl class="simple">
-<dt>└─ series_uid</dt><dd><p>├─ instance_0.dcm
+<dt>└─ accession (study)</dt><dd><dl class="simple">
+<dt>└─ series</dt><dd><p>├─ instance_0.dcm
 └─ instance_1.dcm</p>
 </dd>
 </dl>
 </dd>
 </dl>
 </div></blockquote>
-<dl class="py method">
-<dt class="sig sig-object py" id="pyalfe.data_structure.PatientDicomDataDir.is_dicom_file">
-<span class="sig-name descname"><span class="pre">is_dicom_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#PatientDicomDataDir.is_dicom_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.PatientDicomDataDir.is_dicom_file" title="Link to this definition">#</a></dt>
-<dd><p>Function to check if file is a dicom file.
-The first 128 bytes are preamble the next 4 bytes should
-contain DICM otherwise it is not a dicom file. Adapted from
-<a class="github reference external" href="https://github.com/icometrix/dicom2nifti/blob/main/dicom2nifti/common.py">icometrix/dicom2nifti</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – file to check for the DICM header block</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>True if it is a dicom file otherwise False.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.data_structure.PatientDicomDataDir.get_all_dicom_series_instances">
 <span class="sig-name descname"><span class="pre">get_all_dicom_series_instances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/data_structure.html#PatientDicomDataDir.get_all_dicom_series_instances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.data_structure.PatientDicomDataDir.get_all_dicom_series_instances" title="Link to this definition">#</a></dt>
@@ -1162,6 +1171,12 @@ list of instances as values.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Tissue.CEREBELLUM"><code class="docutils literal notranslate"><span class="pre">Tissue.CEREBELLUM</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Series"><code class="docutils literal notranslate"><span class="pre">Series</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Series.instances"><code class="docutils literal notranslate"><span class="pre">Series.instances</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Series.series_path"><code class="docutils literal notranslate"><span class="pre">Series.series_path</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.Series.series_uid"><code class="docutils literal notranslate"><span class="pre">Series.series_uid</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PipelineDataDir"><code class="docutils literal notranslate"><span class="pre">PipelineDataDir</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PipelineDataDir.get_output_image"><code class="docutils literal notranslate"><span class="pre">PipelineDataDir.get_output_image()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PipelineDataDir.get_input_image"><code class="docutils literal notranslate"><span class="pre">PipelineDataDir.get_input_image()</span></code></a></li>
@@ -1184,7 +1199,6 @@ list of instances as values.</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PatientDicomDataDir"><code class="docutils literal notranslate"><span class="pre">PatientDicomDataDir</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PatientDicomDataDir.is_dicom_file"><code class="docutils literal notranslate"><span class="pre">PatientDicomDataDir.is_dicom_file()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PatientDicomDataDir.get_all_dicom_series_instances"><code class="docutils literal notranslate"><span class="pre">PatientDicomDataDir.get_all_dicom_series_instances()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.data_structure.PatientDicomDataDir.get_series"><code class="docutils literal notranslate"><span class="pre">PatientDicomDataDir.get_series()</span></code></a></li>
 </ul>
