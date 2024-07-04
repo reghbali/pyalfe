@@ -372,7 +372,7 @@ document.write(`
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">from</span> <span class="nn">bids</span> <span class="kn">import</span> <span class="n">BIDSLayout</span>
-<span class="kn">import</span> <span class="nn">SimpleITK</span> <span class="k">as</span> <span class="nn">sitk</span>
+<span class="kn">import</span> <span class="nn">pydicom</span>
 
 <span class="kn">from</span> <span class="nn">strenum</span> <span class="kn">import</span> <span class="n">StrEnum</span>
 
@@ -417,7 +417,7 @@ document.write(`
 
 
 
-<span class="n">Series</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Series&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;series_uid&#39;</span><span class="p">,</span> <span class="s1">&#39;series_path&#39;</span><span class="p">,</span> <span class="s1">&#39;instances&#39;</span><span class="p">])</span>
+<span class="n">Series</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Series&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;series_path&#39;</span><span class="p">,</span> <span class="s1">&#39;instances&#39;</span><span class="p">])</span>
 
 
 <div class="viewcode-block" id="PipelineDataDir">
@@ -989,12 +989,46 @@ document.write(`
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dicom_dir</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dicom_dir</span> <span class="o">=</span> <span class="n">dicom_dir</span>
 
+<div class="viewcode-block" id="PatientDicomDataDir.is_dicom_file">
+<a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.PatientDicomDataDir.is_dicom_file">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_dicom_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Function to check if file is a dicom file.</span>
+<span class="sd">        The first 128 bytes are preamble the next 4 bytes should</span>
+<span class="sd">        contain DICM otherwise it is not a dicom file. Adapted from</span>
+<span class="sd">        https://github.com/icometrix/dicom2nifti/blob/main/dicom2nifti/common.py</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file: str</span>
+<span class="sd">            file to check for the DICM header block</span>
+
+<span class="sd">        Return</span>
+<span class="sd">        ------</span>
+<span class="sd">        bool</span>
+<span class="sd">            True if it is a dicom file otherwise False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">file_stream</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+        <span class="n">file_stream</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">file_stream</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">file_stream</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;DICM&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">dicom_headers</span> <span class="o">=</span> <span class="n">pydicom</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span>
+                <span class="n">file</span><span class="p">,</span> <span class="n">defer_size</span><span class="o">=</span><span class="s2">&quot;1 KB&quot;</span><span class="p">,</span> <span class="n">stop_before_pixels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">dicom_headers</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
 <div class="viewcode-block" id="PatientDicomDataDir.get_all_dicom_series_instances">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.PatientDicomDataDir.get_all_dicom_series_instances">[docs]</a>
     <span class="k">def</span> <span class="nf">get_all_dicom_series_instances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;This method returns a dictionary where the keys are the series IDs</span>
-<span class="sd">        available for a patient-accession (study) and the values are the list</span>
-<span class="sd">        of all the instances in the series.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This method returns a list of Series each containing a series path</span>
+<span class="sd">        and all of the instances in the series.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1003,21 +1037,20 @@ document.write(`
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        dict[str, list[str]]</span>
-<span class="sd">            A dictionary with series IDs as keys and</span>
-<span class="sd">            list of instances as values.</span>
+<span class="sd">        list[Series]</span>
+<span class="sd">            A list of Series (series_path, instances)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">accession_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dicom_dir</span><span class="p">,</span> <span class="n">accession</span><span class="p">)</span>
+
         <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">accession_path</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)):</span>
-            <span class="n">series_uids</span> <span class="o">=</span> <span class="n">sitk</span><span class="o">.</span><span class="n">ImageSeriesReader</span><span class="o">.</span><span class="n">GetGDCMSeriesIDs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">series_uids</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">continue</span>
-            <span class="n">series_uid</span> <span class="o">=</span> <span class="n">series_uids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">instances</span> <span class="o">=</span> <span class="n">sitk</span><span class="o">.</span><span class="n">ImageSeriesReader</span><span class="o">.</span><span class="n">GetGDCMSeriesFileNames</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">series_uid</span><span class="p">)</span>
-            <span class="n">ret</span><span class="p">[</span><span class="n">series_uid</span><span class="p">]</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span>
-                <span class="n">series_uid</span><span class="o">=</span><span class="n">series_uid</span><span class="p">,</span> <span class="n">series_path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">instances</span><span class="o">=</span><span class="n">instances</span>
-            <span class="p">)</span>
+            <span class="n">instances</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_dicom_file</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+                    <span class="n">instances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">instances</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Series</span><span class="p">(</span><span class="n">series_path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">instances</span><span class="o">=</span><span class="n">instances</span><span class="p">))</span>
+
         <span class="k">return</span> <span class="n">ret</span></div>
 
 

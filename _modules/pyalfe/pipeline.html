@@ -448,10 +448,9 @@ document.write(`
             <span class="n">t1_registration</span><span class="p">,</span>
             <span class="n">tissue_segmentation</span><span class="p">,</span>
             <span class="n">resampling</span><span class="p">,</span>
-            <span class="n">quantification</span>
+            <span class="n">quantification</span><span class="p">,</span>
         <span class="p">]</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span></div>
-
 
 
 
@@ -465,6 +464,7 @@ document.write(`
 <span class="sd">    dicom_processing: DicomProcessing</span>
 <span class="sd">        The dicom processing object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dicom_processing</span><span class="p">:</span> <span class="n">DicomProcessing</span><span class="p">):</span>
         <span class="n">steps</span> <span class="o">=</span> <span class="p">[</span><span class="n">dicom_processing</span><span class="p">]</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span></div>
