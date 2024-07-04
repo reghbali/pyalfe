@@ -4,6 +4,7 @@ import datetime
 from typing import Optional
 
 import pydicom
+import SimpleITK as sitk
 
 ImageMeta = collections.namedtuple(
     'ImageMeta',
@@ -25,33 +26,74 @@ ImageMeta = collections.namedtuple(
 )
 
 
-def get_dicom_metadata(dicom):
-    return pydicom.filereader.dcmread(dicom, stop_before_pixels=False, force=True)
+def get_dicom_header_pydicom(dicom):
+    """This function returns all the meta data from the header of a dicom file
+    using the pydicom library.
+
+    Parameters
+    ----------
+    dcm : str
+        The path to the dicom file.
+
+    Returns
+    -------
+    dict
+        Dictionary of dicom meta data mapping dicom tags to values.
+    """
+    raw_header = pydicom.dcmread(dicom, stop_before_pixels=False, force=True)
+    return {
+        (f'{key.group:04X}', f'{key.elem:04X}'): robust_decode(element.value)
+        for key, element in raw_header.items()
+    }
+
+
+def get_dicom_header_sitk(dcm: str) -> dict:
+    """This function returns all the meta data from the header of a dicom file
+    using the simpleITK library.
+
+    Parameters
+    ----------
+    dcm : str
+        The path to the dicom file.
+
+    Returns
+    -------
+    dict
+        Dictionary of dicom meta data mapping dicom tags to values.
+    """
+    reader = sitk.ImageFileReader()
+    reader.SetFileName(dcm)
+    reader.LoadPrivateTagsOn()
+    reader.ReadImageInformation()
+    return {
+        tuple(key.split('|')): reader.GetMetaData(key)
+        for key in reader.GetMetaDataKeys()
+    }
 
 
 def robust_decode(bstring):
-    return bstring.decode(errors='replace')
+    if isinstance(bstring, bytes):
+        return bstring.decode(errors='replace').rstrip('\x00')
+    else:
+        return bstring
 
 
-def vector_decode(bstring):
-    string_vector = robust_decode(bstring).split('\\')
+def vector_decode(string):
+    string_vector = string.split('\\')
     return [eval(num) for num in string_vector]
 
 
-def extract_value(header, tag, default=None, decoder=lambda x: x):
-    if header.get_item(tag) is not None:
-        value = header.get_item(tag).value
-        if value is not None:
-            return decoder(value)
+def extract_value(header: dict, tag: tuple, default=None, decoder=lambda x: x):
+    if tag in header and len(header[tag]) > 0:
+        return decoder(header[tag])
     return default
 
 
-def date_decode(bstring):
-    string = robust_decode(bstring)
+def date_decode(string):
     return str(datetime.datetime.strptime(string, "%Y%m%d").date())
 
 
-def extract_dicom_meta(dcm: str, series_uid: Optional[str] = None) -> ImageMeta:
+def extract_image_meta(dcm: str, series_uid: Optional[str] = None) -> ImageMeta:
     """extract relaevant informationfrom dicom header
 
     Parameters
@@ -70,26 +112,20 @@ def extract_dicom_meta(dcm: str, series_uid: Optional[str] = None) -> ImageMeta:
         Returns a ImageMeta object that representing
         some of the dicom file meta data
     """
-    header = get_dicom_metadata(dcm)
+    header = get_dicom_header_pydicom(dcm)
     path = dcm
     if not series_uid:
         series_uid = extract_series_uid(header)
-    manufacturer = extract_value(
-        header, ('0008', '0070'), default='', decoder=robust_decode
-    )
+    manufacturer = extract_value(header, ('0008', '0070'), default='')
     if manufacturer == 'GE MEDICAL SYSTEMS':
-        seq = extract_value(header, ('0019', '109C'), default='', decoder=robust_decode)
+        seq = extract_value(header, ('0019', '109C'), default='')
     else:
-        seq = extract_value(header, ('0018', '0020'), default='', decoder=robust_decode)
-    series_desc = extract_value(
-        header, ('0008', '103E'), default='', decoder=robust_decode
-    )
+        seq = extract_value(header, ('0018', '0020'), default='')
+    series_desc = extract_value(header, ('0008', '103E'), default='')
     tr = extract_value(header, ('0018', '0080'), decoder=eval)
     te = extract_value(header, ('0018', '0081'), decoder=eval)
     flip_angle = extract_value(header, ('0018', '1314'), decoder=eval)
-    contrast_agent = extract_value(
-        header, ('0018', '0010'), default='', decoder=robust_decode
-    )
+    contrast_agent = extract_value(header, ('0018', '0010'), default='')
     patient_orientation_vector = extract_value(
         header, ('0020', '0037'), default='', decoder=vector_decode
     )
@@ -118,9 +154,7 @@ def extract_echo_number(header, default=1):
 
 
 def extract_series_uid(header, default=None):
-    return extract_value(
-        header, ('0020', '000e'), default=default, decoder=robust_decode
-    )
+    return extract_value(header, ('0020', '000e'), default=default)
 
 
 def get_max_echo_series_crc(series: list[str]) -> str:
@@ -143,7 +177,7 @@ def get_max_echo_series_crc(series: list[str]) -> str:
     series_uid = None
     max_echo = None
     for dcm in series:
-        header = get_dicom_metadata(dcm)
+        header = get_dicom_header_pydicom(dcm)
 
         echo_number = extract_echo_number(header)
 

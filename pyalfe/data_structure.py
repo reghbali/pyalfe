@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 
 from bids import BIDSLayout
-import SimpleITK as sitk
+import pydicom
 
 from strenum import StrEnum
 
@@ -46,7 +46,7 @@ class Tissue(IntEnum):
     CEREBELLUM = 6
 
 
-Series = collections.namedtuple('Series', ['series_uid', 'series_path', 'instances'])
+Series = collections.namedtuple('Series', ['series_path', 'instances'])
 
 
 class PipelineDataDir(ABC):
@@ -577,10 +577,41 @@ class PatientDicomDataDir:
     def __init__(self, dicom_dir) -> None:
         self.dicom_dir = dicom_dir
 
+    def is_dicom_file(self, file):
+        """Function to check if file is a dicom file.
+        The first 128 bytes are preamble the next 4 bytes should
+        contain DICM otherwise it is not a dicom file. Adapted from
+        https://github.com/icometrix/dicom2nifti/blob/main/dicom2nifti/common.py
+
+        Parameters
+        ----------
+        file: str
+            file to check for the DICM header block
+
+        Return
+        ------
+        bool
+            True if it is a dicom file otherwise False.
+        """
+        file_stream = open(file, 'rb')
+        file_stream.seek(128)
+        data = file_stream.read(4)
+        file_stream.close()
+        if data == b'DICM':
+            return True
+        try:
+            dicom_headers = pydicom.read_file(
+                file, defer_size="1 KB", stop_before_pixels=True, force=True
+            )
+            if dicom_headers is not None:
+                return True
+        except RuntimeError:
+            pass
+        return False
+
     def get_all_dicom_series_instances(self, accession):
-        """This method returns a dictionary where the keys are the series IDs
-        available for a patient-accession (study) and the values are the list
-        of all the instances in the series.
+        """This method returns a list of Series each containing a series path
+        and all of the instances in the series.
 
         Parameters
         ----------
@@ -589,21 +620,20 @@ class PatientDicomDataDir:
 
         Returns
         -------
-        dict[str, list[str]]
-            A dictionary with series IDs as keys and
-            list of instances as values.
+        list[Series]
+            A list of Series (series_path, instances)
         """
-        ret = {}
+        ret = []
         accession_path = os.path.join(self.dicom_dir, accession)
+
         for path in glob.glob(os.path.join(accession_path, '*')):
-            series_uids = sitk.ImageSeriesReader.GetGDCMSeriesIDs(path)
-            if len(series_uids) == 0:
-                continue
-            series_uid = series_uids[0]
-            instances = sitk.ImageSeriesReader.GetGDCMSeriesFileNames(path, series_uid)
-            ret[series_uid] = Series(
-                series_uid=series_uid, series_path=path, instances=instances
-            )
+            instances = []
+            for file in glob.glob(os.path.join(path, '*')):
+                if os.path.isfile(file) and self.is_dicom_file(file):
+                    instances.append(file)
+            if len(instances) > 0:
+                ret.append(Series(series_path=path, instances=instances))
+
         return ret
 
     def get_series(self, accession, series_uid):

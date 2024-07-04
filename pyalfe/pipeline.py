@@ -78,10 +78,9 @@ class PyALFEPipelineRunner(PipelineRunner):
             t1_registration,
             tissue_segmentation,
             resampling,
-            quantification
+            quantification,
         ]
         super().__init__(steps)
-
 
 
 class DicomProcessingPipelineRunner(PipelineRunner):
@@ -92,6 +91,7 @@ class DicomProcessingPipelineRunner(PipelineRunner):
     dicom_processing: DicomProcessing
         The dicom processing object.
     """
+
     def __init__(self, dicom_processing: DicomProcessing):
         steps = [dicom_processing]
         super().__init__(steps)

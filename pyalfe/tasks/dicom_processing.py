@@ -12,8 +12,19 @@ from pyalfe.data_structure import (
     Orientation,
 )
 from pyalfe.tasks import Task
-from pyalfe.utils.dicom import extract_dicom_meta, get_max_echo_series_crc, ImageMeta
+from pyalfe.utils.dicom import (
+    extract_image_meta,
+    get_max_echo_series_crc,
+    ImageMeta,
+)
 from pyalfe.utils.technique import detect_modality, detect_orientation
+
+
+def none_to_inf(val):
+    if val is not None:
+        return val
+    else:
+        return math.inf
 
 
 class DicomProcessing(Task):
@@ -91,12 +102,6 @@ class DicomProcessing(Task):
             The image meta for the image with the smallest slice thickness.
         """
 
-        def none_to_inf(val):
-            if val is not None:
-                return val
-            else:
-                return math.inf
-
         return min(
             image_list, key=lambda image_meta: none_to_inf(image_meta.slice_thickness)
         )
@@ -105,47 +110,65 @@ class DicomProcessing(Task):
     def select_orientation(
         orientation_dict: dict[Orientation, ImageMeta]
     ) -> tuple[Orientation, ImageMeta]:
-        selected_orientation = None
-        selected_image = None
+        """This function selects the orientation from multiple orientations
+        choices. If Axial is available it chooses Axial. Otherwise it chooses
+        the orientation with the smallest slice thickness.
+
+        Parameters
+        ----------
+        orientation_dict : dict[Orientation, ImageMeta]
+            A dictionaly mapping orientaitons to image meta data.
+
+        Returns
+        -------
+        tuple[Orientation, ImageMeta]
+            The selected orientation and the coresponding image meta data.
+        """
 
         if Orientation.AXIAL in orientation_dict:
             selected_orientation = Orientation.AXIAL
-            selected_image = orientation_dict[Orientation.AXIAL]
         else:
-            min_thickness = float('inf')
-            for orientation in [Orientation.SAGITTAL, Orientation.CORONAL]:
-                if orientation in orientation_dict:
-                    image_meta = orientation_dict[orientation]
-                    if min_thickness > image_meta['slice_thickness']:
-                        min_thickness = image_meta['slice_thickness']
-                        selected_orientation = orientation
-                        selected_image = image_meta
-        return selected_orientation, selected_image
+            selected_orientation = min(
+                orientation_dict,
+                key=lambda orientation: none_to_inf(
+                    orientation_dict[orientation].slice_thickness
+                ),
+            )
+        return selected_orientation, orientation_dict[selected_orientation]
 
     def run(self, accession: str) -> None:
+        """Runs the dicom processing task for a given accession (study number).
+
+        Parameters
+        ----------
+        accession : str
+            The accession (study number).
+        """
         classified = defaultdict(defaultdict(list).copy)
         converted, conversion_failed = defaultdict(str), defaultdict(str)
         skipped = []
-        all_series = self.dicom_dir.get_all_dicom_series_instances(accession)
+        series_uid_map = {}
 
-        for series in all_series.values():
+        for series in self.dicom_dir.get_all_dicom_series_instances(accession):
+            dicom_meta = extract_image_meta(series.instances[0])
 
-            dicom_meta = extract_dicom_meta(
-                series.instances[0], series_uid=series.series_uid
-            )
             modality = detect_modality(
                 dicom_meta.series_desc,
                 dicom_meta.seq,
                 dicom_meta.contrast_agent,
                 dicom_meta.te,
             )
-            orientation = detect_orientation(dicom_meta.patient_orientation_vector)
 
+            orientation = detect_orientation(dicom_meta.patient_orientation_vector)
             if modality is None or orientation is None:
                 skipped.append(dicom_meta)
                 continue
 
             classified[modality][orientation].append(dicom_meta)
+
+            # we need this map so we can find the series path and instances
+            # for conversion NIfTI
+            series_uid_map[dicom_meta.series_uid] = series
 
         for modality, orientations in classified.items():
             orientation_best = defaultdict(Modality)
@@ -157,11 +180,13 @@ class DicomProcessing(Task):
             nifti_path = self.pipeline_dir.get_input_image(
                 accession=accession, modality=modality
             )
+
             selected_series_uid = selected_image_meta.series_uid
-            dcm_series_dir = all_series[selected_series_uid].series_path
+            dcm_series_dir = series_uid_map[selected_series_uid].series_path
             max_echo_series_crc = get_max_echo_series_crc(
-                all_series[selected_series_uid].instances
+                series_uid_map[selected_series_uid].instances
             )
+
             conversion_status = self.dicom2nifti(
                 dcm_series_dir=dcm_series_dir,
                 nifti_path=nifti_path,
@@ -172,4 +197,5 @@ class DicomProcessing(Task):
                 self.logger.warning(f'failed to convert {dcm_series_dir} to nifti.')
                 conversion_failed[modality] = selected_image_meta
                 continue
+
             converted[modality] = selected_image_meta

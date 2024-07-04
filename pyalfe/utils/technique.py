@@ -28,7 +28,10 @@ def detect_modality(series_desc, seq, contrast_agent, te):
     if (
         contrast_agent
         and not re.search('(?i)^NO|PRE', contrast_agent)
-        and re.search('(?i)\\+C|GAD|POST', contrast_agent)
+        and re.search(
+            '(?i)\\+C|GAD|GD|POST|HANCE|VIST|ABLAVAR|OMNISCAN|OPTIMARK|ARTIREM|DOTAREM|VUEWAY|ELUCIREM',
+            contrast_agent,
+        )
     ):
         contrast = True
 
@@ -42,7 +45,10 @@ def detect_modality(series_desc, seq, contrast_agent, te):
         return Modality.EADC
 
     if re.search('(?!)ADC', series_desc) or (
-        (re.search('(?!)AVERAGE DC', series_desc) or re.search('(?!)AVDC', series_desc))
+        (
+            re.search(r'(?!)AVERAGE\sDC', series_desc)
+            or re.search('(?!)AVDC', series_desc)
+        )
         and re.search('(?!)UNIVERSAL', series_desc)
     ):
         return Modality.ADC
@@ -79,7 +85,7 @@ def detect_modality(series_desc, seq, contrast_agent, te):
         if te >= 20:
             return Modality.SWI
 
-    if re.search('(?i)MPGR|T2*', series_desc):
+    if re.search(r'(?i)MPGR|T2\*', series_desc):
         return Modality.SWI
 
     if re.search('(?i)TSE|FSE', series_desc):
