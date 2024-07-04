@@ -90,11 +90,6 @@ def download(assets):
     '--data-dir-structure',
     type=click.Choice(['alfe', 'bids'], case_sensitive=False),
 )
-@click.option(
-    '-dcm',
-    '--dicom-dir',
-    type=click.Path(), default=None
-)
 def run(
     accession: str,
     config: str,
@@ -261,17 +256,17 @@ def process_dicom(
     nifti_dir: str,
     data_dir_structure: str,
     overwrite: bool,
-    ):
+):
     from pyalfe.containers import DicomProcessingContianer
 
     container = DicomProcessingContianer()
     container.config.from_ini(config, required=True, envs_required=True)
-    
+
     options = container.config.options()
 
     options['dicom_dir'] = dicom_dir
 
-    if nifti_dir:    
+    if nifti_dir:
         options['nifti_dir'] = nifti_dir
     else:
         options['nifti_dir'] = options['input_dir']
@@ -283,8 +278,6 @@ def process_dicom(
     pipeline_runner = container.dicom_processing_pipeline_runner()
 
     pipeline_runner.run(accession)
-
-
 
 
 if __name__ == '__main__':
