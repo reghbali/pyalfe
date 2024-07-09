@@ -6,11 +6,18 @@ from unittest import TestCase
 import numpy as np
 import pandas as pd
 
-from pyalfe.data_structure import DefaultALFEDataDir, Modality, Tissue
+from pyalfe.data_structure import (
+    DefaultALFEDataDir,
+    PatientDicomDataDir,
+    Modality,
+    Orientation,
+    Tissue,
+)
 from pyalfe.image_processing import Convert3DProcessor
 from pyalfe.image_registration import GreedyRegistration
 from pyalfe.inference import InferenceModel
 from pyalfe.roi import roi_dict
+from pyalfe.tasks.dicom_processing import DicomProcessing
 from pyalfe.tasks.initialization import Initialization
 from pyalfe.tasks.quantification import Quantification
 from pyalfe.tasks.registration import (
@@ -26,6 +33,7 @@ from pyalfe.tasks.segmentation import (
 from pyalfe.tasks.skullstripping import Skullstripping
 from pyalfe.tasks.t1_postprocessing import T1Postprocessing
 from pyalfe.tasks.t1_preprocessing import T1Preprocessing
+from pyalfe.utils.dicom import ImageMeta
 from tests.utils import create_nifti
 
 
@@ -44,14 +52,14 @@ class TestTask(TestCase):
     def setUp(self) -> None:
         self.test_dir = os.path.join('/tmp', 'tasks_tests')
 
-        processed_dir = os.path.join(self.test_dir, 'output')
-        classified_dir = os.path.join(self.test_dir, 'input')
+        output_dir = os.path.join(self.test_dir, 'output')
+        input_dir = os.path.join(self.test_dir, 'input')
 
-        os.makedirs(processed_dir)
-        os.mkdir(classified_dir)
+        os.makedirs(output_dir)
+        os.mkdir(input_dir)
 
         self.pipeline_dir = DefaultALFEDataDir(
-            output_dir=processed_dir, input_dir=classified_dir
+            output_dir=output_dir, input_dir=input_dir
         )
 
     def tearDown(self) -> None:
@@ -169,7 +177,6 @@ class TestCrossModalityRegistration(TestTask):
         task.run(accession)
         for target in modalities_target:
             for modality in modalities:
-
                 print(modality, target)
                 output = self.pipeline_dir.get_output_image(
                     accession, modality, f'to_{target}_{task.image_type}'
@@ -943,3 +950,204 @@ class TestQuantification(TestTask):
         self.assertEqual(200 / 3.0, lesion_stats['percentage_volume_in_Temporal'])
         self.assertEqual(6.0, lesion_stats['lesion_volume_in_CorpusCallosum'])
         self.assertEqual(100.0, lesion_stats['percentage_volume_in_CorpusCallosum'])
+
+
+class TestDicomProcessing(TestTask):
+    def setUp(self) -> None:
+        super().setUp()
+        self.dicom_input_dir = os.path.join(self.test_dir, 'dicom')
+        os.mkdir(self.dicom_input_dir)
+
+        self.dicom_data_dir = PatientDicomDataDir(self.dicom_input_dir)
+
+    def test_get_best(self):
+        image_1 = ImageMeta(
+            path='/dicom/123/456/1-01.dcm',
+            series_uid='1.3.6.1.4.1.14519.5.2.1.23720270058',
+            manufacturer='SIEMENS',
+            seq='SE\\IR ',
+            series_desc='T2',
+            tr=9420,
+            te=141,
+            flip_angle=170,
+            contrast_agent='9ML MULTIHANCE',
+            patient_orientation_vector=[
+                0.9999984769134,
+                -0.0017453283007,
+                0,
+                0.00174532830068,
+                0.9999984769134,
+                0,
+            ],
+            slice_thickness=None,
+            echo_number=1,
+            date='2010-05-15',
+        )
+
+        self.assertEqual(DicomProcessing.get_best([image_1]), image_1)
+
+        image_2 = ImageMeta(
+            path='/dicom/123/456/1-01.dcm',
+            series_uid='1.3.6.1.4.1.14519.5.2.1.23720270058',
+            manufacturer='SIEMENS',
+            seq='SE\\IR ',
+            series_desc='T2',
+            tr=9420,
+            te=141,
+            flip_angle=170,
+            contrast_agent='9ML MULTIHANCE',
+            patient_orientation_vector=[
+                0.9999984769134,
+                -0.0017453283007,
+                0,
+                0.00174532830068,
+                0.9999984769134,
+                0,
+            ],
+            slice_thickness=1,
+            echo_number=1,
+            date='2010-05-15',
+        )
+        self.assertEqual(DicomProcessing.get_best([image_1, image_2]), image_2)
+
+        image_3 = ImageMeta(
+            path='/dicom/123/456/1-01.dcm',
+            series_uid='1.3.6.1.4.1.14519.5.2.1.23720270058',
+            manufacturer='SIEMENS',
+            seq='SE\\IR ',
+            series_desc='T2',
+            tr=9420,
+            te=141,
+            flip_angle=170,
+            contrast_agent='9ML MULTIHANCE',
+            patient_orientation_vector=[
+                0.9999984769134,
+                -0.0017453283007,
+                0,
+                0.00174532830068,
+                0.9999984769134,
+                0,
+            ],
+            slice_thickness=1.5,
+            echo_number=1,
+            date='2010-05-15',
+        )
+        self.assertEqual(DicomProcessing.get_best([image_1, image_2, image_3]), image_2)
+
+    def test_select_orientation(self):
+        image_axial = ImageMeta(
+            path='/dicom/123/456/1-01.dcm',
+            series_uid='1.3.6.1.4.1.14519.5.2.1.23720270058',
+            manufacturer='SIEMENS',
+            seq='SE\\IR ',
+            series_desc='T2',
+            tr=9420,
+            te=141,
+            flip_angle=170,
+            contrast_agent='9ML MULTIHANCE',
+            patient_orientation_vector=[
+                0.9999984769134,
+                -0.0017453283007,
+                0,
+                0.00174532830068,
+                0.9999984769134,
+                0,
+            ],
+            slice_thickness=1,
+            echo_number=1,
+            date='2010-05-15',
+        )
+        orientation_dict = {Orientation.AXIAL: image_axial}
+        selected_orientation, selected_image = DicomProcessing.select_orientation(
+            orientation_dict
+        )
+        self.assertEqual(selected_orientation, Orientation.AXIAL)
+        self.assertEqual(selected_image, image_axial)
+
+        image_sagital = ImageMeta(
+            path='/dicom/123/457/1-01.dcm',
+            series_uid='1.3.6.1.4.1.14519.5.2.1.23720270058',
+            manufacturer='SIEMENS',
+            seq='SE\\IR ',
+            series_desc='T2',
+            tr=9420,
+            te=141,
+            flip_angle=170,
+            contrast_agent='9ML MULTIHANCE',
+            patient_orientation_vector=[
+                0,
+                0.9999984769134,
+                0,
+                0.00174532830068,
+                0,
+                0.9999984769134,
+            ],
+            slice_thickness=2,
+            echo_number=1,
+            date='2010-05-15',
+        )
+
+        orientation_dict = {
+            Orientation.AXIAL: image_axial,
+            Orientation.SAGITTAL: image_sagital,
+        }
+        selected_orientation, selected_image = DicomProcessing.select_orientation(
+            orientation_dict
+        )
+        self.assertEqual(selected_orientation, Orientation.AXIAL)
+        self.assertEqual(selected_image, image_axial)
+
+        orientation_dict = {Orientation.SAGITTAL: image_sagital}
+        selected_orientation, selected_image = DicomProcessing.select_orientation(
+            orientation_dict
+        )
+        self.assertEqual(selected_orientation, Orientation.SAGITTAL)
+        self.assertEqual(selected_image, image_sagital)
+
+        image_coronal = ImageMeta(
+            path='/dicom/123/457/1-01.dcm',
+            series_uid='1.3.6.1.4.1.14519.5.2.1.23720270058',
+            manufacturer='SIEMENS',
+            seq='SE\\IR ',
+            series_desc='T2',
+            tr=9420,
+            te=141,
+            flip_angle=170,
+            contrast_agent='9ML MULTIHANCE',
+            patient_orientation_vector=[
+                0.9999984769134,
+                0,
+                0,
+                0.00174532830068,
+                0,
+                0.9999984769134,
+            ],
+            slice_thickness=0.5,
+            echo_number=1,
+            date='2010-05-15',
+        )
+
+        orientation_dict = {
+            Orientation.SAGITTAL: image_sagital,
+            Orientation.CORONAL: image_coronal,
+        }
+        selected_orientation, selected_image = DicomProcessing.select_orientation(
+            orientation_dict
+        )
+        self.assertEqual(selected_orientation, Orientation.CORONAL)
+        self.assertEqual(selected_image, image_coronal)
+
+    def test_run(self):
+        accession = '05152010'
+        shutil.copytree(
+            os.path.join('tests', 'data', 'upenn_gbm', 'UPENN-GBM-00621', accession),
+            os.path.join(self.dicom_input_dir, accession),
+        )
+        task = DicomProcessing(
+            pipeline_dir=self.pipeline_dir, dicom_dir=self.dicom_data_dir
+        )
+        task.run(accession)
+
+        for modality in [Modality.T1, Modality.T2, Modality.FLAIR, Modality.T1Post]:
+            nifti_image = self.pipeline_dir.get_input_image(accession, modality)
+            self.assertTrue(os.path.exists(nifti_image))

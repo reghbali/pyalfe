@@ -1,3 +1,4 @@
+from pyalfe.tasks.dicom_processing import DicomProcessing
 from pyalfe.tasks.initialization import Initialization
 from pyalfe.tasks.quantification import Quantification
 from pyalfe.tasks.registration import (
@@ -14,7 +15,16 @@ from pyalfe.tasks.t1_postprocessing import T1Postprocessing
 from pyalfe.tasks.t1_preprocessing import T1Preprocessing
 
 
-class PyALFEPipelineRunner:
+class PipelineRunner:
+    def __init__(self, steps):
+        self.steps = steps
+
+    def run(self, accession: str) -> None:
+        for step in self.steps:
+            step.run(accession)
+
+
+class PyALFEPipelineRunner(PipelineRunner):
     """The pyalfe pipeline runner.
 
     Attributes
@@ -57,27 +67,31 @@ class PyALFEPipelineRunner:
         resampling: Resampling,
         quantification: Quantification,
     ):
-        self.initialization = initialization
-        self.skullstripping = skullstripping
-        self.t1_preprocessing = t1_preprocessing
-        self.cross_modality_registration = cross_modality_registration
-        self.flair_segmentation = flair_segmentation
-        self.enhancement_segmentation = enhancement_segmentation
-        self.tissue_segmentation = tissue_segmentation
-        self.t1_postprocessing = t1_postprocessing
-        self.t1_registration = t1_registration
-        self.resampling = resampling
-        self.quantification = quantification
+        steps = [
+            initialization,
+            skullstripping,
+            t1_preprocessing,
+            cross_modality_registration,
+            flair_segmentation,
+            enhancement_segmentation,
+            t1_postprocessing,
+            t1_registration,
+            tissue_segmentation,
+            resampling,
+            quantification,
+        ]
+        super().__init__(steps)
 
-    def run(self, accession) -> None:
-        self.initialization.run(accession)
-        self.skullstripping.run(accession)
-        self.t1_preprocessing.run(accession)
-        self.cross_modality_registration.run(accession)
-        self.flair_segmentation.run(accession)
-        self.enhancement_segmentation.run(accession)
-        self.t1_postprocessing.run(accession)
-        self.t1_registration.run(accession)
-        self.tissue_segmentation.run(accession)
-        self.resampling.run(accession)
-        self.quantification.run(accession)
+
+class DicomProcessingPipelineRunner(PipelineRunner):
+    """The Dicom processing pipeline runner
+
+    Attributes
+    ----------
+    dicom_processing: DicomProcessing
+        The dicom processing object.
+    """
+
+    def __init__(self, dicom_processing: DicomProcessing):
+        steps = [dicom_processing]
+        super().__init__(steps)
