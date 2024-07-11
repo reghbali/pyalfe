@@ -66,8 +66,8 @@ def download(assets):
 )
 @click.option('-m', '--modalities')
 @click.option('-t', '--targets')
-@click.option('-id', '--input-dir')
-@click.option('-od', '--output-dir')
+@click.option('-id', '--input-dir', type=click.Path(resolve_path=True))
+@click.option('-od', '--output-dir', type=click.Path(resolve_path=True))
 @click.option(
     '-dt',
     '--dominant_tissue',
@@ -178,10 +178,10 @@ def configure():
     None
     """
     input_dir = click.prompt(
-        'Enter input image directory', type=click.Path(exists=True)
+        'Enter input image directory', type=click.Path(exists=True, resolve_path=True)
     )
     output_dir = click.prompt(
-        'Enter output image directory', type=click.Path(exists=True)
+        'Enter output image directory', type=click.Path(exists=True, resolve_path=True)
     )
     modalities = click.prompt(
         'Enter modalities separated by comma (press enter for default)',
