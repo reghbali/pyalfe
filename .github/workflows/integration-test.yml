@@ -23,7 +23,7 @@ jobs:
         run: |
           gh pr checkout ${{ steps.comment-branch.outputs.head_ref }}
           env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GH_TOKEN: ${{ github.token }}
 
       - name: Cache dependency binaries
         id: cache-bin
