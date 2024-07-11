@@ -20,9 +20,10 @@ jobs:
         id: comment-branch
 
       - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.comment-branch.outputs.head_ref }}
+        run: |
+          gh pr checkout ${{ steps.comment-branch.outputs.head_ref }}
+          env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cache dependency binaries
         id: cache-bin
