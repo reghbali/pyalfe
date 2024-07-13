@@ -40,7 +40,7 @@ jobs:
         uses: mshick/add-pr-comment@v2
         with:
           message: |
-            Action started. Click [here](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) to see the status.
+            Integration test started. Click [here](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) to see the status.
 
       - name: Cache dependency binaries
         if: steps.check-comment.outputs.triggered == 'true'
