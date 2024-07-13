@@ -91,6 +91,23 @@ jobs:
           pyalfe download models
 
       - name: Run tests
+        id: test
         if: steps.check-comment.outputs.triggered == 'true'
         run: |
           pytest tests/integration
+
+      - name: React to comment with success
+        uses: dkershner6/reaction-action@v1
+        if: steps.test.outcome == 'success'
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commentId: ${{ github.event.comment.id }}
+          reaction: "+1"
+
+      - name: React to comment with failure
+        uses: dkershner6/reaction-action@v1
+        if: steps.test.outcome != 'success'
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commentId: ${{ github.event.comment.id }}
+          reaction: "-1"
