@@ -36,6 +36,12 @@ jobs:
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
 
+      - name: Post response to GitHub PR
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            Action started. Click [here](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) to see the status.
+
       - name: Cache dependency binaries
         if: steps.check-comment.outputs.triggered == 'true'
         id: cache-bin
