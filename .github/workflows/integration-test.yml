@@ -1,13 +1,14 @@
 name: Integration Test
 
-on:
-  issue_comment:
-    types: [created]
+on:  
+  pull_request:
+    branches:
+      - main
 
 jobs:
   integration_test_linux:
     name: integration-linux-cp${{ matrix.python-version }}
-    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, 'please run integration') }}
+    if: contains(github.event.pull_request.labels.*.name, 'ready-for-testing')
     runs-on: ubuntu-20.04
 
     strategy:
