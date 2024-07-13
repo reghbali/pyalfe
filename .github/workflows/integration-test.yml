@@ -2,30 +2,42 @@ name: Integration Test
 
 on:  
   pull_request:
-    branches:
-      - main
+    types: [opened]
+  issue_comment:
+    types: [created] 
 
 jobs:
   integration_test_linux:
     name: integration-linux-cp${{ matrix.python-version }}
-    if: contains(github.event.pull_request.labels.*.name, 'ready-for-testing')
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
         python-version: [ "3.9", "3.11"]
 
     steps:
+      - uses: khan/pull-request-comment-trigger@master
+        id: check-comment
+        with:
+          trigger: 'please run integration'
+          reaction: rocket
+          prefix_only: true
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          
       - name: Get branch
+        if: steps.check-comment.outputs.triggered == 'true'
         uses: xt0rted/pull-request-comment-branch@v2
         id: comment-branch
       
       - name: Checkout
+        if: steps.check-comment.outputs.triggered == 'true'
         uses: actions/checkout@v4
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
 
       - name: Cache dependency binaries
+        if: steps.check-comment.outputs.triggered == 'true'
         id: cache-bin
         uses: actions/cache@v3
         with:
@@ -35,11 +47,13 @@ jobs:
             ~/.cache/pip
 
       - name: Setup Python
+        if: steps.check-comment.outputs.triggered == 'true'
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version}}
 
       - name: Install test dependencies
+        if: steps.check-comment.outputs.triggered == 'true'
         run: |
           export BIN=~/.local/bin
 
@@ -61,13 +75,16 @@ jobs:
           fi
 
       - name: Install package
+        if: steps.check-comment.outputs.triggered == 'true'
         run: |
           pip install -e ".[ants]"
 
       - name: Download models
+        if: steps.check-comment.outputs.triggered == 'true'
         run: |
           pyalfe download models
 
       - name: Run tests
+        if: steps.check-comment.outputs.triggered == 'true'
         run: |
           pytest tests/integration
