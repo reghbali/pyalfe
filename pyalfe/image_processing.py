@@ -430,6 +430,12 @@ class Convert3DProcessor(ImageProcessor):
 
 class NilearnProcessor(ImageProcessor):
     @staticmethod
+    def save(nib_image, file):
+        # np.int32 is problematic. 1s can turn into 0.9999999
+        nib_image.set_data_dtype(np.float32)
+        nib.save(nib_image, file)
+
+    @staticmethod
     def _crop_img_to(image, slices, copy=True):
 
         data = nilearn.image.get_data(image)
@@ -484,23 +490,21 @@ class NilearnProcessor(ImageProcessor):
             (data >= lower_bound) & (data <= upper_bound), inside_target, outside_target
         ).astype(np.int16)
         threshold_image = nib.Nifti1Image(threshold_data, nib_image.affine)
-        nib.save(threshold_image, output)
+        NilearnProcessor.save(threshold_image, output)
 
     @staticmethod
     def binarize(image, output):
         nib_image = nilearn.image.load_img(image)
-        nib.save(nilearn.image.binarize_img(nib_image), output)
+        NilearnProcessor.save(nilearn.image.binarize_img(nib_image), output)
 
     @staticmethod
     def mask(image, mask, output):
         nib_image = nilearn.image.load_img(image)
         nib_mask = nilearn.image.load_img(mask)
         masked_image = nib.Nifti1Image(
-            nib_image.get_fdata() * nib_mask.get_fdata(),
-            nib_image.affine,
-            dtype=np.int16,
+            nib_image.get_fdata() * nib_mask.get_fdata(), nib_image.affine
         )
-        nib.save(masked_image, output)
+        NilearnProcessor.save(masked_image, output)
 
     @staticmethod
     def largest_mask_comp(image, output):
@@ -516,9 +520,9 @@ class NilearnProcessor(ImageProcessor):
     def holefill(binary_image, output):
         nib_image = nilearn.image.load_img(binary_image)
         data = nib_image.get_fdata()
-        holefilled_data = scipy.ndimage.binary_fill_holes(data).astype('int16')
+        holefilled_data = scipy.ndimage.binary_fill_holes(data).astype('int32')
         holefilled_image = nib.Nifti1Image(holefilled_data, nib_image.affine)
-        nib.save(holefilled_image, output)
+        NilearnProcessor.save(holefilled_image, output)
 
     @staticmethod
     def reslice_to_ref(ref_image, moving_image, output):
@@ -544,7 +548,7 @@ class NilearnProcessor(ImageProcessor):
             target_shape=new_dims,
             interpolation='nearest',
         )
-        nib.save(resampled_image, output)
+        NilearnProcessor.save(resampled_image, output)
 
     @staticmethod
     def get_dims(image):
@@ -563,7 +567,7 @@ class NilearnProcessor(ImageProcessor):
         trimmed_largest_comp_image = NilearnProcessor.crop_img(
             largest_comp_image, pad=trim_margin_vec
         )
-        nib.save(trimmed_largest_comp_image, output)
+        NilearnProcessor.save(trimmed_largest_comp_image, output)
 
     @staticmethod
     def set_subtract(binary_image_1, binary_image_2, output):
@@ -587,7 +591,7 @@ class NilearnProcessor(ImageProcessor):
                 data, structure=np.ones(3 * (-2 * rad + 1,))
             ).astype(data.dtype)
         dilated_image = nib.Nifti1Image(dilated_data, nib_image.affine)
-        nib.save(dilated_image, output)
+        NilearnProcessor.save(dilated_image, output)
 
     @staticmethod
     def union(binary_image_1, binary_image_2, output):
