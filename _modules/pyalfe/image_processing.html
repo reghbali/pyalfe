@@ -883,6 +883,15 @@ document.write(`
 <div class="viewcode-block" id="NilearnProcessor">
 <a class="viewcode-back" href="../../api/image_processing.html#pyalfe.image_processing.NilearnProcessor">[docs]</a>
 <span class="k">class</span> <span class="nc">NilearnProcessor</span><span class="p">(</span><span class="n">ImageProcessor</span><span class="p">):</span>
+<div class="viewcode-block" id="NilearnProcessor.save">
+<a class="viewcode-back" href="../../api/image_processing.html#pyalfe.image_processing.NilearnProcessor.save">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="n">nib_image</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="c1"># np.int32 is problematic. 1s can turn into 0.9999999</span>
+        <span class="n">nib_image</span><span class="o">.</span><span class="n">set_data_dtype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">nib</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">nib_image</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span></div>
+
+
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_crop_img_to</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">slices</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 
@@ -943,7 +952,7 @@ document.write(`
             <span class="p">(</span><span class="n">data</span> <span class="o">&gt;=</span> <span class="n">lower_bound</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span> <span class="o">&lt;=</span> <span class="n">upper_bound</span><span class="p">),</span> <span class="n">inside_target</span><span class="p">,</span> <span class="n">outside_target</span>
         <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
         <span class="n">threshold_image</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">(</span><span class="n">threshold_data</span><span class="p">,</span> <span class="n">nib_image</span><span class="o">.</span><span class="n">affine</span><span class="p">)</span>
-        <span class="n">nib</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">threshold_image</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span></div>
+        <span class="n">NilearnProcessor</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">threshold_image</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NilearnProcessor.binarize">
@@ -951,7 +960,7 @@ document.write(`
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">binarize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
         <span class="n">nib_image</span> <span class="o">=</span> <span class="n">nilearn</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load_img</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-        <span class="n">nib</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">nilearn</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">binarize_img</span><span class="p">(</span><span class="n">nib_image</span><span class="p">),</span> <span class="n">output</span><span class="p">)</span></div>
+        <span class="n">NilearnProcessor</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">nilearn</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">binarize_img</span><span class="p">(</span><span class="n">nib_image</span><span class="p">),</span> <span class="n">output</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NilearnProcessor.mask">
@@ -961,11 +970,9 @@ document.write(`
         <span class="n">nib_image</span> <span class="o">=</span> <span class="n">nilearn</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load_img</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
         <span class="n">nib_mask</span> <span class="o">=</span> <span class="n">nilearn</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load_img</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
         <span class="n">masked_image</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">(</span>
-            <span class="n">nib_image</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()</span> <span class="o">*</span> <span class="n">nib_mask</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">(),</span>
-            <span class="n">nib_image</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span>
-            <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">,</span>
+            <span class="n">nib_image</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()</span> <span class="o">*</span> <span class="n">nib_mask</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">(),</span> <span class="n">nib_image</span><span class="o">.</span><span class="n">affine</span>
         <span class="p">)</span>
-        <span class="n">nib</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">masked_image</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span></div>
+        <span class="n">NilearnProcessor</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">masked_image</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NilearnProcessor.largest_mask_comp">
@@ -987,9 +994,9 @@ document.write(`
     <span class="k">def</span> <span class="nf">holefill</span><span class="p">(</span><span class="n">binary_image</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
         <span class="n">nib_image</span> <span class="o">=</span> <span class="n">nilearn</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load_img</span><span class="p">(</span><span class="n">binary_image</span><span class="p">)</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">nib_image</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()</span>
-        <span class="n">holefilled_data</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">binary_fill_holes</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int16&#39;</span><span class="p">)</span>
+        <span class="n">holefilled_data</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">binary_fill_holes</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int32&#39;</span><span class="p">)</span>
         <span class="n">holefilled_image</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">(</span><span class="n">holefilled_data</span><span class="p">,</span> <span class="n">nib_image</span><span class="o">.</span><span class="n">affine</span><span class="p">)</span>
-        <span class="n">nib</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">holefilled_image</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span></div>
+        <span class="n">NilearnProcessor</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">holefilled_image</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NilearnProcessor.reslice_to_ref">
@@ -1021,7 +1028,7 @@ document.write(`
             <span class="n">target_shape</span><span class="o">=</span><span class="n">new_dims</span><span class="p">,</span>
             <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">nib</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">resampled_image</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span></div>
+        <span class="n">NilearnProcessor</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">resampled_image</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NilearnProcessor.get_dims">
@@ -1046,7 +1053,7 @@ document.write(`
         <span class="n">trimmed_largest_comp_image</span> <span class="o">=</span> <span class="n">NilearnProcessor</span><span class="o">.</span><span class="n">crop_img</span><span class="p">(</span>
             <span class="n">largest_comp_image</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="n">trim_margin_vec</span>
         <span class="p">)</span>
-        <span class="n">nib</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">trimmed_largest_comp_image</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span></div>
+        <span class="n">NilearnProcessor</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">trimmed_largest_comp_image</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NilearnProcessor.set_subtract">
@@ -1076,7 +1083,7 @@ document.write(`
                 <span class="n">data</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">rad</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,))</span>
             <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
         <span class="n">dilated_image</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">(</span><span class="n">dilated_data</span><span class="p">,</span> <span class="n">nib_image</span><span class="o">.</span><span class="n">affine</span><span class="p">)</span>
-        <span class="n">nib</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">dilated_image</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span></div>
+        <span class="n">NilearnProcessor</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">dilated_image</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NilearnProcessor.union">
