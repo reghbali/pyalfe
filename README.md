@@ -213,21 +213,22 @@ This config value can be overwritten when calling `pyalfe run` via `-dt` or `--d
 
 #### Image processor
 ```bash
-image processor to use (c3d, nilearn) [c3d]:
+image processor to use (nilearn, c3d) [nilearn]:
 ```
-Currently, pyalfe can be configures to use either Convert3D (a.k.a. c3d) or Nilearn for image processing tasks.
-The default is Convert3d aka c3d. In other to use c3d,
-you have to download it using the [download command](#download-models).
-To use Nilearn, you do not need to run any extra command since it is already installed when you install pyalfe.
+Currently, pyalfe can be configured to use either Nilearn, Convert3D (a.k.a. c3d) for image processing tasks.
+The default is Nilearn which is a python native library and is installed during installation of pyalfe.
+To use c3d, you have to download and install it (https://sourceforge.net/projects/c3d/) on your machine.
+
 This config value can be overwritten when calling `pyalfe run` via `-ip` or `--image_processing` option.
 
 #### Image Registration
 ```bash
 image registration to use (greedy, ants) [greedy]:
 ```
-Currently, pyalfe can be configures to use either greedy or ants for image registration tasks. The default is greedy.
-In other to use greedy, you have to download it using the [download command](#download-models). To use ants,
+Currently, pyalfe can be configured to use either greedy or ants for image registration tasks. The default is greedy.
+In other to use greedy, you have to download and install greedy (https://sourceforge.net/projects/greedy-reg/). To use ants,
 install pyalfe with ants support ``pip install pyalfe[ants]``.
+
 This config value can be overwritten when calling `pyalfe run` via `-ir` or `--image-registration` option.
 
 #### Dierctory Data Structure
