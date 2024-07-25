@@ -14,22 +14,29 @@ To use Greedy and Convert3d, these command line tools should be installed on you
 
 ## Installation
 
-Clone the repo
+We recommend upgrading pip and installing pyalfe in a virtualenv.
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+```
+
+### Option 1: PyPI
+
+To install, run
+```bash
+pip install pyalfe
+```
+
+
+### Option 2: Development mode
+If you want to have the latest development version, you can clone the repo
 ```bash
 git clone https://github.com/reghbali/pyalfe.git
 cd pyalfe
 ```
 
-Then run (we recommend using a python virtual environment)
-
-```bash
-pip install --upgrade pip
-```
-
-You can either install pyalfe in [development mode](#development-mode-installation) or [build and install](#build-and-install).
-### Option 1: Development mode installation
-
-First update the setuptools
+update the setuptools
 ```bash
 pip install --upgrade setuptools
 ```
@@ -40,9 +47,13 @@ Run the following command in the parent pyalfe directory:
 pip install -e .
 ```
 
-### Option 2: Build and install
+### Option 3: Build and install
+```bash
+git clone https://github.com/reghbali/pyalfe.git
+cd pyalfe
+```
 
-First update the build tool
+update the build tool
 ```bash
 pip install --upgrade build
 ```
@@ -58,16 +69,31 @@ To download deep learning models, run
 ```bash
 pyalfe download models
 ```
-### Pyradiomics support
-To install pyalfe with pyradiomics support, run
+### Extras
+If you want pyalfe to generate pyradiomics features alongside its default features
+you can install pyalfe with pyradiomics support. To do so, run:
+```bash
+pip install 'pyalfe[radiomics]'
+```
+for development installation
 ```bash
 pip install -e  '.[radiomics]'
 ```
-for development installation or
+when performing a build and install
 ```bash
 pip install 'dist/pyalfe-0.0.1-py3-none-any.whl[radiomics]'
 ```
-when performing a build and install.
+
+If you want to use ant registration tool, you can install pyalfe with ants support:
+```bash
+pip install 'pyalfe[ants]'
+```
+
+If you want to build the docs, install pyalfe with docs support:
+```bash
+pip install 'pyalfe[docs]'
+```
+
 ## Usage
 
 ### Configuration
@@ -187,21 +213,22 @@ This config value can be overwritten when calling `pyalfe run` via `-dt` or `--d
 
 #### Image processor
 ```bash
-image processor to use (c3d, nilearn) [c3d]:
+image processor to use (nilearn, c3d) [nilearn]:
 ```
-Currently, pyalfe can be configures to use either Convert3D (a.k.a. c3d) or Nilearn for image processing tasks.
-The default is Convert3d aka c3d. In other to use c3d,
-you have to download it using the [download command](#download-models).
-To use Nilearn, you do not need to run any extra command since it is already installed when you install pyalfe.
+Currently, pyalfe can be configured to use either Nilearn, Convert3D (a.k.a. c3d) for image processing tasks.
+The default is Nilearn which is a python native library and is installed during installation of pyalfe.
+To use c3d, you have to download and install it (https://sourceforge.net/projects/c3d/) on your machine.
+
 This config value can be overwritten when calling `pyalfe run` via `-ip` or `--image_processing` option.
 
 #### Image Registration
 ```bash
 image registration to use (greedy, ants) [greedy]:
 ```
-Currently, pyalfe can be configures to use either greedy or ants for image registration tasks. The default is greedy.
-In other to use greedy, you have to download it using the [download command](#download-models). To use ants,
+Currently, pyalfe can be configured to use either greedy or ants for image registration tasks. The default is greedy.
+In other to use greedy, you have to download and install greedy (https://sourceforge.net/projects/greedy-reg/). To use ants,
 install pyalfe with ants support ``pip install pyalfe[ants]``.
+
 This config value can be overwritten when calling `pyalfe run` via `-ir` or `--image-registration` option.
 
 #### Dierctory Data Structure

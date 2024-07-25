@@ -200,8 +200,8 @@ def configure():
     )
     image_processor = click.prompt(
         'image processor to use (press enter for default)',
-        type=click.Choice(['c3d', 'nilearn']),
-        default='c3d',
+        type=click.Choice(['nilearn', 'c3d']),
+        default='nilearn',
     )
     image_registration = click.prompt(
         'image registration to use (press enter for default)',
