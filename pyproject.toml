@@ -11,7 +11,7 @@ authors = [
     {name = "Reza Eghbali", email="eghbali68@gmail.com"},
     {email = "reza.eghbali@ucsf.edu"}
 ]
-description = "A Python pipeline for Automated Lesion and Feature Extraction from brain MRIs"
+description = "A pipeline for Automated Lesion and Feature Extraction from brain MRIs"
 readme = "README.md"
 dependencies = [
     "scipy",
