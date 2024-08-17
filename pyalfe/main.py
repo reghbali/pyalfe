@@ -7,6 +7,14 @@ import click
 
 
 DEFAULT_CFG = os.path.expanduser(os.path.join('~', '.config', 'pyalfe', 'config.ini'))
+DEFAULT_MODALITIES = ['T1', 'T1Post', 'FLAIR', 'T2', 'ADC', 'SWI', 'CBF']
+DEFAULT_TARGETS = ['FLAIR', 'T1Post']
+DEFAUlT_DOMINANT_TISSUE = 'white_matter'
+DEFAULT_IMAGE_PROCESSOR = 'nilearn'
+DEFAULT_IMAGE_REGISTRATION = 'greedy'
+DEFUALT_DATA_DIR_STRUCTURE = 'alfe'
+DEFAULT_OVERWRITE = True
+
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -57,7 +65,143 @@ def download(assets):
             click.print(f'asset {asset} is not recognized.')
 
 
-@main.command()
+def _run(
+    accession: str,
+    config: str = None,
+    input_dir: str = None,
+    output_dir: str = None,
+    modalities: str = None,
+    targets: str = None,
+    dominant_tissue: str = None,
+    image_processor: str = None,
+    image_registration: str = None,
+    data_dir_structure: str = None,
+    overwrite: bool = True,
+):
+    """Runs the pipeline for an accession number.
+
+    Parameters
+    ----------
+    accession : str
+        the accession number for which you want to run the pipeline.
+    config : str
+        the path to the config file.
+    input_dir : str
+        the path to the directory containing input input images
+    outpu_dir : str
+        the path to the directory containing output output images
+    modalities : str
+        comma separated modalities
+    targets : str
+        comma separated target modalities
+    dominant_tissue : str, default='white_matter'
+        dominant tissue
+    image_processor : str, default='c3d'
+        image processor that is used by the pipeline.
+    image_registration : str, default='greedy'
+        image registration that is used by the pipeline.
+    data_dir_structure: str, default='alfe'
+        the data directory structure, it can be 'alfe' or 'bids'.
+    overwrite : bool
+        if True, the pipeline overwrites existing output images.
+
+    Returns
+    -------
+    None
+    """
+    from pyalfe.containers import PipelineContainer
+
+    container = PipelineContainer()
+
+    if config:
+        container.config.from_ini(config)
+
+    options = {}
+    if input_dir:
+        options['input_dir'] = input_dir
+
+    if output_dir:
+        options['output_dir'] = output_dir
+
+    if modalities:
+        if isinstance(modalities, str):
+            options['modalities'] = modalities.split(',')
+        else:
+            options['modalities'] = modalities
+
+    if targets:
+        if isinstance(targets, str):
+            options['targets'] = targets.split(',')
+        else:
+            options[targets] = targets
+
+    if dominant_tissue:
+        options['dominant_tissue'] = dominant_tissue
+
+    if image_processor:
+        options['image_processor'] = image_processor
+
+    if image_registration:
+        options['image_registration'] = image_registration
+
+    if data_dir_structure:
+        options['data_dir_structure'] = data_dir_structure
+
+    options['overwrite_images'] = overwrite
+
+    container.init_resources()
+    pipeline_runner = container.pyalfe_pipeline_runner()
+
+    pipeline_runner.run(accession)
+
+
+def run(
+    accession: str,
+    input_dir: str,
+    output_dir: str,
+    modalities: str = DEFAULT_MODALITIES,
+    targets: str = DEFAULT_TARGETS,
+    dominant_tissue: str = DEFAUlT_DOMINANT_TISSUE,
+    image_processor: str = DEFAULT_IMAGE_PROCESSOR,
+    image_registration: str = DEFAULT_IMAGE_REGISTRATION,
+    data_dir_structure: str = DEFUALT_DATA_DIR_STRUCTURE,
+    overwrite: bool = DEFAULT_OVERWRITE,
+) -> None:
+    """Runs the pipeline for an accession number.
+
+    Parameters
+    ----------
+    accession : str
+        the accession number for which you want to run the pipeline.
+    config : str, default: :attr:`DEFAULT_CFG`
+        the path to the config file.
+    input_dir : str
+        the path to the directory containing input input images
+    outpu_dir : str
+        the path to the directory containing output output images
+    modalities : str, default: :attr:`DEFAULT_MODALITIES`
+        comma separated modalities
+    targets : str, default: :attr:`DEFAULT_TARGETS`
+        comma separated target modalities
+    dominant_tissue : str, default: :attr:`DEFAUlT_DOMINANT_TISSUE`
+        dominant tissue
+    image_processor : str, default: :attr:`DEFAULT_IMAGE_PROCESSOR`
+        image processor that is used by the pipeline.
+    image_registration : str, default: :attr:`DEFAULT_IMAGE_REGISTRATION`
+        image registration that is used by the pipeline.
+    data_dir_structure: str, default: :attr:`DEFUALT_DATA_DIR_STRUCTURE`
+        the data directory structure, it can be 'alfe' or 'bids'.
+    overwrite : bool, default: :attr:`DEFAULT_OVERWRITE`
+        if True, the pipeline overwrites existing output images.
+
+    Returns
+    -------
+    None
+    """
+    _run()
+
+
+@main.command(name='run')
 @click.argument('accession')
 @click.option(
     '-c',
@@ -90,7 +234,7 @@ def download(assets):
     '--data-dir-structure',
     type=click.Choice(['alfe', 'bids'], case_sensitive=False),
 )
-def run(
+def run_command(
     accession: str,
     config: str,
     input_dir: str,
@@ -137,7 +281,7 @@ def run(
     from pyalfe.containers import PipelineContainer
 
     container = PipelineContainer()
-    container.config.from_ini(config, required=True, envs_required=True)
+    container.config.from_ini(config)
 
     options = container.config.options()
 
@@ -159,8 +303,8 @@ def run(
         options['data_dir_structure'] = data_dir_structure
     options['overwrite_images'] = overwrite
 
-    container.config.from_dict(options)
-    click.echo(options)
+    click.echo('running pyalfe with following options')
+    click.echo(container.config.options())
 
     container.init_resources()
     pipeline_runner = container.pyalfe_pipeline_runner()
@@ -185,33 +329,33 @@ def configure():
     )
     modalities = click.prompt(
         'Enter modalities separated by comma (press enter for default)',
-        default='T1,T1Post,FLAIR,T2,ADC,SWI,CBF',
+        default=DEFAULT_MODALITIES.join(','),
         type=str,
     )
     targets = click.prompt(
         'Enter target modalities separated by comma (press enter for default)',
-        default='T1Post,FLAIR',
+        default=DEFAULT_TARGETS.join(','),
         type=str,
     )
     dominant_tissue = click.prompt(
         'Enter the dominant tissue for the lesions',
         type=click.Choice(['white_matter', 'gray_matter', 'auto']),
-        default='white_matter',
+        default=DEFAUlT_DOMINANT_TISSUE,
     )
     image_processor = click.prompt(
         'image processor to use (press enter for default)',
         type=click.Choice(['nilearn', 'c3d']),
-        default='nilearn',
+        default=DEFAULT_IMAGE_PROCESSOR,
     )
     image_registration = click.prompt(
         'image registration to use (press enter for default)',
         type=click.Choice(['greedy', 'ants']),
-        default='greedy',
+        default=DEFAULT_IMAGE_REGISTRATION,
     )
     data_dir_structure = click.prompt(
         'data directory structure (press enter for default)',
         type=click.Choice(['alfe', 'bids']),
-        default='alfe',
+        default=DEFUALT_DATA_DIR_STRUCTURE,
     )
     config_path = click.prompt('config path', default=DEFAULT_CFG)
     config = configparser.ConfigParser()
