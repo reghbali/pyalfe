@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -423,20 +423,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe">pyalfe</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe-configure">configure</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#returns">Returns</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe-download">download</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe-process-dicom">process-dicom</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe-run">run</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">Parameters</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Returns</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.main.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -448,199 +435,34 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="pyalfe-main">
-<h1>pyalfe.main<a class="headerlink" href="#pyalfe-main" title="Link to this heading">#</a></h1>
-<section id="pyalfe">
-<h2>pyalfe<a class="headerlink" href="#pyalfe" title="Link to this heading">#</a></h2>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pyalfe<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>COMMAND<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
-</pre></div>
-</div>
-<section id="pyalfe-configure">
-<h3>configure<a class="headerlink" href="#pyalfe-configure" title="Link to this heading">#</a></h3>
-<p>Configure the pipeline through a series of prompts.</p>
-<section id="returns">
-<h4>Returns<a class="headerlink" href="#returns" title="Link to this heading">#</a></h4>
-<p>None</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pyalfe<span class="w"> </span>configure<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
-</pre></div>
-</div>
-</section>
-</section>
-<section id="pyalfe-download">
-<h3>download<a class="headerlink" href="#pyalfe-download" title="Link to this heading">#</a></h3>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pyalfe<span class="w"> </span>download<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>ASSETS<span class="o">]</span>...
-</pre></div>
-</div>
-<p class="rubric">Arguments</p>
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-download-arg-ASSETS">
-<span class="sig-name descname"><span class="pre">ASSETS</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-pyalfe-download-arg-ASSETS" title="Link to this definition">#</a></dt>
-<dd><p>Optional argument(s)</p>
-</dd></dl>
-
-</section>
-<section id="pyalfe-process-dicom">
-<h3>process-dicom<a class="headerlink" href="#pyalfe-process-dicom" title="Link to this heading">#</a></h3>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pyalfe<span class="w"> </span>process-dicom<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>ACCESSION<span class="w"> </span>DICOM_DIR
-</pre></div>
-</div>
-<p class="rubric">Options</p>
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-process-dicom-c">
-<span id="cmdoption-pyalfe-process-dicom-config"></span><span class="sig-name descname"><span class="pre">-c</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--config</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;config&gt;</span></span><a class="headerlink" href="#cmdoption-pyalfe-process-dicom-c" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-process-dicom-nd">
-<span id="cmdoption-pyalfe-process-dicom-nifti-dir"></span><span class="sig-name descname"><span class="pre">-nd</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--nifti-dir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;nifti_dir&gt;</span></span><a class="headerlink" href="#cmdoption-pyalfe-process-dicom-nd" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-process-dicom-dds">
-<span id="cmdoption-pyalfe-process-dicom-data-dir-structure"></span><span class="sig-name descname"><span class="pre">-dds</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--data-dir-structure</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;data_dir_structure&gt;</span></span><a class="headerlink" href="#cmdoption-pyalfe-process-dicom-dds" title="Link to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Options<span class="colon">:</span></dt>
-<dd class="field-odd"><p>alfe | bids</p>
+  <section id="module-pyalfe.main">
+<span id="pyalfe-main"></span><h1>pyalfe.main<a class="headerlink" href="#module-pyalfe.main" title="Link to this heading">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyalfe.main.run">
+<span class="sig-prename descclassname"><span class="pre">pyalfe.main.</span></span><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modalities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['T1',</span> <span class="pre">'T1Post',</span> <span class="pre">'FLAIR',</span> <span class="pre">'T2',</span> <span class="pre">'ADC',</span> <span class="pre">'SWI',</span> <span class="pre">'CBF']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['FLAIR',</span> <span class="pre">'T1Post']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dominant_tissue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'white_matter'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_processor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'nilearn'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_registration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'greedy'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir_structure</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'alfe'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/pyalfe/main.html#run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.main.run" title="Link to this definition">#</a></dt>
+<dd><p>Runs the pipeline for an accession number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>accession</strong> (<em>str</em>) – the accession number for which you want to run the pipeline.</p></li>
+<li><p><strong>config</strong> (str, default: <code class="xref py py-attr docutils literal notranslate"><span class="pre">DEFAULT_CFG</span></code>) – the path to the config file.</p></li>
+<li><p><strong>input_dir</strong> (<em>str</em>) – the path to the directory containing input input images</p></li>
+<li><p><strong>outpu_dir</strong> (<em>str</em>) – the path to the directory containing output output images</p></li>
+<li><p><strong>modalities</strong> (str, default: <code class="xref py py-attr docutils literal notranslate"><span class="pre">DEFAULT_MODALITIES</span></code>) – comma separated modalities</p></li>
+<li><p><strong>targets</strong> (str, default: <code class="xref py py-attr docutils literal notranslate"><span class="pre">DEFAULT_TARGETS</span></code>) – comma separated target modalities</p></li>
+<li><p><strong>dominant_tissue</strong> (str, default: <code class="xref py py-attr docutils literal notranslate"><span class="pre">DEFAUlT_DOMINANT_TISSUE</span></code>) – dominant tissue</p></li>
+<li><p><strong>image_processor</strong> (str, default: <code class="xref py py-attr docutils literal notranslate"><span class="pre">DEFAULT_IMAGE_PROCESSOR</span></code>) – image processor that is used by the pipeline.</p></li>
+<li><p><strong>image_registration</strong> (str, default: <code class="xref py py-attr docutils literal notranslate"><span class="pre">DEFAULT_IMAGE_REGISTRATION</span></code>) – image registration that is used by the pipeline.</p></li>
+<li><p><strong>data_dir_structure</strong> (str, default: <code class="xref py py-attr docutils literal notranslate"><span class="pre">DEFUALT_DATA_DIR_STRUCTURE</span></code>) – the data directory structure, it can be ‘alfe’ or ‘bids’.</p></li>
+<li><p><strong>overwrite</strong> (bool, default: <code class="xref py py-attr docutils literal notranslate"><span class="pre">DEFAULT_OVERWRITE</span></code>) – if True, the pipeline overwrites existing output images.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-process-dicom-ow">
-<span id="cmdoption-pyalfe-process-dicom-overwrite"></span><span id="cmdoption-pyalfe-process-dicom-now"></span><span id="cmdoption-pyalfe-process-dicom-no-overwrite"></span><span class="sig-name descname"><span class="pre">-ow</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--overwrite</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">-now</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--no-overwrite</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-pyalfe-process-dicom-ow" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<p class="rubric">Arguments</p>
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-process-dicom-arg-ACCESSION">
-<span class="sig-name descname"><span class="pre">ACCESSION</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-pyalfe-process-dicom-arg-ACCESSION" title="Link to this definition">#</a></dt>
-<dd><p>Required argument</p>
-</dd></dl>
-
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-process-dicom-arg-DICOM_DIR">
-<span class="sig-name descname"><span class="pre">DICOM_DIR</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-pyalfe-process-dicom-arg-DICOM_DIR" title="Link to this definition">#</a></dt>
-<dd><p>Required argument</p>
-</dd></dl>
-
-</section>
-<section id="pyalfe-run">
-<h3>run<a class="headerlink" href="#pyalfe-run" title="Link to this heading">#</a></h3>
-<p>Runs the pipeline for an accession number.</p>
-<section id="parameters">
-<h4>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h4>
-<dl class="simple">
-<dt>accession<span class="classifier">str</span></dt><dd><p>the accession number for which you want to run the pipeline.</p>
-</dd>
-<dt>config<span class="classifier">str, default: ~/.config/pyalfe/config.ini</span></dt><dd><p>the path to the config file.</p>
-</dd>
-<dt>input_dir<span class="classifier">str</span></dt><dd><p>the path to the directory containing input input images</p>
-</dd>
-<dt>outpu_dir<span class="classifier">str</span></dt><dd><p>the path to the directory containing output output images</p>
-</dd>
-<dt>modalities<span class="classifier">str</span></dt><dd><p>comma separated modalities</p>
-</dd>
-<dt>targets<span class="classifier">str</span></dt><dd><p>comma separated target modalities</p>
-</dd>
-<dt>dominant_tissue<span class="classifier">str, default=’white_matter’</span></dt><dd><p>dominant tissue</p>
-</dd>
-<dt>image_processor<span class="classifier">str, default=’c3d’</span></dt><dd><p>image processor that is used by the pipeline.</p>
-</dd>
-<dt>image_registration<span class="classifier">str, default=’greedy’</span></dt><dd><p>image registration that is used by the pipeline.</p>
-</dd>
-<dt>data_dir_structure: str, default=’alfe’</dt><dd><p>the data directory structure, it can be ‘alfe’ or ‘bids’.</p>
-</dd>
-<dt>overwrite<span class="classifier">bool</span></dt><dd><p>if True, the pipeline overwrites existing output images.</p>
-</dd>
-</dl>
-</section>
-<section id="id1">
-<h4>Returns<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
-<p>None</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pyalfe<span class="w"> </span>run<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>ACCESSION
-</pre></div>
-</div>
-<p class="rubric">Options</p>
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-run-c">
-<span id="cmdoption-pyalfe-run-config"></span><span class="sig-name descname"><span class="pre">-c</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--config</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;config&gt;</span></span><a class="headerlink" href="#cmdoption-pyalfe-run-c" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-run-m">
-<span id="cmdoption-pyalfe-run-modalities"></span><span class="sig-name descname"><span class="pre">-m</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--modalities</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;modalities&gt;</span></span><a class="headerlink" href="#cmdoption-pyalfe-run-m" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-run-t">
-<span id="cmdoption-pyalfe-run-targets"></span><span class="sig-name descname"><span class="pre">-t</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--targets</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;targets&gt;</span></span><a class="headerlink" href="#cmdoption-pyalfe-run-t" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-run-id">
-<span id="cmdoption-pyalfe-run-input-dir"></span><span class="sig-name descname"><span class="pre">-id</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--input-dir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;input_dir&gt;</span></span><a class="headerlink" href="#cmdoption-pyalfe-run-id" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-run-od">
-<span id="cmdoption-pyalfe-run-output-dir"></span><span class="sig-name descname"><span class="pre">-od</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--output-dir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output_dir&gt;</span></span><a class="headerlink" href="#cmdoption-pyalfe-run-od" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-run-dt">
-<span id="cmdoption-pyalfe-run-dominant_tissue"></span><span class="sig-name descname"><span class="pre">-dt</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--dominant_tissue</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;dominant_tissue&gt;</span></span><a class="headerlink" href="#cmdoption-pyalfe-run-dt" title="Link to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Options<span class="colon">:</span></dt>
-<dd class="field-odd"><p>white_matter | gray_matter | auto</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-run-ow">
-<span id="cmdoption-pyalfe-run-overwrite"></span><span id="cmdoption-pyalfe-run-now"></span><span id="cmdoption-pyalfe-run-no-overwrite"></span><span class="sig-name descname"><span class="pre">-ow</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--overwrite</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">-now</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--no-overwrite</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-pyalfe-run-ow" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-run-ip">
-<span id="cmdoption-pyalfe-run-image-processor"></span><span class="sig-name descname"><span class="pre">-ip</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--image-processor</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;image_processor&gt;</span></span><a class="headerlink" href="#cmdoption-pyalfe-run-ip" title="Link to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Options<span class="colon">:</span></dt>
-<dd class="field-odd"><p>c3d | nilearn</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-run-ir">
-<span id="cmdoption-pyalfe-run-image-registration"></span><span class="sig-name descname"><span class="pre">-ir</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--image-registration</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;image_registration&gt;</span></span><a class="headerlink" href="#cmdoption-pyalfe-run-ir" title="Link to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Options<span class="colon">:</span></dt>
-<dd class="field-odd"><p>greedy | ants</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-run-dds">
-<span id="cmdoption-pyalfe-run-data-dir-structure"></span><span class="sig-name descname"><span class="pre">-dds</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--data-dir-structure</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;data_dir_structure&gt;</span></span><a class="headerlink" href="#cmdoption-pyalfe-run-dds" title="Link to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Options<span class="colon">:</span></dt>
-<dd class="field-odd"><p>alfe | bids</p>
-</dd>
-</dl>
-</dd></dl>
-
-<p class="rubric">Arguments</p>
-<dl class="std option">
-<dt class="sig sig-object std" id="cmdoption-pyalfe-run-arg-ACCESSION">
-<span class="sig-name descname"><span class="pre">ACCESSION</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-pyalfe-run-arg-ACCESSION" title="Link to this definition">#</a></dt>
-<dd><p>Required argument</p>
-</dd></dl>
-
-</section>
-</section>
-</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -707,20 +529,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe">pyalfe</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe-configure">configure</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#returns">Returns</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe-download">download</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe-process-dicom">process-dicom</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe-run">run</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">Parameters</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Returns</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.main.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
 </ul>
   </nav></div>
 

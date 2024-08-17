@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -360,17 +360,17 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for pyalfe.containers</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">os</span>
-
-<span class="kn">from</span> <span class="nn">dependency_injector</span> <span class="kn">import</span> <span class="n">containers</span><span class="p">,</span> <span class="n">providers</span>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">SimpleNamespace</span>
 
 <span class="kn">from</span> <span class="nn">pyalfe.data_structure</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">DefaultALFEDataDir</span><span class="p">,</span>
     <span class="n">BIDSDataDir</span><span class="p">,</span>
     <span class="n">PatientDicomDataDir</span><span class="p">,</span>
-    <span class="n">Modality</span>
-    <span class="p">)</span>
+    <span class="n">Modality</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">pyalfe.image_processing</span> <span class="kn">import</span> <span class="n">Convert3DProcessor</span><span class="p">,</span> <span class="n">NilearnProcessor</span>
 <span class="kn">from</span> <span class="nn">pyalfe.image_registration</span> <span class="kn">import</span> <span class="n">GreedyRegistration</span><span class="p">,</span> <span class="n">AntsRegistration</span>
 <span class="kn">from</span> <span class="nn">pyalfe.inference</span> <span class="kn">import</span> <span class="n">NNUnetV2</span>
@@ -394,247 +394,314 @@ document.write(`
 <span class="kn">from</span> <span class="nn">pyalfe.tasks.t1_preprocessing</span> <span class="kn">import</span> <span class="n">T1Preprocessing</span>
 
 
+<div class="viewcode-block" id="Config">
+<a class="viewcode-back" href="../../api/containers.html#pyalfe.containers.Config">[docs]</a>
+<span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+<div class="viewcode-block" id="Config.from_ini">
+<a class="viewcode-back" href="../../api/containers.html#pyalfe.containers.Config.from_ini">[docs]</a>
+    <span class="k">def</span> <span class="nf">from_ini</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ini_file</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ini_file</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;config file </span><span class="si">{</span><span class="n">ini_file</span><span class="si">}</span><span class="s1"> does not exist.&#39;</span><span class="p">)</span>
+        <span class="n">config_parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+        <span class="n">config_parser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">ini_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="n">section</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">config_parser</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">section</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">config_parser</span><span class="o">.</span><span class="n">sections</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Config.from_dict">
+<a class="viewcode-back" href="../../api/containers.html#pyalfe.containers.Config.from_dict">[docs]</a>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">section</span><span class="p">,</span> <span class="n">key_value</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">):</span>
+                <span class="n">current</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">key_value</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">current</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">SimpleNamespace</span><span class="p">(</span><span class="o">**</span><span class="n">key_value</span><span class="p">))</span></div>
+</div>
+
+
+
 <div class="viewcode-block" id="PipelineContainer">
 <a class="viewcode-back" href="../../api/containers.html#pyalfe.containers.PipelineContainer">[docs]</a>
-<span class="k">class</span> <span class="nc">PipelineContainer</span><span class="p">(</span><span class="n">containers</span><span class="o">.</span><span class="n">DeclarativeContainer</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">PipelineContainer</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    container objects for all the dependencies of the pipeline.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">config</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Configuration</span><span class="p">()</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()</span>
 
-    <span class="n">pipeline_dir</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Selector</span><span class="p">(</span>
-        <span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">data_dir_structure</span><span class="p">,</span>
-        <span class="n">alfe</span><span class="o">=</span><span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-            <span class="n">DefaultALFEDataDir</span><span class="p">,</span>
-            <span class="n">output_dir</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span>
-            <span class="n">input_dir</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">input_dir</span><span class="p">,</span>
-        <span class="p">),</span>
-        <span class="n">bids</span><span class="o">=</span><span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-            <span class="n">BIDSDataDir</span><span class="p">,</span>
-            <span class="n">output_dir</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span>
-            <span class="n">input_dir</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">input_dir</span><span class="p">,</span>
-        <span class="p">),</span>
-    <span class="p">)</span>
+<div class="viewcode-block" id="PipelineContainer.init_resources">
+<a class="viewcode-back" href="../../api/containers.html#pyalfe.containers.PipelineContainer.init_resources">[docs]</a>
+    <span class="k">def</span> <span class="nf">init_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This function exists for compatibility reasons&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
 
-    <span class="n">image_processor</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Selector</span><span class="p">(</span>
-        <span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">image_processor</span><span class="p">,</span>
-        <span class="n">c3d</span><span class="o">=</span><span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span><span class="n">Convert3DProcessor</span><span class="p">),</span>
-        <span class="n">nilearn</span><span class="o">=</span><span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span><span class="n">NilearnProcessor</span><span class="p">),</span>
-    <span class="p">)</span>
 
-    <span class="n">image_registration</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Selector</span><span class="p">(</span>
-        <span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">image_registration</span><span class="p">,</span>
-        <span class="n">greedy</span><span class="o">=</span><span class="n">providers</span><span class="o">.</span><span class="n">Factory</span><span class="p">(</span><span class="n">GreedyRegistration</span><span class="p">),</span>
-        <span class="n">ants</span><span class="o">=</span><span class="n">providers</span><span class="o">.</span><span class="n">Factory</span><span class="p">(</span><span class="n">AntsRegistration</span><span class="p">),</span>
-    <span class="p">)</span>
-
-    <span class="n">parent_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
-
-    <span class="n">skullstripping_model</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">NNUnetV2</span><span class="p">,</span>
-        <span class="n">model_dir</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span>
-            <span class="n">MODELS_PATH</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span>
-                <span class="s1">&#39;nnunetv2&#39;</span><span class="p">,</span> <span class="s1">&#39;Dataset502_SS&#39;</span><span class="p">,</span> <span class="s1">&#39;nnUNetTrainer__nnUNetPlans__3d_fullres&#39;</span>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">pipeline_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">data_dir_structure</span> <span class="o">==</span> <span class="s1">&#39;alfe&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">DefaultALFEDataDir</span><span class="p">(</span>
+                <span class="n">output_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span>
+                <span class="n">input_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">input_dir</span><span class="p">,</span>
             <span class="p">)</span>
-        <span class="p">),</span>
-        <span class="n">folds</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,),</span>
-    <span class="p">)</span>
-
-    <span class="n">flair_model</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">NNUnetV2</span><span class="p">,</span>
-        <span class="n">model_dir</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span>
-            <span class="n">MODELS_PATH</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span>
-                <span class="s1">&#39;nnunetv2&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Dataset500_FLAIR&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;nnUNetTrainer__nnUNetPlans__3d_fullres&#39;</span><span class="p">,</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">data_dir_structure</span> <span class="o">==</span> <span class="s1">&#39;bids&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">BIDSDataDir</span><span class="p">(</span>
+                <span class="n">output_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span>
+                <span class="n">input_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">input_dir</span><span class="p">,</span>
             <span class="p">)</span>
-        <span class="p">),</span>
-        <span class="n">folds</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,),</span>
-    <span class="p">)</span>
-
-    <span class="n">enhancement_model</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">NNUnetV2</span><span class="p">,</span>
-        <span class="n">model_dir</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span>
-            <span class="n">MODELS_PATH</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span>
-                <span class="s1">&#39;nnunetv2&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Dataset503_Enhancement&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;nnUNetTrainer__nnUNetPlans__3d_fullres&#39;</span><span class="p">,</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Invalid data dir structure </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">data_dir_structure</span><span class="si">}</span><span class="s1">&#39;</span>
             <span class="p">)</span>
-        <span class="p">),</span>
-        <span class="n">folds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,),</span>
-    <span class="p">)</span>
 
-    <span class="n">tissue_model</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">NNUnetV2</span><span class="p">,</span>
-        <span class="n">model_dir</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span>
-            <span class="n">MODELS_PATH</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span>
-                <span class="s1">&#39;nnunetv2&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Dataset510_Tissue_W_Prior&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;nnUNetTrainer__nnUNetPlans__3d_fullres&#39;</span><span class="p">,</span>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">image_processor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">image_processor</span> <span class="o">==</span> <span class="s1">&#39;c3d&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Convert3DProcessor</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">image_processor</span> <span class="o">==</span> <span class="s1">&#39;nilearn&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">NilearnProcessor</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">image_registration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">image_registration</span> <span class="o">==</span> <span class="s1">&#39;greedy&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">GreedyRegistration</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">image_registration</span> <span class="o">==</span> <span class="s1">&#39;ants&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">AntsRegistration</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Invalid image registration </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">image_registration</span><span class="si">}</span><span class="s1">&#39;</span>
             <span class="p">)</span>
-        <span class="p">),</span>
-        <span class="n">folds</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,),</span>
-    <span class="p">)</span>
 
-    <span class="n">initialization</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">Initialization</span><span class="p">,</span>
-        <span class="n">pipeline_dir</span><span class="o">=</span><span class="n">pipeline_dir</span><span class="p">,</span>
-        <span class="n">modalities</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">modalities</span><span class="o">.</span><span class="n">as_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)),</span>
-        <span class="n">overwrite</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">skullstripping_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">NNUnetV2</span><span class="p">(</span>
+            <span class="n">model_dir</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span>
+                <span class="n">MODELS_PATH</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span>
+                    <span class="s1">&#39;nnunetv2&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;Dataset502_SS&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;nnUNetTrainer__nnUNetPlans__3d_fullres&#39;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">),</span>
+            <span class="n">folds</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,),</span>
+        <span class="p">)</span>
 
-    <span class="n">skullstripping</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">Skullstripping</span><span class="p">,</span>
-        <span class="n">inference_model</span><span class="o">=</span><span class="n">skullstripping_model</span><span class="p">,</span>
-        <span class="n">image_processor</span><span class="o">=</span><span class="n">image_processor</span><span class="p">,</span>
-        <span class="n">pipeline_dir</span><span class="o">=</span><span class="n">pipeline_dir</span><span class="p">,</span>
-        <span class="n">modalities</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">modalities</span><span class="o">.</span><span class="n">as_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)),</span>
-        <span class="n">overwrite</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">flair_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">NNUnetV2</span><span class="p">(</span>
+            <span class="n">model_dir</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span>
+                <span class="n">MODELS_PATH</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span>
+                    <span class="s1">&#39;nnunetv2&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;Dataset500_FLAIR&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;nnUNetTrainer__nnUNetPlans__3d_fullres&#39;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">),</span>
+            <span class="n">folds</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,),</span>
+        <span class="p">)</span>
 
-    <span class="n">t1_preprocessing</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">T1Preprocessing</span><span class="p">,</span>
-        <span class="n">image_processor</span><span class="o">=</span><span class="n">image_processor</span><span class="p">,</span>
-        <span class="n">pipeline_dir</span><span class="o">=</span><span class="n">pipeline_dir</span><span class="p">,</span>
-        <span class="n">overwrite</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">enhancement_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">NNUnetV2</span><span class="p">(</span>
+            <span class="n">model_dir</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span>
+                <span class="n">MODELS_PATH</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span>
+                    <span class="s1">&#39;nnunetv2&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;Dataset503_Enhancement&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;nnUNetTrainer__nnUNetPlans__3d_fullres&#39;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">),</span>
+            <span class="n">folds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,),</span>
+        <span class="p">)</span>
 
-    <span class="n">cross_modality_registration</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">CrossModalityRegistration</span><span class="p">,</span>
-        <span class="n">image_registration</span><span class="o">=</span><span class="n">image_registration</span><span class="p">,</span>
-        <span class="n">pipeline_dir</span><span class="o">=</span><span class="n">pipeline_dir</span><span class="p">,</span>
-        <span class="n">modalities_all</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">modalities</span><span class="o">.</span><span class="n">as_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)),</span>
-        <span class="n">modalities_target</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">as_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)),</span>
-        <span class="n">overwrite</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">tissue_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">NNUnetV2</span><span class="p">(</span>
+            <span class="n">model_dir</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span>
+                <span class="n">MODELS_PATH</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span>
+                    <span class="s1">&#39;nnunetv2&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;Dataset510_Tissue_W_Prior&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;nnUNetTrainer__nnUNetPlans__3d_fullres&#39;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">),</span>
+            <span class="n">folds</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,),</span>
+        <span class="p">)</span>
 
-    <span class="n">flair_segmentation</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">SingleModalitySegmentation</span><span class="p">,</span>
-        <span class="n">inference_model</span><span class="o">=</span><span class="n">flair_model</span><span class="p">,</span>
-        <span class="n">image_processor</span><span class="o">=</span><span class="n">image_processor</span><span class="p">,</span>
-        <span class="n">pipeline_dir</span><span class="o">=</span><span class="n">pipeline_dir</span><span class="p">,</span>
-        <span class="n">modality</span><span class="o">=</span><span class="n">Modality</span><span class="o">.</span><span class="n">FLAIR</span><span class="p">,</span>
-        <span class="n">image_type_input</span><span class="o">=</span><span class="s1">&#39;skullstripped&#39;</span><span class="p">,</span>
-        <span class="n">image_type_output</span><span class="o">=</span><span class="s1">&#39;abnormal_seg&#39;</span><span class="p">,</span>
-        <span class="n">image_type_mask</span><span class="o">=</span><span class="s1">&#39;skullstripping_mask&#39;</span><span class="p">,</span>
-        <span class="n">segmentation_dir</span><span class="o">=</span><span class="s1">&#39;abnormalmap&#39;</span><span class="p">,</span>
-        <span class="n">components</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">overwrite</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">initialization</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Initialization</span><span class="p">(</span>
+            <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
+            <span class="n">modalities</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">modalities</span><span class="o">.</span><span class="n">as_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)),</span>
+            <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
+        <span class="p">)</span>
 
-    <span class="n">enhancement_segmentation</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">MultiModalitySegmentation</span><span class="p">,</span>
-        <span class="n">inference_model</span><span class="o">=</span><span class="n">enhancement_model</span><span class="p">,</span>
-        <span class="n">image_processor</span><span class="o">=</span><span class="n">image_processor</span><span class="p">,</span>
-        <span class="n">pipeline_dir</span><span class="o">=</span><span class="n">pipeline_dir</span><span class="p">,</span>
-        <span class="n">modality_list</span><span class="o">=</span><span class="p">[</span><span class="n">Modality</span><span class="o">.</span><span class="n">T1</span><span class="p">,</span> <span class="n">Modality</span><span class="o">.</span><span class="n">T1Post</span><span class="p">],</span>
-        <span class="n">output_modality</span><span class="o">=</span><span class="n">Modality</span><span class="o">.</span><span class="n">T1Post</span><span class="p">,</span>
-        <span class="n">image_type_input</span><span class="o">=</span><span class="s1">&#39;skullstripped&#39;</span><span class="p">,</span>
-        <span class="n">image_type_output</span><span class="o">=</span><span class="s1">&#39;abnormal_seg&#39;</span><span class="p">,</span>
-        <span class="n">image_type_mask</span><span class="o">=</span><span class="s1">&#39;skullstripping_mask&#39;</span><span class="p">,</span>
-        <span class="n">segmentation_dir</span><span class="o">=</span><span class="s1">&#39;abnormalmap&#39;</span><span class="p">,</span>
-        <span class="n">components</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">overwrite</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">skullstripping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Skullstripping</span><span class="p">(</span>
+            <span class="n">inference_model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">skullstripping_model</span><span class="p">,</span>
+            <span class="n">image_processor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_processor</span><span class="p">,</span>
+            <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
+            <span class="n">modalities</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">modalties</span><span class="o">.</span><span class="n">as_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)),</span>
+            <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
+        <span class="p">)</span>
 
-    <span class="n">tissue_segmentation</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">TissueWithPriorSegementation</span><span class="p">,</span>
-        <span class="n">inference_model</span><span class="o">=</span><span class="n">tissue_model</span><span class="p">,</span>
-        <span class="n">image_processor</span><span class="o">=</span><span class="n">image_processor</span><span class="p">,</span>
-        <span class="n">pipeline_dir</span><span class="o">=</span><span class="n">pipeline_dir</span><span class="p">,</span>
-        <span class="n">image_type_input</span><span class="o">=</span><span class="s1">&#39;trim_upsampled&#39;</span><span class="p">,</span>
-        <span class="n">image_type_output</span><span class="o">=</span><span class="s1">&#39;tissue_seg&#39;</span><span class="p">,</span>
-        <span class="n">template_name</span><span class="o">=</span><span class="s1">&#39;Tissue&#39;</span><span class="p">,</span>
-        <span class="n">overwrite</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">t1_preprocessing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">T1Preprocessing</span><span class="p">(</span>
+            <span class="n">image_processor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_processor</span><span class="p">,</span>
+            <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
+            <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
+        <span class="p">)</span>
 
-    <span class="n">t1_postprocessing</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">T1Postprocessing</span><span class="p">,</span>
-        <span class="n">image_processor</span><span class="o">=</span><span class="n">image_processor</span><span class="p">,</span>
-        <span class="n">pipeline_dir</span><span class="o">=</span><span class="n">pipeline_dir</span><span class="p">,</span>
-        <span class="n">overwrite</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">cross_modality_registration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">CrossModalityRegistration</span><span class="p">(</span>
+            <span class="n">image_registration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_registration</span><span class="p">,</span>
+            <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
+            <span class="n">modalities_all</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">modalities</span><span class="o">.</span><span class="n">as_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)),</span>
+            <span class="n">modalities_target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">as_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)),</span>
+            <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
+        <span class="p">)</span>
 
-    <span class="n">t1_registration</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">T1Registration</span><span class="p">,</span>
-        <span class="n">image_processor</span><span class="o">=</span><span class="n">image_processor</span><span class="p">,</span>
-        <span class="n">image_registration</span><span class="o">=</span><span class="n">image_registration</span><span class="p">,</span>
-        <span class="n">pipeline_dir</span><span class="o">=</span><span class="n">pipeline_dir</span><span class="p">,</span>
-        <span class="n">overwrite</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">flair_segmentation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">SingleModalitySegmentation</span><span class="p">(</span>
+            <span class="n">inference_model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">flair_model</span><span class="p">,</span>
+            <span class="n">image_processor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_processor</span><span class="p">,</span>
+            <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
+            <span class="n">modality</span><span class="o">=</span><span class="n">Modality</span><span class="o">.</span><span class="n">FLAIR</span><span class="p">,</span>
+            <span class="n">image_type_input</span><span class="o">=</span><span class="s1">&#39;skullstripped&#39;</span><span class="p">,</span>
+            <span class="n">image_type_output</span><span class="o">=</span><span class="s1">&#39;abnormal_seg&#39;</span><span class="p">,</span>
+            <span class="n">image_type_mask</span><span class="o">=</span><span class="s1">&#39;skullstripping_mask&#39;</span><span class="p">,</span>
+            <span class="n">segmentation_dir</span><span class="o">=</span><span class="s1">&#39;abnormalmap&#39;</span><span class="p">,</span>
+            <span class="n">components</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
+        <span class="p">)</span>
 
-    <span class="n">resampling</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">Resampling</span><span class="p">,</span>
-        <span class="n">image_processor</span><span class="o">=</span><span class="n">image_processor</span><span class="p">,</span>
-        <span class="n">image_registration</span><span class="o">=</span><span class="n">image_registration</span><span class="p">,</span>
-        <span class="n">pipeline_dir</span><span class="o">=</span><span class="n">pipeline_dir</span><span class="p">,</span>
-        <span class="n">modalities_target</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">as_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)),</span>
-        <span class="n">overwrite</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">enhancement_segmentation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">MultiModalitySegmentation</span><span class="p">(</span>
+            <span class="n">inference_model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">enhancement_model</span><span class="p">,</span>
+            <span class="n">image_processor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_processor</span><span class="p">,</span>
+            <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
+            <span class="n">modality_list</span><span class="o">=</span><span class="p">[</span><span class="n">Modality</span><span class="o">.</span><span class="n">T1</span><span class="p">,</span> <span class="n">Modality</span><span class="o">.</span><span class="n">T1Post</span><span class="p">],</span>
+            <span class="n">output_modality</span><span class="o">=</span><span class="n">Modality</span><span class="o">.</span><span class="n">T1Post</span><span class="p">,</span>
+            <span class="n">image_type_input</span><span class="o">=</span><span class="s1">&#39;skullstripped&#39;</span><span class="p">,</span>
+            <span class="n">image_type_output</span><span class="o">=</span><span class="s1">&#39;abnormal_seg&#39;</span><span class="p">,</span>
+            <span class="n">image_type_mask</span><span class="o">=</span><span class="s1">&#39;skullstripping_mask&#39;</span><span class="p">,</span>
+            <span class="n">segmentation_dir</span><span class="o">=</span><span class="s1">&#39;abnormalmap&#39;</span><span class="p">,</span>
+            <span class="n">components</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
+        <span class="p">)</span>
 
-    <span class="n">quantification</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">Quantification</span><span class="p">,</span>
-        <span class="n">pipeline_dir</span><span class="o">=</span><span class="n">pipeline_dir</span><span class="p">,</span>
-        <span class="n">modalities_all</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">modalities</span><span class="o">.</span><span class="n">as_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)),</span>
-        <span class="n">modalities_target</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">as_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)),</span>
-        <span class="n">dominant_tissue</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">dominant_tissue</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">tissue_segmentation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TissueWithPriorSegementation</span><span class="p">(</span>
+            <span class="n">inference_model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tissue_model</span><span class="p">,</span>
+            <span class="n">image_processor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_processor</span><span class="p">,</span>
+            <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
+            <span class="n">image_type_input</span><span class="o">=</span><span class="s1">&#39;trim_upsampled&#39;</span><span class="p">,</span>
+            <span class="n">image_type_output</span><span class="o">=</span><span class="s1">&#39;tissue_seg&#39;</span><span class="p">,</span>
+            <span class="n">template_name</span><span class="o">=</span><span class="s1">&#39;Tissue&#39;</span><span class="p">,</span>
+            <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
+        <span class="p">)</span>
 
-    <span class="n">pyalfe_pipeline_runner</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">PyALFEPipelineRunner</span><span class="p">,</span>
-        <span class="n">initialization</span><span class="o">=</span><span class="n">initialization</span><span class="p">,</span>
-        <span class="n">skullstripping</span><span class="o">=</span><span class="n">skullstripping</span><span class="p">,</span>
-        <span class="n">t1_preprocessing</span><span class="o">=</span><span class="n">t1_preprocessing</span><span class="p">,</span>
-        <span class="n">cross_modality_registration</span><span class="o">=</span><span class="n">cross_modality_registration</span><span class="p">,</span>
-        <span class="n">flair_segmentation</span><span class="o">=</span><span class="n">flair_segmentation</span><span class="p">,</span>
-        <span class="n">enhancement_segmentation</span><span class="o">=</span><span class="n">enhancement_segmentation</span><span class="p">,</span>
-        <span class="n">tissue_segmentation</span><span class="o">=</span><span class="n">tissue_segmentation</span><span class="p">,</span>
-        <span class="n">t1_postprocessing</span><span class="o">=</span><span class="n">t1_postprocessing</span><span class="p">,</span>
-        <span class="n">t1_registration</span><span class="o">=</span><span class="n">t1_registration</span><span class="p">,</span>
-        <span class="n">resampling</span><span class="o">=</span><span class="n">resampling</span><span class="p">,</span>
-        <span class="n">quantification</span><span class="o">=</span><span class="n">quantification</span><span class="p">,</span>
-    <span class="p">)</span></div>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">t1_postprocessing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">T1Postprocessing</span><span class="p">(</span>
+            <span class="n">image_processor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_processor</span><span class="p">,</span>
+            <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
+            <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">t1_registration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">T1Registration</span><span class="p">(</span>
+            <span class="n">image_processor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_processor</span><span class="p">,</span>
+            <span class="n">image_registration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_registration</span><span class="p">,</span>
+            <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
+            <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">resampling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Resampling</span><span class="p">(</span>
+            <span class="n">image_processor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_processor</span><span class="p">,</span>
+            <span class="n">image_registration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_registration</span><span class="p">,</span>
+            <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
+            <span class="n">modalities_target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">as_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)),</span>
+            <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">quantification</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Quantification</span><span class="p">(</span>
+            <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
+            <span class="n">modalities_all</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">modalities</span><span class="o">.</span><span class="n">as_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)),</span>
+            <span class="n">modalities_target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">as_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)),</span>
+            <span class="n">dominant_tissue</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">dominant_tissue</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">pyalfe_pipeline_runner</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">PyALFEPipelineRunner</span><span class="p">(</span>
+            <span class="n">initialization</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">initialization</span><span class="p">,</span>
+            <span class="n">skullstripping</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">skullstripping</span><span class="p">,</span>
+            <span class="n">t1_preprocessing</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">t1_preprocessing</span><span class="p">,</span>
+            <span class="n">cross_modality_registration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cross_modality_registration</span><span class="p">,</span>
+            <span class="n">flair_segmentation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">flair_segmentation</span><span class="p">,</span>
+            <span class="n">enhancement_segmentation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">enhancement_segmentation</span><span class="p">,</span>
+            <span class="n">tissue_segmentation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tissue_segmentation</span><span class="p">,</span>
+            <span class="n">t1_postprocessing</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">t1_postprocessing</span><span class="p">,</span>
+            <span class="n">t1_registration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">t1_registration</span><span class="p">,</span>
+            <span class="n">resampling</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resampling</span><span class="p">,</span>
+            <span class="n">quantification</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">quantification</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="DicomProcessingContianer">
 <a class="viewcode-back" href="../../api/containers.html#pyalfe.containers.DicomProcessingContianer">[docs]</a>
-<span class="k">class</span> <span class="nc">DicomProcessingContianer</span><span class="p">(</span><span class="n">containers</span><span class="o">.</span><span class="n">DeclarativeContainer</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">DicomProcessingContianer</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Contianer for dicom processing pipeline depedencies&quot;&quot;&quot;</span>
 
-    <span class="n">config</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Configuration</span><span class="p">()</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
 
-    <span class="n">pipeline_dir</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Selector</span><span class="p">(</span>
-        <span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">data_dir_structure</span><span class="p">,</span>
-        <span class="n">alfe</span><span class="o">=</span><span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-            <span class="n">DefaultALFEDataDir</span><span class="p">,</span>
-            <span class="n">output_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span>
-            <span class="n">input_dir</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">input_dir</span><span class="p">,</span>
-        <span class="p">),</span>
-        <span class="n">bids</span><span class="o">=</span><span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-            <span class="n">BIDSDataDir</span><span class="p">,</span>
-            <span class="n">output_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span>
-            <span class="n">input_dir</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">input_dir</span><span class="p">,</span>
-        <span class="p">),</span>
-    <span class="p">)</span>
-    
-    <span class="n">dicom_dir</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">PatientDicomDataDir</span><span class="p">,</span>
-        <span class="n">dicom_dir</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">dicom_dir</span>
-    <span class="p">)</span>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">pipeline_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">data_dir_structure</span> <span class="o">==</span> <span class="s1">&#39;alfe&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">DefaultALFEDataDir</span><span class="p">(</span>
+                <span class="n">output_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span> <span class="n">input_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">input_dir</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">data_dir_structure</span> <span class="o">==</span> <span class="s1">&#39;bids&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">BIDSDataDir</span><span class="p">(</span>
+                <span class="n">output_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span>
+                <span class="n">input_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">input_dir</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Invalid data dir structure </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">data_dir_structure</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
 
-    <span class="n">dicom_processing</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">DicomProcessing</span><span class="p">,</span>
-        <span class="n">pipeline_dir</span><span class="o">=</span><span class="n">pipeline_dir</span><span class="p">,</span>
-        <span class="n">dicom_dir</span><span class="o">=</span><span class="n">dicom_dir</span><span class="p">,</span>
-        <span class="n">overwrite</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span>
-    <span class="p">)</span>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">dicom_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">PatientDicomDataDir</span><span class="p">(</span><span class="n">dicom_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">dicom_dir</span><span class="p">)</span>
 
-    <span class="n">dicom_processing_pipeline_runner</span> <span class="o">=</span> <span class="n">providers</span><span class="o">.</span><span class="n">Singleton</span><span class="p">(</span>
-        <span class="n">DicomProcessingPipelineRunner</span><span class="p">,</span>
-        <span class="n">dicom_processing</span><span class="o">=</span><span class="n">dicom_processing</span>
-    <span class="p">)</span></div>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">dicom_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">DicomProcessing</span><span class="p">(</span>
+            <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
+            <span class="n">dicom_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dicom_dir</span><span class="p">,</span>
+            <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">dicom_processing_pipeline_runner</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">DicomProcessingPipelineRunner</span><span class="p">(</span><span class="n">dicom_processing</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dicom_processing</span><span class="p">)</span></div>
 
 </pre></div>
 
