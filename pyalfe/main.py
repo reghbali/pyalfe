@@ -329,12 +329,12 @@ def configure():
     )
     modalities = click.prompt(
         'Enter modalities separated by comma (press enter for default)',
-        default=DEFAULT_MODALITIES.join(','),
+        default=','.join(DEFAULT_MODALITIES),
         type=str,
     )
     targets = click.prompt(
         'Enter target modalities separated by comma (press enter for default)',
-        default=DEFAULT_TARGETS.join(','),
+        default=','.join(DEFAULT_TARGETS),
         type=str,
     )
     dominant_tissue = click.prompt(
