@@ -115,39 +115,41 @@ def _run(
 
     if config:
         container.config.from_ini(config)
+        options = container.config.options
+    else:
+        options = {}
 
-    options = {}
     if input_dir:
-        options['input_dir'] = input_dir
+        options.input_dir = input_dir
 
     if output_dir:
-        options['output_dir'] = output_dir
+        options.output_dir = output_dir
 
     if modalities:
         if isinstance(modalities, str):
-            options['modalities'] = modalities.split(',')
+            options.modalities = modalities.split(',')
         else:
-            options['modalities'] = modalities
+            options.modalities = modalities
 
     if targets:
         if isinstance(targets, str):
-            options['targets'] = targets.split(',')
+            options.targets = targets.split(',')
         else:
-            options[targets] = targets
+            options.targets = targets
 
     if dominant_tissue:
-        options['dominant_tissue'] = dominant_tissue
+        options.dominant_tissue = dominant_tissue
 
     if image_processor:
-        options['image_processor'] = image_processor
+        options.image_processor = image_processor
 
     if image_registration:
-        options['image_registration'] = image_registration
+        options.image_registration = image_registration
 
     if data_dir_structure:
-        options['data_dir_structure'] = data_dir_structure
+        options.data_dir_structure = data_dir_structure
 
-    options['overwrite_images'] = overwrite
+    options.overwrite_images = overwrite
 
     container.init_resources()
     pipeline_runner = container.pyalfe_pipeline_runner()
@@ -198,7 +200,18 @@ def run(
     -------
     None
     """
-    _run()
+    _run(
+        accession=accession,
+        input_dir=input_dir,
+        output_dir=output_dir,
+        modalities=modalities,
+        targets=targets,
+        dominant_tissue=dominant_tissue,
+        image_processor=image_processor,
+        image_registration=image_registration,
+        data_dir_structure=data_dir_structure,
+        overwrite=overwrite,
+    )
 
 
 @main.command(name='run')
@@ -257,7 +270,7 @@ def run_command(
         the path to the config file.
     input_dir : str
         the path to the directory containing input input images
-    outpu_dir : str
+    output_dir : str
         the path to the directory containing output output images
     modalities : str
         comma separated modalities
@@ -278,38 +291,19 @@ def run_command(
     -------
     None
     """
-    from pyalfe.containers import PipelineContainer
-
-    container = PipelineContainer()
-    container.config.from_ini(config)
-
-    options = container.config.options
-
-    if input_dir:
-        options['input_dir'] = input_dir
-    if output_dir:
-        options['output_dir'] = output_dir
-    if modalities:
-        options['modalities'] = modalities
-    if targets:
-        options['targets'] = targets
-    if dominant_tissue:
-        options['dominant_tissue'] = dominant_tissue
-    if image_processor:
-        options['image_processor'] = image_processor
-    if image_registration:
-        options['image_registration'] = image_registration
-    if data_dir_structure:
-        options['data_dir_structure'] = data_dir_structure
-    options['overwrite_images'] = overwrite
-
-    click.echo('running pyalfe with following options')
-    click.echo(container.config.options())
-
-    container.init_resources()
-    pipeline_runner = container.pyalfe_pipeline_runner()
-
-    pipeline_runner.run(accession)
+    _run(
+        accession=accession,
+        config=config,
+        input_dir=input_dir,
+        output_dir=output_dir,
+        modalities=modalities,
+        targets=targets,
+        dominant_tissue=dominant_tissue,
+        image_processor=image_processor,
+        image_registration=image_registration,
+        data_dir_structure=data_dir_structure,
+        overwrite=overwrite,
+    )
 
 
 @main.command()
