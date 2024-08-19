@@ -127,15 +127,15 @@ def _run(
 
     if modalities:
         if isinstance(modalities, str):
-            options.modalities = modalities.split(',')
-        else:
             options.modalities = modalities
+        else:
+            options.modalities = ','.join(modalities)
 
     if targets:
         if isinstance(targets, str):
             options.targets = targets.split(',')
         else:
-            options.targets = targets
+            options.targets = ','.join(targets)
 
     if dominant_tissue:
         options.dominant_tissue = dominant_tissue

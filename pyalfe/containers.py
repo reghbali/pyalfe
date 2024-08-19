@@ -158,7 +158,7 @@ class PipelineContainer:
     def initialization(self):
         return Initialization(
             pipeline_dir=self.pipeline_dir,
-            modalities=self.config.options.modalities.as_(lambda s: s.split(',')),
+            modalities=self.config.options.modalities.split(','),
             overwrite=self.config.options.overwrite_images,
         )
 
@@ -168,7 +168,7 @@ class PipelineContainer:
             inference_model=self.skullstripping_model,
             image_processor=self.image_processor,
             pipeline_dir=self.pipeline_dir,
-            modalities=self.config.modalties.as_(lambda s: s.split(',')),
+            modalities=self.config.modalties.split(','),
             overwrite=self.config.options.overwrite_images,
         )
 
@@ -185,8 +185,8 @@ class PipelineContainer:
         CrossModalityRegistration(
             image_registration=self.image_registration,
             pipeline_dir=self.pipeline_dir,
-            modalities_all=self.config.options.modalities.as_(lambda s: s.split(',')),
-            modalities_target=self.config.options.targets.as_(lambda s: s.split(',')),
+            modalities_all=self.config.options.modalities.split(','),
+            modalities_target=self.config.options.targets.split(','),
             overwrite=self.config.options.overwrite_images,
         )
 
@@ -256,7 +256,7 @@ class PipelineContainer:
             image_processor=self.image_processor,
             image_registration=self.image_registration,
             pipeline_dir=self.pipeline_dir,
-            modalities_target=self.config.options.targets.as_(lambda s: s.split(',')),
+            modalities_target=self.config.options.targets.split(','),
             overwrite=self.config.options.overwrite_images,
         )
 
@@ -264,8 +264,8 @@ class PipelineContainer:
     def quantification(self):
         Quantification(
             pipeline_dir=self.pipeline_dir,
-            modalities_all=self.config.options.modalities.as_(lambda s: s.split(',')),
-            modalities_target=self.config.options.targets.as_(lambda s: s.split(',')),
+            modalities_all=self.config.options.modalities.split(','),
+            modalities_target=self.config.options.targets.split(','),
             dominant_tissue=self.config.options.dominant_tissue,
         )
 
