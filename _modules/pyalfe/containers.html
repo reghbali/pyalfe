@@ -519,7 +519,7 @@ document.write(`
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">tissue_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">NNUnetV2</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">NNUnetV2</span><span class="p">(</span>
             <span class="n">model_dir</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span>
                 <span class="n">MODELS_PATH</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span>
                     <span class="s1">&#39;nnunetv2&#39;</span><span class="p">,</span>
@@ -558,7 +558,7 @@ document.write(`
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">cross_modality_registration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">CrossModalityRegistration</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">CrossModalityRegistration</span><span class="p">(</span>
             <span class="n">image_registration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_registration</span><span class="p">,</span>
             <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
             <span class="n">modalities_all</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">modalities</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">),</span>
@@ -568,7 +568,7 @@ document.write(`
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">flair_segmentation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">SingleModalitySegmentation</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">SingleModalitySegmentation</span><span class="p">(</span>
             <span class="n">inference_model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">flair_model</span><span class="p">,</span>
             <span class="n">image_processor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_processor</span><span class="p">,</span>
             <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
@@ -611,7 +611,7 @@ document.write(`
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">t1_postprocessing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">T1Postprocessing</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">T1Postprocessing</span><span class="p">(</span>
             <span class="n">image_processor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_processor</span><span class="p">,</span>
             <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
             <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
@@ -619,7 +619,7 @@ document.write(`
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">t1_registration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">T1Registration</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">T1Registration</span><span class="p">(</span>
             <span class="n">image_processor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_processor</span><span class="p">,</span>
             <span class="n">image_registration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_registration</span><span class="p">,</span>
             <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
@@ -628,7 +628,7 @@ document.write(`
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">resampling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">Resampling</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">Resampling</span><span class="p">(</span>
             <span class="n">image_processor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_processor</span><span class="p">,</span>
             <span class="n">image_registration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_registration</span><span class="p">,</span>
             <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
@@ -638,7 +638,7 @@ document.write(`
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">quantification</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">Quantification</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">Quantification</span><span class="p">(</span>
             <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
             <span class="n">modalities_all</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">modalities</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">),</span>
             <span class="n">modalities_target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">),</span>
