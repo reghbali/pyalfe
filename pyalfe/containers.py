@@ -143,7 +143,7 @@ class PipelineContainer:
 
     @cached_property
     def tissue_model(self):
-        NNUnetV2(
+        return NNUnetV2(
             model_dir=str(
                 MODELS_PATH.joinpath(
                     'nnunetv2',
@@ -182,7 +182,7 @@ class PipelineContainer:
 
     @cached_property
     def cross_modality_registration(self):
-        CrossModalityRegistration(
+        return CrossModalityRegistration(
             image_registration=self.image_registration,
             pipeline_dir=self.pipeline_dir,
             modalities_all=self.config.options.modalities.split(','),
@@ -192,7 +192,7 @@ class PipelineContainer:
 
     @cached_property
     def flair_segmentation(self):
-        SingleModalitySegmentation(
+        return SingleModalitySegmentation(
             inference_model=self.flair_model,
             image_processor=self.image_processor,
             pipeline_dir=self.pipeline_dir,
@@ -235,7 +235,7 @@ class PipelineContainer:
 
     @cached_property
     def t1_postprocessing(self):
-        T1Postprocessing(
+        return T1Postprocessing(
             image_processor=self.image_processor,
             pipeline_dir=self.pipeline_dir,
             overwrite=self.config.options.overwrite_images,
@@ -243,7 +243,7 @@ class PipelineContainer:
 
     @cached_property
     def t1_registration(self):
-        T1Registration(
+        return T1Registration(
             image_processor=self.image_processor,
             image_registration=self.image_registration,
             pipeline_dir=self.pipeline_dir,
@@ -252,7 +252,7 @@ class PipelineContainer:
 
     @cached_property
     def resampling(self):
-        Resampling(
+        return Resampling(
             image_processor=self.image_processor,
             image_registration=self.image_registration,
             pipeline_dir=self.pipeline_dir,
@@ -262,7 +262,7 @@ class PipelineContainer:
 
     @cached_property
     def quantification(self):
-        Quantification(
+        return Quantification(
             pipeline_dir=self.pipeline_dir,
             modalities_all=self.config.options.modalities.split(','),
             modalities_target=self.config.options.targets.split(','),
