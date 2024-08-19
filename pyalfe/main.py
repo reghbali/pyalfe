@@ -283,7 +283,7 @@ def run_command(
     container = PipelineContainer()
     container.config.from_ini(config)
 
-    options = container.config.options()
+    options = container.config.options
 
     if input_dir:
         options['input_dir'] = input_dir
