@@ -152,7 +152,7 @@ def _run(
     options.overwrite_images = overwrite
 
     container.init_resources()
-    pipeline_runner = container.pyalfe_pipeline_runner()
+    pipeline_runner = container.pyalfe_pipeline_runner
 
     pipeline_runner.run(accession)
 

@@ -168,7 +168,7 @@ class PipelineContainer:
             inference_model=self.skullstripping_model,
             image_processor=self.image_processor,
             pipeline_dir=self.pipeline_dir,
-            modalities=self.config.modalties.split(','),
+            modalities=self.config.options.modalities.split(','),
             overwrite=self.config.options.overwrite_images,
         )
 
@@ -271,7 +271,7 @@ class PipelineContainer:
 
     @cached_property
     def pyalfe_pipeline_runner(self):
-        PyALFEPipelineRunner(
+        return PyALFEPipelineRunner(
             initialization=self.initialization,
             skullstripping=self.skullstripping,
             t1_preprocessing=self.t1_preprocessing,
