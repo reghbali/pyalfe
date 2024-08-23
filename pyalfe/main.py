@@ -390,6 +390,8 @@ def _process_dicom(
     else:
         options = {}
 
+    print(options)
+
     options.dicom_dir = dicom_dir
 
     if nifti_dir:
@@ -402,10 +404,8 @@ def _process_dicom(
 
     options.overwrite_images = overwrite
 
-    container.config.from_dict(options)
-
     container.init_resources()
-    pipeline_runner = container.dicom_processing_pipeline_runner()
+    pipeline_runner = container.dicom_processing_pipeline_runner
 
     pipeline_runner.run(accession)
 

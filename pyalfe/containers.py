@@ -55,17 +55,19 @@ class Config:
                 setattr(self, section, SimpleNamespace(**key_value))
 
 
-class PipelineContainer:
-    """
-    container objects for all the dependencies of the pipeline.
-    """
-
+class DeclarativeContainer:
     def __init__(self):
         self.config = Config()
 
     def init_resources(self):
         """This function exists for compatibility reasons"""
         pass
+
+
+class PipelineContainer(DeclarativeContainer):
+    """
+    container objects for all the dependencies of the pipeline.
+    """
 
     @cached_property
     def pipeline_dir(self):
@@ -286,19 +288,16 @@ class PipelineContainer:
         )
 
 
-class DicomProcessingContianer:
+class DicomProcessingContianer(DeclarativeContainer):
     """Contianer for dicom processing pipeline depedencies"""
-
-    def __init__(self, config):
-        self.config = config
 
     @cached_property
     def pipeline_dir(self):
-        if self.config.data_dir_structure == 'alfe':
+        if self.config.options.data_dir_structure == 'alfe':
             return DefaultALFEDataDir(
                 output_dir=os.devnull, input_dir=self.config.options.input_dir
             )
-        elif self.config.data_dir_structure == 'bids':
+        elif self.config.options.data_dir_structure == 'bids':
             return BIDSDataDir(
                 output_dir=os.devnull,
                 input_dir=self.config.options.input_dir,
@@ -314,7 +313,7 @@ class DicomProcessingContianer:
 
     @cached_property
     def dicom_processing(self):
-        DicomProcessing(
+        return DicomProcessing(
             pipeline_dir=self.pipeline_dir,
             dicom_dir=self.dicom_dir,
             overwrite=self.config.options.overwrite_images,
@@ -322,4 +321,4 @@ class DicomProcessingContianer:
 
     @cached_property
     def dicom_processing_pipeline_runner(self):
-        DicomProcessingPipelineRunner(dicom_processing=self.dicom_processing)
+        return DicomProcessingPipelineRunner(dicom_processing=self.dicom_processing)
