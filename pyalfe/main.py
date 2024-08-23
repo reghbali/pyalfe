@@ -372,7 +372,61 @@ def configure():
         config.write(conf)
 
 
-@main.command()
+def _process_dicom(
+    accession: str,
+    dicom_dir: str,
+    config: str = None,
+    nifti_dir: str = None,
+    data_dir_structure: str = None,
+    overwrite: bool = True,
+):
+    from pyalfe.containers import DicomProcessingContianer
+
+    container = DicomProcessingContianer()
+
+    if config:
+        container.config.from_ini(config)
+        options = container.config.options
+    else:
+        options = {}
+
+    options.dicom_dir = dicom_dir
+
+    if nifti_dir:
+        options.nifti_dir = nifti_dir
+    elif options.input_dir:
+        options.nifti_dir = options.input_dir
+
+    if data_dir_structure:
+        options.data_dir_structure = data_dir_structure
+
+    options.overwrite_images = overwrite
+
+    container.config.from_dict(options)
+
+    container.init_resources()
+    pipeline_runner = container.dicom_processing_pipeline_runner()
+
+    pipeline_runner.run(accession)
+
+
+def process_dicom(
+    accession: str,
+    dicom_dir: str,
+    nifti_dir: str,
+    data_dir_structure: str = DEFUALT_DATA_DIR_STRUCTURE,
+    overwrite: bool = DEFAULT_OVERWRITE,
+):
+    _process_dicom(
+        accession=accession,
+        dicom_dir=dicom_dir,
+        nifti_dir=nifti_dir,
+        data_dir_structure=data_dir_structure,
+        overwrite=overwrite,
+    )
+
+
+@main.command(name='process_dicom')
 @click.argument('accession')
 @click.argument('dicom_dir')
 @click.option(
@@ -387,7 +441,7 @@ def configure():
     type=click.Choice(['alfe', 'bids'], case_sensitive=False),
 )
 @click.option('-ow/-now', '--overwrite/--no-overwrite', default=True)
-def process_dicom(
+def process_dicom_command(
     accession: str,
     dicom_dir: str,
     config: str,
@@ -395,27 +449,14 @@ def process_dicom(
     data_dir_structure: str,
     overwrite: bool,
 ):
-    from pyalfe.containers import DicomProcessingContianer
-
-    container = DicomProcessingContianer()
-    container.config.from_ini(config, required=True, envs_required=True)
-
-    options = container.config.options()
-
-    options['dicom_dir'] = dicom_dir
-
-    if nifti_dir:
-        options['nifti_dir'] = nifti_dir
-    else:
-        options['nifti_dir'] = options['input_dir']
-    if data_dir_structure:
-        options['data_dir_structure'] = data_dir_structure
-    options['overwrite_images'] = overwrite
-
-    container.init_resources()
-    pipeline_runner = container.dicom_processing_pipeline_runner()
-
-    pipeline_runner.run(accession)
+    _process_dicom(
+        accession=accession,
+        dicom_dir=dicom_dir,
+        config=config,
+        nifti_dir=nifti_dir,
+        data_dir_structure=data_dir_structure,
+        overwrite=overwrite,
+    )
 
 
 if __name__ == '__main__':
