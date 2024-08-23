@@ -737,7 +737,64 @@ document.write(`
         <span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
 
 
-<span class="nd">@main</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">_process_dicom</span><span class="p">(</span>
+    <span class="n">accession</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">dicom_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">config</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">nifti_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">data_dir_structure</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">pyalfe.containers</span> <span class="kn">import</span> <span class="n">DicomProcessingContianer</span>
+
+    <span class="n">container</span> <span class="o">=</span> <span class="n">DicomProcessingContianer</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+        <span class="n">container</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_ini</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">options</span><span class="o">.</span><span class="n">dicom_dir</span> <span class="o">=</span> <span class="n">dicom_dir</span>
+
+    <span class="k">if</span> <span class="n">nifti_dir</span><span class="p">:</span>
+        <span class="n">options</span><span class="o">.</span><span class="n">nifti_dir</span> <span class="o">=</span> <span class="n">nifti_dir</span>
+    <span class="k">elif</span> <span class="n">options</span><span class="o">.</span><span class="n">input_dir</span><span class="p">:</span>
+        <span class="n">options</span><span class="o">.</span><span class="n">nifti_dir</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">input_dir</span>
+
+    <span class="k">if</span> <span class="n">data_dir_structure</span><span class="p">:</span>
+        <span class="n">options</span><span class="o">.</span><span class="n">data_dir_structure</span> <span class="o">=</span> <span class="n">data_dir_structure</span>
+
+    <span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span> <span class="o">=</span> <span class="n">overwrite</span>
+
+    <span class="n">container</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+
+    <span class="n">container</span><span class="o">.</span><span class="n">init_resources</span><span class="p">()</span>
+    <span class="n">pipeline_runner</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">dicom_processing_pipeline_runner</span><span class="p">()</span>
+
+    <span class="n">pipeline_runner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">accession</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="process_dicom">
+<a class="viewcode-back" href="../../api/main.html#pyalfe.main.process_dicom">[docs]</a>
+<span class="k">def</span> <span class="nf">process_dicom</span><span class="p">(</span>
+    <span class="n">accession</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">dicom_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">nifti_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">data_dir_structure</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFUALT_DATA_DIR_STRUCTURE</span><span class="p">,</span>
+    <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">DEFAULT_OVERWRITE</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">_process_dicom</span><span class="p">(</span>
+        <span class="n">accession</span><span class="o">=</span><span class="n">accession</span><span class="p">,</span>
+        <span class="n">dicom_dir</span><span class="o">=</span><span class="n">dicom_dir</span><span class="p">,</span>
+        <span class="n">nifti_dir</span><span class="o">=</span><span class="n">nifti_dir</span><span class="p">,</span>
+        <span class="n">data_dir_structure</span><span class="o">=</span><span class="n">data_dir_structure</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="nd">@main</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;process_dicom&#39;</span><span class="p">)</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s1">&#39;accession&#39;</span><span class="p">)</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s1">&#39;dicom_dir&#39;</span><span class="p">)</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
@@ -752,7 +809,7 @@ document.write(`
     <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;alfe&#39;</span><span class="p">,</span> <span class="s1">&#39;bids&#39;</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
 <span class="p">)</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;-ow/-now&#39;</span><span class="p">,</span> <span class="s1">&#39;--overwrite/--no-overwrite&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">process_dicom</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">process_dicom_command</span><span class="p">(</span>
     <span class="n">accession</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">dicom_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">config</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -760,27 +817,14 @@ document.write(`
     <span class="n">data_dir_structure</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">pyalfe.containers</span> <span class="kn">import</span> <span class="n">DicomProcessingContianer</span>
-
-    <span class="n">container</span> <span class="o">=</span> <span class="n">DicomProcessingContianer</span><span class="p">()</span>
-    <span class="n">container</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_ini</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">envs_required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="n">options</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="p">()</span>
-
-    <span class="n">options</span><span class="p">[</span><span class="s1">&#39;dicom_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dicom_dir</span>
-
-    <span class="k">if</span> <span class="n">nifti_dir</span><span class="p">:</span>
-        <span class="n">options</span><span class="p">[</span><span class="s1">&#39;nifti_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nifti_dir</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">options</span><span class="p">[</span><span class="s1">&#39;nifti_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;input_dir&#39;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">data_dir_structure</span><span class="p">:</span>
-        <span class="n">options</span><span class="p">[</span><span class="s1">&#39;data_dir_structure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_dir_structure</span>
-    <span class="n">options</span><span class="p">[</span><span class="s1">&#39;overwrite_images&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">overwrite</span>
-
-    <span class="n">container</span><span class="o">.</span><span class="n">init_resources</span><span class="p">()</span>
-    <span class="n">pipeline_runner</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">dicom_processing_pipeline_runner</span><span class="p">()</span>
-
-    <span class="n">pipeline_runner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">accession</span><span class="p">)</span>
+    <span class="n">_process_dicom</span><span class="p">(</span>
+        <span class="n">accession</span><span class="o">=</span><span class="n">accession</span><span class="p">,</span>
+        <span class="n">dicom_dir</span><span class="o">=</span><span class="n">dicom_dir</span><span class="p">,</span>
+        <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+        <span class="n">nifti_dir</span><span class="o">=</span><span class="n">nifti_dir</span><span class="p">,</span>
+        <span class="n">data_dir_structure</span><span class="o">=</span><span class="n">data_dir_structure</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">,</span>
+    <span class="p">)</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
