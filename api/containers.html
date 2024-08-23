@@ -428,8 +428,11 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.Config.from_dict"><code class="docutils literal notranslate"><span class="pre">Config.from_dict()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DeclarativeContainer"><code class="docutils literal notranslate"><span class="pre">DeclarativeContainer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DeclarativeContainer.init_resources"><code class="docutils literal notranslate"><span class="pre">DeclarativeContainer.init_resources()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer"><code class="docutils literal notranslate"><span class="pre">PipelineContainer</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.init_resources"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.init_resources()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.pipeline_dir"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.pipeline_dir</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.image_processor"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.image_processor</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.image_registration"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.image_registration</span></code></a></li>
@@ -488,16 +491,22 @@ document.write(`
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.containers.</span></span><span class="sig-name descname"><span class="pre">PipelineContainer</span></span><a class="reference internal" href="../_modules/pyalfe/containers.html#PipelineContainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.containers.PipelineContainer" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="pyalfe.containers.DeclarativeContainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.containers.</span></span><span class="sig-name descname"><span class="pre">DeclarativeContainer</span></span><a class="reference internal" href="../_modules/pyalfe/containers.html#DeclarativeContainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.containers.DeclarativeContainer" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>container objects for all the dependencies of the pipeline.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.init_resources">
-<span class="sig-name descname"><span class="pre">init_resources</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/containers.html#PipelineContainer.init_resources"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.containers.PipelineContainer.init_resources" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="pyalfe.containers.DeclarativeContainer.init_resources">
+<span class="sig-name descname"><span class="pre">init_resources</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/containers.html#DeclarativeContainer.init_resources"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.containers.DeclarativeContainer.init_resources" title="Link to this definition">#</a></dt>
 <dd><p>This function exists for compatibility reasons</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.containers.</span></span><span class="sig-name descname"><span class="pre">PipelineContainer</span></span><a class="reference internal" href="../_modules/pyalfe/containers.html#PipelineContainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.containers.PipelineContainer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyalfe.containers.DeclarativeContainer" title="pyalfe.containers.DeclarativeContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeContainer</span></code></a></p>
+<p>container objects for all the dependencies of the pipeline.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="pyalfe.containers.PipelineContainer.pipeline_dir">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pipeline_dir</span></span><a class="headerlink" href="#pyalfe.containers.PipelineContainer.pipeline_dir" title="Link to this definition">#</a></dt>
@@ -597,8 +606,8 @@ document.write(`
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyalfe.containers.DicomProcessingContianer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.containers.</span></span><span class="sig-name descname"><span class="pre">DicomProcessingContianer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/containers.html#DicomProcessingContianer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.containers.DicomProcessingContianer" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.containers.</span></span><span class="sig-name descname"><span class="pre">DicomProcessingContianer</span></span><a class="reference internal" href="../_modules/pyalfe/containers.html#DicomProcessingContianer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.containers.DicomProcessingContianer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyalfe.containers.DeclarativeContainer" title="pyalfe.containers.DeclarativeContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeContainer</span></code></a></p>
 <p>Contianer for dicom processing pipeline depedencies</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="pyalfe.containers.DicomProcessingContianer.pipeline_dir">
@@ -693,8 +702,11 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.Config.from_dict"><code class="docutils literal notranslate"><span class="pre">Config.from_dict()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DeclarativeContainer"><code class="docutils literal notranslate"><span class="pre">DeclarativeContainer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.DeclarativeContainer.init_resources"><code class="docutils literal notranslate"><span class="pre">DeclarativeContainer.init_resources()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer"><code class="docutils literal notranslate"><span class="pre">PipelineContainer</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.init_resources"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.init_resources()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.pipeline_dir"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.pipeline_dir</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.image_processor"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.image_processor</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.containers.PipelineContainer.image_registration"><code class="docutils literal notranslate"><span class="pre">PipelineContainer.image_registration</span></code></a></li>

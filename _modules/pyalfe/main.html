@@ -755,6 +755,8 @@ document.write(`
     <span class="k">else</span><span class="p">:</span>
         <span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
 
+    <span class="nb">print</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+
     <span class="n">options</span><span class="o">.</span><span class="n">dicom_dir</span> <span class="o">=</span> <span class="n">dicom_dir</span>
 
     <span class="k">if</span> <span class="n">nifti_dir</span><span class="p">:</span>
@@ -767,10 +769,8 @@ document.write(`
 
     <span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span> <span class="o">=</span> <span class="n">overwrite</span>
 
-    <span class="n">container</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
-
     <span class="n">container</span><span class="o">.</span><span class="n">init_resources</span><span class="p">()</span>
-    <span class="n">pipeline_runner</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">dicom_processing_pipeline_runner</span><span class="p">()</span>
+    <span class="n">pipeline_runner</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">dicom_processing_pipeline_runner</span>
 
     <span class="n">pipeline_runner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">accession</span><span class="p">)</span>
 

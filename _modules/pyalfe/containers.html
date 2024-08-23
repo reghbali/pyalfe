@@ -426,22 +426,27 @@ document.write(`
 
 
 
-<div class="viewcode-block" id="PipelineContainer">
-<a class="viewcode-back" href="../../api/containers.html#pyalfe.containers.PipelineContainer">[docs]</a>
-<span class="k">class</span> <span class="nc">PipelineContainer</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    container objects for all the dependencies of the pipeline.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
+<div class="viewcode-block" id="DeclarativeContainer">
+<a class="viewcode-back" href="../../api/containers.html#pyalfe.containers.DeclarativeContainer">[docs]</a>
+<span class="k">class</span> <span class="nc">DeclarativeContainer</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()</span>
 
-<div class="viewcode-block" id="PipelineContainer.init_resources">
-<a class="viewcode-back" href="../../api/containers.html#pyalfe.containers.PipelineContainer.init_resources">[docs]</a>
+<div class="viewcode-block" id="DeclarativeContainer.init_resources">
+<a class="viewcode-back" href="../../api/containers.html#pyalfe.containers.DeclarativeContainer.init_resources">[docs]</a>
     <span class="k">def</span> <span class="nf">init_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;This function exists for compatibility reasons&quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
+</div>
 
+
+
+<div class="viewcode-block" id="PipelineContainer">
+<a class="viewcode-back" href="../../api/containers.html#pyalfe.containers.PipelineContainer">[docs]</a>
+<span class="k">class</span> <span class="nc">PipelineContainer</span><span class="p">(</span><span class="n">DeclarativeContainer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    container objects for all the dependencies of the pipeline.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">pipeline_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -665,19 +670,16 @@ document.write(`
 
 <div class="viewcode-block" id="DicomProcessingContianer">
 <a class="viewcode-back" href="../../api/containers.html#pyalfe.containers.DicomProcessingContianer">[docs]</a>
-<span class="k">class</span> <span class="nc">DicomProcessingContianer</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">DicomProcessingContianer</span><span class="p">(</span><span class="n">DeclarativeContainer</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Contianer for dicom processing pipeline depedencies&quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">pipeline_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">data_dir_structure</span> <span class="o">==</span> <span class="s1">&#39;alfe&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">data_dir_structure</span> <span class="o">==</span> <span class="s1">&#39;alfe&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">DefaultALFEDataDir</span><span class="p">(</span>
                 <span class="n">output_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span> <span class="n">input_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">input_dir</span>
             <span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">data_dir_structure</span> <span class="o">==</span> <span class="s1">&#39;bids&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">data_dir_structure</span> <span class="o">==</span> <span class="s1">&#39;bids&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">BIDSDataDir</span><span class="p">(</span>
                 <span class="n">output_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span>
                 <span class="n">input_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">input_dir</span><span class="p">,</span>
@@ -693,7 +695,7 @@ document.write(`
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">dicom_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">DicomProcessing</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">DicomProcessing</span><span class="p">(</span>
             <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
             <span class="n">dicom_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dicom_dir</span><span class="p">,</span>
             <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
@@ -701,7 +703,7 @@ document.write(`
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">dicom_processing_pipeline_runner</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">DicomProcessingPipelineRunner</span><span class="p">(</span><span class="n">dicom_processing</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dicom_processing</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">DicomProcessingPipelineRunner</span><span class="p">(</span><span class="n">dicom_processing</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dicom_processing</span><span class="p">)</span></div>
 
 </pre></div>
 
