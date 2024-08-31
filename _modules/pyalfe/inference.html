@@ -368,6 +368,8 @@ document.write(`
 
 <span class="kn">import</span> <span class="nn">torch</span>
 
+<span class="kn">from</span> <span class="nn">pyalfe.interfaces.freesurfer</span> <span class="kn">import</span> <span class="n">FreeSurfer</span>
+
 
 <div class="viewcode-block" id="InferenceModel">
 <a class="viewcode-back" href="../../api/inference.html#pyalfe.inference.InferenceModel">[docs]</a>
@@ -479,6 +481,28 @@ document.write(`
             <span class="n">num_processes_preprocessing</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_threads_preprocessing</span><span class="p">,</span>
             <span class="n">num_processes_segmentation_export</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_threads_save</span><span class="p">,</span>
         <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="SynthSeg">
+<a class="viewcode-back" href="../../api/inference.html#pyalfe.inference.SynthSeg">[docs]</a>
+<span class="k">class</span> <span class="nc">SynthSeg</span><span class="p">(</span><span class="n">InferenceModel</span><span class="p">):</span>
+<div class="viewcode-block" id="SynthSeg.predict_cases">
+<a class="viewcode-back" href="../../api/inference.html#pyalfe.inference.SynthSeg.predict_cases">[docs]</a>
+    <span class="k">def</span> <span class="nf">predict_cases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_image_tuple_list</span><span class="p">,</span> <span class="n">output_list</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">input_tuple</span><span class="p">,</span> <span class="n">output</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">input_image_tuple_list</span><span class="p">,</span> <span class="n">output_list</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_tuple</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39; </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">input_tuple</span><span class="p">)</span><span class="si">}</span><span class="s1"> images are given.&#39;</span>
+                    <span class="s1">&#39; SynthSeg works on single image at a time.&#39;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_tuple</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Empty input image tuple&#39;</span><span class="p">)</span>
+            <span class="n">free_surfer</span> <span class="o">=</span> <span class="n">FreeSurfer</span><span class="p">()</span>
+            <span class="n">free_surfer</span><span class="o">.</span><span class="n">mri_synthseg</span><span class="p">(</span><span class="n">input_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">output</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

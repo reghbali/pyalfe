@@ -444,6 +444,12 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.TissueWithPriorSegementation.run"><code class="docutils literal notranslate"><span class="pre">TissueWithPriorSegementation.run()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.SynthSegTissueSegmentation"><code class="docutils literal notranslate"><span class="pre">SynthSegTissueSegmentation</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.SynthSegTissueSegmentation.logger"><code class="docutils literal notranslate"><span class="pre">SynthSegTissueSegmentation.logger</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.SynthSegTissueSegmentation.post_process"><code class="docutils literal notranslate"><span class="pre">SynthSegTissueSegmentation.post_process()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.SynthSegTissueSegmentation.run"><code class="docutils literal notranslate"><span class="pre">SynthSegTissueSegmentation.run()</span></code></a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -608,22 +614,19 @@ Default is True.</p>
 <dd><p>Bases: <a class="reference internal" href="#pyalfe.tasks.segmentation.Segmentation" title="pyalfe.tasks.segmentation.Segmentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Segmentation</span></code></a></p>
 <p>This task generates tissue segmentation from T1 and a prior atlas based
 segementation.</p>
-<blockquote>
-<div><p>Parameters</p>
-</div></blockquote>
-<dl class="simple">
-<dt>image_processor: ImageProcessor</dt><dd><p>The image processor object.</p>
-</dd>
-<dt>pipeline_dir: PipelineDataDir</dt><dd><p>The pipeline data directory object.</p>
-</dd>
-<dt>image_type_input: str = ‘skullstripped’</dt><dd><p>The type of image that should be used as input.
-Default is <cite>skullstripped</cite>.</p>
-</dd>
-<dt>image_type_output: str</dt><dd><p>The type of output image that segmentation should be saved as.
-Default is <cite>tissue_seg</cite>.</p>
-</dd>
-<dt>overwrite: bool = True</dt><dd><p>Whether to overwrite existing output segmentation images.
-Default is True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inference_model</strong> (<a class="reference internal" href="../inference.html#pyalfe.inference.InferenceModel" title="pyalfe.inference.InferenceModel"><em>InferenceModel</em></a>) – The inference model object.</p></li>
+<li><p><strong>image_processor</strong> (<a class="reference internal" href="../image_processing.html#pyalfe.image_processing.ImageProcessor" title="pyalfe.image_processing.ImageProcessor"><em>ImageProcessor</em></a>) – The image processor object.</p></li>
+<li><p><strong>pipeline_dir</strong> (<a class="reference internal" href="../data_structure.html#pyalfe.data_structure.PipelineDataDir" title="pyalfe.data_structure.PipelineDataDir"><em>PipelineDataDir</em></a>) – The pipeline data directory object.</p></li>
+<li><p><strong>image_type_input</strong> (<em>str = 'skullstripped'</em>) – The type of image that should be used as input.
+Default is <cite>skullstripped</cite>.</p></li>
+<li><p><strong>image_type_output</strong> (<em>str</em>) – The type of output image that segmentation should be saved as.
+Default is <cite>tissue_seg</cite>.</p></li>
+<li><p><strong>overwrite</strong> (<em>bool = True</em>) – Whether to overwrite existing output segmentation images.
+Default is True.</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -634,6 +637,57 @@ Default is True.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.tasks.segmentation.TissueWithPriorSegementation.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#TissueWithPriorSegementation.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.TissueWithPriorSegementation.run" title="Link to this definition">#</a></dt>
+<dd><p>Runs the task for an accession.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyalfe.tasks.segmentation.SynthSegTissueSegmentation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.tasks.segmentation.</span></span><span class="sig-name descname"><span class="pre">SynthSegTissueSegmentation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inference_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../inference.html#pyalfe.inference.InferenceModel" title="pyalfe.inference.InferenceModel"><span class="pre">InferenceModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_processor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../image_processing.html#pyalfe.image_processing.ImageProcessor" title="pyalfe.image_processing.ImageProcessor"><span class="pre">ImageProcessor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../data_structure.html#pyalfe.data_structure.PipelineDataDir" title="pyalfe.data_structure.PipelineDataDir"><span class="pre">PipelineDataDir</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'trim_upsampled'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_type_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'tissue_seg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#SynthSegTissueSegmentation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.SynthSegTissueSegmentation" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyalfe.tasks.segmentation.Segmentation" title="pyalfe.tasks.segmentation.Segmentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Segmentation</span></code></a></p>
+<p>This task generates tissue segmentation using freesurfer’s synthseg</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inference_model</strong> (<a class="reference internal" href="../inference.html#pyalfe.inference.InferenceModel" title="pyalfe.inference.InferenceModel"><em>InferenceModel</em></a>) – The inference model object.</p></li>
+<li><p><strong>image_processor</strong> (<a class="reference internal" href="../image_processing.html#pyalfe.image_processing.ImageProcessor" title="pyalfe.image_processing.ImageProcessor"><em>ImageProcessor</em></a>) – The image processor object.</p></li>
+<li><p><strong>pipeline_dir</strong> (<a class="reference internal" href="../data_structure.html#pyalfe.data_structure.PipelineDataDir" title="pyalfe.data_structure.PipelineDataDir"><em>PipelineDataDir</em></a>) – The pipeline data directory object.</p></li>
+<li><p><strong>image_type_input</strong> (<em>str = 'skullstripped'</em>) – The type of image that should be used as input.
+Default is <cite>skullstripped</cite>.</p></li>
+<li><p><strong>image_type_output</strong> (<em>str</em>) – The type of output image that segmentation should be saved as.
+Default is <cite>tissue_seg</cite>.</p></li>
+<li><p><strong>overwrite</strong> (<em>bool = True</em>) – Whether to overwrite existing output segmentation images.
+Default is True.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyalfe.tasks.segmentation.SynthSegTissueSegmentation.logger">
+<span class="sig-name descname"><span class="pre">logger</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Logger</span> <span class="pre">SynthSegTissueSegmentation</span> <span class="pre">(WARNING)&gt;</span></em><a class="headerlink" href="#pyalfe.tasks.segmentation.SynthSegTissueSegmentation.logger" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyalfe.tasks.segmentation.SynthSegTissueSegmentation.post_process">
+<span class="sig-name descname"><span class="pre">post_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#SynthSegTissueSegmentation.post_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.SynthSegTissueSegmentation.post_process" title="Link to this definition">#</a></dt>
+<dd><p>Post processes the prediction segmentation image by applying an
+optional mask to create the final segmentation. For example, in a
+lesion segmentation task you can remove any lesion outside the brain
+by applying a brain mask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pred</strong> (<em>str</em><em> or </em><em>Path</em>) – Path to the prediction segmentation image.</p></li>
+<li><p><strong>mask</strong> (<em>str</em><em> or </em><em>Path</em>) – Path to the mask image.</p></li>
+<li><p><strong>seg</strong> (<em>str</em><em> or </em><em>Path</em>) – Path to the output post-processed segmentation image.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyalfe.tasks.segmentation.SynthSegTissueSegmentation.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/tasks/segmentation.html#SynthSegTissueSegmentation.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.tasks.segmentation.SynthSegTissueSegmentation.run" title="Link to this definition">#</a></dt>
 <dd><p>Runs the task for an accession.</p>
 </dd></dl>
 
@@ -724,6 +778,12 @@ Default is True.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.TissueWithPriorSegementation"><code class="docutils literal notranslate"><span class="pre">TissueWithPriorSegementation</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.TissueWithPriorSegementation.logger"><code class="docutils literal notranslate"><span class="pre">TissueWithPriorSegementation.logger</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.TissueWithPriorSegementation.run"><code class="docutils literal notranslate"><span class="pre">TissueWithPriorSegementation.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.SynthSegTissueSegmentation"><code class="docutils literal notranslate"><span class="pre">SynthSegTissueSegmentation</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.SynthSegTissueSegmentation.logger"><code class="docutils literal notranslate"><span class="pre">SynthSegTissueSegmentation.logger</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.SynthSegTissueSegmentation.post_process"><code class="docutils literal notranslate"><span class="pre">SynthSegTissueSegmentation.post_process()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.tasks.segmentation.SynthSegTissueSegmentation.run"><code class="docutils literal notranslate"><span class="pre">SynthSegTissueSegmentation.run()</span></code></a></li>
 </ul>
 </li>
 </ul>

@@ -665,7 +665,7 @@ document.write(`
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This task generates tissue segmentation from T1 and a prior atlas based</span>
 <span class="sd">    segementation.</span>
 
-<span class="sd">        Parameters</span>
+<span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    inference_model: InferenceModel</span>
 <span class="sd">        The inference model object.</span>
@@ -715,8 +715,8 @@ document.write(`
         <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">t1_image_path</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">t1_image_path</span><span class="si">}</span><span class="s1"> is missing.&#39;</span>
-                <span class="s1">&#39; Skipping Tissue segmentation.&#39;</span><span class="p">)</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">t1_image_path</span><span class="si">}</span><span class="s1"> is missing.&#39;</span> <span class="s1">&#39; Skipping Tissue segmentation.&#39;</span>
+            <span class="p">)</span>
             <span class="k">return</span>
         <span class="n">tissue_prior_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="o">.</span><span class="n">get_output_image</span><span class="p">(</span>
             <span class="n">accession</span><span class="p">,</span>
@@ -727,8 +727,8 @@ document.write(`
         <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">tissue_prior_path</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">tissue_prior_path</span><span class="si">}</span><span class="s1"> is missing.&#39;</span>
-                <span class="s1">&#39; Skipping Tissue segmentation.&#39;</span><span class="p">)</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">tissue_prior_path</span><span class="si">}</span><span class="s1"> is missing.&#39;</span> <span class="s1">&#39; Skipping Tissue segmentation.&#39;</span>
+            <span class="p">)</span>
             <span class="k">return</span>
         <span class="n">pred_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="o">.</span><span class="n">get_output_image</span><span class="p">(</span>
             <span class="n">accession</span><span class="p">,</span> <span class="n">Modality</span><span class="o">.</span><span class="n">T1</span><span class="p">,</span> <span class="n">image_type</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image_type_output</span><span class="si">}</span><span class="s1">_pred&#39;</span>
@@ -736,6 +736,84 @@ document.write(`
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pred_path</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">([</span><span class="n">t1_image_path</span><span class="p">,</span> <span class="n">tissue_prior_path</span><span class="p">],</span> <span class="n">pred_path</span><span class="p">)</span>
+
+        <span class="n">seg_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="o">.</span><span class="n">get_output_image</span><span class="p">(</span>
+            <span class="n">accession</span><span class="p">,</span> <span class="n">Modality</span><span class="o">.</span><span class="n">T1</span><span class="p">,</span> <span class="n">image_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_type_output</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">seg_path</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">post_process</span><span class="p">(</span><span class="n">pred_path</span><span class="p">,</span> <span class="n">seg_path</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="SynthSegTissueSegmentation">
+<a class="viewcode-back" href="../../../api/tasks/segmentation.html#pyalfe.tasks.segmentation.SynthSegTissueSegmentation">[docs]</a>
+<span class="k">class</span> <span class="nc">SynthSegTissueSegmentation</span><span class="p">(</span><span class="n">Segmentation</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This task generates tissue segmentation using freesurfer&#39;s synthseg</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    inference_model: InferenceModel</span>
+<span class="sd">        The inference model object.</span>
+<span class="sd">    image_processor: ImageProcessor</span>
+<span class="sd">        The image processor object.</span>
+<span class="sd">    pipeline_dir: PipelineDataDir</span>
+<span class="sd">        The pipeline data directory object.</span>
+<span class="sd">    image_type_input: str = &#39;skullstripped&#39;</span>
+<span class="sd">        The type of image that should be used as input.</span>
+<span class="sd">        Default is `skullstripped`.</span>
+<span class="sd">    image_type_output: str</span>
+<span class="sd">        The type of output image that segmentation should be saved as.</span>
+<span class="sd">        Default is `tissue_seg`.</span>
+<span class="sd">    overwrite: bool = True</span>
+<span class="sd">        Whether to overwrite existing output segmentation images.</span>
+<span class="sd">        Default is True.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;SynthSegTissueSegmentation&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">inference_model</span><span class="p">:</span> <span class="n">InferenceModel</span><span class="p">,</span>
+        <span class="n">image_processor</span><span class="p">:</span> <span class="n">ImageProcessor</span><span class="p">,</span>
+        <span class="n">pipeline_dir</span><span class="p">:</span> <span class="n">PipelineDataDir</span><span class="p">,</span>
+        <span class="n">image_type_input</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;trim_upsampled&#39;</span><span class="p">,</span>
+        <span class="n">image_type_output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;tissue_seg&#39;</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">inference_model</span><span class="p">,</span> <span class="n">image_processor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span> <span class="o">=</span> <span class="n">pipeline_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_type_input</span> <span class="o">=</span> <span class="n">image_type_input</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_type_output</span> <span class="o">=</span> <span class="n">image_type_output</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span> <span class="o">=</span> <span class="n">overwrite</span>
+
+<div class="viewcode-block" id="SynthSegTissueSegmentation.post_process">
+<a class="viewcode-back" href="../../../api/tasks/segmentation.html#pyalfe.tasks.segmentation.SynthSegTissueSegmentation.post_process">[docs]</a>
+    <span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pred</span><span class="p">,</span> <span class="n">seg</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">seg</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SynthSegTissueSegmentation.run">
+<a class="viewcode-back" href="../../../api/tasks/segmentation.html#pyalfe.tasks.segmentation.SynthSegTissueSegmentation.run">[docs]</a>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">):</span>
+        <span class="n">t1_image_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="o">.</span><span class="n">get_output_image</span><span class="p">(</span>
+            <span class="n">accession</span><span class="p">,</span>
+            <span class="n">Modality</span><span class="o">.</span><span class="n">T1</span><span class="p">,</span>
+            <span class="n">image_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_type_input</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">t1_image_path</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">t1_image_path</span><span class="si">}</span><span class="s1"> is missing.&#39;</span> <span class="s1">&#39; Skipping Tissue segmentation.&#39;</span>
+            <span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">pred_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="o">.</span><span class="n">get_output_image</span><span class="p">(</span>
+            <span class="n">accession</span><span class="p">,</span> <span class="n">Modality</span><span class="o">.</span><span class="n">T1</span><span class="p">,</span> <span class="n">image_type</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image_type_output</span><span class="si">}</span><span class="s1">_pred&#39;</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pred_path</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">((</span><span class="n">t1_image_path</span><span class="p">,),</span> <span class="n">pred_path</span><span class="p">)</span>
 
         <span class="n">seg_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="o">.</span><span class="n">get_output_image</span><span class="p">(</span>
             <span class="n">accession</span><span class="p">,</span> <span class="n">Modality</span><span class="o">.</span><span class="n">T1</span><span class="p">,</span> <span class="n">image_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_type_output</span>
