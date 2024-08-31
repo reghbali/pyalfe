@@ -209,8 +209,8 @@ class AntsRegistration(ImageRegistration):
     """
 
     def reslice(self, fixed, moving, registration_output, *transform):
-        fixed_image = ants.image_read(fixed)
-        moving_image = ants.image_read(moving)
+        fixed_image = ants.image_read(str(fixed))
+        moving_image = ants.image_read(str(moving))
         output = ants.apply_transforms(fixed_image, moving_image, transform)
         ants.image_write(output, registration_output)
 
