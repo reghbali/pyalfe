@@ -277,7 +277,7 @@ class TissueWithPriorSegementation(Segmentation):
     """This task generates tissue segmentation from T1 and a prior atlas based
     segementation.
 
-        Parameters
+    Parameters
     ----------
     inference_model: InferenceModel
         The inference model object.
@@ -325,8 +325,8 @@ class TissueWithPriorSegementation(Segmentation):
         )
         if not os.path.exists(t1_image_path):
             self.logger.info(
-                f'{t1_image_path} is missing.'
-                ' Skipping Tissue segmentation.')
+                f'{t1_image_path} is missing.' ' Skipping Tissue segmentation.'
+            )
             return
         tissue_prior_path = self.pipeline_dir.get_output_image(
             accession,
@@ -337,8 +337,8 @@ class TissueWithPriorSegementation(Segmentation):
         )
         if not os.path.exists(tissue_prior_path):
             self.logger.info(
-                f'{tissue_prior_path} is missing.'
-                ' Skipping Tissue segmentation.')
+                f'{tissue_prior_path} is missing.' ' Skipping Tissue segmentation.'
+            )
             return
         pred_path = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type=f'{self.image_type_output}_pred'
@@ -346,6 +346,75 @@ class TissueWithPriorSegementation(Segmentation):
 
         if self.overwrite or not os.path.exists(pred_path):
             self.predict([t1_image_path, tissue_prior_path], pred_path)
+
+        seg_path = self.pipeline_dir.get_output_image(
+            accession, Modality.T1, image_type=self.image_type_output
+        )
+
+        if self.overwrite or not os.path.exists(seg_path):
+            self.post_process(pred_path, seg_path)
+
+
+class SynthSegTissueSegmentation(Segmentation):
+    """This task generates tissue segmentation using freesurfer's synthseg
+
+    Parameters
+    ----------
+    inference_model: InferenceModel
+        The inference model object.
+    image_processor: ImageProcessor
+        The image processor object.
+    pipeline_dir: PipelineDataDir
+        The pipeline data directory object.
+    image_type_input: str = 'skullstripped'
+        The type of image that should be used as input.
+        Default is `skullstripped`.
+    image_type_output: str
+        The type of output image that segmentation should be saved as.
+        Default is `tissue_seg`.
+    overwrite: bool = True
+        Whether to overwrite existing output segmentation images.
+        Default is True.
+    """
+
+    logger = logging.getLogger('SynthSegTissueSegmentation')
+
+    def __init__(
+        self,
+        inference_model: InferenceModel,
+        image_processor: ImageProcessor,
+        pipeline_dir: PipelineDataDir,
+        image_type_input: str = 'trim_upsampled',
+        image_type_output: str = 'tissue_seg',
+        overwrite: bool = True,
+    ):
+        super().__init__(inference_model, image_processor)
+        self.pipeline_dir = pipeline_dir
+        self.image_type_input = image_type_input
+        self.image_type_output = image_type_output
+        self.overwrite = overwrite
+
+    def post_process(self, pred, seg, mask=None):
+        shutil.copy(pred, seg)
+
+    def run(self, accession):
+        t1_image_path = self.pipeline_dir.get_output_image(
+            accession,
+            Modality.T1,
+            image_type=self.image_type_input,
+        )
+        if not os.path.exists(t1_image_path):
+            self.logger.info(
+                f'{t1_image_path} is missing.' ' Skipping Tissue segmentation.'
+            )
+            return
+
+        pred_path = self.pipeline_dir.get_output_image(
+            accession, Modality.T1, image_type=f'{self.image_type_output}_pred'
+        )
+
+        if self.overwrite or not os.path.exists(pred_path):
+            self.predict((t1_image_path,), pred_path)
 
         seg_path = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type=self.image_type_output
