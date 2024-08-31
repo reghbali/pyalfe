@@ -222,8 +222,8 @@ class AntsRegistration(ImageRegistration):
             moving_name = os.path.basename(moving).split('.')[0]
             transform_output = f'{moving_name}_to_{fixed_name}.mat'
         rigid_output = ants.registration(
-            ants.image_read(fixed),
-            ants.image_read(moving),
+            ants.image_read(str(fixed)),
+            ants.image_read(str(moving)),
             type_of_transform=type_of_transform,
             initial_transform=init_transform,
             reg_iterations=(100, 50, 10),
@@ -252,8 +252,8 @@ class AntsRegistration(ImageRegistration):
     def register_deformable(
         self, fixed, moving, transform_output=None, affine_transform=None
     ):
-        fixed_image = ants.image_read(fixed)
-        moving_image = ants.image_read(moving)
+        fixed_image = ants.image_read(str(fixed))
+        moving_image = ants.image_read(str(moving))
 
         if not affine_transform:
             fixed_name = os.path.basename(fixed).split('.')[0]
