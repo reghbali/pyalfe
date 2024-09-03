@@ -133,7 +133,7 @@ def _run(
 
     if targets:
         if isinstance(targets, str):
-            options.targets = targets.split(',')
+            options.targets = targets
         else:
             options.targets = ','.join(targets)
 
