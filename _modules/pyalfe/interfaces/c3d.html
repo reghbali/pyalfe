@@ -371,6 +371,14 @@ document.write(`
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c3d_path</span><span class="o">=</span><span class="n">C3D_PATH</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="n">c3d_path</span><span class="p">]</span>
 
+<div class="viewcode-block" id="C3D.assign">
+<a class="viewcode-back" href="../../../api/interfaces/c3d.html#pyalfe.interfaces.c3d.C3D.assign">[docs]</a>
+    <span class="k">def</span> <span class="nf">assign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-as&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
 <div class="viewcode-block" id="C3D.push">
 <a class="viewcode-back" href="../../../api/interfaces/c3d.html#pyalfe.interfaces.c3d.C3D.push">[docs]</a>
     <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
@@ -447,6 +455,15 @@ document.write(`
 <a class="viewcode-back" href="../../../api/interfaces/c3d.html#pyalfe.interfaces.c3d.C3D.resample">[docs]</a>
     <span class="k">def</span> <span class="nf">resample</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-resample&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="C3D.retain_labels">
+<a class="viewcode-back" href="../../../api/interfaces/c3d.html#pyalfe.interfaces.c3d.C3D.retain_labels">[docs]</a>
+    <span class="k">def</span> <span class="nf">retain_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-retain-labels&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">label</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
 

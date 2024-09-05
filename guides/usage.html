@@ -431,7 +431,8 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dominant-tissue">Dominant Tissue</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-processor">Image processor</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-registration">Image Registration</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dierctory-data-structure">Dierctory Data Structure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-data-structure">Directory Data Structure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tissue-segmentation">Tissue Segmentation</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-the-pipeline">Running the pipeline</a></li>
@@ -453,7 +454,7 @@ However, you can skip to <a class="reference internal" href="#running-the-pipeli
 options.</p>
 <section id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h2>
-<p>To configrue the PyALFE pipeline you should run:</p>
+<p>To configure the PyALFE pipeline, you should run:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pyalfe<span class="w"> </span>configure
 </pre></div>
 </div>
@@ -570,32 +571,34 @@ This config value can be overwritten when calling <code class="docutils literal 
 </section>
 <section id="image-processor">
 <h3>Image processor<a class="headerlink" href="#image-processor" title="Link to this heading">#</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>image<span class="w"> </span>processor<span class="w"> </span>to<span class="w"> </span>use<span class="w"> </span><span class="o">(</span>c3d,<span class="w"> </span>nilearn<span class="o">)</span><span class="w"> </span><span class="o">[</span>c3d<span class="o">]</span>:
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>image<span class="w"> </span>processor<span class="w"> </span>to<span class="w"> </span>use<span class="w"> </span><span class="o">(</span>nilearn,<span class="w"> </span>c3d<span class="o">)</span><span class="w"> </span><span class="o">[</span>nilearn<span class="o">]</span>:
 </pre></div>
 </div>
-<p>Currently, pyalfe can be configures to use either Convert3D (a.k.a. c3d) or Nilearn for image processing tasks.
-The default is Convert3d aka c3d. In other to use c3d,
-you have to download it using the <a class="reference internal" href="#download-models"><span class="xref myst">download command</span></a>.
-To use Nilearn, you do not need to run any extra command since it is already installed when you install pyalfe.
-This config value can be overwritten when calling <code class="docutils literal notranslate"><span class="pre">pyalfe</span> <span class="pre">run</span></code> via <code class="docutils literal notranslate"><span class="pre">-ip</span></code> or <code class="docutils literal notranslate"><span class="pre">--image_processing</span></code> option.</p>
+<p>Currently, pyalfe can be configured to use either Nilearn, Convert3D (a.k.a. c3d) for image processing tasks.
+The default is Nilearn which is a python native library and is installed during installation of pyalfe.
+To use c3d, you have to download and install it (<a class="reference external" href="https://sourceforge.net/projects/c3d/">https://sourceforge.net/projects/c3d/</a>) on your machine.</p>
+<p>This config value can be overwritten when calling <code class="docutils literal notranslate"><span class="pre">pyalfe</span> <span class="pre">run</span></code> via <code class="docutils literal notranslate"><span class="pre">-ip</span></code> or <code class="docutils literal notranslate"><span class="pre">--image_processing</span></code> option.</p>
 </section>
 <section id="image-registration">
 <h3>Image Registration<a class="headerlink" href="#image-registration" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>image<span class="w"> </span>registration<span class="w"> </span>to<span class="w"> </span>use<span class="w"> </span><span class="o">(</span>greedy,<span class="w"> </span>ants<span class="o">)</span><span class="w"> </span><span class="o">[</span>greedy<span class="o">]</span>:
 </pre></div>
 </div>
-<p>Currently, pyalfe can be configures to use either greedy or ants for image registration tasks. The default is greedy.
-In other to use greedy, you have to download it using the <a class="reference internal" href="#download-models"><span class="xref myst">download command</span></a>. To use ants,
-install pyalfe with ants support <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pyalfe[ants]</span></code>.
-This config value can be overwritten when calling <code class="docutils literal notranslate"><span class="pre">pyalfe</span> <span class="pre">run</span></code> via <code class="docutils literal notranslate"><span class="pre">-ir</span></code> or <code class="docutils literal notranslate"><span class="pre">--image-registration</span></code> option.</p>
+<p>Currently, pyalfe can be configured to use either greedy or ants for image registration tasks. The default is greedy.
+In other to use greedy, you have to download and install greedy (<a class="reference external" href="https://sourceforge.net/projects/greedy-reg/">https://sourceforge.net/projects/greedy-reg/</a>). To use ants,
+install pyalfe with ants support <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pyalfe[ants]</span></code>.</p>
+<p>This config value can be overwritten when calling <code class="docutils literal notranslate"><span class="pre">pyalfe</span> <span class="pre">run</span></code> via <code class="docutils literal notranslate"><span class="pre">-ir</span></code> or <code class="docutils literal notranslate"><span class="pre">--image-registration</span></code> option.</p>
 </section>
-<section id="dierctory-data-structure">
-<h3>Dierctory Data Structure<a class="headerlink" href="#dierctory-data-structure" title="Link to this heading">#</a></h3>
+<section id="directory-data-structure">
+<h3>Directory Data Structure<a class="headerlink" href="#directory-data-structure" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>data<span class="w"> </span>directory<span class="w"> </span>structure<span class="w"> </span><span class="o">(</span>press<span class="w"> </span>enter<span class="w"> </span><span class="k">for</span><span class="w"> </span>default<span class="o">)</span><span class="w"> </span><span class="o">(</span>alfe,<span class="w"> </span>bids<span class="o">)</span><span class="w"> </span><span class="o">[</span>alfe<span class="o">]</span>:
 </pre></div>
 </div>
 <p>The directory structure that pyALFE expects in the input directory and will follow when creating the output. See <a class="reference internal" href="#input-directory"><span class="xref myst">Inupt directory</span></a> for information on ALFE and BIDS.
 This config value can be overwritten when calling <code class="docutils literal notranslate"><span class="pre">payalfe</span> <span class="pre">run</span></code> via <code class="docutils literal notranslate"><span class="pre">-dds</span></code> or <code class="docutils literal notranslate"><span class="pre">--data-dir-structure</span></code> option.</p>
+</section>
+<section id="tissue-segmentation">
+<h3>Tissue Segmentation<a class="headerlink" href="#tissue-segmentation" title="Link to this heading">#</a></h3>
 </section>
 </section>
 <section id="running-the-pipeline">
@@ -687,7 +690,8 @@ This config value can be overwritten when calling <code class="docutils literal 
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dominant-tissue">Dominant Tissue</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-processor">Image processor</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-registration">Image Registration</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dierctory-data-structure">Dierctory Data Structure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-data-structure">Directory Data Structure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tissue-segmentation">Tissue Segmentation</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-the-pipeline">Running the pipeline</a></li>

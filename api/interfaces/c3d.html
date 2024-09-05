@@ -424,6 +424,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D"><code class="docutils literal notranslate"><span class="pre">C3D</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.assign"><code class="docutils literal notranslate"><span class="pre">C3D.assign()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.push"><code class="docutils literal notranslate"><span class="pre">C3D.push()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.popas"><code class="docutils literal notranslate"><span class="pre">C3D.popas()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.thresh"><code class="docutils literal notranslate"><span class="pre">C3D.thresh()</span></code></a></li>
@@ -435,6 +436,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.multiply"><code class="docutils literal notranslate"><span class="pre">C3D.multiply()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.reslice_identity"><code class="docutils literal notranslate"><span class="pre">C3D.reslice_identity()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.resample"><code class="docutils literal notranslate"><span class="pre">C3D.resample()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.retain_labels"><code class="docutils literal notranslate"><span class="pre">C3D.retain_labels()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.trim"><code class="docutils literal notranslate"><span class="pre">C3D.trim()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.dilate"><code class="docutils literal notranslate"><span class="pre">C3D.dilate()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.holefill"><code class="docutils literal notranslate"><span class="pre">C3D.holefill()</span></code></a></li>
@@ -464,6 +466,11 @@ document.write(`
 <dt class="sig sig-object py" id="pyalfe.interfaces.c3d.C3D">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyalfe.interfaces.c3d.</span></span><span class="sig-name descname"><span class="pre">C3D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c3d_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'c3d'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/interfaces/c3d.html#C3D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.interfaces.c3d.C3D" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyalfe.interfaces.c3d.C3D.assign">
+<span class="sig-name descname"><span class="pre">assign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/interfaces/c3d.html#C3D.assign"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.interfaces.c3d.C3D.assign" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.interfaces.c3d.C3D.push">
 <span class="sig-name descname"><span class="pre">push</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/interfaces/c3d.html#C3D.push"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.interfaces.c3d.C3D.push" title="Link to this definition">#</a></dt>
@@ -517,6 +524,11 @@ document.write(`
 <dl class="py method">
 <dt class="sig sig-object py" id="pyalfe.interfaces.c3d.C3D.resample">
 <span class="sig-name descname"><span class="pre">resample</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/interfaces/c3d.html#C3D.resample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.interfaces.c3d.C3D.resample" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyalfe.interfaces.c3d.C3D.retain_labels">
+<span class="sig-name descname"><span class="pre">retain_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyalfe/interfaces/c3d.html#C3D.retain_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.interfaces.c3d.C3D.retain_labels" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -638,6 +650,7 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D"><code class="docutils literal notranslate"><span class="pre">C3D</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.assign"><code class="docutils literal notranslate"><span class="pre">C3D.assign()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.push"><code class="docutils literal notranslate"><span class="pre">C3D.push()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.popas"><code class="docutils literal notranslate"><span class="pre">C3D.popas()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.thresh"><code class="docutils literal notranslate"><span class="pre">C3D.thresh()</span></code></a></li>
@@ -649,6 +662,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.multiply"><code class="docutils literal notranslate"><span class="pre">C3D.multiply()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.reslice_identity"><code class="docutils literal notranslate"><span class="pre">C3D.reslice_identity()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.resample"><code class="docutils literal notranslate"><span class="pre">C3D.resample()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.retain_labels"><code class="docutils literal notranslate"><span class="pre">C3D.retain_labels()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.trim"><code class="docutils literal notranslate"><span class="pre">C3D.trim()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.dilate"><code class="docutils literal notranslate"><span class="pre">C3D.dilate()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.interfaces.c3d.C3D.holefill"><code class="docutils literal notranslate"><span class="pre">C3D.holefill()</span></code></a></li>

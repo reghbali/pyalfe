@@ -438,6 +438,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.union"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.union()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.distance_transform"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.distance_transform()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.label_mask_comp"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.label_mask_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.remap_labels"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.remap_labels()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor</span></code></a><ul class="nav section-nav flex-column">
@@ -455,6 +456,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.union"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.union()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.distance_transform"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.distance_transform()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.label_mask_comp"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.label_mask_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.remap_labels"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.remap_labels()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor</span></code></a><ul class="nav section-nav flex-column">
@@ -474,6 +476,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.union"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.union()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.distance_transform"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.distance_transform()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.label_mask_comp"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.label_mask_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.remap_labels"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.remap_labels()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -732,6 +735,25 @@ the second largest is assigned label 2 and so forth.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="pyalfe.image_processing.ImageProcessor.remap_labels">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">remap_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">multi_label_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#ImageProcessor.remap_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.ImageProcessor.remap_labels" title="Link to this definition">#</a></dt>
+<dd><p>Maps all the labels if a multi label image according to a label map
+the <cite>label_map</cite> is a dictionary that maps input labels to output label.
+For example, {1: 1, 2: 1, 3: 2} maps labels 1 and 2 in the input to
+label 1 in the output and label 3 in the input to label 2 in the output.
+Any other label is mapped to 0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>multi_label_image</strong> (<em>str</em><em> or </em><em>Path</em>) – The path to the multi label image</p></li>
+<li><p><strong>label_map</strong> (<em>dict</em>) – The label map</p></li>
+<li><p><strong>output</strong> (<em>str</em><em> or </em><em>Path</em>) – Path to the output image.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -970,6 +992,25 @@ the second largest is assigned label 2 and so forth.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>binary_image</strong> (<em>str</em><em> or </em><em>Path</em>) – The path to the binary image.</p></li>
+<li><p><strong>output</strong> (<em>str</em><em> or </em><em>Path</em>) – Path to the output image.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyalfe.image_processing.Convert3DProcessor.remap_labels">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">remap_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">multi_label_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#Convert3DProcessor.remap_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.Convert3DProcessor.remap_labels" title="Link to this definition">#</a></dt>
+<dd><p>Maps all the labels if a multi label image according to a label map
+the <cite>label_map</cite> is a dictionary that maps input labels to output label.
+For example, {1: 1, 2: 1, 3: 2} maps labels 1 and 2 in the input to
+label 1 in the output and label 3 in the input to label 2 in the output.
+Any other label is mapped to 0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>multi_label_image</strong> (<em>str</em><em> or </em><em>Path</em>) – The path to the multi label image</p></li>
+<li><p><strong>label_map</strong> (<em>dict</em>) – The label map</p></li>
 <li><p><strong>output</strong> (<em>str</em><em> or </em><em>Path</em>) – Path to the output image.</p></li>
 </ul>
 </dd>
@@ -1230,6 +1271,25 @@ the second largest is assigned label 2 and so forth.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="pyalfe.image_processing.NilearnProcessor.remap_labels">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">remap_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">multi_label_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyalfe/image_processing.html#NilearnProcessor.remap_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyalfe.image_processing.NilearnProcessor.remap_labels" title="Link to this definition">#</a></dt>
+<dd><p>Maps all the labels if a multi label image according to a label map
+the <cite>label_map</cite> is a dictionary that maps input labels to output label.
+For example, {1: 1, 2: 1, 3: 2} maps labels 1 and 2 in the input to
+label 1 in the output and label 3 in the input to label 2 in the output.
+Any other label is mapped to 0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>multi_label_image</strong> (<em>str</em><em> or </em><em>Path</em>) – The path to the multi label image</p></li>
+<li><p><strong>label_map</strong> (<em>dict</em>) – The label map</p></li>
+<li><p><strong>output</strong> (<em>str</em><em> or </em><em>Path</em>) – Path to the output image.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -1313,6 +1373,7 @@ the second largest is assigned label 2 and so forth.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.union"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.union()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.distance_transform"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.distance_transform()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.label_mask_comp"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.label_mask_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.ImageProcessor.remap_labels"><code class="docutils literal notranslate"><span class="pre">ImageProcessor.remap_labels()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor</span></code></a><ul class="nav section-nav flex-column">
@@ -1330,6 +1391,7 @@ the second largest is assigned label 2 and so forth.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.union"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.union()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.distance_transform"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.distance_transform()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.label_mask_comp"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.label_mask_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.Convert3DProcessor.remap_labels"><code class="docutils literal notranslate"><span class="pre">Convert3DProcessor.remap_labels()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor</span></code></a><ul class="nav section-nav flex-column">
@@ -1349,6 +1411,7 @@ the second largest is assigned label 2 and so forth.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.union"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.union()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.distance_transform"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.distance_transform()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.label_mask_comp"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.label_mask_comp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pyalfe.image_processing.NilearnProcessor.remap_labels"><code class="docutils literal notranslate"><span class="pre">NilearnProcessor.remap_labels()</span></code></a></li>
 </ul>
 </li>
 </ul>

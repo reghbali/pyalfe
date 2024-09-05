@@ -375,6 +375,7 @@ document.write(`
 <span class="n">DEFAULT_IMAGE_PROCESSOR</span> <span class="o">=</span> <span class="s1">&#39;nilearn&#39;</span>
 <span class="n">DEFAULT_IMAGE_REGISTRATION</span> <span class="o">=</span> <span class="s1">&#39;greedy&#39;</span>
 <span class="n">DEFUALT_DATA_DIR_STRUCTURE</span> <span class="o">=</span> <span class="s1">&#39;alfe&#39;</span>
+<span class="n">DEFAUlT_TISSUE_SEGMENTATION</span> <span class="o">=</span> <span class="s1">&#39;prior&#39;</span>
 <span class="n">DEFAULT_OVERWRITE</span> <span class="o">=</span> <span class="kc">True</span>
 
 
@@ -438,6 +439,7 @@ document.write(`
     <span class="n">image_processor</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">image_registration</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">data_dir_structure</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tissue_segmentation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Runs the pipeline for an accession number.</span>
@@ -450,20 +452,22 @@ document.write(`
 <span class="sd">        the path to the config file.</span>
 <span class="sd">    input_dir : str</span>
 <span class="sd">        the path to the directory containing input input images</span>
-<span class="sd">    outpu_dir : str</span>
+<span class="sd">    output_dir : str</span>
 <span class="sd">        the path to the directory containing output output images</span>
 <span class="sd">    modalities : str</span>
 <span class="sd">        comma separated modalities</span>
 <span class="sd">    targets : str</span>
 <span class="sd">        comma separated target modalities</span>
-<span class="sd">    dominant_tissue : str, default=&#39;white_matter&#39;</span>
+<span class="sd">    dominant_tissue : str</span>
 <span class="sd">        dominant tissue</span>
-<span class="sd">    image_processor : str, default=&#39;c3d&#39;</span>
+<span class="sd">    image_processor : str</span>
 <span class="sd">        image processor that is used by the pipeline.</span>
-<span class="sd">    image_registration : str, default=&#39;greedy&#39;</span>
+<span class="sd">    image_registration : str</span>
 <span class="sd">        image registration that is used by the pipeline.</span>
-<span class="sd">    data_dir_structure: str, default=&#39;alfe&#39;</span>
+<span class="sd">    data_dir_structure: str</span>
 <span class="sd">        the data directory structure, it can be &#39;alfe&#39; or &#39;bids&#39;.</span>
+<span class="sd">    tissue_segmentation: str</span>
+<span class="sd">        the tissue segmentation method</span>
 <span class="sd">    overwrite : bool</span>
 <span class="sd">        if True, the pipeline overwrites existing output images.</span>
 
@@ -511,6 +515,9 @@ document.write(`
     <span class="k">if</span> <span class="n">data_dir_structure</span><span class="p">:</span>
         <span class="n">options</span><span class="o">.</span><span class="n">data_dir_structure</span> <span class="o">=</span> <span class="n">data_dir_structure</span>
 
+    <span class="k">if</span> <span class="n">tissue_segmentation</span><span class="p">:</span>
+        <span class="n">options</span><span class="o">.</span><span class="n">tissue_segmentation</span> <span class="o">=</span> <span class="n">tissue_segmentation</span>
+
     <span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span> <span class="o">=</span> <span class="n">overwrite</span>
 
     <span class="n">container</span><span class="o">.</span><span class="n">init_resources</span><span class="p">()</span>
@@ -531,6 +538,7 @@ document.write(`
     <span class="n">image_processor</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_IMAGE_PROCESSOR</span><span class="p">,</span>
     <span class="n">image_registration</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_IMAGE_REGISTRATION</span><span class="p">,</span>
     <span class="n">data_dir_structure</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFUALT_DATA_DIR_STRUCTURE</span><span class="p">,</span>
+    <span class="n">tissue_segmentation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAUlT_TISSUE_SEGMENTATION</span><span class="p">,</span>
     <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">DEFAULT_OVERWRITE</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Runs the pipeline for an accession number.</span>
@@ -543,7 +551,7 @@ document.write(`
 <span class="sd">        the path to the config file.</span>
 <span class="sd">    input_dir : str</span>
 <span class="sd">        the path to the directory containing input input images</span>
-<span class="sd">    outpu_dir : str</span>
+<span class="sd">    output_dir : str</span>
 <span class="sd">        the path to the directory containing output output images</span>
 <span class="sd">    modalities : str, default: :attr:`DEFAULT_MODALITIES`</span>
 <span class="sd">        comma separated modalities</span>
@@ -557,6 +565,8 @@ document.write(`
 <span class="sd">        image registration that is used by the pipeline.</span>
 <span class="sd">    data_dir_structure: str, default: :attr:`DEFUALT_DATA_DIR_STRUCTURE`</span>
 <span class="sd">        the data directory structure, it can be &#39;alfe&#39; or &#39;bids&#39;.</span>
+<span class="sd">    tissue_segmentation: str, default: :attr:`DEFAULT_TISSUE_SEGMENTATION`</span>
+<span class="sd">        the tissue segmentation method, it can be &#39;prior&#39; or &#39;synthseg&#39;</span>
 <span class="sd">    overwrite : bool, default: :attr:`DEFAULT_OVERWRITE`</span>
 <span class="sd">        if True, the pipeline overwrites existing output images.</span>
 
@@ -574,6 +584,7 @@ document.write(`
         <span class="n">image_processor</span><span class="o">=</span><span class="n">image_processor</span><span class="p">,</span>
         <span class="n">image_registration</span><span class="o">=</span><span class="n">image_registration</span><span class="p">,</span>
         <span class="n">data_dir_structure</span><span class="o">=</span><span class="n">data_dir_structure</span><span class="p">,</span>
+        <span class="n">tissue_segmentation</span><span class="o">=</span><span class="n">tissue_segmentation</span><span class="p">,</span>
         <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">,</span>
     <span class="p">)</span></div>
 
@@ -611,6 +622,11 @@ document.write(`
     <span class="s1">&#39;-dds&#39;</span><span class="p">,</span>
     <span class="s1">&#39;--data-dir-structure&#39;</span><span class="p">,</span>
     <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;alfe&#39;</span><span class="p">,</span> <span class="s1">&#39;bids&#39;</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s1">&#39;-ts&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;--tissue-segmentation&#39;</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;prior&#39;</span><span class="p">,</span> <span class="s1">&#39;synthseg&#39;</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
 <span class="p">)</span>
 <span class="k">def</span> <span class="nf">run_command</span><span class="p">(</span>
     <span class="n">accession</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -716,6 +732,11 @@ document.write(`
         <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;alfe&#39;</span><span class="p">,</span> <span class="s1">&#39;bids&#39;</span><span class="p">]),</span>
         <span class="n">default</span><span class="o">=</span><span class="n">DEFUALT_DATA_DIR_STRUCTURE</span><span class="p">,</span>
     <span class="p">)</span>
+    <span class="n">tissue_segmentation</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">prompt</span><span class="p">(</span>
+        <span class="s1">&#39;tissue segmentation method (press enter for default)&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;prior&#39;</span><span class="p">,</span> <span class="s1">&#39;synthseg&#39;</span><span class="p">]),</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">DEFAUlT_TISSUE_SEGMENTATION</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">config_path</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">prompt</span><span class="p">(</span><span class="s1">&#39;config path&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">DEFAULT_CFG</span><span class="p">)</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
     <span class="n">config</span><span class="p">[</span><span class="s1">&#39;options&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
@@ -727,6 +748,7 @@ document.write(`
         <span class="s1">&#39;image_processor&#39;</span><span class="p">:</span> <span class="n">image_processor</span><span class="p">,</span>
         <span class="s1">&#39;image_registration&#39;</span><span class="p">:</span> <span class="n">image_registration</span><span class="p">,</span>
         <span class="s1">&#39;data_dir_structure&#39;</span><span class="p">:</span> <span class="n">data_dir_structure</span><span class="p">,</span>
+        <span class="s1">&#39;tissue_segmentation&#39;</span><span class="p">:</span> <span class="n">tissue_segmentation</span><span class="p">,</span>
     <span class="p">}</span>
 
     <span class="n">config_parent_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">config_path</span><span class="p">)</span>
