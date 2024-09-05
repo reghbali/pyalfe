@@ -276,6 +276,23 @@ def get_image_processor_test(image_processor: ImageProcessor) -> type[TestCase]:
                 get_nifti_data(output), np.array([[[3, 0, 2, 2, 0, 1, 1, 1, 0]]])
             )
 
+        def test_remap_labels(self):
+            data = np.array([[[1, 0, 2, 1, 0, 0, 10, 3, 2]]])
+            input_image_path = self.get_image_path('input.nii.gz')
+            create_nifti(input_image_path, data.astype(np.int16))
+
+            output_1 = self.get_image_path('output_1.nii.gz')
+            image_processor.remap_labels(input_image_path, {2: 1, 10: 1}, output_1)
+            np.testing.assert_array_equal(
+                get_nifti_data(output_1), np.array([[[0, 0, 1, 0, 0, 0, 1, 0, 1]]])
+            )
+
+            output_2 = self.get_image_path('output_2.nii.gz')
+            image_processor.remap_labels(input_image_path, {2: 2, 10: 2}, output_2)
+            np.testing.assert_array_equal(
+                get_nifti_data(output_2), np.array([[[0, 0, 2, 0, 0, 0, 2, 0, 2]]])
+            )
+
     return TestImageProcessor
 
 

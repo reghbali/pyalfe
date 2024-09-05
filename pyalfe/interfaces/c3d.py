@@ -7,6 +7,11 @@ class C3D:
     def __init__(self, c3d_path=C3D_PATH):
         self.cmd = [c3d_path]
 
+    def assign(self, var):
+        self.cmd.append('-as')
+        self.cmd.append(var)
+        return self
+
     def push(self, var):
         self.cmd.append('-push')
         self.cmd.append(var)
@@ -51,6 +56,12 @@ class C3D:
 
     def resample(self):
         self.cmd.append('-resample')
+        return self
+
+    def retain_labels(self, labels):
+        self.cmd.append('-retain-labels')
+        for label in labels:
+            self.cmd.append(str(label))
         return self
 
     def trim(self, m1, m2, m3):

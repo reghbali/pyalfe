@@ -395,7 +395,44 @@ class SynthSegTissueSegmentation(Segmentation):
         self.overwrite = overwrite
 
     def post_process(self, pred, seg, mask=None):
-        shutil.copy(pred, seg)
+        self.image_processor.remap_labels(
+            pred,
+            {
+                4: 1,
+                5: 1,
+                14: 1,
+                15: 1,
+                24: 1,
+                43: 1,
+                44: 1,
+                3: 2,
+                42: 2,
+                17: 2,
+                53: 2,
+                2: 3,
+                41: 3,
+                10: 4,
+                11: 4,
+                12: 4,
+                13: 4,
+                18: 4,
+                26: 4,
+                28: 4,
+                49: 4,
+                50: 41,
+                51: 41,
+                52: 4,
+                54: 4,
+                58: 4,
+                60: 4,
+                16: 5,
+                7: 6,
+                8: 6,
+                46: 6,
+                47: 6,
+            },
+            seg,
+        )
 
     def run(self, accession):
         t1_image_path = self.pipeline_dir.get_output_image(

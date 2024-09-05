@@ -13,6 +13,7 @@ DEFAUlT_DOMINANT_TISSUE = 'white_matter'
 DEFAULT_IMAGE_PROCESSOR = 'nilearn'
 DEFAULT_IMAGE_REGISTRATION = 'greedy'
 DEFUALT_DATA_DIR_STRUCTURE = 'alfe'
+DEFAUlT_TISSUE_SEGMENTATION = 'prior'
 DEFAULT_OVERWRITE = True
 
 
@@ -76,6 +77,7 @@ def _run(
     image_processor: str = None,
     image_registration: str = None,
     data_dir_structure: str = None,
+    tissue_segmentation: str = None,
     overwrite: bool = True,
 ):
     """Runs the pipeline for an accession number.
@@ -88,20 +90,22 @@ def _run(
         the path to the config file.
     input_dir : str
         the path to the directory containing input input images
-    outpu_dir : str
+    output_dir : str
         the path to the directory containing output output images
     modalities : str
         comma separated modalities
     targets : str
         comma separated target modalities
-    dominant_tissue : str, default='white_matter'
+    dominant_tissue : str
         dominant tissue
-    image_processor : str, default='c3d'
+    image_processor : str
         image processor that is used by the pipeline.
-    image_registration : str, default='greedy'
+    image_registration : str
         image registration that is used by the pipeline.
-    data_dir_structure: str, default='alfe'
+    data_dir_structure: str
         the data directory structure, it can be 'alfe' or 'bids'.
+    tissue_segmentation: str
+        the tissue segmentation method
     overwrite : bool
         if True, the pipeline overwrites existing output images.
 
@@ -149,6 +153,9 @@ def _run(
     if data_dir_structure:
         options.data_dir_structure = data_dir_structure
 
+    if tissue_segmentation:
+        options.tissue_segmentation = tissue_segmentation
+
     options.overwrite_images = overwrite
 
     container.init_resources()
@@ -167,6 +174,7 @@ def run(
     image_processor: str = DEFAULT_IMAGE_PROCESSOR,
     image_registration: str = DEFAULT_IMAGE_REGISTRATION,
     data_dir_structure: str = DEFUALT_DATA_DIR_STRUCTURE,
+    tissue_segmentation: str = DEFAUlT_TISSUE_SEGMENTATION,
     overwrite: bool = DEFAULT_OVERWRITE,
 ) -> None:
     """Runs the pipeline for an accession number.
@@ -179,7 +187,7 @@ def run(
         the path to the config file.
     input_dir : str
         the path to the directory containing input input images
-    outpu_dir : str
+    output_dir : str
         the path to the directory containing output output images
     modalities : str, default: :attr:`DEFAULT_MODALITIES`
         comma separated modalities
@@ -193,6 +201,8 @@ def run(
         image registration that is used by the pipeline.
     data_dir_structure: str, default: :attr:`DEFUALT_DATA_DIR_STRUCTURE`
         the data directory structure, it can be 'alfe' or 'bids'.
+    tissue_segmentation: str, default: :attr:`DEFAULT_TISSUE_SEGMENTATION`
+        the tissue segmentation method, it can be 'prior' or 'synthseg'
     overwrite : bool, default: :attr:`DEFAULT_OVERWRITE`
         if True, the pipeline overwrites existing output images.
 
@@ -210,6 +220,7 @@ def run(
         image_processor=image_processor,
         image_registration=image_registration,
         data_dir_structure=data_dir_structure,
+        tissue_segmentation=tissue_segmentation,
         overwrite=overwrite,
     )
 
@@ -246,6 +257,11 @@ def run(
     '-dds',
     '--data-dir-structure',
     type=click.Choice(['alfe', 'bids'], case_sensitive=False),
+)
+@click.option(
+    '-ts',
+    '--tissue-segmentation',
+    type=click.Choice(['prior', 'synthseg'], case_sensitive=False),
 )
 def run_command(
     accession: str,
@@ -351,6 +367,11 @@ def configure():
         type=click.Choice(['alfe', 'bids']),
         default=DEFUALT_DATA_DIR_STRUCTURE,
     )
+    tissue_segmentation = click.prompt(
+        'tissue segmentation method (press enter for default)',
+        type=click.Choice(['prior', 'synthseg']),
+        default=DEFAUlT_TISSUE_SEGMENTATION,
+    )
     config_path = click.prompt('config path', default=DEFAULT_CFG)
     config = configparser.ConfigParser()
     config['options'] = {
@@ -362,6 +383,7 @@ def configure():
         'image_processor': image_processor,
         'image_registration': image_registration,
         'data_dir_structure': data_dir_structure,
+        'tissue_segmentation': tissue_segmentation,
     }
 
     config_parent_path = os.path.dirname(config_path)
