@@ -274,6 +274,7 @@ def run_command(
     image_processor: str,
     image_registration: str,
     data_dir_structure: str,
+    tissue_segmentation: str,
     overwrite: bool,
 ) -> None:
     """Runs the pipeline for an accession number.
@@ -318,6 +319,7 @@ def run_command(
         image_processor=image_processor,
         image_registration=image_registration,
         data_dir_structure=data_dir_structure,
+        tissue_segmentation=tissue_segmentation,
         overwrite=overwrite,
     )
 
