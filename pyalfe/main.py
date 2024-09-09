@@ -334,10 +334,14 @@ def configure():
     None
     """
     input_dir = click.prompt(
-        'Enter input image directory', type=click.Path(exists=True, resolve_path=True)
+        'Enter input image directory ' '(press enter to skip)',
+        default='',
+        type=click.Path(resolve_path=True),
     )
     output_dir = click.prompt(
-        'Enter output image directory', type=click.Path(exists=True, resolve_path=True)
+        'Enter output image directory' '(press enter to skip)',
+        default='',
+        type=click.Path(resolve_path=True),
     )
     modalities = click.prompt(
         'Enter modalities separated by comma (press enter for default)',

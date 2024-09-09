@@ -11,7 +11,7 @@ from pyalfe.data_structure import (
 )
 from pyalfe.image_processing import Convert3DProcessor, NilearnProcessor
 from pyalfe.image_registration import GreedyRegistration, AntsRegistration
-from pyalfe.inference import NNUnetV2
+from pyalfe.inference import NNUnetV2, SynthSeg
 from pyalfe.models import MODELS_PATH
 from pyalfe.pipeline import PyALFEPipelineRunner, DicomProcessingPipelineRunner
 from pyalfe.tasks.dicom_processing import DicomProcessing
@@ -26,6 +26,7 @@ from pyalfe.tasks.segmentation import (
     TissueWithPriorSegementation,
     SingleModalitySegmentation,
     MultiModalitySegmentation,
+    SynthSegTissueSegmentation,
 )
 from pyalfe.tasks.skullstripping import Skullstripping
 from pyalfe.tasks.t1_postprocessing import T1Postprocessing
@@ -92,6 +93,10 @@ class PipelineContainer(DeclarativeContainer):
             return Convert3DProcessor()
         elif self.config.options.image_processor == 'nilearn':
             return NilearnProcessor()
+        else:
+            raise ValueError(
+                f'Invalid image processor {self.config.options.image_processor}'
+            )
 
     @property
     def image_registration(self):
@@ -145,16 +150,23 @@ class PipelineContainer(DeclarativeContainer):
 
     @cached_property
     def tissue_model(self):
-        return NNUnetV2(
-            model_dir=str(
-                MODELS_PATH.joinpath(
-                    'nnunetv2',
-                    'Dataset510_Tissue_W_Prior',
-                    'nnUNetTrainer__nnUNetPlans__3d_fullres',
-                )
-            ),
-            folds=(3,),
-        )
+        if self.config.options.tissue_segmentation == 'prior':
+            return NNUnetV2(
+                model_dir=str(
+                    MODELS_PATH.joinpath(
+                        'nnunetv2',
+                        'Dataset510_Tissue_W_Prior',
+                        'nnUNetTrainer__nnUNetPlans__3d_fullres',
+                    )
+                ),
+                folds=(3,),
+            )
+        elif self.config.options.tissue_segmentation == 'synthseg':
+            return SynthSeg()
+        else:
+            raise ValueError(
+                f'Invalid tissue segmentation {self.config.options.tissue_segmentation}'
+            )
 
     @cached_property
     def initialization(self):
@@ -225,15 +237,30 @@ class PipelineContainer(DeclarativeContainer):
 
     @cached_property
     def tissue_segmentation(self):
-        return TissueWithPriorSegementation(
-            inference_model=self.tissue_model,
-            image_processor=self.image_processor,
-            pipeline_dir=self.pipeline_dir,
-            image_type_input='trim_upsampled',
-            image_type_output='tissue_seg',
-            template_name='Tissue',
-            overwrite=self.config.options.overwrite_images,
-        )
+        if self.config.options.tissue_segmentation == 'prior':
+            return TissueWithPriorSegementation(
+                inference_model=self.tissue_model,
+                image_processor=self.image_processor,
+                pipeline_dir=self.pipeline_dir,
+                image_type_input='trim_upsampled',
+                image_type_output='tissue_seg',
+                template_name='Tissue',
+                overwrite=self.config.options.overwrite_images,
+            )
+        elif self.config.options.tissue_segmentation == 'synthseg':
+            return SynthSegTissueSegmentation(
+                inference_model=self.tissue_model,
+                image_processor=self.image_processor,
+                pipeline_dir=self.pipeline_dir,
+                image_type_input='trim_upsampled',
+                image_type_output='tissue_seg',
+                template_name='Tissue',
+                overwrite=self.config.options.overwrite_images,
+            )
+        else:
+            raise ValueError(
+                f'Invalid tissue segmentation {self.config.options.tissue_segmentation}'
+            )
 
     @cached_property
     def t1_postprocessing(self):
