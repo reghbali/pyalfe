@@ -599,6 +599,13 @@ This config value can be overwritten when calling <code class="docutils literal 
 </section>
 <section id="tissue-segmentation">
 <h3>Tissue Segmentation<a class="headerlink" href="#tissue-segmentation" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tissue<span class="w"> </span>segmentation<span class="w"> </span>method<span class="w"> </span><span class="o">(</span>press<span class="w"> </span>enter<span class="w"> </span><span class="k">for</span><span class="w"> </span>default<span class="o">)</span><span class="w"> </span><span class="o">(</span>prior,<span class="w"> </span>synthseg<span class="o">)</span><span class="w"> </span><span class="o">[</span>prior<span class="o">]</span>:
+</pre></div>
+</div>
+<p>The tissue segmentation method that will be used by pyALFE. The default is based on the method described in this <a class="reference external" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8346689/">paper</a>, a UNet
+that receives a template-based <strong>prior</strong> map tissue alongside the image . pyALFE
+also supports <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S1361841523000506">SynthSeg</a> via <a class="reference external" href="https://surfer.nmr.mgh.harvard.edu/fswiki/SynthSeg">FreeSurfer</a>. To use SynthSeg, you have to have FreeSurfer &gt;= v7
+installed.</p>
 </section>
 </section>
 <section id="running-the-pipeline">

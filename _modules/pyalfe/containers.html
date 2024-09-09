@@ -373,7 +373,7 @@ document.write(`
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">pyalfe.image_processing</span> <span class="kn">import</span> <span class="n">Convert3DProcessor</span><span class="p">,</span> <span class="n">NilearnProcessor</span>
 <span class="kn">from</span> <span class="nn">pyalfe.image_registration</span> <span class="kn">import</span> <span class="n">GreedyRegistration</span><span class="p">,</span> <span class="n">AntsRegistration</span>
-<span class="kn">from</span> <span class="nn">pyalfe.inference</span> <span class="kn">import</span> <span class="n">NNUnetV2</span>
+<span class="kn">from</span> <span class="nn">pyalfe.inference</span> <span class="kn">import</span> <span class="n">NNUnetV2</span><span class="p">,</span> <span class="n">SynthSeg</span>
 <span class="kn">from</span> <span class="nn">pyalfe.models</span> <span class="kn">import</span> <span class="n">MODELS_PATH</span>
 <span class="kn">from</span> <span class="nn">pyalfe.pipeline</span> <span class="kn">import</span> <span class="n">PyALFEPipelineRunner</span><span class="p">,</span> <span class="n">DicomProcessingPipelineRunner</span>
 <span class="kn">from</span> <span class="nn">pyalfe.tasks.dicom_processing</span> <span class="kn">import</span> <span class="n">DicomProcessing</span>
@@ -388,6 +388,7 @@ document.write(`
     <span class="n">TissueWithPriorSegementation</span><span class="p">,</span>
     <span class="n">SingleModalitySegmentation</span><span class="p">,</span>
     <span class="n">MultiModalitySegmentation</span><span class="p">,</span>
+    <span class="n">SynthSegTissueSegmentation</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">pyalfe.tasks.skullstripping</span> <span class="kn">import</span> <span class="n">Skullstripping</span>
 <span class="kn">from</span> <span class="nn">pyalfe.tasks.t1_postprocessing</span> <span class="kn">import</span> <span class="n">T1Postprocessing</span>
@@ -471,6 +472,10 @@ document.write(`
             <span class="k">return</span> <span class="n">Convert3DProcessor</span><span class="p">()</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">image_processor</span> <span class="o">==</span> <span class="s1">&#39;nilearn&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">NilearnProcessor</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Invalid image processor </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">image_processor</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">image_registration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -524,16 +529,23 @@ document.write(`
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">tissue_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">NNUnetV2</span><span class="p">(</span>
-            <span class="n">model_dir</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span>
-                <span class="n">MODELS_PATH</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span>
-                    <span class="s1">&#39;nnunetv2&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;Dataset510_Tissue_W_Prior&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;nnUNetTrainer__nnUNetPlans__3d_fullres&#39;</span><span class="p">,</span>
-                <span class="p">)</span>
-            <span class="p">),</span>
-            <span class="n">folds</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,),</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tissue_segmentation</span> <span class="o">==</span> <span class="s1">&#39;prior&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">NNUnetV2</span><span class="p">(</span>
+                <span class="n">model_dir</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span>
+                    <span class="n">MODELS_PATH</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span>
+                        <span class="s1">&#39;nnunetv2&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Dataset510_Tissue_W_Prior&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;nnUNetTrainer__nnUNetPlans__3d_fullres&#39;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">folds</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,),</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tissue_segmentation</span> <span class="o">==</span> <span class="s1">&#39;synthseg&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">SynthSeg</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Invalid tissue segmentation </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tissue_segmentation</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">initialization</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -604,15 +616,30 @@ document.write(`
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">tissue_segmentation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">TissueWithPriorSegementation</span><span class="p">(</span>
-            <span class="n">inference_model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tissue_model</span><span class="p">,</span>
-            <span class="n">image_processor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_processor</span><span class="p">,</span>
-            <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
-            <span class="n">image_type_input</span><span class="o">=</span><span class="s1">&#39;trim_upsampled&#39;</span><span class="p">,</span>
-            <span class="n">image_type_output</span><span class="o">=</span><span class="s1">&#39;tissue_seg&#39;</span><span class="p">,</span>
-            <span class="n">template_name</span><span class="o">=</span><span class="s1">&#39;Tissue&#39;</span><span class="p">,</span>
-            <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tissue_segmentation</span> <span class="o">==</span> <span class="s1">&#39;prior&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">TissueWithPriorSegementation</span><span class="p">(</span>
+                <span class="n">inference_model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tissue_model</span><span class="p">,</span>
+                <span class="n">image_processor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_processor</span><span class="p">,</span>
+                <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
+                <span class="n">image_type_input</span><span class="o">=</span><span class="s1">&#39;trim_upsampled&#39;</span><span class="p">,</span>
+                <span class="n">image_type_output</span><span class="o">=</span><span class="s1">&#39;tissue_seg&#39;</span><span class="p">,</span>
+                <span class="n">template_name</span><span class="o">=</span><span class="s1">&#39;Tissue&#39;</span><span class="p">,</span>
+                <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tissue_segmentation</span> <span class="o">==</span> <span class="s1">&#39;synthseg&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">SynthSegTissueSegmentation</span><span class="p">(</span>
+                <span class="n">inference_model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tissue_model</span><span class="p">,</span>
+                <span class="n">image_processor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image_processor</span><span class="p">,</span>
+                <span class="n">pipeline_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_dir</span><span class="p">,</span>
+                <span class="n">image_type_input</span><span class="o">=</span><span class="s1">&#39;trim_upsampled&#39;</span><span class="p">,</span>
+                <span class="n">image_type_output</span><span class="o">=</span><span class="s1">&#39;tissue_seg&#39;</span><span class="p">,</span>
+                <span class="n">template_name</span><span class="o">=</span><span class="s1">&#39;Tissue&#39;</span><span class="p">,</span>
+                <span class="n">overwrite</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">overwrite_images</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Invalid tissue segmentation </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">tissue_segmentation</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">t1_postprocessing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

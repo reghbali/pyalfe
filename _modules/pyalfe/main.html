@@ -699,10 +699,14 @@ document.write(`
 <span class="sd">    None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">input_dir</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">prompt</span><span class="p">(</span>
-        <span class="s1">&#39;Enter input image directory&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">resolve_path</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="s1">&#39;Enter input image directory &#39;</span> <span class="s1">&#39;(press enter to skip)&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">resolve_path</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
     <span class="p">)</span>
     <span class="n">output_dir</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">prompt</span><span class="p">(</span>
-        <span class="s1">&#39;Enter output image directory&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">resolve_path</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="s1">&#39;Enter output image directory&#39;</span> <span class="s1">&#39;(press enter to skip)&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">resolve_path</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
     <span class="p">)</span>
     <span class="n">modalities</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">prompt</span><span class="p">(</span>
         <span class="s1">&#39;Enter modalities separated by comma (press enter for default)&#39;</span><span class="p">,</span>

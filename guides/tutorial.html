@@ -426,6 +426,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-download-and-directory-setup">Data download and directory setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run">Run</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-output">Pipeline output</a></li>
 </ul>
             </nav>
         </div>
@@ -439,9 +440,8 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="tutorial">
 <h1>Tutorial<a class="headerlink" href="#tutorial" title="Link to this heading">#</a></h1>
-<p>In this tutorial, you will download sample data, install pyalfe, and run it on this data.
-This tutorial requires <code class="docutils literal notranslate"><span class="pre">git</span></code>, <code class="docutils literal notranslate"><span class="pre">python&gt;=3.9</span></code>, <a class="reference external" href="https://sourceforge.net/projects/greedy-reg/files/">greedy</a>,
-and <a class="reference external" href="https://sourceforge.net/projects/c3d/">c3d</a>.</p>
+<p>In this tutorial, you will download sample data, install pyalfe, configure it, and run it on this data.
+This tutorial requires <code class="docutils literal notranslate"><span class="pre">git</span></code>, <code class="docutils literal notranslate"><span class="pre">python&gt;=3.9</span></code>, <a class="reference external" href="https://sourceforge.net/projects/greedy-reg/files/">greedy</a>.</p>
 <section id="data-download-and-directory-setup">
 <h2>Data download and directory setup<a class="headerlink" href="#data-download-and-directory-setup" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
@@ -454,7 +454,7 @@ and <a class="reference external" href="https://sourceforge.net/projects/c3d/">c
 data inside it. The data is the MRI scan of a glioblastoma patient and is
 taken from the <a class="reference external" href="https://www.nature.com/articles/s41597-022-01560-7">UPenn-GBM dataset</a>.</p>
 <ol class="arabic simple" start="2">
-<li><p>Create an output directory where you have write access</p></li>
+<li><p>Create the output directory</p></li>
 </ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>pyalfe-output
 </pre></div>
@@ -475,10 +475,43 @@ taken from the <a class="reference external" href="https://www.nature.com/articl
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pyalfe<span class="w"> </span>download<span class="w"> </span>models
 </pre></div>
 </div>
+<p>Configure pyalfe by running</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pyalfe<span class="w"> </span>configrue
+</pre></div>
+</div>
+<p>and simply pressing enter for all the prompts for default values.</p>
 </section>
 <section id="run">
 <h2>Run<a class="headerlink" href="#run" title="Link to this heading">#</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pyalfe<span class="w"> </span>run<span class="w"> </span>UPENNGBM0000511<span class="w"> </span>--input-dir<span class="w"> </span>pyalfe-test-data<span class="w">  </span>--output-dir<span class="w"> </span>pyalfe-output
+</pre></div>
+</div>
+</section>
+<section id="pipeline-output">
+<h2>Pipeline output<a class="headerlink" href="#pipeline-output" title="Link to this heading">#</a></h2>
+<p>You can now inspect the pipeline output by changing directory to</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>pyalfe-output/UPENNGBM0000511
+</pre></div>
+</div>
+<p>and exploring the <code class="docutils literal notranslate"><span class="pre">FLAIR</span></code>, <code class="docutils literal notranslate"><span class="pre">T1</span></code>, <code class="docutils literal notranslate"><span class="pre">T1Post</span></code>, <code class="docutils literal notranslate"><span class="pre">T2</span></code>, <code class="docutils literal notranslate"><span class="pre">ADC</span></code> subdirectories.</p>
+<p>For instance, the individual FLAIR lesion measures can be found at:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>FLAIR/quantification/UPENNGBM0000511_SummaryLesionMeasures.csv
+</pre></div>
+</div>
+<p>FLAIR lesion segmentation can be found at:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>FLAIR/abnormalmap/UPENNGBM0000511_FLAIR_abnormal_seg.nii.gz
+</pre></div>
+</div>
+<p>Summary T1Post (enhancing) lesion measures can be found at:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>T1Post/quantification/UPENNGBM0000511_IndividualLesionMeasures.csv
+</pre></div>
+</div>
+<p>Brain volumetric measures can be found at:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>T1/quantification/UPENNGBM0000511_volumeMeasures.csv
+</pre></div>
+</div>
+<p>The tissue segmentation can be found at:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>T1/UPENNGBM0000511_T1_tissue_seg.nii.gz
 </pre></div>
 </div>
 </section>
@@ -551,6 +584,7 @@ taken from the <a class="reference external" href="https://www.nature.com/articl
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-download-and-directory-setup">Data download and directory setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run">Run</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-output">Pipeline output</a></li>
 </ul>
   </nav></div>
 
