@@ -254,7 +254,6 @@ class PipelineContainer(DeclarativeContainer):
                 pipeline_dir=self.pipeline_dir,
                 image_type_input='trim_upsampled',
                 image_type_output='tissue_seg',
-                template_name='Tissue',
                 overwrite=self.config.options.overwrite_images,
             )
         else:
