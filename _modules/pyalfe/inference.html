@@ -502,7 +502,7 @@ document.write(`
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_tuple</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Empty input image tuple&#39;</span><span class="p">)</span>
             <span class="n">free_surfer</span> <span class="o">=</span> <span class="n">FreeSurfer</span><span class="p">()</span>
-            <span class="n">free_surfer</span><span class="o">.</span><span class="n">mri_synthseg</span><span class="p">(</span><span class="n">input_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">output</span><span class="p">)</span></div>
+            <span class="n">free_surfer</span><span class="o">.</span><span class="n">mri_synthseg</span><span class="p">(</span><span class="n">input_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">output</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
 </div>
 
 </pre></div>
