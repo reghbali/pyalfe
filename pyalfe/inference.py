@@ -118,4 +118,4 @@ class SynthSeg(InferenceModel):
             if len(input_tuple) == 0:
                 raise ValueError('Empty input image tuple')
             free_surfer = FreeSurfer()
-            free_surfer.mri_synthseg(input_tuple[0], output)
+            free_surfer.mri_synthseg(input_tuple[0], output).run()
