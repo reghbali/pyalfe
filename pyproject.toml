@@ -18,7 +18,6 @@ dependencies = [
     "StrEnum",
     "numpy",
     "Click",
-    "dependency_injector",
     "pydcm2niix",
     "huggingface_hub",
     "torch",

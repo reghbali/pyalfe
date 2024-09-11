@@ -239,6 +239,16 @@ data directory structure (press enter for default) (alfe, bids) [alfe]:
 The directory structure that pyALFE expects in the input directory and will follow when creating the output. See [Inupt directory](#input-directory) for information on ALFE and BIDS.
 This config value can be overwritten when calling `payalfe run` via `-dds` or `--data-dir-structure` option.
 
+#### Tissue Segmentation
+```bash
+tissue segmentation method (press enter for default) (prior, synthseg) [prior]:
+```
+
+The tissue segmentation method that will be used by pyALFE. The default is based on the method described in this [paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8346689/), a UNet
+that receives a template-based **prior** map tissue alongside the image . pyALFE
+also supports [SynthSeg](https://www.sciencedirect.com/science/article/pii/S1361841523000506) via [FreeSurfer](https://surfer.nmr.mgh.harvard.edu/fswiki/SynthSeg). To use SynthSeg, you have to have FreeSurfer >= v7
+installed.
+
 ### Running the pipeline
 To run PyALFE for an accession
 

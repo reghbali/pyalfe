@@ -7,7 +7,7 @@ import pandas as pd
 from click.testing import CliRunner
 
 from pyalfe.data_structure import DefaultALFEDataDir, Modality
-from pyalfe.main import run
+from pyalfe.main import run_command
 from tests.utils import download_and_extract
 
 
@@ -56,7 +56,7 @@ class TestIntegration(TestCase):
             '--targets',
             ','.join(targets),
         ]
-        result = runner.invoke(run, args, catch_exceptions=False)
+        result = runner.invoke(run_command, args, catch_exceptions=False)
         self.assertEqual(result.exit_code, 0, msg=result.stdout)
 
         for modality in modalities:
@@ -95,7 +95,7 @@ class TestIntegration(TestCase):
                 msg=f'{summary_quantification_path} does not exist.',
             )
             summary_quantification = pd.read_csv(summary_quantification_path)
-            self.assertEqual(summary_quantification.dropna().shape, (63, 2))
+            self.assertEqual(summary_quantification.dropna().shape, (65, 2))
 
             individual_quantification = pd.read_csv(individual_quantification_path)
-            self.assertEqual(individual_quantification.dropna().shape[1], 61)
+            self.assertEqual(individual_quantification.dropna().shape[1], 63)

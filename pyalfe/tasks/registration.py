@@ -235,7 +235,7 @@ class T1Registration:
             accession, Modality.T1, image_type='skullstripped'
         )
         t1ss_mask = self.pipeline_dir.get_output_image(
-            accession, Modality.T1, image_type='skullstripped_mask'
+            accession, Modality.T1, image_type='skullstripping_mask'
         )
         t1trim_upsampled = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='trim_upsampled'

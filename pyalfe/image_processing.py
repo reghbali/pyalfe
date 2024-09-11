@@ -1,6 +1,7 @@
 import shutil
 from abc import ABC, abstractmethod
 import re
+from collections import defaultdict
 
 import nibabel as nib
 import scipy.ndimage
@@ -315,6 +316,29 @@ class ImageProcessor(ABC):
         """
         pass
 
+    @staticmethod
+    @abstractmethod
+    def remap_labels(multi_label_image, label_map, output):
+        """Maps all the labels if a multi label image according to a label map
+        the `label_map` is a dictionary that maps input labels to output label.
+        For example, {1: 1, 2: 1, 3: 2} maps labels 1 and 2 in the input to
+        label 1 in the output and label 3 in the input to label 2 in the output.
+        Any other label is mapped to 0.
+
+        Parameters
+        ----------
+        multi_label_image: str or Path
+            The path to the multi label image
+        label_map: dict
+            The label map
+        output: str or Path
+            Path to the output image.
+
+        Returns
+        -------
+
+        """
+
 
 class Convert3DProcessor(ImageProcessor):
     @staticmethod
@@ -426,6 +450,28 @@ class Convert3DProcessor(ImageProcessor):
     def label_mask_comp(binary_image, output):
         c3d = C3D()
         c3d.operand(binary_image).comp().out(output).run()
+
+    @staticmethod
+    def remap_labels(multi_label_image, label_map, output):
+        reverse_map = defaultdict(list)
+        for input_label, output_label in label_map.items():
+            reverse_map[output_label].append(input_label)
+
+        c3d = C3D()
+        c3d.operand(multi_label_image).assign('input')
+
+        first = True
+        for output_label, labels in reverse_map.items():
+            c3d.push('input').retain_labels(labels).thresh(
+                min(labels), max(labels), output_label, 0
+            )
+            if not first:
+                c3d.add()
+            else:
+                first = False
+
+        c3d.out(output)
+        c3d.run()
 
 
 class NilearnProcessor(ImageProcessor):
@@ -576,7 +622,7 @@ class NilearnProcessor(ImageProcessor):
                 'np.maximum(img1 - img2, 0)', img1=binary_image_1, img2=binary_image_2
             )
         )
-        nib.save(subtract_image, output)
+        NilearnProcessor.save(subtract_image, output)
 
     @staticmethod
     def dilate(binary_image, rad, output):
@@ -600,7 +646,7 @@ class NilearnProcessor(ImageProcessor):
                 'img1 + img2', img1=binary_image_1, img2=binary_image_2
             )
         )
-        nib.save(union_image, output)
+        NilearnProcessor.save(union_image, output)
 
     @staticmethod
     def distance_transform(binary_image, output):
@@ -608,7 +654,7 @@ class NilearnProcessor(ImageProcessor):
         data = nib_image.get_fdata()
         dist_data = scipy.ndimage.distance_transform_edt(1 - data)
         dist_image = nib.Nifti1Image(dist_data, nib_image.affine)
-        nib.save(dist_image, output)
+        NilearnProcessor.save(dist_image, output)
 
     @staticmethod
     def label_mask_comp(binary_image, output):
@@ -622,4 +668,16 @@ class NilearnProcessor(ImageProcessor):
             sorted_comp_data[comp_image_data == label] = index + 1
 
         sorted_comp_image = nib.Nifti1Image(sorted_comp_data, nib_image.affine)
-        nib.save(sorted_comp_image, output)
+        NilearnProcessor.save(sorted_comp_image, output)
+
+    @staticmethod
+    def remap_labels(multi_label_image, label_map, output):
+        reverse_map = defaultdict(list)
+        for input_label, output_label in label_map.items():
+            reverse_map[output_label].append(input_label)
+
+        formula = '0'
+        for output_label, labels in reverse_map.items():
+            formula += f' + {output_label} * np.isin(img, {labels})'
+        remapped_image = nilearn.image.math_img(formula, img=multi_label_image)
+        NilearnProcessor.save(remapped_image, output)

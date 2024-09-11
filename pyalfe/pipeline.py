@@ -75,8 +75,8 @@ class PyALFEPipelineRunner(PipelineRunner):
             flair_segmentation,
             enhancement_segmentation,
             t1_registration,
-            t1_postprocessing,
             tissue_segmentation,
+            t1_postprocessing,
             resampling,
             quantification,
         ]

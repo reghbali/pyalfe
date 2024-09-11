@@ -6,6 +6,8 @@ from typing import Optional
 
 import torch
 
+from pyalfe.interfaces.freesurfer import FreeSurfer
+
 
 class InferenceModel(ABC):
     """The parent class for all inference models."""
@@ -101,3 +103,19 @@ class NNUnetV2(InferenceModel):
             num_processes_preprocessing=self.n_threads_preprocessing,
             num_processes_segmentation_export=self.n_threads_save,
         )
+
+
+class SynthSeg(InferenceModel):
+    def predict_cases(self, input_image_tuple_list, output_list):
+        for input_tuple, output in zip(input_image_tuple_list, output_list):
+            if os.path.exists(output):
+                os.remove(output)
+            if len(input_tuple) > 1:
+                raise ValueError(
+                    f' {len(input_tuple)} images are given.'
+                    ' SynthSeg works on single image at a time.'
+                )
+            if len(input_tuple) == 0:
+                raise ValueError('Empty input image tuple')
+            free_surfer = FreeSurfer()
+            free_surfer.mri_synthseg(input_tuple[0], output).run()

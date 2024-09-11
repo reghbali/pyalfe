@@ -39,7 +39,7 @@ class T1Postprocessing(Task):
 
         if not os.path.exists(tissue_segmentation_image):
             self.logger.info(
-                'T1 tissue segmentation is missing.' 'Skipping T1 postprocessing'
+                'T1 tissue segmentation is missing. Skipping T1 postprocessing'
             )
             return
 
