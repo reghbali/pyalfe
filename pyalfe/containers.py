@@ -321,12 +321,12 @@ class DicomProcessingContianer(DeclarativeContainer):
     def pipeline_dir(self):
         if self.config.options.data_dir_structure == 'alfe':
             return DefaultALFEDataDir(
-                output_dir=os.devnull, input_dir=self.config.options.input_dir
+                output_dir=os.devnull, input_dir=self.config.options.nifti_dir
             )
         elif self.config.options.data_dir_structure == 'bids':
             return BIDSDataDir(
                 output_dir=os.devnull,
-                input_dir=self.config.options.input_dir,
+                input_dir=self.config.options.nifti_dir,
             )
         else:
             raise ValueError(
