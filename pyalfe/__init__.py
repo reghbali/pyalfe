@@ -1,1 +1,1 @@
-from pyalfe.main import run, configure
+from pyalfe.main import run, process_dicom
