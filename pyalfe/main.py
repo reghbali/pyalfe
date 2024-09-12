@@ -119,9 +119,10 @@ def _run(
 
     if config:
         container.config.from_ini(config)
-        options = container.config.options
     else:
-        options = {}
+        container.config.from_dict({'options': {}})
+
+    options = container.config.options
 
     if input_dir:
         options.input_dir = input_dir
@@ -414,11 +415,10 @@ def _process_dicom(
 
     if config:
         container.config.from_ini(config)
-        options = container.config.options
     else:
-        options = {}
+        container.config.from_dict({'options': {}})
 
-    print(options)
+    options = container.config.options
 
     options.dicom_dir = dicom_dir
 
