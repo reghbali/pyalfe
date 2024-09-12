@@ -16,7 +16,7 @@ taken from the [UPenn-GBM dataset](https://www.nature.com/articles/s41597-022-01
 
 2. Create the output directory
 ```bash
-mkdir -p pyalfe-output
+mkdir pyalfe-output
 ```
 
 ## Installation
