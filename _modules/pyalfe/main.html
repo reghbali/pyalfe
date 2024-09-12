@@ -481,9 +481,10 @@ document.write(`
 
     <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
         <span class="n">container</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_ini</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-        <span class="n">options</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">container</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;options&#39;</span><span class="p">:</span> <span class="p">{}})</span>
+
+    <span class="n">options</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span>
 
     <span class="k">if</span> <span class="n">input_dir</span><span class="p">:</span>
         <span class="n">options</span><span class="o">.</span><span class="n">input_dir</span> <span class="o">=</span> <span class="n">input_dir</span>
@@ -779,11 +780,10 @@ document.write(`
 
     <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
         <span class="n">container</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_ini</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-        <span class="n">options</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">container</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;options&#39;</span><span class="p">:</span> <span class="p">{}})</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">options</span>
 
     <span class="n">options</span><span class="o">.</span><span class="n">dicom_dir</span> <span class="o">=</span> <span class="n">dicom_dir</span>
 
