@@ -7,31 +7,40 @@ PyALFE can be configured to use either [Greedy](https://greedy.readthedocs.io/en
 Similarly, PyALFE can be configured to use [Convert3D](https://sourceforge.net/p/c3d/git/ci/master/tree/doc/c3d.md) or python native library [Nilearn](https://nilearn.github.io/stable/index.html) for image processing tasks.
 To use Greedy and Convert3d, these command line tools should be downloaded using the [download command](#download-models-and-tools).
 
-### Option 1: Pypi installation
-You can install pyalfe by running:
+### Option 1: PyPI
+
+To install, run
 ```bash
 pip install pyalfe
 ```
 
-You can either install pyalfe from source after cloning the repo using [development mode](#development-mode-installation) or [build and install](#build-and-install).
+### Option 2: Development mode
+If you want to have the latest development version, you can clone the repo
+```bash
+git clone https://github.com/reghbali/pyalfe.git
+cd pyalfe
+```
 
-### Option 2: Development mode installation
-
-First update the setuptools
+update the setuptools
 ```bash
 pip install --upgrade setuptools
 ```
 
-Run the following command in the parent pyalfe directory:
+run the following command in the parent pyalfe directory:
 
 ```bash
-
 pip install -e .
 ```
 
-### Option 2: Build and install
+### Option 3: Build and install
+Similar to the previous option, you have to first clone the repo
 
-First update the build tool
+```bash
+git clone https://github.com/reghbali/pyalfe.git
+cd pyalfe
+```
+
+update the build tool
 ```bash
 pip install --upgrade build
 ```
@@ -39,7 +48,7 @@ pip install --upgrade build
 Run the following commands in the parent pyalfe directory to build the whl file and install pyalfe
 ```bash
 python -m build
-pip install dist/pyalfe-*-py3-none-any.whl
+pip install dist/pyalfe-0.1.0-py3-none-any.whl
 ```
 
 ### Download models
@@ -47,24 +56,28 @@ To download deep learning models, run
 ```bash
 pyalfe download models
 ```
-### Pyradiomics support
-To install pyalfe with pyradiomics support, run
+
+### Extras
+If you want pyalfe to generate pyradiomics features alongside its default features
+you can install pyalfe with pyradiomics support. To do so, run:
+```bash
+pip install 'pyalfe[radiomics]'
+```
+for development installation
 ```bash
 pip install -e  '.[radiomics]'
 ```
-for development installation or
+when performing a build and install
 ```bash
-pip install 'dist/pyalfe-0.0.1-py3-none-any.whl[radiomics]'
+pip install 'dist/pyalfe-0.1.0-py3-none-any.whl[radiomics]'
 ```
-when performing a build and install.
 
-### Ants support
-If you want to use Ants registration, you need to install pyalfe with ants support, run
+If you want to use ant registration tool, you can install pyalfe with ants support:
 ```bash
-pip install -e  '.[ants]'
+pip install 'pyalfe[ants]'
 ```
-for development installation or
+
+If you want to build the docs, install pyalfe with docs support:
 ```bash
-pip install 'dist/pyalfe-0.0.1-py3-none-any.whl[ants]'
+pip install 'pyalfe[docs]'
 ```
-when performing a build and install.
