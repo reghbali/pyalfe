@@ -29,7 +29,7 @@ Run the following command in the parent pyalfe directory:
 pip install -e .
 ```
 
-### Option 2: Build and install
+### Option 3: Build and install
 
 First update the build tool
 ```bash
