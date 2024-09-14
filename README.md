@@ -1,9 +1,9 @@
 # PyALFE
 
 Python implementation of Automated Lesion and Feature Extraction (ALFE) pipeline.
-We developed this pipeline for analysis of brain MRIs of patients suffering from conditions that cause brain lesions. It utilizes image processing tools, image registration tools, and deep learning segmentation models to produce a set of features that describe the lesion in the brain.
+We developed this pipeline for analysis of brain MRIs of patients suffering from conditions that cause brain lesions. It utilizes image processing tools, image registration tools, and deep learning segmentation models to produce a set of features that describe the lesions in the brain.
 
-## Requirements
+## Documentation
 
 PyALFE supports Linux x86-64, Mac x86-64, and Mac arm64 and requires python 3.9+.
 
