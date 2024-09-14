@@ -424,12 +424,11 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-registration-and-processing">Image registration and processing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-1-pypi-installation">Option 1: Pypi installation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-2-development-mode-installation">Option 2: Development mode installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-1-pypi">Option 1: PyPI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-2-development-mode">Option 2: Development mode</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-3-build-and-install">Option 3: Build and install</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#download-models">Download models</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyradiomics-support">Pyradiomics support</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ants-support">Ants support</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extras">Extras</a></li>
 </ul>
             </nav>
         </div>
@@ -450,34 +449,43 @@ document.write(`
 Similarly, PyALFE can be configured to use <a class="reference external" href="https://sourceforge.net/p/c3d/git/ci/master/tree/doc/c3d.md">Convert3D</a> or python native library <a class="reference external" href="https://nilearn.github.io/stable/index.html">Nilearn</a> for image processing tasks.
 To use Greedy and Convert3d, these command line tools should be downloaded using the <a class="reference internal" href="#download-models-and-tools"><span class="xref myst">download command</span></a>.</p>
 </section>
-<section id="option-1-pypi-installation">
-<h2>Option 1: Pypi installation<a class="headerlink" href="#option-1-pypi-installation" title="Link to this heading">#</a></h2>
-<p>You can install pyalfe by running:</p>
+<section id="option-1-pypi">
+<h2>Option 1: PyPI<a class="headerlink" href="#option-1-pypi" title="Link to this heading">#</a></h2>
+<p>To install, run</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>pyalfe
 </pre></div>
 </div>
-<p>You can either install pyalfe from source after cloning the repo using <a class="reference internal" href="#development-mode-installation"><span class="xref myst">development mode</span></a> or <a class="reference internal" href="#build-and-install"><span class="xref myst">build and install</span></a>.</p>
 </section>
-<section id="option-2-development-mode-installation">
-<h2>Option 2: Development mode installation<a class="headerlink" href="#option-2-development-mode-installation" title="Link to this heading">#</a></h2>
-<p>First update the setuptools</p>
+<section id="option-2-development-mode">
+<h2>Option 2: Development mode<a class="headerlink" href="#option-2-development-mode" title="Link to this heading">#</a></h2>
+<p>If you want to have the latest development version, you can clone the repo</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/reghbali/pyalfe.git
+<span class="nb">cd</span><span class="w"> </span>pyalfe
+</pre></div>
+</div>
+<p>update the setuptools</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>setuptools
 </pre></div>
 </div>
-<p>Run the following command in the parent pyalfe directory:</p>
+<p>run the following command in the parent pyalfe directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </pre></div>
 </div>
 </section>
 <section id="option-3-build-and-install">
 <h2>Option 3: Build and install<a class="headerlink" href="#option-3-build-and-install" title="Link to this heading">#</a></h2>
-<p>First update the build tool</p>
+<p>Similar to the previous option, you have to first clone the repo</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/reghbali/pyalfe.git
+<span class="nb">cd</span><span class="w"> </span>pyalfe
+</pre></div>
+</div>
+<p>update the build tool</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>build
 </pre></div>
 </div>
 <p>Run the following commands in the parent pyalfe directory to build the whl file and install pyalfe</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>build
-pip<span class="w"> </span>install<span class="w"> </span>dist/pyalfe-*-py3-none-any.whl
+pip<span class="w"> </span>install<span class="w"> </span>dist/pyalfe-0.1.0-py3-none-any.whl
 </pre></div>
 </div>
 </section>
@@ -488,29 +496,29 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/pyalfe-*-py3-none
 </pre></div>
 </div>
 </section>
-<section id="pyradiomics-support">
-<h2>Pyradiomics support<a class="headerlink" href="#pyradiomics-support" title="Link to this heading">#</a></h2>
-<p>To install pyalfe with pyradiomics support, run</p>
+<section id="extras">
+<h2>Extras<a class="headerlink" href="#extras" title="Link to this heading">#</a></h2>
+<p>If you want pyalfe to generate pyradiomics features alongside its default features
+you can install pyalfe with pyradiomics support. To do so, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;pyalfe[radiomics]&#39;</span>
+</pre></div>
+</div>
+<p>for development installation</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w">  </span><span class="s1">&#39;.[radiomics]&#39;</span>
 </pre></div>
 </div>
-<p>for development installation or</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;dist/pyalfe-0.0.1-py3-none-any.whl[radiomics]&#39;</span>
+<p>when performing a build and install</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;dist/pyalfe-0.1.0-py3-none-any.whl[radiomics]&#39;</span>
 </pre></div>
 </div>
-<p>when performing a build and install.</p>
-</section>
-<section id="ants-support">
-<h2>Ants support<a class="headerlink" href="#ants-support" title="Link to this heading">#</a></h2>
-<p>If you want to use Ants registration, you need to install pyalfe with ants support, run</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w">  </span><span class="s1">&#39;.[ants]&#39;</span>
+<p>If you want to use ant registration tool, you can install pyalfe with ants support:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;pyalfe[ants]&#39;</span>
 </pre></div>
 </div>
-<p>for development installation or</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;dist/pyalfe-0.0.1-py3-none-any.whl[ants]&#39;</span>
+<p>If you want to build the docs, install pyalfe with docs support:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;pyalfe[docs]&#39;</span>
 </pre></div>
 </div>
-<p>when performing a build and install.</p>
 </section>
 </section>
 
@@ -579,12 +587,11 @@ pip<span class="w"> </span>install<span class="w"> </span>dist/pyalfe-*-py3-none
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-registration-and-processing">Image registration and processing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-1-pypi-installation">Option 1: Pypi installation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-2-development-mode-installation">Option 2: Development mode installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-1-pypi">Option 1: PyPI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-2-development-mode">Option 2: Development mode</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-3-build-and-install">Option 3: Build and install</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#download-models">Download models</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyradiomics-support">Pyradiomics support</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ants-support">Ants support</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extras">Extras</a></li>
 </ul>
   </nav></div>
 
