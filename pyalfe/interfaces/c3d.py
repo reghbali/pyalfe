@@ -1,4 +1,5 @@
 import subprocess
+from shutil import which
 
 from pyalfe.tools import C3D_PATH
 
@@ -6,6 +7,12 @@ from pyalfe.tools import C3D_PATH
 class C3D:
     def __init__(self, c3d_path=C3D_PATH):
         self.cmd = [c3d_path]
+        if which(c3d_path) is None:
+            raise RuntimeError(
+                f'{c3d_path} executable was not found in your system. '
+                'To download and install convert3d, visit:\n '
+                'https://sourceforge.net/projects/c3d/'
+            )
 
     def assign(self, var):
         self.cmd.append('-as')

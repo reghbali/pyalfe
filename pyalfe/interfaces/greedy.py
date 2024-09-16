@@ -1,4 +1,5 @@
 import subprocess
+from shutil import which
 
 from pyalfe.tools import GREEDY_PATH
 
@@ -6,6 +7,12 @@ from pyalfe.tools import GREEDY_PATH
 class Greedy:
     def __init__(self, greedy_path=GREEDY_PATH):
         self.cmd = [greedy_path]
+        if which(greedy_path) is None:
+            raise RuntimeError(
+                f'{greedy_path} executable was not found in your system. '
+                'To download and install greedy, visit:\n '
+                'https://sourceforge.net/projects/greedy-reg/'
+            )
 
     def dim(self, d):
         self.cmd += ['-d', str(d)]
