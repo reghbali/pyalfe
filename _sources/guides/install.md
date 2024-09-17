@@ -2,10 +2,10 @@
 
 PyALFE supports Linux x86-64, Mac x86-64, and Mac arm64 and requires python >= 3.9.
 
-### Image registration and processing
-PyALFE can be configured to use either [Greedy](https://greedy.readthedocs.io/en/latest/) or [AntsPy](https://antspy.readthedocs.io/en/latest/registration.html) registration tools.
-Similarly, PyALFE can be configured to use [Convert3D](https://sourceforge.net/p/c3d/git/ci/master/tree/doc/c3d.md) or python native library [Nilearn](https://nilearn.github.io/stable/index.html) for image processing tasks.
-To use Greedy and Convert3d, these command line tools should be downloaded using the [download command](#download-models-and-tools).
+### Prerquisite
+PyALFE uses [Greedy](https://greedy.readthedocs.io/en/latest/) registration tool by default. The instruction for installing Greedy can be found [here](https://greedy.readthedocs.io/en/latest/install.html#using-pre-compiled-binaries).
+
+Alternatively, PyALFE can be configured to use [AntsPy](https://antspy.readthedocs.io/en/latest/registration.html) registration tool. To use AntsPy, you can install PyALFE with [ants support](#extras).
 
 ### Option 1: PyPI
 
@@ -72,7 +72,7 @@ when performing a build and install
 pip install 'dist/pyalfe-0.1.0-py3-none-any.whl[radiomics]'
 ```
 
-If you want to use ant registration tool, you can install pyalfe with ants support:
+If you want to use ants registration tool, you can install pyalfe with ants support:
 ```bash
 pip install 'pyalfe[ants]'
 ```

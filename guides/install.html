@@ -423,7 +423,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-registration-and-processing">Image registration and processing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerquisite">Prerquisite</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-1-pypi">Option 1: PyPI</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-2-development-mode">Option 2: Development mode</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-3-build-and-install">Option 3: Build and install</a></li>
@@ -443,11 +443,10 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h1>
 <p>PyALFE supports Linux x86-64, Mac x86-64, and Mac arm64 and requires python &gt;= 3.9.</p>
-<section id="image-registration-and-processing">
-<h2>Image registration and processing<a class="headerlink" href="#image-registration-and-processing" title="Link to this heading">#</a></h2>
-<p>PyALFE can be configured to use either <a class="reference external" href="https://greedy.readthedocs.io/en/latest/">Greedy</a> or <a class="reference external" href="https://antspy.readthedocs.io/en/latest/registration.html">AntsPy</a> registration tools.
-Similarly, PyALFE can be configured to use <a class="reference external" href="https://sourceforge.net/p/c3d/git/ci/master/tree/doc/c3d.md">Convert3D</a> or python native library <a class="reference external" href="https://nilearn.github.io/stable/index.html">Nilearn</a> for image processing tasks.
-To use Greedy and Convert3d, these command line tools should be downloaded using the <a class="reference internal" href="#download-models-and-tools"><span class="xref myst">download command</span></a>.</p>
+<section id="prerquisite">
+<h2>Prerquisite<a class="headerlink" href="#prerquisite" title="Link to this heading">#</a></h2>
+<p>PyALFE uses <a class="reference external" href="https://greedy.readthedocs.io/en/latest/">Greedy</a> registration tool by default. The instruction for installing Greedy can be found <a class="reference external" href="https://greedy.readthedocs.io/en/latest/install.html#using-pre-compiled-binaries">here</a>.</p>
+<p>Alternatively, PyALFE can be configured to use <a class="reference external" href="https://antspy.readthedocs.io/en/latest/registration.html">AntsPy</a> registration tool. To use AntsPy, you can install PyALFE with <a class="reference internal" href="#extras"><span class="xref myst">ants support</span></a>.</p>
 </section>
 <section id="option-1-pypi">
 <h2>Option 1: PyPI<a class="headerlink" href="#option-1-pypi" title="Link to this heading">#</a></h2>
@@ -511,7 +510,7 @@ you can install pyalfe with pyradiomics support. To do so, run:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;dist/pyalfe-0.1.0-py3-none-any.whl[radiomics]&#39;</span>
 </pre></div>
 </div>
-<p>If you want to use ant registration tool, you can install pyalfe with ants support:</p>
+<p>If you want to use ants registration tool, you can install pyalfe with ants support:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;pyalfe[ants]&#39;</span>
 </pre></div>
 </div>
@@ -586,7 +585,7 @@ you can install pyalfe with pyradiomics support. To do so, run:</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-registration-and-processing">Image registration and processing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerquisite">Prerquisite</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-1-pypi">Option 1: PyPI</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-2-development-mode">Option 2: Development mode</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#option-3-build-and-install">Option 3: Build and install</a></li>
