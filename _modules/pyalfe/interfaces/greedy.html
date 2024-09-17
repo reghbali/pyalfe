@@ -363,7 +363,7 @@ document.write(`
 <span></span><span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">which</span>
 
-<span class="kn">from</span> <span class="nn">pyalfe.tools</span> <span class="kn">import</span> <span class="n">GREEDY_PATH</span>
+<span class="kn">from</span> <span class="nn">pyalfe.tools</span> <span class="kn">import</span> <span class="n">GREEDY_PATH</span><span class="p">,</span> <span class="n">greedy_url</span>
 
 
 <div class="viewcode-block" id="Greedy">
@@ -372,11 +372,15 @@ document.write(`
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">greedy_path</span><span class="o">=</span><span class="n">GREEDY_PATH</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="n">greedy_path</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">which</span><span class="p">(</span><span class="n">greedy_path</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">greedy_path</span><span class="si">}</span><span class="s1"> executable was not found in your system. &#39;</span>
                 <span class="s1">&#39;To download and install greedy, visit:</span><span class="se">\n</span><span class="s1"> &#39;</span>
                 <span class="s1">&#39;https://greedy.readthedocs.io/en/latest/install.html#using-pre-compiled-binaries&#39;</span>
             <span class="p">)</span>
+            <span class="k">if</span> <span class="n">greedy_url</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> or </span><span class="si">{</span><span class="n">greedy_url</span><span class="si">}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">&#39;</span>
+
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Greedy.dim">
 <a class="viewcode-back" href="../../../api/interfaces/greedy.html#pyalfe.interfaces.greedy.Greedy.dim">[docs]</a>
