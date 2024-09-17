@@ -22,6 +22,7 @@ dependencies = [
     "huggingface_hub",
     "torch",
     "pandas",
+    "picsl_c3d",
     "pybids",
     "nibabel",
     "nilearn",

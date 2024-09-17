@@ -11,7 +11,7 @@ class Greedy:
             raise RuntimeError(
                 f'{greedy_path} executable was not found in your system. '
                 'To download and install greedy, visit:\n '
-                'https://sourceforge.net/projects/greedy-reg/'
+                'https://greedy.readthedocs.io/en/latest/install.html#using-pre-compiled-binaries'
             )
 
     def dim(self, d):

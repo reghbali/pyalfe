@@ -1,18 +1,15 @@
-import subprocess
-from shutil import which
+import io
 
-from pyalfe.tools import C3D_PATH
+from picsl_c3d import Convert3D
 
 
 class C3D:
-    def __init__(self, c3d_path=C3D_PATH):
-        self.cmd = [c3d_path]
-        if which(c3d_path) is None:
-            raise RuntimeError(
-                f'{c3d_path} executable was not found in your system. '
-                'To download and install convert3d, visit:\n '
-                'https://sourceforge.net/projects/c3d/'
-            )
+    def __init__(self):
+        self.cmd = []
+        self.c = Convert3D()
+
+    def __repr__(self):
+        return ' '.join([str(part) for part in self.cmd])
 
     def assign(self, var):
         self.cmd.append('-as')
@@ -104,7 +101,9 @@ class C3D:
         return self
 
     def run(self):
-        return subprocess.run(self.cmd, capture_output=True).stdout.decode("utf-8")
+        return self.c.execute(self.__repr__())
 
     def check_output(self):
-        return subprocess.check_output(self.cmd).decode("utf-8")
+        cmd_output = io.StringIO()
+        self.c.execute(self.__repr__(), out=cmd_output)
+        return cmd_output.getvalue()
