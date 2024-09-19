@@ -1,11 +1,22 @@
 import subprocess
+from shutil import which
 
-from pyalfe.tools import GREEDY_PATH
+from pyalfe.tools import GREEDY_PATH, greedy_url
 
 
 class Greedy:
     def __init__(self, greedy_path=GREEDY_PATH):
         self.cmd = [greedy_path]
+        if which(greedy_path) is None:
+            msg = (
+                f'{greedy_path} executable was not found in your system. '
+                'To download and install greedy, visit:\n '
+                'https://greedy.readthedocs.io/en/latest/install.html#using-pre-compiled-binaries'
+            )
+            if greedy_url:
+                msg += f'\n or {greedy_url} \n'
+
+            raise RuntimeError(msg)
 
     def dim(self, d):
         self.cmd += ['-d', str(d)]

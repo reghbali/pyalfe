@@ -39,7 +39,7 @@ pyalfe download models
 
 Configure pyalfe by running
 ```bash
-pyalfe configrue
+pyalfe configure
 ```
 and simply pressing enter for all the prompts for default values.
 
