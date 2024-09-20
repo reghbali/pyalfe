@@ -1,8 +1,7 @@
 # Tutorial
 
 In this tutorial, you will download sample data, install pyalfe, configure it, and run it on this data.
-This tutorial requires `git`, `python>=3.9`, [greedy](https://sourceforge.net/projects/greedy-reg/files/).
-
+This tutorial requires `git` and `python>=3.9`.
 
 ## Data download and directory setup
 

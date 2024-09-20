@@ -2,10 +2,6 @@
 
 PyALFE supports Linux x86-64, Mac x86-64, and Mac arm64 and requires python >= 3.9.
 
-### Prerquisite
-PyALFE uses [Greedy](https://greedy.readthedocs.io/en/latest/) registration tool by default. The instruction for installing Greedy can be found [here](https://greedy.readthedocs.io/en/latest/install.html#using-pre-compiled-binaries).
-
-Alternatively, PyALFE can be configured to use [AntsPy](https://antspy.readthedocs.io/en/latest/registration.html) registration tool. To use AntsPy, you can install PyALFE with [ants support](#extras).
 
 ### Option 1: PyPI
 

@@ -1,22 +1,13 @@
-import subprocess
-from shutil import which
-
-from pyalfe.tools import GREEDY_PATH, greedy_url
+from picsl_greedy import Greedy3D
 
 
 class Greedy:
-    def __init__(self, greedy_path=GREEDY_PATH):
-        self.cmd = [greedy_path]
-        if which(greedy_path) is None:
-            msg = (
-                f'{greedy_path} executable was not found in your system. '
-                'To download and install greedy, visit:\n '
-                'https://greedy.readthedocs.io/en/latest/install.html#using-pre-compiled-binaries'
-            )
-            if greedy_url:
-                msg += f'\n or {greedy_url} \n'
+    def __init__(self):
+        self.cmd = []
+        self.g = Greedy3D()
 
-            raise RuntimeError(msg)
+    def __repr__(self):
+        return ' '.join([str(part) for part in self.cmd])
 
     def dim(self, d):
         self.cmd += ['-d', str(d)]
@@ -83,4 +74,4 @@ class Greedy:
         return self
 
     def run(self):
-        return subprocess.run(self.cmd, capture_output=True).stdout.decode("utf-8")
+        return self.g.execute(self.__repr__())
