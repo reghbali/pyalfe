@@ -420,7 +420,7 @@ class TestResampling(TestTask):
                     image_type=roi_key,
                     sub_dir_name=roi_properties['sub_dir'],
                 )
-            elif roi_properties['type'] == 'registered':
+            elif roi_properties['type'] == 'template':
                 roi_image = self.pipeline_dir.get_output_image(
                     accession,
                     Modality.T1,
@@ -463,7 +463,7 @@ class TestT1Registration(TestTask):
             accession, Modality.T1, image_type='skullstripped'
         )
         input_mask = self.pipeline_dir.get_output_image(
-            accession, Modality.T1, image_type='skullstripped_mask'
+            accession, Modality.T1, image_type='skullstripping_mask'
         )
         input_image_trim_upsampled = self.pipeline_dir.get_output_image(
             accession, Modality.T1, image_type='trim_upsampled'

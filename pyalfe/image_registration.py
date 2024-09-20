@@ -127,12 +127,11 @@ class GreedyRegistration(ImageRegistration):
 
     logger = logging.getLogger('GreedyRegistration')
 
-    def __init__(self, greedy_path='greedy', threads=16):
-        self.greedy_path = greedy_path
+    def __init__(self, threads=16):
         self.threads = threads
 
     def reslice(self, fixed, moving, registration_output, *transform):
-        cmd = Greedy(self.greedy_path)
+        cmd = Greedy()
         cmd = cmd.dim(3).threads(self.threads)
         cmd = cmd.reslice(*transform).reference(fixed)
         cmd = cmd.input_output(moving, registration_output)
@@ -141,17 +140,10 @@ class GreedyRegistration(ImageRegistration):
     def _register_affine(
         self, dof, fixed, moving, transform_output, init_transform, fast
     ):
-        cmd = Greedy(self.greedy_path)
-        if 'WNCC' in cmd.run():
-            metric = 'WNCC'
-        else:
-            metric = 'NCC'
-            self.logger.warning(
-                'Your version of greedy does not support weigthed normalized'
-                ' cross-correlation. Falling back to simple normalized'
-                ' cross-correlation. Consider upgrading greedy to the'
-                ' latest version.'
-            )
+        cmd = Greedy()
+
+        metric = 'WNCC'
+
         if init_transform:
             cmd.initialize_affine(init_transform)
         cmd = cmd.threads(self.threads).dim(3).affine().dof(dof)
@@ -193,7 +185,7 @@ class GreedyRegistration(ImageRegistration):
         if not os.path.exists(affine_transform):
             self.register_affine(fixed, moving, affine_transform, fast=False)
 
-        cmd = Greedy(self.greedy_path)
+        cmd = Greedy()
         cmd = cmd.dim(3).threads(self.threads).metric('NCC', 2)
         cmd = cmd.epsilon(0.5).num_iter(100, 50, 10)
         if affine_transform:

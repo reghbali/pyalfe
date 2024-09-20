@@ -23,6 +23,7 @@ dependencies = [
     "torch",
     "pandas",
     "picsl_c3d",
+    "picsl_greedy",
     "pybids",
     "nibabel",
     "nilearn",
