@@ -506,14 +506,13 @@ document.write(`
 
     <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;GreedyRegistration&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">greedy_path</span><span class="o">=</span><span class="s1">&#39;greedy&#39;</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">16</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">greedy_path</span> <span class="o">=</span> <span class="n">greedy_path</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">16</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">threads</span> <span class="o">=</span> <span class="n">threads</span>
 
 <div class="viewcode-block" id="GreedyRegistration.reslice">
 <a class="viewcode-back" href="../../api/image_registration.html#pyalfe.image_registration.GreedyRegistration.reslice">[docs]</a>
     <span class="k">def</span> <span class="nf">reslice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fixed</span><span class="p">,</span> <span class="n">moving</span><span class="p">,</span> <span class="n">registration_output</span><span class="p">,</span> <span class="o">*</span><span class="n">transform</span><span class="p">):</span>
-        <span class="n">cmd</span> <span class="o">=</span> <span class="n">Greedy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">greedy_path</span><span class="p">)</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">Greedy</span><span class="p">()</span>
         <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">dim</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">threads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">threads</span><span class="p">)</span>
         <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">reslice</span><span class="p">(</span><span class="o">*</span><span class="n">transform</span><span class="p">)</span><span class="o">.</span><span class="n">reference</span><span class="p">(</span><span class="n">fixed</span><span class="p">)</span>
         <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">input_output</span><span class="p">(</span><span class="n">moving</span><span class="p">,</span> <span class="n">registration_output</span><span class="p">)</span>
@@ -523,17 +522,10 @@ document.write(`
     <span class="k">def</span> <span class="nf">_register_affine</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">dof</span><span class="p">,</span> <span class="n">fixed</span><span class="p">,</span> <span class="n">moving</span><span class="p">,</span> <span class="n">transform_output</span><span class="p">,</span> <span class="n">init_transform</span><span class="p">,</span> <span class="n">fast</span>
     <span class="p">):</span>
-        <span class="n">cmd</span> <span class="o">=</span> <span class="n">Greedy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">greedy_path</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s1">&#39;WNCC&#39;</span> <span class="ow">in</span> <span class="n">cmd</span><span class="o">.</span><span class="n">run</span><span class="p">():</span>
-            <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;WNCC&#39;</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;NCC&#39;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="s1">&#39;Your version of greedy does not support weigthed normalized&#39;</span>
-                <span class="s1">&#39; cross-correlation. Falling back to simple normalized&#39;</span>
-                <span class="s1">&#39; cross-correlation. Consider upgrading greedy to the&#39;</span>
-                <span class="s1">&#39; latest version.&#39;</span>
-            <span class="p">)</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">Greedy</span><span class="p">()</span>
+
+        <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;WNCC&#39;</span>
+
         <span class="k">if</span> <span class="n">init_transform</span><span class="p">:</span>
             <span class="n">cmd</span><span class="o">.</span><span class="n">initialize_affine</span><span class="p">(</span><span class="n">init_transform</span><span class="p">)</span>
         <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">threads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">threads</span><span class="p">)</span><span class="o">.</span><span class="n">dim</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">affine</span><span class="p">()</span><span class="o">.</span><span class="n">dof</span><span class="p">(</span><span class="n">dof</span><span class="p">)</span>
@@ -583,7 +575,7 @@ document.write(`
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">affine_transform</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">register_affine</span><span class="p">(</span><span class="n">fixed</span><span class="p">,</span> <span class="n">moving</span><span class="p">,</span> <span class="n">affine_transform</span><span class="p">,</span> <span class="n">fast</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-        <span class="n">cmd</span> <span class="o">=</span> <span class="n">Greedy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">greedy_path</span><span class="p">)</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">Greedy</span><span class="p">()</span>
         <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">dim</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">threads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">threads</span><span class="p">)</span><span class="o">.</span><span class="n">metric</span><span class="p">(</span><span class="s1">&#39;NCC&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">epsilon</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">num_iter</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">affine_transform</span><span class="p">:</span>
