@@ -28,6 +28,14 @@ def main():
 @main.command()
 @click.argument('assets', nargs=-1)
 def download(assets):
+    """
+    Downloads assets such as models.
+
+    \b
+    Example
+    -------
+    pyalfe download models
+    """
     import huggingface_hub
     from pyalfe.models import MODELS_PATH, models_url
     from pyalfe.tools import C3D_PATH, GREEDY_PATH, c3d_url, greedy_url
@@ -89,9 +97,9 @@ def _run(
     config : str
         the path to the config file.
     input_dir : str
-        the path to the directory containing input input images
+        the path to the directory containing input images
     output_dir : str
-        the path to the directory containing output output images
+        the path to the directory containing output images
     modalities : str
         comma separated modalities
     targets : str
@@ -187,9 +195,9 @@ def run(
     config : str, default: :attr:`DEFAULT_CFG`
         the path to the config file.
     input_dir : str
-        the path to the directory containing input input images
+        the path to the directory containing input images
     output_dir : str
-        the path to the directory containing output output images
+        the path to the directory containing output images
     modalities : str, default: :attr:`DEFAULT_MODALITIES`
         comma separated modalities
     targets : str, default: :attr:`DEFAULT_TARGETS`
@@ -232,37 +240,64 @@ def run(
     '-c',
     '--config',
     default=DEFAULT_CFG,
+    help='The path to the config file. Run `pyalfe configure` '
+    f'to create the config file. Default: {DEFAULT_CFG}',
 )
-@click.option('-m', '--modalities')
-@click.option('-t', '--targets')
-@click.option('-id', '--input-dir', type=click.Path(resolve_path=True))
-@click.option('-od', '--output-dir', type=click.Path(resolve_path=True))
+@click.option(
+    '-id',
+    '--input-dir',
+    type=click.Path(resolve_path=True),
+    help='The path to the directory containing input images',
+)
+@click.option(
+    '-od',
+    '--output-dir',
+    type=click.Path(resolve_path=True),
+    help='The path to the directory containing output images',
+)
+@click.option(
+    '-m',
+    '--modalities',
+    help='Comma separated modalities. Example: T1,T1Post,FLAIR,CBF',
+)
+@click.option(
+    '-t', '--targets', help='Comma separated target modalities. Example: T1Post,FLAIR'
+)
 @click.option(
     '-dt',
     '--dominant_tissue',
-    default='white_matter',
     type=click.Choice(['white_matter', 'gray_matter', 'auto'], case_sensitive=False),
+    help='Dominant tissue for the lesions and abnormalities.',
 )
-@click.option('-ow/-now', '--overwrite/--no-overwrite', default=True)
 @click.option(
     '-ip',
     '--image-processor',
     type=click.Choice(['c3d', 'nilearn'], case_sensitive=False),
+    help='Image processor that is used by the pipeline',
 )
 @click.option(
     '-ir',
     '--image-registration',
     type=click.Choice(['greedy', 'ants'], case_sensitive=False),
+    help='Image registration that is used by the pipeline',
 )
 @click.option(
     '-dds',
     '--data-dir-structure',
     type=click.Choice(['alfe', 'bids'], case_sensitive=False),
+    help='The data directory structure',
 )
 @click.option(
     '-ts',
     '--tissue-segmentation',
     type=click.Choice(['prior', 'synthseg'], case_sensitive=False),
+    help='The tissue segmentation tool used by the pipeline',
+)
+@click.option(
+    '-ow/-now',
+    '--overwrite/--no-overwrite',
+    default=True,
+    help='Whether to overwrite output images',
 )
 def run_command(
     accession: str,
@@ -278,37 +313,7 @@ def run_command(
     tissue_segmentation: str,
     overwrite: bool,
 ) -> None:
-    """Runs the pipeline for an accession number.
-
-    Parameters
-    ----------
-    accession : str
-        the accession number for which you want to run the pipeline.
-    config : str, default: ~/.config/pyalfe/config.ini
-        the path to the config file.
-    input_dir : str
-        the path to the directory containing input input images
-    output_dir : str
-        the path to the directory containing output output images
-    modalities : str
-        comma separated modalities
-    targets : str
-        comma separated target modalities
-    dominant_tissue : str, default='white_matter'
-        dominant tissue
-    image_processor : str, default='c3d'
-        image processor that is used by the pipeline.
-    image_registration : str, default='greedy'
-        image registration that is used by the pipeline.
-    data_dir_structure: str, default='alfe'
-        the data directory structure, it can be 'alfe' or 'bids'.
-    overwrite : bool
-        if True, the pipeline overwrites existing output images.
-
-    Returns
-    -------
-    None
-    """
+    """Runs the pipeline for an accession number."""
     _run(
         accession=accession,
         config=config,
@@ -327,20 +332,14 @@ def run_command(
 
 @main.command()
 def configure():
-    """
-    Configure the pipeline through a series of prompts.
-
-    Returns
-    -------
-    None
-    """
+    """Configures the pipeline through a series of prompts."""
     input_dir = click.prompt(
-        'Enter input image directory ' '(press enter to skip)',
+        'Enter input image directory (press enter to skip)',
         default='',
         type=click.Path(resolve_path=True),
     )
     output_dir = click.prompt(
-        'Enter output image directory' '(press enter to skip)',
+        'Enter output image directory (press enter to skip)',
         default='',
         type=click.Path(resolve_path=True),
     )
@@ -409,6 +408,37 @@ def _process_dicom(
     data_dir_structure: str = None,
     overwrite: bool = True,
 ):
+    """Processes a dicom study (Experimental). Detects modalities and converts to NIfTI.
+    Organizes the NIfTIs so they can be used as input for the pipeline.
+
+    The dicom_dir should be organized as:
+    dicom_dir
+    └─ accession (study)
+        └─ series
+            ├─ instance_0.dcm
+            └─ instance_1.dcm
+
+    Parameters
+    ----------
+    accession: str
+        the accession number for which you want to process dicoms.
+    dicom_dir: str
+        the directory containing raw dicoms.
+    config : str, default: :attr:`DEFAULT_CFG`
+        the path to the config file.
+    nifti_dir: str
+        the directory where the NIfTI images will be written.
+        If not provided, defaults to pipeline input dir in the config.
+    data_dir_structure: str, default: :attr:`DEFUALT_DATA_DIR_STRUCTURE`
+        the data directory structure, it can be 'alfe' or 'bids'.
+    overwrite : bool, default: :attr:`DEFAULT_OVERWRITE`
+        if True, the pipeline overwrites existing output images.
+
+    Returns
+    -------
+    None
+
+    """
     from pyalfe.containers import DicomProcessingContianer
 
     container = DicomProcessingContianer()
@@ -461,14 +491,27 @@ def process_dicom(
     '-c',
     '--config',
     default=DEFAULT_CFG,
+    help='The path to the config file. '
+    f'Run `pyalfe configure` to create the config file. Default: {DEFAULT_CFG}',
 )
-@click.option('-nd', '--nifti-dir')
+@click.option(
+    '-nd',
+    '--nifti-dir',
+    help='The path where the NIfTI images will be written. '
+    'If not provided, defaults to pipeline input dir in the config.',
+)
 @click.option(
     '-dds',
     '--data-dir-structure',
     type=click.Choice(['alfe', 'bids'], case_sensitive=False),
+    help='The data directory structure',
 )
-@click.option('-ow/-now', '--overwrite/--no-overwrite', default=True)
+@click.option(
+    '-ow/-now',
+    '--overwrite/--no-overwrite',
+    default=True,
+    help='Whether to overwrite output images',
+)
 def process_dicom_command(
     accession: str,
     dicom_dir: str,
@@ -477,6 +520,9 @@ def process_dicom_command(
     data_dir_structure: str,
     overwrite: bool,
 ):
+    """Processes a dicom study (Experimental). Detects modalities and converts to NIfTI.
+    Organizes the NIfTIs so they can be used as input for the pipeline.
+    """
     _process_dicom(
         accession=accession,
         dicom_dir=dicom_dir,
