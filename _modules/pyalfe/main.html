@@ -390,6 +390,14 @@ document.write(`
 <span class="nd">@main</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">argument</span><span class="p">(</span><span class="s1">&#39;assets&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">assets</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Downloads assets such as models.</span>
+
+<span class="sd">    \b</span>
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    pyalfe download models</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">huggingface_hub</span>
     <span class="kn">from</span> <span class="nn">pyalfe.models</span> <span class="kn">import</span> <span class="n">MODELS_PATH</span><span class="p">,</span> <span class="n">models_url</span>
     <span class="kn">from</span> <span class="nn">pyalfe.tools</span> <span class="kn">import</span> <span class="n">C3D_PATH</span><span class="p">,</span> <span class="n">GREEDY_PATH</span><span class="p">,</span> <span class="n">c3d_url</span><span class="p">,</span> <span class="n">greedy_url</span>
@@ -451,9 +459,9 @@ document.write(`
 <span class="sd">    config : str</span>
 <span class="sd">        the path to the config file.</span>
 <span class="sd">    input_dir : str</span>
-<span class="sd">        the path to the directory containing input input images</span>
+<span class="sd">        the path to the directory containing input images</span>
 <span class="sd">    output_dir : str</span>
-<span class="sd">        the path to the directory containing output output images</span>
+<span class="sd">        the path to the directory containing output images</span>
 <span class="sd">    modalities : str</span>
 <span class="sd">        comma separated modalities</span>
 <span class="sd">    targets : str</span>
@@ -551,9 +559,9 @@ document.write(`
 <span class="sd">    config : str, default: :attr:`DEFAULT_CFG`</span>
 <span class="sd">        the path to the config file.</span>
 <span class="sd">    input_dir : str</span>
-<span class="sd">        the path to the directory containing input input images</span>
+<span class="sd">        the path to the directory containing input images</span>
 <span class="sd">    output_dir : str</span>
-<span class="sd">        the path to the directory containing output output images</span>
+<span class="sd">        the path to the directory containing output images</span>
 <span class="sd">    modalities : str, default: :attr:`DEFAULT_MODALITIES`</span>
 <span class="sd">        comma separated modalities</span>
 <span class="sd">    targets : str, default: :attr:`DEFAULT_TARGETS`</span>
@@ -597,37 +605,64 @@ document.write(`
     <span class="s1">&#39;-c&#39;</span><span class="p">,</span>
     <span class="s1">&#39;--config&#39;</span><span class="p">,</span>
     <span class="n">default</span><span class="o">=</span><span class="n">DEFAULT_CFG</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The path to the config file. Run `pyalfe configure` &#39;</span>
+    <span class="sa">f</span><span class="s1">&#39;to create the config file. Default: </span><span class="si">{</span><span class="n">DEFAULT_CFG</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;-m&#39;</span><span class="p">,</span> <span class="s1">&#39;--modalities&#39;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;-t&#39;</span><span class="p">,</span> <span class="s1">&#39;--targets&#39;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;-id&#39;</span><span class="p">,</span> <span class="s1">&#39;--input-dir&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">resolve_path</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;-od&#39;</span><span class="p">,</span> <span class="s1">&#39;--output-dir&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">resolve_path</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s1">&#39;-id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;--input-dir&#39;</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">resolve_path</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The path to the directory containing input images&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s1">&#39;-od&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;--output-dir&#39;</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">resolve_path</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The path to the directory containing output images&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s1">&#39;-m&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;--modalities&#39;</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Comma separated modalities. Example: T1,T1Post,FLAIR,CBF&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s1">&#39;-t&#39;</span><span class="p">,</span> <span class="s1">&#39;--targets&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Comma separated target modalities. Example: T1Post,FLAIR&#39;</span>
+<span class="p">)</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
     <span class="s1">&#39;-dt&#39;</span><span class="p">,</span>
     <span class="s1">&#39;--dominant_tissue&#39;</span><span class="p">,</span>
-    <span class="n">default</span><span class="o">=</span><span class="s1">&#39;white_matter&#39;</span><span class="p">,</span>
     <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;white_matter&#39;</span><span class="p">,</span> <span class="s1">&#39;gray_matter&#39;</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Dominant tissue for the lesions and abnormalities.&#39;</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;-ow/-now&#39;</span><span class="p">,</span> <span class="s1">&#39;--overwrite/--no-overwrite&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
     <span class="s1">&#39;-ip&#39;</span><span class="p">,</span>
     <span class="s1">&#39;--image-processor&#39;</span><span class="p">,</span>
     <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;c3d&#39;</span><span class="p">,</span> <span class="s1">&#39;nilearn&#39;</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Image processor that is used by the pipeline&#39;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
     <span class="s1">&#39;-ir&#39;</span><span class="p">,</span>
     <span class="s1">&#39;--image-registration&#39;</span><span class="p">,</span>
     <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;greedy&#39;</span><span class="p">,</span> <span class="s1">&#39;ants&#39;</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Image registration that is used by the pipeline&#39;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
     <span class="s1">&#39;-dds&#39;</span><span class="p">,</span>
     <span class="s1">&#39;--data-dir-structure&#39;</span><span class="p">,</span>
     <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;alfe&#39;</span><span class="p">,</span> <span class="s1">&#39;bids&#39;</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The data directory structure&#39;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
     <span class="s1">&#39;-ts&#39;</span><span class="p">,</span>
     <span class="s1">&#39;--tissue-segmentation&#39;</span><span class="p">,</span>
     <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;prior&#39;</span><span class="p">,</span> <span class="s1">&#39;synthseg&#39;</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The tissue segmentation tool used by the pipeline&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s1">&#39;-ow/-now&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;--overwrite/--no-overwrite&#39;</span><span class="p">,</span>
+    <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Whether to overwrite output images&#39;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="k">def</span> <span class="nf">run_command</span><span class="p">(</span>
     <span class="n">accession</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -643,37 +678,7 @@ document.write(`
     <span class="n">tissue_segmentation</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Runs the pipeline for an accession number.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    accession : str</span>
-<span class="sd">        the accession number for which you want to run the pipeline.</span>
-<span class="sd">    config : str, default: ~/.config/pyalfe/config.ini</span>
-<span class="sd">        the path to the config file.</span>
-<span class="sd">    input_dir : str</span>
-<span class="sd">        the path to the directory containing input input images</span>
-<span class="sd">    output_dir : str</span>
-<span class="sd">        the path to the directory containing output output images</span>
-<span class="sd">    modalities : str</span>
-<span class="sd">        comma separated modalities</span>
-<span class="sd">    targets : str</span>
-<span class="sd">        comma separated target modalities</span>
-<span class="sd">    dominant_tissue : str, default=&#39;white_matter&#39;</span>
-<span class="sd">        dominant tissue</span>
-<span class="sd">    image_processor : str, default=&#39;c3d&#39;</span>
-<span class="sd">        image processor that is used by the pipeline.</span>
-<span class="sd">    image_registration : str, default=&#39;greedy&#39;</span>
-<span class="sd">        image registration that is used by the pipeline.</span>
-<span class="sd">    data_dir_structure: str, default=&#39;alfe&#39;</span>
-<span class="sd">        the data directory structure, it can be &#39;alfe&#39; or &#39;bids&#39;.</span>
-<span class="sd">    overwrite : bool</span>
-<span class="sd">        if True, the pipeline overwrites existing output images.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    None</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Runs the pipeline for an accession number.&quot;&quot;&quot;</span>
     <span class="n">_run</span><span class="p">(</span>
         <span class="n">accession</span><span class="o">=</span><span class="n">accession</span><span class="p">,</span>
         <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
@@ -692,20 +697,14 @@ document.write(`
 
 <span class="nd">@main</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">configure</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Configure the pipeline through a series of prompts.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    None</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configures the pipeline through a series of prompts.&quot;&quot;&quot;</span>
     <span class="n">input_dir</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">prompt</span><span class="p">(</span>
-        <span class="s1">&#39;Enter input image directory &#39;</span> <span class="s1">&#39;(press enter to skip)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Enter input image directory (press enter to skip)&#39;</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">resolve_path</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
     <span class="p">)</span>
     <span class="n">output_dir</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">prompt</span><span class="p">(</span>
-        <span class="s1">&#39;Enter output image directory&#39;</span> <span class="s1">&#39;(press enter to skip)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Enter output image directory (press enter to skip)&#39;</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">resolve_path</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
     <span class="p">)</span>
@@ -774,6 +773,37 @@ document.write(`
     <span class="n">data_dir_structure</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Processes a dicom study (Experimental). Detects modalities and converts to NIfTI.</span>
+<span class="sd">    Organizes the NIfTIs so they can be used as input for the pipeline.</span>
+
+<span class="sd">    The dicom_dir should be organized as:</span>
+<span class="sd">    dicom_dir</span>
+<span class="sd">    └─ accession (study)</span>
+<span class="sd">        └─ series</span>
+<span class="sd">            ├─ instance_0.dcm</span>
+<span class="sd">            └─ instance_1.dcm</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    accession: str</span>
+<span class="sd">        the accession number for which you want to process dicoms.</span>
+<span class="sd">    dicom_dir: str</span>
+<span class="sd">        the directory containing raw dicoms.</span>
+<span class="sd">    config : str, default: :attr:`DEFAULT_CFG`</span>
+<span class="sd">        the path to the config file.</span>
+<span class="sd">    nifti_dir: str</span>
+<span class="sd">        the directory where the NIfTI images will be written.</span>
+<span class="sd">        If not provided, defaults to pipeline input dir in the config.</span>
+<span class="sd">    data_dir_structure: str, default: :attr:`DEFUALT_DATA_DIR_STRUCTURE`</span>
+<span class="sd">        the data directory structure, it can be &#39;alfe&#39; or &#39;bids&#39;.</span>
+<span class="sd">    overwrite : bool, default: :attr:`DEFAULT_OVERWRITE`</span>
+<span class="sd">        if True, the pipeline overwrites existing output images.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">pyalfe.containers</span> <span class="kn">import</span> <span class="n">DicomProcessingContianer</span>
 
     <span class="n">container</span> <span class="o">=</span> <span class="n">DicomProcessingContianer</span><span class="p">()</span>
@@ -829,14 +859,27 @@ document.write(`
     <span class="s1">&#39;-c&#39;</span><span class="p">,</span>
     <span class="s1">&#39;--config&#39;</span><span class="p">,</span>
     <span class="n">default</span><span class="o">=</span><span class="n">DEFAULT_CFG</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The path to the config file. &#39;</span>
+    <span class="sa">f</span><span class="s1">&#39;Run `pyalfe configure` to create the config file. Default: </span><span class="si">{</span><span class="n">DEFAULT_CFG</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;-nd&#39;</span><span class="p">,</span> <span class="s1">&#39;--nifti-dir&#39;</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s1">&#39;-nd&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;--nifti-dir&#39;</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The path where the NIfTI images will be written. &#39;</span>
+    <span class="s1">&#39;If not provided, defaults to pipeline input dir in the config.&#39;</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
     <span class="s1">&#39;-dds&#39;</span><span class="p">,</span>
     <span class="s1">&#39;--data-dir-structure&#39;</span><span class="p">,</span>
     <span class="nb">type</span><span class="o">=</span><span class="n">click</span><span class="o">.</span><span class="n">Choice</span><span class="p">([</span><span class="s1">&#39;alfe&#39;</span><span class="p">,</span> <span class="s1">&#39;bids&#39;</span><span class="p">],</span> <span class="n">case_sensitive</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The data directory structure&#39;</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;-ow/-now&#39;</span><span class="p">,</span> <span class="s1">&#39;--overwrite/--no-overwrite&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span>
+    <span class="s1">&#39;-ow/-now&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;--overwrite/--no-overwrite&#39;</span><span class="p">,</span>
+    <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Whether to overwrite output images&#39;</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="k">def</span> <span class="nf">process_dicom_command</span><span class="p">(</span>
     <span class="n">accession</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">dicom_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -845,6 +888,9 @@ document.write(`
     <span class="n">data_dir_structure</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 <span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Processes a dicom study (Experimental). Detects modalities and converts to NIfTI.</span>
+<span class="sd">    Organizes the NIfTIs so they can be used as input for the pipeline.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_process_dicom</span><span class="p">(</span>
         <span class="n">accession</span><span class="o">=</span><span class="n">accession</span><span class="p">,</span>
         <span class="n">dicom_dir</span><span class="o">=</span><span class="n">dicom_dir</span><span class="p">,</span>
