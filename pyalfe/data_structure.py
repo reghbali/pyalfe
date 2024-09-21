@@ -565,9 +565,9 @@ class BIDSDataDir(PipelineDataDir):
 
 
 class PatientDicomDataDir:
-    """This class is designe to work with directories containing raw dicom
+    """This class is designed to work with directories containing raw dicom
     files for a patient that are organized as:
-    patient_id
+    dicom_dir
         └─ accession (study)
             └─ series
                 ├─ instance_0.dcm

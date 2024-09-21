@@ -2,7 +2,7 @@ name: Integration Test
 
 on:
   issue_comment:
-    types: [created] 
+    types: [created]
 
 jobs:
   integration_test_linux:
@@ -22,12 +22,12 @@ jobs:
           prefix_only: true
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-          
+
       - name: Get branch
         if: steps.check-comment.outputs.triggered == 'true'
         uses: xt0rted/pull-request-comment-branch@v2
         id: comment-branch
-      
+
       - name: Checkout
         if: steps.check-comment.outputs.triggered == 'true'
         uses: actions/checkout@v4
@@ -59,24 +59,7 @@ jobs:
       - name: Install test dependencies
         if: steps.check-comment.outputs.triggered == 'true'
         run: |
-          export BIN=~/.local/bin
-
           pip install pytest
-
-          mkdir -p $BIN
-          cd /tmp
-
-          if [[ ! -f $BIN/greedy ]]; then
-              curl -o greedy.tgz -L https://sourceforge.net/projects/greedy-reg/files/Nightly/greedy-nightly-Linux-gcc64.tar.gz
-              tar xf greedy.tgz
-              cp greedy*/bin/greedy $BIN/greedy
-          fi
-
-          if [[ ! -f $BIN/c3d ]]; then
-              curl -o c3d.tgz -L https://sourceforge.net/projects/c3d/files/c3d/Nightly/c3d-nightly-Linux-gcc64.tar.gz
-              tar xf c3d.tgz
-              cp c3d*/bin/c3d $BIN/c3d
-          fi
 
       - name: Install package
         if: steps.check-comment.outputs.triggered == 'true'
