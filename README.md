@@ -16,7 +16,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 Please make sure to update tests as appropriate.
 
-## Citation
+## Citing
 If you use this software, please consider citing the [pyALFE paper](https://link.springer.com/article/10.1007/s12021-024-09708-z): 
 
 ```
