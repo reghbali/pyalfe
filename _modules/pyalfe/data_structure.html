@@ -15,19 +15,21 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-  
-  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -35,10 +37,11 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
@@ -61,6 +64,7 @@
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -76,19 +80,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../../search.html"
       method="get">
@@ -96,7 +89,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -104,8 +96,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -123,7 +115,8 @@
       
         
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -153,21 +146,17 @@
     
     
     <img src="../../_static/logo.png" class="logo__image only-light" alt="pyalfe - Home"/>
-    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="pyalfe - Home"/>`);</script>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="pyalfe - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -218,9 +207,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -316,24 +310,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 
 </div></div>
       
@@ -360,26 +346,26 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for pyalfe.data_structure</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">collections</span>
-<span class="kn">import</span> <span class="nn">glob</span>
-<span class="kn">import</span> <span class="nn">importlib</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">auto</span><span class="p">,</span> <span class="n">IntEnum</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">auto</span><span class="p">,</span> <span class="n">IntEnum</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span> <span class="nn">bids</span> <span class="kn">import</span> <span class="n">BIDSLayout</span>
-<span class="kn">import</span> <span class="nn">pydicom</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bids</span><span class="w"> </span><span class="kn">import</span> <span class="n">BIDSLayout</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pydicom</span>
 
-<span class="kn">from</span> <span class="nn">strenum</span> <span class="kn">import</span> <span class="n">StrEnum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">strenum</span><span class="w"> </span><span class="kn">import</span> <span class="n">StrEnum</span>
 
 
 <div class="viewcode-block" id="Modality">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.Modality">[docs]</a>
-<span class="k">class</span> <span class="nc">Modality</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Modality</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
     <span class="n">T1</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
     <span class="n">T1Post</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
     <span class="n">T2</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
@@ -397,7 +383,7 @@ document.write(`
 
 <div class="viewcode-block" id="Orientation">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.Orientation">[docs]</a>
-<span class="k">class</span> <span class="nc">Orientation</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Orientation</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
     <span class="n">AXIAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
     <span class="n">SAGITTAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
     <span class="n">CORONAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
@@ -406,7 +392,7 @@ document.write(`
 
 <div class="viewcode-block" id="Tissue">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.Tissue">[docs]</a>
-<span class="k">class</span> <span class="nc">Tissue</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Tissue</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
     <span class="n">BACKGROUND</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">CSF</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">CORTICAL_GRAY_MATTER</span> <span class="o">=</span> <span class="mi">2</span>
@@ -422,12 +408,12 @@ document.write(`
 
 <div class="viewcode-block" id="PipelineDataDir">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.PipelineDataDir">[docs]</a>
-<span class="k">class</span> <span class="nc">PipelineDataDir</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PipelineDataDir</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract PipelineDataDir&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="PipelineDataDir.get_output_image">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.PipelineDataDir.get_output_image">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_output_image</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_output_image</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">accession</span><span class="p">,</span>
         <span class="n">modality</span><span class="p">,</span>
@@ -472,7 +458,7 @@ document.write(`
 
 <div class="viewcode-block" id="PipelineDataDir.get_input_image">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.PipelineDataDir.get_input_image">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_input_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.nii.gz&#39;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_input_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.nii.gz&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates the path for an input image.</span>
 
 <span class="sd">        Parameters</span>
@@ -494,7 +480,7 @@ document.write(`
 
 <div class="viewcode-block" id="PipelineDataDir.get_quantification_file">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.PipelineDataDir.get_quantification_file">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_quantification_file</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_quantification_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">,</span> <span class="n">quantification_file_type</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.csv&#39;</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates the path for an output quantification file.</span>
@@ -524,20 +510,20 @@ document.write(`
 
 <div class="viewcode-block" id="DefaultALFEDataDir">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.DefaultALFEDataDir">[docs]</a>
-<span class="k">class</span> <span class="nc">DefaultALFEDataDir</span><span class="p">(</span><span class="n">PipelineDataDir</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DefaultALFEDataDir</span><span class="p">(</span><span class="n">PipelineDataDir</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Default implementation of PipelineDataDir</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dir_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="n">output_dir</span><span class="p">,</span> <span class="s1">&#39;input&#39;</span><span class="p">:</span> <span class="n">input_dir</span><span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_type</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="o">*</span><span class="n">sub_dir_names</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_type</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="o">*</span><span class="n">sub_dir_names</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dir_dict</span><span class="p">[</span><span class="n">dir_type</span><span class="p">],</span> <span class="n">accession</span><span class="p">,</span> <span class="o">*</span><span class="n">sub_dir_names</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DefaultALFEDataDir.create_dir">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.DefaultALFEDataDir.create_dir">[docs]</a>
-    <span class="k">def</span> <span class="nf">create_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_type</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="o">*</span><span class="n">sub_dir_names</span><span class="p">,</span> <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_type</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="o">*</span><span class="n">sub_dir_names</span><span class="p">,</span> <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="n">directory</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">dir_type</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="o">*</span><span class="n">sub_dir_names</span><span class="p">)</span>
         <span class="n">Path</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="n">exists</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">directory</span></div>
@@ -545,7 +531,7 @@ document.write(`
 
 <div class="viewcode-block" id="DefaultALFEDataDir.get_output_image">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.DefaultALFEDataDir.get_output_image">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_output_image</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_output_image</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">accession</span><span class="p">,</span>
         <span class="n">modality</span><span class="p">,</span>
@@ -628,7 +614,7 @@ document.write(`
 
 <div class="viewcode-block" id="DefaultALFEDataDir.get_input_image">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.DefaultALFEDataDir.get_input_image">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_input_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.nii.gz&#39;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_input_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.nii.gz&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate the path for an input image in</span>
 <span class="sd">        ALFE default dir structure format.</span>
 
@@ -659,7 +645,7 @@ document.write(`
 
 <div class="viewcode-block" id="DefaultALFEDataDir.get_quantification_file">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.DefaultALFEDataDir.get_quantification_file">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_quantification_file</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_quantification_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">,</span> <span class="n">quantification_file_type</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.csv&#39;</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate the path for a quantification file in</span>
@@ -702,14 +688,14 @@ document.write(`
 
 <div class="viewcode-block" id="BIDSDataDir">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.BIDSDataDir">[docs]</a>
-<span class="k">class</span> <span class="nc">BIDSDataDir</span><span class="p">(</span><span class="n">PipelineDataDir</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BIDSDataDir</span><span class="p">(</span><span class="n">PipelineDataDir</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    BIDS almost-compliant implementation of PipelineDataDir</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;BIDSDataDir&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">input_layout</span> <span class="o">=</span> <span class="n">BIDSLayout</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">input_dir</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">())</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span>
@@ -746,7 +732,7 @@ document.write(`
 
 <div class="viewcode-block" id="BIDSDataDir.get_input_image">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.BIDSDataDir.get_input_image">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_input_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.nii.gz&#39;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_input_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.nii.gz&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates the path for an input image in BIDS dir structure format.</span>
 
 <span class="sd">        Parameters</span>
@@ -824,7 +810,7 @@ document.write(`
 
 <div class="viewcode-block" id="BIDSDataDir.get_output_image">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.BIDSDataDir.get_output_image">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_output_image</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_output_image</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">accession</span><span class="p">,</span>
         <span class="n">modality</span><span class="p">,</span>
@@ -921,7 +907,7 @@ document.write(`
 
 <div class="viewcode-block" id="BIDSDataDir.get_quantification_file">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.BIDSDataDir.get_quantification_file">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_quantification_file</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_quantification_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">modality</span><span class="p">,</span> <span class="n">quantification_file_type</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.csv&#39;</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate the path for a quantification file in</span>
@@ -976,7 +962,7 @@ document.write(`
 
 <div class="viewcode-block" id="PatientDicomDataDir">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.PatientDicomDataDir">[docs]</a>
-<span class="k">class</span> <span class="nc">PatientDicomDataDir</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PatientDicomDataDir</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This class is designed to work with directories containing raw dicom</span>
 <span class="sd">    files for a patient that are organized as:</span>
 <span class="sd">    dicom_dir</span>
@@ -986,12 +972,12 @@ document.write(`
 <span class="sd">                └─ instance_1.dcm</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dicom_dir</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dicom_dir</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dicom_dir</span> <span class="o">=</span> <span class="n">dicom_dir</span>
 
 <div class="viewcode-block" id="PatientDicomDataDir.is_dicom_file">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.PatientDicomDataDir.is_dicom_file">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_dicom_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_dicom_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Function to check if file is a dicom file.</span>
 <span class="sd">        The first 128 bytes are preamble the next 4 bytes should</span>
 <span class="sd">        contain DICM otherwise it is not a dicom file. Adapted from</span>
@@ -1026,7 +1012,7 @@ document.write(`
 
 <div class="viewcode-block" id="PatientDicomDataDir.get_all_dicom_series_instances">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.PatientDicomDataDir.get_all_dicom_series_instances">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_all_dicom_series_instances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_all_dicom_series_instances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;This method returns a list of Series each containing a series path</span>
 <span class="sd">        and all of the instances in the series.</span>
 
@@ -1056,7 +1042,7 @@ document.write(`
 
 <div class="viewcode-block" id="PatientDicomDataDir.get_series">
 <a class="viewcode-back" href="../../api/data_structure.html#pyalfe.data_structure.PatientDicomDataDir.get_series">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_series</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">series_uid</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_series</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accession</span><span class="p">,</span> <span class="n">series_uid</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;This method returns the path to a series.</span>
 
 <span class="sd">        Parameters</span>
@@ -1138,8 +1124,8 @@ By Reza Eghbali
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>
