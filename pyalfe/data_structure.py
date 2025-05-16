@@ -396,7 +396,7 @@ class BIDSDataDir(PipelineDataDir):
             **self.modality_dict[modality],
             'extension': extension,
         }
-        candidates = self.input_layout.get(*entities, patterns)
+        candidates = self.input_layout.get('filename', *entities, patterns)
         if len(candidates) == 0:
             default_path = self.input_layout.build_path(
                 entities, patterns, validate=False
