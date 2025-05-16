@@ -282,15 +282,15 @@ class Quantification(Task):
     def get_summary_update_from_individual(individual_lesion_df):
         if len(individual_lesion_df) == 0:
             return {
-            'number_of_lesions': 0,
-            'largest_lesion_volume': 0.0,
-            'average_lesion_volume': 0.0,                
+                'number_of_lesions': 0,
+                'largest_lesion_volume': 0.0,
+                'average_lesion_volume': 0.0,
             }
         return {
             'number_of_lesions': len(individual_lesion_df),
             'largest_lesion_volume': individual_lesion_df['total_lesion_volume'].max(),
             'average_lesion_volume': individual_lesion_df['total_lesion_volume'].mean(),
-            }
+        }
 
     def run(self, accession):
         volumetric_quantification_file = self.pipeline_dir.get_quantification_file(
