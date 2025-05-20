@@ -157,7 +157,7 @@ def extract_series_uid(header, default=None):
     return extract_value(header, ('0020', '000e'), default=default)
 
 
-def get_max_echo_series_crc(series: list[str]) -> str:
+def get_max_echo_series_crc(series: list[str]) -> (int, str):
     """Calculate a checksum string of the given DICOM series. Adapeted from
     https://git.fmrib.ox.ac.uk/fsl/fslpy/-/blob/main/fsl/data/dicom.py
 
@@ -189,11 +189,11 @@ def get_max_echo_series_crc(series: list[str]) -> str:
             series_uid = extract_series_uid(header)
 
     if series_uid is None:
-        return None
+        return max_echo, None
 
     crc32 = str(binascii.crc32(series_uid.encode()))
 
     if max_echo is not None and max_echo > 1:
         crc32 = f'{crc32}.{max_echo}'
 
-    return crc32
+    return max_echo, crc32

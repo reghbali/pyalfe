@@ -5,6 +5,8 @@ import os
 from pathlib import Path
 import subprocess
 
+import SimpleITK as sitk
+
 from pyalfe.data_structure import (
     PipelineDataDir,
     PatientDicomDataDir,
@@ -15,7 +17,7 @@ from pyalfe.tasks import Task
 from pyalfe.utils.dicom import (
     extract_image_meta,
     get_max_echo_series_crc,
-    ImageMeta,
+    ImageMeta, extract_echo_number, get_dicom_header_pydicom,
 )
 from pyalfe.utils.technique import detect_modality, detect_orientation
 
@@ -45,8 +47,59 @@ class DicomProcessing(Task):
         self.dicom_dir = dicom_dir
         self.overwrite = overwrite
 
-    @staticmethod
     def dicom2nifti(
+            self,
+            dcm_series_dir: str,
+            nifti_path: str,
+            echo: int,
+    ):
+        """
+        Convert a DICOM series with a specific echo number to a NIfTI file.
+
+        Parameters
+        ----------
+        dcm_series_dir : str
+            Path to the directory containing the DICOM series.
+        nifti_path : str
+            Path to the output NIfTI file. Should end with `.nii` or `.nii.gz`.
+        echo : int
+            Echo number to filter for. Only DICOM instances with this EchoNumber will be converted.
+
+        Raises
+        ------
+        ValueError
+            If no DICOM files matching the specified echo number are found.
+        RuntimeError
+            If the DICOM series cannot be read or the NIfTI file cannot be written.
+        """
+        echo_instances = []
+
+        for dcm_name in os.listdir(dcm_series_dir):
+            dcm = os.path.join(dcm_series_dir, dcm_name)
+            header = get_dicom_header_pydicom(dcm)
+            echo_number = extract_echo_number(header)
+            if echo_number == echo:
+                echo_instances.append(dcm)
+
+        if not echo_instances:
+            self.logger.info(f'No DICOM files found with EchoNumber={echo} in {dcm_series_dir}')
+
+        try:
+            reader = sitk.ImageSeriesReader()
+            reader.SetFileNames(sorted(echo_instances))
+            image = reader.Execute()
+            nifti_dir = os.path.dirname(nifti_path)
+            Path(nifti_dir).mkdir(parents=True, exist_ok=True)
+            sitk.WriteImage(image, nifti_path)
+            self.logger.info(
+                f"NIfTI file for echo {echo} saved to: {nifti_path}")
+        except Exception as e:
+            self.logger.info(f'Failed to convert DICOM to NIfTI for echo {echo}: {e}')
+            return 0
+        return 1
+
+    @staticmethod
+    def dicom2nifti_dcm2niix(
         dcm_series_dir: str,
         nifti_path: str,
         series_crc: str = None,
@@ -183,14 +236,14 @@ class DicomProcessing(Task):
 
             selected_series_uid = selected_image_meta.series_uid
             dcm_series_dir = series_uid_map[selected_series_uid].series_path
-            max_echo_series_crc = get_max_echo_series_crc(
+            max_echo, max_echo_series_crc = get_max_echo_series_crc(
                 series_uid_map[selected_series_uid].instances
             )
 
             conversion_status = self.dicom2nifti(
                 dcm_series_dir=dcm_series_dir,
                 nifti_path=nifti_path,
-                series_crc=max_echo_series_crc,
+                echo=max_echo,
             )
 
             if conversion_status == 0:
