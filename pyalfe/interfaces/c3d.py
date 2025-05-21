@@ -88,6 +88,14 @@ class C3D:
         self.cmd += ['-o', output]
         return self
 
+    def out_list(self, output):
+        self.cmd.append('-oo')
+        if type(output) is list:
+            self.cmd += output
+        else:
+            self.cmd.append(output)
+        return self
+
     def operand(self, *op):
         self.cmd += op
         return self
@@ -98,6 +106,14 @@ class C3D:
 
     def sdt(self):
         self.cmd.append('-sdt')
+        return self
+
+    def slice(self, axis='z'):
+        self.cmd += ['-slice', axis]
+        return self
+
+    def data_type(self, dtype):
+        self.cmd += ['-type', dtype]
         return self
 
     def run(self):
