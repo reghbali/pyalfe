@@ -252,3 +252,5 @@ class DicomProcessing(Task):
                 continue
 
             converted[modality] = selected_image_meta
+
+        self.logger.info(f'converted: {converted}')
