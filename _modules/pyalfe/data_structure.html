@@ -1014,7 +1014,7 @@ document.write(`
         <span class="k">if</span> <span class="n">data</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;DICM&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">dicom_headers</span> <span class="o">=</span> <span class="n">pydicom</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span>
+            <span class="n">dicom_headers</span> <span class="o">=</span> <span class="n">pydicom</span><span class="o">.</span><span class="n">dcmread</span><span class="p">(</span>
                 <span class="n">file</span><span class="p">,</span> <span class="n">defer_size</span><span class="o">=</span><span class="s2">&quot;1 KB&quot;</span><span class="p">,</span> <span class="n">stop_before_pixels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">dicom_headers</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
