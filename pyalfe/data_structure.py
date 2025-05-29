@@ -600,7 +600,7 @@ class PatientDicomDataDir:
         if data == b'DICM':
             return True
         try:
-            dicom_headers = pydicom.read_file(
+            dicom_headers = pydicom.dcmread(
                 file, defer_size="1 KB", stop_before_pixels=True, force=True
             )
             if dicom_headers is not None:
