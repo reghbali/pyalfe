@@ -200,7 +200,7 @@ class DicomProcessing(Task):
         classified = defaultdict(defaultdict(list).copy)
         converted, conversion_failed = defaultdict(str), defaultdict(str)
         skipped = []
-        series_uid_map = {}
+        series_path_map = {}
 
         for series in self.dicom_dir.get_all_dicom_series_instances(accession):
             dicom_meta = extract_image_meta(series.instances[0])
@@ -221,7 +221,7 @@ class DicomProcessing(Task):
 
             # we need this map so we can find the series path and instances
             # for conversion to NIfTI
-            series_uid_map[dicom_meta.path] = series
+            series_path_map[dicom_meta.path] = series
 
         for modality, orientations in classified.items():
             orientation_best = defaultdict(Modality)
@@ -234,9 +234,9 @@ class DicomProcessing(Task):
                 accession=accession, modality=modality
             )
 
-            dcm_series_dir = series_uid_map[selected_image_meta.path].series_path
+            dcm_series_dir = series_path_map[selected_image_meta.path].series_path
             max_echo, max_echo_series_crc = get_max_echo_series_crc(
-                series_uid_map[selected_image_meta.path].instances
+                series_path_map[selected_image_meta.path].instances
             )
 
             self.logger.info(f'converting {dcm_series_dir} to {nifti_path}.')
