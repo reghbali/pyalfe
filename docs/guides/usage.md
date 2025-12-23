@@ -133,7 +133,7 @@ This config value can be overwritten when calling `pyalfe run` via `-ip` or `--i
 image registration to use (greedy, ants) [greedy]:
 ```
 Currently, pyalfe can be configured to use either greedy or ants for image registration tasks. The default is greedy.
-In other to use greedy, you have to download and install greedy (https://sourceforge.net/projects/greedy-reg/). To use ants,
+In order to use greedy, you have to download and install greedy (https://sourceforge.net/projects/greedy-reg/). To use ants,
 install pyalfe with ants support ``pip install pyalfe[ants]``.
 
 This config value can be overwritten when calling `pyalfe run` via `-ir` or `--image-registration` option.
